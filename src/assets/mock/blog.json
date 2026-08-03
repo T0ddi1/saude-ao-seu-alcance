@@ -1,0 +1,35 @@
+{
+  "breadcrumbs": [
+    { "label": "Home", "href": "/" },
+    { "label": "Artigos", "href": "/blog" },
+    { "label": "Cuidados com a Saúde", "href": "/blog" }
+  ],
+  "pageTitle": "Cuidados com a saúde",
+  "articles": [
+    { "date": "15/07/2027", "title": "Título do Artigo", "excerpt": "Pequenas mudanças no dia a dia ajudam a prevenir doenças e a manter o corpo e a mente em equilíbrio ao longo dos anos.", "image": "assets/images/cuidado-com-a-saude.jpg", "href": "/artigos/blog-1" },
+    { "date": "15/07/2027", "title": "Título do Artigo", "excerpt": "Caminhar ou correr ao ar livre com regularidade melhora a saúde cardiovascular e reduz o estresse do dia a dia.", "image": "assets/images/blog-corrida.jpg", "href": "/artigos/blog-2" },
+    { "date": "15/07/2027", "title": "Título do Artigo", "excerpt": "Pausas de descanso genuíno, sem telas, são tão importantes para a saúde mental quanto o sono noturno.", "image": "assets/images/blog-sofa.jpg", "href": "/artigos/blog-3" },
+    { "date": "15/07/2027", "title": "Título do Artigo", "excerpt": "Pequenos momentos ao ar livre entre um compromisso e outro ajudam a recarregar as energias durante a semana.", "image": "assets/images/blog-ciclista.jpg", "href": "/artigos/blog-4" },
+    { "date": "15/07/2027", "title": "Título do Artigo", "excerpt": "Alongamento e exercícios funcionais simples podem ser feitos em poucos minutos e trazem benefícios imediatos.", "image": "assets/images/blog-yoga.jpg", "href": "/artigos/blog-5" },
+    { "date": "15/07/2027", "title": "Título do Artigo", "excerpt": "Atividades físicas em família aproximam gerações e criam hábitos saudáveis que duram a vida toda.", "image": "assets/images/blog-familia-bike.jpg", "href": "/artigos/blog-6" }
+  ],
+  "categories": [
+    { "label": "Cuidados com a saúde", "count": 35, "href": "/blog", "active": true },
+    { "label": "Cuidado Federal", "count": 9, "href": "/blog/cuidado-federal", "active": false },
+    { "label": "Emergências e Primeiros Cuidados", "count": 16, "href": "/blog/emergencias", "active": false },
+    { "label": "Hábitos Saudáveis", "count": 104, "href": "/blog/habitos-saudaveis", "active": false }
+  ],
+  "recentPosts": [
+    { "date": "01/07/2027", "excerpt": "Saiba como agir em situações de emergência e salvar vidas.", "href": "/artigos/recente-1" },
+    { "date": "01/07/2027", "excerpt": "Saiba como agir em situações de emergência e salvar vidas.", "href": "/artigos/recente-2" },
+    { "date": "01/07/2027", "excerpt": "Saiba como agir em situações de emergência e salvar vidas.", "href": "/artigos/recente-3" }
+  ],
+  "extras": [
+    { "kind": "ad", "title": "Medicamentos de qualidade para cuidar de você todos os dias.", "ctaLabel": "Saiba mais", "href": "/artigos/medicamentos-qualidade" },
+    { "kind": "sponsor", "icon": "ring", "title": "Dasa", "image": "assets/images/outubro-rosa.png", "description": "Laboratórios Dasa promovem campanha nacional de prevenção e reforçam a importância do diagnóstico precoce.", "linkLabel": "Ler notícia", "href": "/artigos/dasa" }
+  ],
+  "pagination": {
+    "current": 1,
+    "total": 4
+  }
+}

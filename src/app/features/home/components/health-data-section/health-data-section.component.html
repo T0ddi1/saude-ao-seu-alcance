@@ -1,0 +1,35 @@
+<section class="health-data">
+  <div class="health-data__intro">
+    <div class="health-data__map" aria-hidden="true">
+      <img src="assets/images/mapa-brasil.svg" alt="Mapa do Brasil" />
+    </div>
+    <h2>{{ healthStats.title }}</h2>
+  </div>
+
+  <div class="health-data__stats">
+    <app-stat-card
+      *ngFor="let stat of healthStats.stats; let i = index"
+      [stat]="stat"
+      [variant]="i === 0 ? 'filled' : 'outline'"
+    ></app-stat-card>
+  </div>
+
+  <div class="health-data__categories">
+    <div class="health-data__category" *ngFor="let cat of contentCategories">
+      <div class="health-data__category-icon">
+        <app-icon [name]="cat.icon" [size]="20" color="var(--color-primary)"></app-icon>
+      </div>
+      <div class="health-data__category-media">
+        <img [src]="cat.image" [alt]="cat.title" loading="lazy" />
+      </div>
+      <h3>{{ cat.title }}</h3>
+      <p>{{ cat.description }}</p>
+      <a [href]="cat.href" class="health-data__category-link">
+        {{ cat.linkLabel }}
+        <span class="health-data__category-arrow">
+          <app-icon name="arrow-right" [size]="12"></app-icon>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,49 @@
+<app-breadcrumb [items]="breadcrumbs"></app-breadcrumb>
+
+<div class="auth">
+  <div class="auth__card">
+    <h1>Criar nova conta</h1>
+    <p class="auth__subtitle">Entre com os seus dados abaixo:</p>
+
+    <button type="button" class="auth__social">
+      <span class="auth__social-mark auth__social-mark--google">G</span>
+      Login com Google
+    </button>
+
+    <div class="auth__divider"><span>Ou</span></div>
+
+    <form class="auth__form" (ngSubmit)="onSubmit()">
+      <label class="auth__field">
+        <input type="email" name="email" [(ngModel)]="email" placeholder="Digite o seu e-mail" required />
+      </label>
+
+      <label class="auth__field auth__field--password">
+        <input [type]="showPassword ? 'text' : 'password'" name="password" [(ngModel)]="password" placeholder="Senha" required />
+        <button type="button" class="auth__toggle" (click)="togglePassword()" [attr.aria-pressed]="showPassword">
+          {{ showPassword ? 'ocultar' : 'ver' }}
+        </button>
+      </label>
+
+      <div class="auth__row">
+        <label class="auth__checkbox">
+          <input type="checkbox" name="rememberMe" [(ngModel)]="rememberMe" />
+          Lembrar de mim
+        </label>
+        <a href="/esqueci-a-senha">Esqueceu a senha?</a>
+      </div>
+
+      <p class="auth__error" *ngIf="error()">{{ error() }}</p>
+
+      <app-button type="submit" variant="primary">{{ submitting() ? 'Entrando…' : 'Entrar' }}</app-button>
+    </form>
+
+    <div class="auth__divider"><span>Ou</span></div>
+
+    <button type="button" class="auth__social">
+      <span class="auth__social-mark auth__social-mark--facebook">f</span>
+      Login com Facebook
+    </button>
+
+    <p class="auth__footnote">Não tem uma conta? <a href="/cadastre-se">Criar uma conta.</a></p>
+  </div>
+</div>

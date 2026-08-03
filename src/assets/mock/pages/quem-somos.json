@@ -1,0 +1,39 @@
+{
+  "breadcrumbs": [
+    { "label": "Home", "href": "/" },
+    { "label": "Quem Somos", "href": "/quem-somos" }
+  ],
+  "title": "Quem Somos",
+  "blocks": [
+    { "type": "lead", "segments": [
+      { "text": "O " },
+      { "text": "Portal Saúde ao Seu Alcance", "strong": true },
+      { "text": " consolida-se como um " },
+      { "text": "hub de conteúdo qualificado", "strong": true },
+      { "text": " e um " },
+      { "text": "ecossistema editorial de saúde", "strong": true },
+      { "text": ", afastando-se do formato de portal comercial de vendas." }
+    ] },
+    { "type": "paragraph", "text": "O nosso objetivo central é a produção, curadoria e disseminação de informações confiáveis sobre prevenção, saúde mental, bem-estar, tendências de mercado, inovações tecnológicas e movimentos do sistema de saúde. Mais do que uma página na internet, nascemos com o propósito claro de democratizar o conhecimento em saúde de forma responsável e acessível." },
+    { "type": "paragraph", "text": "Acreditamos que a informação de qualidade é a melhor forma de prevenção. Por isso, a nossa comunicação exige um equilíbrio cuidadoso: utilizamos uma linguagem empática, humanizada e de utilidade pública para dialogar com a população em geral, ao mesmo tempo que mantemos a densidade técnica suficiente para sermos respeitados por empresas, médicos, gestores e agentes do setor." },
+    { "type": "paragraph", "text": "Atuamos como um verdadeiro observatório do mercado, traduzindo a complexidade do ecossistema de saúde para o dia a dia do cidadão." },
+    { "type": "quote", "text": "Para garantir que esse conhecimento chegue a quem precisa, estruturamo-nos como uma base editorial pronta para alimentar múltiplos canais. A nossa atuação transcende os artigos escritos, expandindo-se dinamicamente para podcasts, newsletters, vídeos e redes sociais." },
+    { "type": "paragraph", "text": "Desta forma, conseguimos acompanhar a jornada do utilizador em diferentes momentos do seu dia, incentivando ativamente a adoção de hábitos saudáveis e a compreensão das inovações que transformam o cuidado humano." },
+    { "type": "paragraph", "text": "Todo este trabalho é sustentado por um pilar inegociável de independência editorial percebida. Este compromisso reflete-se na nossa própria identidade, onde o ícone em formato de \"S\" estilizado, formado por elos contínuos e entrelaçados, remete à integração de todo o ecossistema de saúde e ao cuidado contínuo com a vida." },
+    { "type": "paragraph", "text": "O nosso sucesso constrói-se diariamente, não através de conversões comerciais, mas pela geração de valor contínuo e pela construção de uma audiência própria, recorrente e bem orientada." }
+  ],
+  "categories": [
+    { "label": "Cuidados com a saúde", "count": 35, "href": "/blog", "active": false },
+    { "label": "Cuidado Federal", "count": 9, "href": "/blog/cuidado-federal", "active": false },
+    { "label": "Emergências e Primeiros Cuidados", "count": 16, "href": "/blog/emergencias", "active": false },
+    { "label": "Hábitos Saudáveis", "count": 104, "href": "/blog/habitos-saudaveis", "active": false }
+  ],
+  "recentPosts": [
+    { "date": "01/07/2027", "excerpt": "Saiba como agir em situações de emergência e salvar vidas.", "href": "/artigos/recente-1" },
+    { "date": "01/07/2027", "excerpt": "Saiba como agir em situações de emergência e salvar vidas.", "href": "/artigos/recente-2" },
+    { "date": "01/07/2027", "excerpt": "Saiba como agir em situações de emergência e salvar vidas.", "href": "/artigos/recente-3" }
+  ],
+  "extras": [
+    { "kind": "ad", "title": "Medicamentos de qualidade para cuidar de você todos os dias.", "ctaLabel": "Saiba mais", "href": "/artigos/medicamentos-qualidade" }
+  ]
+}

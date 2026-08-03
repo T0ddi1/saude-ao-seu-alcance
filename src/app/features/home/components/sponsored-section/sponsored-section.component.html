@@ -1,0 +1,20 @@
+<section class="sponsored">
+  <div class="sponsored__grid">
+    <a class="sponsored__card" *ngFor="let item of items" [ngClass]="'is-' + item.theme" [href]="item.href">
+      <p class="sponsored__eyebrow">{{ item.eyebrow }}</p>
+      <div class="sponsored__media" *ngIf="item.image">
+        <img [src]="item.image" [alt]="item.title" loading="lazy" />
+      </div>
+      <h3>{{ item.title }}</h3>
+      <p class="sponsored__desc" *ngIf="item.description">{{ item.description }}</p>
+      <span class="sponsored__cta">{{ item.ctaLabel }} →</span>
+    </a>
+  </div>
+
+  <div class="sponsored__badges">
+    <div class="sponsored__badge" *ngFor="let badge of trustBadges">
+      <app-icon [name]="badge.icon" [size]="20" color="var(--color-primary)"></app-icon>
+      <span>{{ badge.label }}</span>
+    </div>
+  </div>
+</section>

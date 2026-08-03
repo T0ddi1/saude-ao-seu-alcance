@@ -1,0 +1,31 @@
+{
+  "breadcrumbs": [
+    { "label": "Home", "href": "/" },
+    { "label": "Linha Editorial", "href": "/linha-editorial" }
+  ],
+  "title": "Linha Editorial",
+  "blocks": [
+    { "type": "paragraph", "text": "A nossa linha editorial baseia-se no compromisso inegociável com a independência editorial percebida e a democratização do conhecimento. O Portal Saúde ao Seu Alcance não é um canal de vendas ou um espaço focado em conversões comerciais, mas sim um hub de conteúdo qualificado e um ecossistema editorial dedicado à saúde." },
+    { "type": "paragraph", "text": "Produzimos e curamos informações com o propósito de levar clareza, utilidade pública e confiança para o dia a dia das pessoas, transformando dados complexos em orientações seguras." },
+    { "type": "paragraph", "text": "Para cumprir esta missão, adotamos um equilíbrio cuidadoso na nossa comunicação. As nossas publicações utilizam uma linguagem acessível, empática e humanizada para dialogar de forma próxima com a população em geral, promovendo o acolhimento cidadão. Simultaneamente, mantemos o rigor e a densidade técnica necessários para sermos respeitados como uma fonte de autoridade e credibilidade por médicos, empresas, gestores e outros agentes do mercado de saúde." },
+    { "type": "quote", "text": "Os nossos pilares de conteúdo refletem a amplitude do cuidado com a vida. Focamo-nos fortemente na educação e na prevenção, abordando temas vitais como saúde mental, bem-estar e cuidados cotidianos." },
+    { "type": "paragraph", "text": "Paralelamente, atuamos como um verdadeiro observatório do mercado, analisando e traduzindo tendências, inovações tecnológicas e as movimentações do sistema de saúde (SUS e saúde suplementar) que impactam diretamente a sociedade." },
+    { "type": "paragraph", "text": "Todo o material que produzimos é pensado para nutrir uma jornada de cuidado contínuo, conceito que está no coração da nossa identidade visual. Esta base editorial qualificada ganha vida em múltiplos canais, alimentando os nossos artigos, podcasts, vídeos, redes sociais e newsletters." },
+    { "type": "paragraph", "text": "A nossa métrica de sucesso não está ligada a vendas diretas, mas sim à geração de valor real e contínuo, construindo uma audiência própria, recorrente e guiada pela informação confiável." }
+  ],
+  "categories": [
+    { "label": "Cuidados com a saúde", "count": 35, "href": "/blog", "active": false },
+    { "label": "Cuidado Federal", "count": 9, "href": "/blog/cuidado-federal", "active": false },
+    { "label": "Emergências e Primeiros Cuidados", "count": 16, "href": "/blog/emergencias", "active": false },
+    { "label": "Hábitos Saudáveis", "count": 104, "href": "/blog/habitos-saudaveis", "active": false }
+  ],
+  "recentPosts": [
+    { "date": "01/07/2027", "excerpt": "Saiba como agir em situações de emergência e salvar vidas.", "href": "/artigos/recente-1" },
+    { "date": "01/07/2027", "excerpt": "Saiba como agir em situações de emergência e salvar vidas.", "href": "/artigos/recente-2" },
+    { "date": "01/07/2027", "excerpt": "Saiba como agir em situações de emergência e salvar vidas.", "href": "/artigos/recente-3" }
+  ],
+  "extras": [
+    { "kind": "brand", "logoText": "Onmed", "subtitle": "SAÚDE AO SEU ALCANCE", "title": "Conheça a Onmed Saúde", "ctaLabel": "Saiba mais", "href": "#" },
+    { "kind": "sponsor", "icon": "ring", "title": "Dasa", "image": "assets/images/outubro-rosa.png", "description": "Laboratórios Dasa promovem campanha nacional de prevenção e reforçam a importância do diagnóstico precoce.", "linkLabel": "Ler notícia", "href": "/artigos/dasa" }
+  ]
+}

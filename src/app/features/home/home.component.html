@@ -1,0 +1,17 @@
+<ng-container *ngIf="data() as d">
+  <section class="home__top">
+    <app-hero-featured [article]="d.featuredArticle"></app-hero-featured>
+    <app-trending-panel [items]="d.trending"></app-trending-panel>
+  </section>
+
+  <section class="home__grid">
+    <app-category-card *ngFor="let card of d.contentCards" [card]="card"></app-category-card>
+  </section>
+
+  <app-health-data-section
+    [healthStats]="d.healthStats"
+    [contentCategories]="d.contentCategories"
+  ></app-health-data-section>
+
+  <app-sponsored-section [items]="d.sponsored" [trustBadges]="d.trustBadges"></app-sponsored-section>
+</ng-container>

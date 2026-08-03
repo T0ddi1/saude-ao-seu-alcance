@@ -1,0 +1,15 @@
+<form class="newsletter" (ngSubmit)="onSubmit()" *ngIf="!submitted(); else thanks">
+  <input
+    class="newsletter__input"
+    type="email"
+    name="email"
+    required
+    [(ngModel)]="email"
+    [placeholder]="placeholder"
+    aria-label="E-mail para newsletter"
+  />
+  <app-button type="submit" variant="primary">{{ ctaLabel }}</app-button>
+</form>
+<ng-template #thanks>
+  <p class="newsletter__thanks">Inscrição confirmada — obrigado!</p>
+</ng-template>

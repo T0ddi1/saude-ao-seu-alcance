@@ -1,0 +1,36 @@
+:host {
+  display: block;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 40px var(--gutter);
+}
+
+.blog {
+  display: grid;
+  grid-template-columns: 2.4fr 1fr;
+  gap: 56px;
+  align-items: start;
+}
+
+.blog__title {
+  font-size: var(--fs-h1);
+  margin-bottom: 32px;
+}
+
+.blog__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px 32px;
+}
+
+@media (max-width: 1000px) {
+  .blog {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .blog__grid {
+    grid-template-columns: 1fr;
+  }
+}

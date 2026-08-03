@@ -1,0 +1,13 @@
+<a class="article-card" [class.article-card--sponsored]="article.sponsored" [href]="article.href">
+  <div class="article-card__media" *ngIf="article.image">
+    <img [src]="article.image" [alt]="article.title" loading="lazy" />
+  </div>
+  <div class="article-card__rule"></div>
+  <div class="article-card__meta-row">
+    <p class="article-card__date">{{ article.date }}</p>
+    <span class="article-card__badge" *ngIf="article.sponsored">Patrocinado</span>
+  </div>
+  <h3 class="article-card__title">{{ article.title }}</h3>
+  <p class="article-card__excerpt">{{ article.excerpt }}</p>
+  <span class="article-card__cta">Leia Mais →</span>
+</a>

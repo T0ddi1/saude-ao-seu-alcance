@@ -1,0 +1,33 @@
+<ng-container *ngIf="data() as d">
+  <app-breadcrumb [items]="d.breadcrumbs"></app-breadcrumb>
+
+  <div class="page">
+    <article class="page__main">
+      <h1 class="page__title">{{ d.title }}</h1>
+
+      <ng-container *ngFor="let block of d.blocks">
+        <p class="page__lead" *ngIf="block.type === 'lead'">
+          <ng-container *ngFor="let seg of block.segments">
+            <strong *ngIf="seg.strong">{{ seg.text }}</strong>
+            <ng-container *ngIf="!seg.strong">{{ seg.text }}</ng-container>
+          </ng-container>
+        </p>
+
+        <p class="page__paragraph" *ngIf="block.type === 'paragraph'">{{ block.text }}</p>
+
+        <h2 class="page__display" *ngIf="block.type === 'display'">{{ block.text }}</h2>
+
+        <blockquote class="page__quote" *ngIf="block.type === 'quote'">
+          <span class="page__quote-mark" aria-hidden="true">&rdquo;&rdquo;</span>
+          <p>{{ block.text }}</p>
+        </blockquote>
+      </ng-container>
+    </article>
+
+    <app-content-sidebar
+      [categories]="d.categories"
+      [recentPosts]="d.recentPosts"
+      [extras]="d.extras"
+    ></app-content-sidebar>
+  </div>
+</ng-container>

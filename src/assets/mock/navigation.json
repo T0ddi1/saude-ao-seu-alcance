@@ -1,0 +1,45 @@
+[
+  {
+    "label": "Para uma vida melhor",
+    "href": "#",
+    "columns": [
+      {
+        "title": "Cuidados com a Saúde",
+        "items": [
+          { "label": "Cuidados com a Saúde", "href": "/blog" },
+          { "label": "Hábitos Saudáveis", "href": "/habitos-saudaveis" },
+          { "label": "Nutrição", "href": "/nutricao" }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "Observatório",
+    "href": "#",
+    "columns": [
+      {
+        "title": "O Sistema de Saúde",
+        "items": [
+          { "label": "Saúde Corporativa", "href": "/saude-corporativa" },
+          { "label": "Mercado de saúde", "href": "/mercado-de-saude" },
+          { "label": "Dados da saúde", "href": "/dados-da-saude" }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "Conteúdos",
+    "href": "#",
+    "columns": [
+      {
+        "title": "Conteúdos",
+        "items": [
+          { "label": "Inovação em Saúde", "href": "/inovacao" },
+          { "label": "Entrevistas", "href": "/entrevistas" },
+          { "label": "Vídeos", "href": "/videos" },
+          { "label": "Linha Editorial", "href": "/linha-editorial" }
+        ]
+      }
+    ]
+  }
+]

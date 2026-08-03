@@ -1,0 +1,71 @@
+.trending {
+  background: var(--color-primary);
+  border-radius: var(--radius-l);
+  padding: 28px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 320px;
+}
+
+.trending__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.trending__head h2 {
+  color: #fff;
+  font-size: var(--fs-h4);
+}
+
+.trending__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.trending__item {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+}
+.trending__item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.trending__rank {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--fs-h4);
+  color: var(--color-secondary);
+  flex-shrink: 0;
+}
+
+.trending__item a {
+  color: #fff;
+  font-size: var(--fs-body-s);
+  line-height: 1.4;
+}
+.trending__item a:hover {
+  color: var(--color-secondary);
+}
+
+.trending__all {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-end;
+  color: #fff;
+  font-weight: 600;
+  font-size: var(--fs-body-s);
+}
+.trending__all:hover {
+  color: var(--color-secondary);
+}

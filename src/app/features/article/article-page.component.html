@@ -1,0 +1,35 @@
+<ng-container *ngIf="data() as d">
+  <app-breadcrumb [items]="d.breadcrumbs"></app-breadcrumb>
+
+  <div class="article">
+    <article class="article__main">
+      <h1 class="article__title">{{ d.title }}</h1>
+      <p class="article__subtitle">{{ d.subtitle }}</p>
+
+      <div class="article__meta">
+        <span>{{ d.date }}</span>
+        <span>Por: <strong>{{ d.author }}</strong></span>
+        <span class="article__share">
+          Compartilhar:
+          <a *ngFor="let s of d.shareLinks" [href]="s.href" [attr.aria-label]="s.label" class="article__share-btn">
+            <app-icon [name]="s.icon" [size]="14" color="#fff"></app-icon>
+          </a>
+        </span>
+      </div>
+
+      <div class="article__hero" *ngIf="d.heroImage">
+        <img [src]="d.heroImage" [alt]="d.title" />
+      </div>
+
+      <p class="article__paragraph" *ngFor="let p of d.paragraphs">{{ p }}</p>
+
+      <app-comment-section [comments]="d.comments"></app-comment-section>
+    </article>
+
+    <app-content-sidebar
+      [categories]="d.categories"
+      [recentPosts]="d.recentPosts"
+      [extras]="d.extras"
+    ></app-content-sidebar>
+  </div>
+</ng-container>

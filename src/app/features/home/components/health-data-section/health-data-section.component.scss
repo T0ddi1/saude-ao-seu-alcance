@@ -1,0 +1,119 @@
+.health-data {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr 1.4fr;
+  gap: 32px;
+  align-items: start;
+  padding: 48px 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.health-data__intro {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.health-data__map {
+  width: 96px;
+  height: 96px;
+}
+.health-data__map img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.health-data__intro h2 {
+  font-size: var(--fs-h2);
+  line-height: 1.15;
+}
+
+.health-data__stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.health-data__categories {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.health-data__category {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.health-data__category-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.health-data__category-media {
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-m);
+  overflow: hidden;
+  border: 1.5px solid var(--color-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8px;
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 11px;
+  color: var(--color-muted);
+  background-image: repeating-linear-gradient(135deg, var(--color-primary-tint), var(--color-primary-tint) 10px, #fff 10px, #fff 20px);
+}
+.health-data__category-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.health-data__category h3 {
+  font-size: var(--fs-h4);
+}
+.health-data__category p {
+  font-size: var(--fs-body-s);
+}
+
+.health-data__category-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: var(--fs-body-s);
+  margin-top: 4px;
+  padding-bottom: 4px;
+  border-bottom: 1.5px solid var(--color-primary);
+}
+.health-data__category-arrow {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-primary);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 1100px) {
+  .health-data {
+    grid-template-columns: 1fr;
+  }
+  .health-data__categories {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .health-data__categories {
+    grid-template-columns: 1fr;
+  }
+}

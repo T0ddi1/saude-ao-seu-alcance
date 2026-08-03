@@ -1,0 +1,83 @@
+:host {
+  display: block;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 40px var(--gutter);
+}
+
+.page {
+  display: grid;
+  grid-template-columns: 2.4fr 1fr;
+  gap: 56px;
+  align-items: start;
+}
+
+.page__title {
+  font-size: var(--fs-h1);
+  margin-bottom: 28px;
+}
+
+.page__main {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.page__lead {
+  font-family: var(--font-heading);
+  font-size: var(--fs-h2);
+  line-height: 1.35;
+  color: var(--color-primary);
+  font-weight: 400;
+}
+.page__lead strong {
+  font-weight: 700;
+}
+
+.page__paragraph {
+  font-size: var(--fs-body-m);
+  line-height: 1.6;
+}
+
+.page__display {
+  font-size: 64px;
+  line-height: 1.05;
+  font-weight: 700;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin: 12px 0;
+}
+
+.page__quote {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  background: var(--color-surface-alt);
+  border-radius: var(--radius-m);
+  padding: 28px;
+  margin: 0;
+}
+.page__quote-mark {
+  font-family: var(--font-heading);
+  font-size: 40px;
+  font-weight: 700;
+  color: var(--color-secondary);
+  line-height: 1;
+}
+.page__quote p {
+  font-size: var(--fs-body-m);
+  font-style: italic;
+  color: var(--color-body-text);
+  line-height: 1.6;
+}
+
+@media (max-width: 1000px) {
+  .page {
+    grid-template-columns: 1fr;
+  }
+  .page__display {
+    font-size: 44px;
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "featuredArticle": {
+    "eyebrow": "ARTIGO EM DESTAQUE",
+    "title": "Prevenção hoje, qualidade de vida amanhã",
+    "excerpt": "Pequenas escolhas diárias podem prevenir doenças, melhorar sua energia e aumentar sua longevidade. Comece agora e colha os benefícios por toda a vida.",
+    "ctaLabel": "Leia o conteúdo",
+    "href": "/artigos/prevencao-hoje-qualidade-de-vida-amanha",
+    "slidesCount": 4,
+    "activeSlide": 3
+  },
+  "trending": [
+    { "rank": 1, "title": "Campanha nacional de vacinação bate recorde de adesão em 2026", "href": "/artigos/trending-1" },
+    { "rank": 2, "title": "Estudo aponta queda na obesidade infantil após programas escolares", "href": "/artigos/trending-2" },
+    { "rank": 3, "title": "Telemedicina já responde por 1 em cada 5 consultas no país", "href": "/artigos/trending-3" },
+    { "rank": 4, "title": "Ministério da Saúde amplia rede de atenção à saúde mental", "href": "/artigos/trending-4" }
+  ],
+  "contentCards": [
+    { "icon": "ring", "title": "Cuidado com a saúde", "image": "assets/images/cuidado-com-a-saude.jpg", "excerpt": "Orientação pública para cuidar de você e de quem você ama.", "linkLabel": "Ver conteúdos", "href": "/blog" },
+    { "icon": "square", "title": "Cuidado Federal", "image": "assets/images/cuidado-com-a-saude.jpg", "excerpt": "Governo lança nova etapa do programa de vacinação e amplia a cobertura em áreas prioritárias.", "linkLabel": "Ler notícia", "href": "/artigos/cuidado-federal", "sponsored": true },
+    { "icon": "cross", "title": "Emergências e Primeiros Cuidados", "image": null, "excerpt": "Saiba como agir em situações de emergência e salvar vidas.", "linkLabel": "Ver conteúdos", "href": "/blog" },
+    { "icon": "ring", "title": "Dasa", "image": "assets/images/outubro-rosa.png", "excerpt": "Laboratórios Dasa promovem campanha nacional de prevenção e reforçam a importância do diagnóstico precoce.", "linkLabel": "Ler notícia", "href": "/artigos/dasa", "sponsored": true },
+    { "icon": "dot", "title": "Hábitos saudáveis", "image": null, "excerpt": "Sono, movimento, equilíbrio mental e bem-estar no dia a dia.", "linkLabel": "Ver conteúdos", "href": "/blog" },
+    { "icon": "square", "title": "Hospital São José", "image": "assets/images/blog-sofa.jpg", "excerpt": "Hospital São José inicia programa de cuidado integrado com foco em prevenção e atendimento humanizado.", "linkLabel": "Ler notícia", "href": "/artigos/hospital-sao-jose", "sponsored": true },
+    { "icon": "ring", "title": "Nutrição", "image": "assets/images/nutricao.jpg", "excerpt": "Alimentação equilibrada para mais saúde, energia e longevidade.", "linkLabel": "Ver conteúdos", "href": "/blog" },
+    { "icon": "square", "title": "PBH", "image": "assets/images/blog-familia-bike.jpg", "excerpt": "Inaugurado novo centro de saúde em BH para ampliar o acesso da população à atenção básica.", "linkLabel": "Ler notícia", "href": "/artigos/pbh", "sponsored": true }
+  ],
+  "healthStats": {
+    "title": "Dados da Saúde no Brasil",
+    "stats": [
+      { "label": "Expectativa de vida", "value": "76,6", "sublabel": "anos (IBGE, 2023)" },
+      { "label": "Mortalidade infantil", "value": "12,4", "sublabel": "por mil nascidos (IBGE, 2023)" },
+      { "label": "Cobertura vacinal", "value": "85%", "sublabel": "crianças até 2 anos (IBGE, 2023)" },
+      { "label": "Cuidar da vida", "value": "9,6%", "sublabel": "do PIB (IBGE, 2022)" }
+    ]
+  },
+  "contentCategories": [
+    { "icon": "doc", "title": "Inovação em Saúde", "description": "Tecnologias, startups e estudos que estão transformando a saúde.", "linkLabel": "Ver conteúdos", "href": "/blog", "image": "assets/images/inovacao.png" },
+    { "icon": "mic", "title": "Entrevistas", "description": "Especialistas compartilham conhecimento e experiências.", "linkLabel": "Ver entrevistas", "href": "/blog", "image": "assets/images/entrevistas.jpg" },
+    { "icon": "play", "title": "Vídeos", "description": "Conteúdos em vídeo com informação confiável e essencial.", "linkLabel": "Ver vídeos", "href": "/blog", "image": "assets/images/skyline.jpg" }
+  ],
+  "sponsored": [
+    { "kind": "ad", "eyebrow": "PUBLICIDADE", "title": "Soluções completas para uma saúde mais eficiente.", "description": "Tecnologia e profissionalidade integrada para o sucesso em um mundo da saúde.", "ctaLabel": "Saiba mais", "href": "#", "image": "assets/images/solucoes-saude.png", "theme": "light" },
+    { "kind": "sponsored", "eyebrow": "CONTEÚDO PATROCINADO", "title": "Eficiência e estratégia para a transformação do setor de saúde.", "description": "Conteúdo, tecnologia e gestão inteligente que impulsionam resultados sustentáveis.", "ctaLabel": "Leia o artigo", "href": "/artigos/eficiencia-setor-saude", "image": null, "theme": "dark" },
+    { "kind": "sponsorship", "eyebrow": "PATROCÍNIO", "title": "Medicamentos de qualidade para cuidar de você todos os dias.", "description": "", "ctaLabel": "Saiba mais", "href": "/artigos/medicamentos-qualidade", "image": null, "theme": "brand" }
+  ],
+  "trustBadges": [
+    { "icon": "ring", "label": "Fontes nativas integradas ao conteúdo" },
+    { "icon": "dot", "label": "Audiência qualificada e engajada" },
+    { "icon": "square", "label": "Ambiente seguro e confiável" },
+    { "icon": "cross", "label": "Métricas e performance transparentes" },
+    { "icon": "ring", "label": "Conexão com marcas que fazem a diferença" }
+  ]
+}

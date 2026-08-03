@@ -1,0 +1,9 @@
+<nav class="breadcrumb" aria-label="Trilha de navegação">
+  <ng-container *ngFor="let item of items; let last = last; let i = index">
+    <span class="breadcrumb__chevron" *ngIf="i > 0">
+      <app-icon name="arrow-right" [size]="12" color="var(--color-muted)"></app-icon>
+    </span>
+    <a *ngIf="!last" [href]="item.href">{{ item.label | uppercase }}</a>
+    <span *ngIf="last" class="breadcrumb__current">{{ item.label | uppercase }}</span>
+  </ng-container>
+</nav>

@@ -1,0 +1,6 @@
+<a *ngIf="href" [href]="href" class="btn" [ngClass]="variant">
+  <ng-content></ng-content>
+</a>
+<button *ngIf="!href" [type]="type" class="btn" [ngClass]="variant">
+  <ng-content></ng-content>
+</button>

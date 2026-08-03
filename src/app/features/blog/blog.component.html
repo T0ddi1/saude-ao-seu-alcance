@@ -1,0 +1,25 @@
+<ng-container *ngIf="data() as d">
+  <app-breadcrumb [items]="d.breadcrumbs"></app-breadcrumb>
+
+  <div class="blog">
+    <div class="blog__main">
+      <h1 class="blog__title">{{ d.pageTitle }}</h1>
+
+      <div class="blog__grid">
+        <app-article-card *ngFor="let article of d.articles" [article]="article"></app-article-card>
+      </div>
+
+      <app-pagination
+        [current]="d.pagination.current"
+        [total]="d.pagination.total"
+        (pageChange)="onPageChange($event)"
+      ></app-pagination>
+    </div>
+
+    <app-content-sidebar
+      [categories]="d.categories"
+      [recentPosts]="d.recentPosts"
+      [extras]="d.extras"
+    ></app-content-sidebar>
+  </div>
+</ng-container>

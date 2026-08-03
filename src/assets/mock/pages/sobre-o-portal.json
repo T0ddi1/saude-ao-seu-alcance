@@ -1,0 +1,31 @@
+{
+  "breadcrumbs": [
+    { "label": "Home", "href": "/" },
+    { "label": "Sobre o Portal", "href": "/sobre-o-portal" }
+  ],
+  "title": "Sobre o Portal",
+  "blocks": [
+    { "type": "paragraph", "text": "O Portal Saúde ao Seu Alcance é um ecossistema editorial de saúde e um hub de conteúdo qualificado. Afastando-se dos modelos tradicionais de portais comerciais ou de vendas, a nossa plataforma nasceu com a missão de democratizar o conhecimento, oferecendo dados fiáveis sobre prevenção, saúde mental, inovações tecnológicas e tendências de mercado. Acreditamos que o acesso a informação clara e responsável é o primeiro passo para uma vida mais saudável e bem orientada." },
+    { "type": "paragraph", "text": "Para materializar este propósito, funcionamos como uma base editorial multicanal, projetada para acompanhar o utilizador em qualquer momento do seu dia. O nosso conteúdo dinâmico ganha vida através de publicações, podcasts, newsletters, vídeos e presença constante nas redes sociais. Cobrimos desde os cuidados diários de bem-estar e nutrição até aos movimentos complexos do sistema de saúde, atuando de forma ativa como um observatório do mercado e garantindo que a literacia em saúde se torna uma realidade." },
+    { "type": "display", "text": "Saúde & Bem-Estar" },
+    { "type": "quote", "text": "A nossa própria identidade visual reflete o nosso compromisso inabalável com a integração e o cuidado contínuo. O nosso ícone representativo, um \"S\" estilizado formado por linhas curvas e elos entrelaçados, simboliza a união de todo o ecossistema e o fator humano." },
+    { "type": "paragraph", "text": "Esta abordagem conceptual estende-se diretamente à nossa comunicação, que procura um equilíbrio vital: utilizar uma linguagem empática, humanizada e de utilidade pública para a população geral, mantendo, em simultâneo, a densidade técnica exigida para dialogar de igual para igual com médicos, gestores e especialistas do setor." },
+    { "type": "paragraph", "text": "Em última análise, o Portal Saúde ao Seu Alcance não mede o seu impacto ou sucesso através de vendas diretas ou conversões comerciais. A nossa estratégia fundacional reside na geração de valor contínuo e na edificação de uma audiência própria, recorrente e altamente qualificada, sempre sustentada por uma independência editorial percebida." },
+    { "type": "paragraph", "text": "O nosso compromisso é consolidarmo-nos como a sua fonte de referência mais segura, colocando a informação, o acolhimento e a excelência, de facto, ao seu alcance." }
+  ],
+  "categories": [
+    { "label": "Cuidados com a saúde", "count": 35, "href": "/blog", "active": false },
+    { "label": "Cuidado Federal", "count": 9, "href": "/blog/cuidado-federal", "active": false },
+    { "label": "Emergências e Primeiros Cuidados", "count": 16, "href": "/blog/emergencias", "active": false },
+    { "label": "Hábitos Saudáveis", "count": 104, "href": "/blog/habitos-saudaveis", "active": false }
+  ],
+  "recentPosts": [
+    { "date": "01/07/2027", "excerpt": "Saiba como agir em situações de emergência e salvar vidas.", "href": "/artigos/recente-1" },
+    { "date": "01/07/2027", "excerpt": "Saiba como agir em situações de emergência e salvar vidas.", "href": "/artigos/recente-2" },
+    { "date": "01/07/2027", "excerpt": "Saiba como agir em situações de emergência e salvar vidas.", "href": "/artigos/recente-3" }
+  ],
+  "extras": [
+    { "kind": "ad", "title": "Medicamentos de qualidade para cuidar de você todos os dias.", "ctaLabel": "Saiba mais", "href": "/artigos/medicamentos-qualidade" },
+    { "kind": "sponsor", "icon": "ring", "title": "Dasa", "image": "assets/images/outubro-rosa.png", "description": "Laboratórios Dasa promovem campanha nacional de prevenção e reforçam a importância do diagnóstico precoce.", "linkLabel": "Ler notícia", "href": "/artigos/dasa" }
+  ]
+}

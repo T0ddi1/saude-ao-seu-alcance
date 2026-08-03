@@ -1,0 +1,23 @@
+<a class="card" [class.card--sponsored]="card.sponsored" [href]="card.href">
+  <header class="card__head">
+    <app-icon [name]="card.icon" [size]="22" color="var(--color-primary)"></app-icon>
+    <h3 class="card__title">{{ card.title }}</h3>
+    <span class="card__badge" *ngIf="card.sponsored">Patrocinado</span>
+  </header>
+
+  <div class="card__media" *ngIf="card.image; else placeholder">
+    <img [src]="card.image" [alt]="card.title" loading="lazy" />
+  </div>
+  <ng-template #placeholder>
+    <div class="card__media card__media--placeholder">
+      <span>foto: {{ card.title | lowercase }}</span>
+    </div>
+  </ng-template>
+
+  <p class="card__excerpt">{{ card.excerpt }}</p>
+
+  <span class="card__link">
+    {{ card.linkLabel }}
+    <app-icon name="arrow-right" [size]="16"></app-icon>
+  </span>
+</a>

@@ -1,0 +1,156 @@
+:host {
+  display: block;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 40px var(--gutter) 80px;
+}
+
+.auth {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.auth__card {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  text-align: center;
+  gap: 16px;
+}
+
+.auth__card h1 {
+  font-size: var(--fs-h2);
+  color: var(--color-primary);
+}
+
+.auth__subtitle {
+  font-size: var(--fs-body-m);
+  color: var(--color-body-text);
+  margin-bottom: 8px;
+}
+
+.auth__social {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 14px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--color-border-strong);
+  background: #fff;
+  font-weight: 600;
+  font-size: var(--fs-body-m);
+  cursor: pointer;
+}
+.auth__social:hover {
+  border-color: var(--color-primary);
+}
+
+.auth__social-mark {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+  color: #fff;
+}
+.auth__social-mark--google {
+  background: #4285f4;
+}
+.auth__social-mark--facebook {
+  background: #1877f2;
+}
+
+.auth__divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--color-muted);
+  font-size: var(--fs-body-s);
+}
+.auth__divider::before,
+.auth__divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--color-border);
+}
+
+.auth__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
+}
+
+.auth__field {
+  display: block;
+}
+.auth__field input {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--color-border);
+  background: var(--color-surface-alt);
+  font-size: var(--fs-body-s);
+}
+.auth__field input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.auth__field--password {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.auth__field--password input {
+  flex: 1;
+}
+.auth__toggle {
+  position: absolute;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: var(--fs-label-s);
+  font-weight: 700;
+  color: var(--color-muted);
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.auth__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: var(--fs-body-s);
+}
+.auth__checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.auth__error {
+  color: #c0392b;
+  font-size: var(--fs-body-s);
+  font-weight: 600;
+}
+
+.auth__footnote {
+  font-size: var(--fs-body-s);
+  color: var(--color-muted);
+}
+
+::ng-deep .auth__form app-button .btn {
+  width: 100%;
+  justify-content: center;
+  padding: 14px;
+}
+

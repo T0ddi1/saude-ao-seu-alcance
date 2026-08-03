@@ -1,0 +1,17 @@
+<section class="hero">
+  <p class="hero__eyebrow">{{ article.eyebrow }}</p>
+  <a class="hero__link" [href]="article.href">
+    <h1 class="hero__title">{{ article.title }}</h1>
+    <p class="hero__excerpt">{{ article.excerpt }}</p>
+  </a>
+  <div class="hero__row">
+    <app-button variant="primary" [href]="article.href">{{ article.ctaLabel }}</app-button>
+    <div class="hero__dots">
+      <span
+        class="hero__dot"
+        *ngFor="let s of slides(); let i = index"
+        [class.is-active]="i === article.activeSlide"
+      ></span>
+    </div>
+  </div>
+</section>

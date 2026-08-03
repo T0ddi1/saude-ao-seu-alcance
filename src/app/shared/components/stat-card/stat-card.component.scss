@@ -1,0 +1,38 @@
+.stat {
+  border-radius: var(--radius-m);
+  padding: 20px;
+  border: 1.5px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat__label {
+  font-size: var(--fs-label-m);
+  font-weight: 600;
+  color: var(--color-body-text);
+}
+
+.stat__value {
+  font-family: var(--font-heading);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.stat__sublabel {
+  font-size: var(--fs-label-s);
+  color: var(--color-muted);
+}
+
+.stat--filled {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+.stat--filled .stat__label,
+.stat--filled .stat__sublabel {
+  color: rgba(255, 255, 255, 0.8);
+}
+.stat--filled .stat__value {
+  color: #fff;
+}

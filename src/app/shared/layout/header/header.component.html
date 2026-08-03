@@ -1,0 +1,44 @@
+<header class="header">
+  <div class="header__bar">
+    <a class="header__logo" routerLink="/" aria-label="Saúde ao Seu Alcance — página inicial">
+      <span class="header__logo-line">saúde</span>
+      <span class="header__logo-line header__logo-line--accent">ao seu alcance</span>
+    </a>
+
+    <nav class="header__nav">
+      <div class="header__nav-item" *ngFor="let item of navItems(); let i = index">
+        <button
+          type="button"
+          class="header__nav-trigger"
+          (click)="toggleMenu(i, $event)"
+          [class.is-open]="openIndex() === i"
+          [attr.aria-expanded]="openIndex() === i"
+        >
+          {{ item.label }}
+          <app-icon name="chevron-down" [size]="14"></app-icon>
+        </button>
+
+        <div class="header__mega" *ngIf="openIndex() === i && item.columns?.length">
+          <div class="header__mega-col" *ngFor="let col of item.columns">
+            <h4>{{ col.title }}</h4>
+            <a *ngFor="let link of col.items" [href]="link.href">{{ link.label }}</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="header__actions">
+      <label class="header__search">
+        <app-icon name="search" [size]="16" color="var(--color-muted)"></app-icon>
+        <input type="search" placeholder="Buscar" aria-label="Buscar no portal" />
+      </label>
+      <button type="button" class="header__icon-btn" aria-label="Favoritos">
+        <app-icon name="bookmark" [size]="18"></app-icon>
+      </button>
+      <a class="header__login" routerLink="/cadastre-se">
+        <app-icon name="user" [size]="16"></app-icon>
+        Entrar
+      </a>
+    </div>
+  </div>
+</header>

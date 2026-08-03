@@ -1,0 +1,34 @@
+<footer class="footer" *ngIf="data() as d">
+  <div class="footer__top">
+    <div class="footer__brand">
+      <p class="footer__logo">saúde <span>ao seu alcance</span></p>
+      <h3>{{ d.newsletter.title }}</h3>
+      <p class="footer__desc">{{ d.newsletter.description }}</p>
+      <app-newsletter-form [placeholder]="d.newsletter.placeholder" [ctaLabel]="d.newsletter.ctaLabel"></app-newsletter-form>
+    </div>
+
+    <div class="footer__columns">
+      <div class="footer__col" *ngFor="let col of d.columns">
+        <h4>{{ col.title }}</h4>
+        <a *ngFor="let link of col.links" [href]="link.href">{{ link.label }}</a>
+      </div>
+    </div>
+
+    <div class="footer__social">
+      <a *ngFor="let s of d.social" [href]="s.href" class="footer__social-btn" [attr.aria-label]="s.label">
+        <app-icon [name]="s.icon" [size]="16" color="#fff"></app-icon>
+      </a>
+    </div>
+  </div>
+
+  <div class="footer__projects">
+    <h4>Projetos especiais</h4>
+    <div class="footer__projects-grid">
+      <a class="footer__project" *ngFor="let p of d.specialProjects" [href]="p.href">
+        <app-icon [name]="p.icon" [size]="20" color="var(--color-secondary)"></app-icon>
+        <span class="footer__project-title">{{ p.title }}</span>
+        <span class="footer__project-desc">{{ p.description }}</span>
+      </a>
+    </div>
+  </div>
+</footer>

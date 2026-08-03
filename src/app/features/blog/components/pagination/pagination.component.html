@@ -1,0 +1,19 @@
+<nav class="pagination" aria-label="Paginação de artigos">
+  <button type="button" class="pagination__side" (click)="go(current - 1)" [disabled]="current === 1">
+    Anterior <span aria-hidden="true">←</span>
+  </button>
+
+  <button
+    type="button"
+    class="pagination__page"
+    *ngFor="let p of pages()"
+    [class.is-active]="p === current"
+    (click)="go(p)"
+  >
+    {{ p < 10 ? '0' + p : p }}
+  </button>
+
+  <button type="button" class="pagination__side" (click)="go(current + 1)" [disabled]="current === total">
+    <span aria-hidden="true">→</span> Próximo
+  </button>
+</nav>
