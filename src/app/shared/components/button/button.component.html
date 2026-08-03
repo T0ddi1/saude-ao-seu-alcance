@@ -1,6 +1,7 @@
+<ng-template #label><ng-content></ng-content></ng-template>
 <a *ngIf="href" [href]="href" class="btn" [ngClass]="variant">
-  <ng-content></ng-content>
+  <ng-container *ngTemplateOutlet="label"></ng-container>
 </a>
 <button *ngIf="!href" [type]="type" class="btn" [ngClass]="variant">
-  <ng-content></ng-content>
+  <ng-container *ngTemplateOutlet="label"></ng-container>
 </button>

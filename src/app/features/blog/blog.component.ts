@@ -24,6 +24,7 @@ export class BlogComponent implements OnInit {
   }
 
   onPageChange(page: number): void {
+    // TODO: once the real API paginates, refetch with the new page here
     this.data.update((d) => (d ? { ...d, pagination: { ...d.pagination, current: page } } : d));
   }
 }

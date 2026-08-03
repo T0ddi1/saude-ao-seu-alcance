@@ -35,6 +35,7 @@ export class CreateAccountComponent {
     }
     this.error.set(null);
     this.submitting.set(true);
+    // TODO: replace with a real auth API call (e.g. this.authService.login(...))
     setTimeout(() => this.submitting.set(false), 800);
   }
 }

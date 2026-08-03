@@ -21,6 +21,7 @@ export class NewsletterFormComponent {
     if (!this.email.includes('@')) {
       return;
     }
+    // TODO: replace with a real subscribe API call once available
     this.submitted.set(true);
   }
 }

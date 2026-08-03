@@ -24,6 +24,7 @@ export class CommentSectionComponent {
     if (!this.name || !this.email || !this.message) {
       return;
     }
+    // TODO: POST to the real comments endpoint once available
     this.comments = [{ name: this.name, date: 'Agora', text: this.message }, ...this.comments];
     this.name = '';
     this.email = '';
