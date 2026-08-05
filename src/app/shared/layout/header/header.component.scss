@@ -15,15 +15,30 @@
 
 .header__logo {
   display: flex;
-  flex-direction: column;
-  line-height: 1.05;
+  align-items: center;
+  gap: 10px;
+  line-height: 1.15;
   font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: 20px;
+  font-size: 22px;
   color: #fff;
   flex-shrink: 0;
 }
-.header__logo-line--accent {
+.header__logo-mark {
+  width: 30px;
+  height: 31px;
+  flex-shrink: 0;
+}
+.header__logo-text {
+  display: flex;
+  flex-direction: column;
+}
+.header__logo-line strong {
+  font-weight: 700;
+}
+.header__logo-line em {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.7em;
   color: var(--color-secondary);
 }
 .header__logo:hover {
@@ -142,6 +157,18 @@
 .header__login:hover {
   background: var(--color-secondary);
   color: var(--color-primary-dark);
+  text-decoration: none;
+}
+
+.header__contact {
+  color: #fff;
+  font-weight: 600;
+  font-size: var(--fs-body-s);
+  padding: 9px 6px;
+  white-space: nowrap;
+}
+.header__contact:hover {
+  color: var(--color-secondary);
   text-decoration: none;
 }
 

@@ -1,14 +1,49 @@
 <section class="sponsored">
   <div class="sponsored__grid">
-    <a class="sponsored__card" *ngFor="let item of items" [ngClass]="'is-' + item.theme" [href]="item.href">
+    <div class="sponsored__slot" *ngFor="let item of items" [style.gridColumn]="'span ' + spanFor(item)">
       <p class="sponsored__eyebrow">{{ item.eyebrow }}</p>
-      <div class="sponsored__media" *ngIf="item.image">
-        <img [src]="item.image" [alt]="item.title" loading="lazy" />
-      </div>
-      <h3>{{ item.title }}</h3>
-      <p class="sponsored__desc" *ngIf="item.description">{{ item.description }}</p>
-      <span class="sponsored__cta">{{ item.ctaLabel }} →</span>
-    </a>
+
+      <a
+        class="sponsored__card"
+        [ngClass]="'is-' + item.theme"
+        [href]="item.href"
+        [attr.target]="item.external ? '_blank' : null"
+        [attr.rel]="item.external ? 'noopener noreferrer' : null"
+      >
+        <ng-container *ngIf="item.theme === 'light'">
+          <div class="sponsored__light-text">
+            <img *ngIf="item.logo" class="sponsored__logo" [src]="item.logo" [alt]="item.title" />
+            <h3>{{ item.title }}</h3>
+            <p class="sponsored__desc" *ngIf="item.description">{{ item.description }}</p>
+            <span class="sponsored__cta">{{ item.ctaLabel }} +</span>
+          </div>
+          <div class="sponsored__light-media" *ngIf="item.image">
+            <img [src]="item.image" [alt]="item.title" loading="lazy" [style.objectPosition]="item.imagePosition || 'center'" />
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="item.theme === 'dark'">
+          <div class="sponsored__media" *ngIf="item.image">
+            <img [src]="item.image" [alt]="item.title" loading="lazy" />
+          </div>
+          <div class="sponsored__content">
+            <h3>{{ item.title }}</h3>
+            <p class="sponsored__desc" *ngIf="item.description">{{ item.description }}</p>
+            <div class="sponsored__footer">
+              <span class="sponsored__cta">{{ item.ctaLabel }} →</span>
+              <span class="sponsored__site" *ngIf="item.siteLabel">{{ item.siteLabel }}</span>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="item.theme === 'brand'">
+          <img *ngIf="item.logo" class="sponsored__logo" [src]="item.logo" [alt]="item.title" />
+          <h3>{{ item.title }}</h3>
+          <p class="sponsored__desc" *ngIf="item.description">{{ item.description }}</p>
+          <span class="sponsored__cta">{{ item.ctaLabel }} [+]</span>
+        </ng-container>
+      </a>
+    </div>
   </div>
 
   <div class="sponsored__badges">

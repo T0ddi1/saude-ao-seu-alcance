@@ -49,7 +49,12 @@ export interface SponsoredItem {
   ctaLabel: string;
   href: string;
   image: string | null;
+  imagePosition?: string;
   theme: 'light' | 'dark' | 'brand';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  logo?: string | null;
+  siteLabel?: string | null;
+  external?: boolean;
 }
 
 export interface TrustBadge {

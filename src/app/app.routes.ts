@@ -42,5 +42,10 @@ export const routes: Routes = [
     loadComponent: () => import('./features/article/article-page.component').then((m) => m.ArticlePageComponent),
     title: 'Artigo — Saúde ao Seu Alcance',
   },
+  {
+    path: 'contato',
+    loadComponent: () => import('./features/contact/contact.component').then((m) => m.ContactComponent),
+    title: 'Contato — Saúde ao Seu Alcance',
+  },
   { path: '**', redirectTo: '' },
 ];

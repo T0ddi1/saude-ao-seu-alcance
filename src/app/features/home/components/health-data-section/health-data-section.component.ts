@@ -1,13 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StatCardComponent } from '../../../../shared/components/stat-card/stat-card.component';
 import { IconComponent } from '../../../../shared/components/icon/icon.component';
 import { HomePageData } from '../../../../core/models/home.model';
 
 @Component({
   selector: 'app-health-data-section',
   standalone: true,
-  imports: [CommonModule, StatCardComponent, IconComponent],
+  imports: [CommonModule, IconComponent],
   templateUrl: './health-data-section.component.html',
   styleUrl: './health-data-section.component.scss',
 })

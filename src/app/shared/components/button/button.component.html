@@ -1,4 +1,9 @@
-<ng-template #label><ng-content></ng-content></ng-template>
+<ng-template #label>
+  <ng-content></ng-content>
+  <span class="btn__arrow" *ngIf="showArrow">
+    <app-icon name="arrow-right" [size]="12" color="var(--color-primary)"></app-icon>
+  </span>
+</ng-template>
 <a *ngIf="href" [href]="href" class="btn" [ngClass]="variant">
   <ng-container *ngTemplateOutlet="label"></ng-container>
 </a>

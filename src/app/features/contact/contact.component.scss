@@ -1,0 +1,41 @@
+:host {
+  display: block;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 40px var(--gutter) 80px;
+}
+
+.contact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.contact__intro {
+  text-align: center;
+  max-width: 560px;
+}
+.contact__intro h1 {
+  font-size: var(--fs-h1);
+  margin-bottom: 12px;
+}
+.contact__intro p {
+  font-size: var(--fs-body-m);
+  color: var(--color-body-text);
+}
+
+.contact__form-wrap {
+  width: 100%;
+  max-width: 660px;
+  border-radius: var(--radius-m);
+  overflow: hidden;
+  box-shadow: var(--shadow-s);
+}
+
+.contact__form-wrap iframe {
+  width: 100%;
+  height: 858px;
+  border: none;
+  display: block;
+}

@@ -24,6 +24,17 @@
   text-decoration: none;
 }
 
+.btn__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  flex-shrink: 0;
+}
+
 .outline {
   background: transparent;
   border-color: var(--color-border-strong);

@@ -1,8 +1,11 @@
 <header class="header">
   <div class="header__bar">
     <a class="header__logo" routerLink="/" aria-label="Saúde ao Seu Alcance — página inicial">
-      <span class="header__logo-line">saúde</span>
-      <span class="header__logo-line header__logo-line--accent">ao seu alcance</span>
+      <img class="header__logo-mark" src="assets/images/logo-mark.svg" alt="" aria-hidden="true" />
+      <span class="header__logo-text">
+        <span class="header__logo-line"><strong>saúde</strong> <em>ao</em></span>
+        <span class="header__logo-line"><strong>seu alcance</strong></span>
+      </span>
     </a>
 
     <nav class="header__nav">
@@ -39,6 +42,7 @@
         <app-icon name="user" [size]="16"></app-icon>
         Entrar
       </a>
+      <a class="header__contact" routerLink="/contato">Contato</a>
     </div>
   </div>
 </header>

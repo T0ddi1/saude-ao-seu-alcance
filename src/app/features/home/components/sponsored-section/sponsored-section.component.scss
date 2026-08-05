@@ -7,40 +7,15 @@
 
 .sponsored__grid {
   display: grid;
-  grid-template-columns: 1.3fr 1fr 1fr;
+  grid-template-columns: repeat(6, 1fr);
   gap: 20px;
 }
 
-.sponsored__card {
-  border-radius: var(--radius-m);
-  padding: 24px;
+.sponsored__slot {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  color: inherit;
-  transition: box-shadow 0.15s ease, transform 0.15s ease;
-}
-.sponsored__card:hover {
-  text-decoration: none;
-  box-shadow: var(--shadow-m);
-  transform: translateY(-2px);
-}
-.sponsored__card.is-light {
-  background: var(--color-surface-alt);
-}
-.sponsored__card.is-dark {
-  background: #1c1c1c;
-  color: #f2f2f2;
-}
-.sponsored__card.is-dark h3 {
-  color: #fff;
-}
-.sponsored__card.is-brand {
-  background: var(--color-info);
-  color: #fff;
-}
-.sponsored__card.is-brand h3 {
-  color: #fff;
+  gap: 10px;
+  min-width: 0;
 }
 
 .sponsored__eyebrow {
@@ -48,18 +23,110 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  opacity: 0.7;
+  color: var(--color-muted);
 }
 
-.sponsored__media {
-  border-radius: var(--radius-s);
+.sponsored__card {
+  position: relative;
+  border-radius: var(--radius-m);
+  color: inherit;
   overflow: hidden;
-  aspect-ratio: 16 / 9;
+  min-height: 220px;
+  flex: 1;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+  display: flex;
+}
+.sponsored__card:hover {
+  text-decoration: none;
+  box-shadow: var(--shadow-m);
+  transform: translateY(-2px);
+}
+
+/* light (Onmed): text left, photo right */
+.sponsored__card.is-light {
+  background: var(--color-surface-alt);
+  align-items: stretch;
+}
+.sponsored__light-text {
+  flex: 1.3;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+}
+.sponsored__light-media {
+  flex: 1;
+  min-width: 120px;
+}
+.sponsored__light-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.is-light h3 {
+  color: var(--color-primary);
+}
+
+/* dark (Tessera): full-bleed photo + overlay */
+.sponsored__card.is-dark {
+  color: #fff;
+  align-items: flex-end;
+  padding: 24px;
+}
+.sponsored__media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
 }
 .sponsored__media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+.sponsored__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10, 12, 20, 0.1) 0%, rgba(6, 8, 14, 0.9) 100%);
+}
+.sponsored__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+/* brand (Gama): solid color, centered */
+.sponsored__card.is-brand {
+  background: var(--color-info);
+  color: #fff;
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 24px;
+}
+.is-brand h3 {
+  color: #fff;
+}
+
+.sponsored__logo {
+  height: 26px;
+  width: auto;
+  object-fit: contain;
+  align-self: flex-start;
+  /* logo source files ship with a baked-in white background — multiply blends it into the card */
+  mix-blend-mode: multiply;
+}
+.is-brand .sponsored__logo {
+  align-self: center;
+  height: 34px;
+  /* gama's logo ships with a baked-in dark background — screen blends it into the brand card */
+  mix-blend-mode: screen;
 }
 
 .sponsored__card h3 {
@@ -72,10 +139,26 @@
   opacity: 0.85;
 }
 
+.sponsored__footer {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
 .sponsored__cta {
   font-weight: 700;
   font-size: var(--fs-body-s);
-  margin-top: 8px;
+}
+.is-light .sponsored__cta {
+  color: var(--color-primary);
+}
+
+.sponsored__site {
+  font-size: var(--fs-label-s);
+  opacity: 0.75;
 }
 
 .sponsored__badges {
@@ -96,8 +179,8 @@
 }
 
 @media (max-width: 900px) {
-  .sponsored__grid {
-    grid-template-columns: 1fr;
+  .sponsored__slot {
+    grid-column: 1 / -1 !important;
   }
   .sponsored__badges {
     grid-template-columns: repeat(2, 1fr);

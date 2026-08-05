@@ -39,9 +39,9 @@
     { "icon": "play", "title": "Vídeos", "description": "Conteúdos em vídeo com informação confiável e essencial.", "linkLabel": "Ver vídeos", "href": "/blog", "image": "assets/images/skyline.jpg" }
   ],
   "sponsored": [
-    { "kind": "ad", "eyebrow": "PUBLICIDADE", "title": "Soluções completas para uma saúde mais eficiente.", "description": "Tecnologia e profissionalidade integrada para o sucesso em um mundo da saúde.", "ctaLabel": "Saiba mais", "href": "#", "image": "assets/images/solucoes-saude.png", "theme": "light" },
-    { "kind": "sponsored", "eyebrow": "CONTEÚDO PATROCINADO", "title": "Eficiência e estratégia para a transformação do setor de saúde.", "description": "Conteúdo, tecnologia e gestão inteligente que impulsionam resultados sustentáveis.", "ctaLabel": "Leia o artigo", "href": "/artigos/eficiencia-setor-saude", "image": null, "theme": "dark" },
-    { "kind": "sponsorship", "eyebrow": "PATROCÍNIO", "title": "Medicamentos de qualidade para cuidar de você todos os dias.", "description": "", "ctaLabel": "Saiba mais", "href": "/artigos/medicamentos-qualidade", "image": null, "theme": "brand" }
+    { "kind": "ad", "eyebrow": "PUBLICIDADE", "title": "Soluções completas para uma saúde mais eficiente.", "description": "Tecnologia e profissionalidade integrada para o sucesso em um mundo da saúde.", "ctaLabel": "Saiba mais", "href": "https://onmedsaude.com.br", "image": "assets/images/solucoes-saude.png", "theme": "light", "size": "lg", "logo": "assets/images/onmed-logo.png", "external": true },
+    { "kind": "sponsored", "eyebrow": "CONTEÚDO PATROCINADO", "title": "Eficiência e estratégia para a transformação do setor de saúde.", "description": "Conteúdo, tecnologia e gestão inteligente que impulsionam resultados sustentáveis.", "ctaLabel": "Leia o artigo", "href": "https://www.tessera-partners.com/pt/index.html", "image": "assets/images/tessera-bg.png", "imagePosition": "center 85%", "theme": "light", "size": "md", "logo": "assets/images/tessera-logo.jpeg", "siteLabel": "www.tessera-partners.com", "external": true },
+    { "kind": "sponsorship", "eyebrow": "PATROCÍNIO", "title": "Medicamentos de qualidade para cuidar de você todos os dias.", "description": "", "ctaLabel": "Saiba mais", "href": "https://gamasaude.com.br", "image": null, "theme": "brand", "size": "sm", "logo": "assets/images/gama-logo.png", "external": true }
   ],
   "trustBadges": [
     { "icon": "ring", "label": "Fontes nativas integradas ao conteúdo" },
