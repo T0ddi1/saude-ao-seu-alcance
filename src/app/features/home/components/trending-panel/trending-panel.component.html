@@ -1,18 +1,18 @@
 <aside class="trending">
   <header class="trending__head">
     <app-icon name="fire" [size]="18" color="#fff"></app-icon>
-    <h2>Em alta</h2>
+    <h2>{{ label() }}</h2>
   </header>
 
   <ol class="trending__list">
-    <li class="trending__item" *ngFor="let item of items">
+    <li class="trending__item" *ngFor="let item of ranked()">
       <span class="trending__rank">{{ item.rank }}</span>
       <a [href]="item.href">{{ item.title }}</a>
     </li>
   </ol>
 
-  <a class="trending__all" href="/em-alta">
-    Ver todos
+  <a class="trending__all" [href]="href()">
+    {{ linkLabel() }}
     <app-icon name="arrow-right" [size]="16" color="#fff"></app-icon>
   </a>
 </aside>

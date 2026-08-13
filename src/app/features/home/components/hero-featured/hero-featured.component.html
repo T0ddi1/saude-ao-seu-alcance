@@ -1,17 +1,38 @@
-<section class="hero">
-  <p class="hero__eyebrow">{{ article.eyebrow }}</p>
-  <a class="hero__link" [href]="article.href">
-    <h1 class="hero__title">{{ article.title }}</h1>
-    <p class="hero__excerpt">{{ article.excerpt }}</p>
+<section
+  class="hero"
+  (mouseenter)="pauseAutoplay()"
+  (mouseleave)="resumeAutoplay()"
+  (touchstart)="onTouchStart($event)"
+  (touchend)="onTouchEnd($event)"
+>
+  <p class="hero__eyebrow">{{ article().eyebrow }}</p>
+  <a class="hero__link" [href]="article().href">
+    <h1 class="hero__title">{{ article().title }}</h1>
+    <p class="hero__excerpt">{{ article().excerpt }}</p>
   </a>
   <div class="hero__row">
-    <app-button variant="primary" [href]="article.href" [showArrow]="true">{{ article.ctaLabel }}</app-button>
-    <div class="hero__dots">
-      <span
-        class="hero__dot"
-        *ngFor="let s of slides(); let i = index"
-        [class.is-active]="i === article.activeSlide"
-      ></span>
+    <app-button variant="primary" [href]="article().href" [showArrow]="true">{{ article().ctaLabel }}</app-button>
+
+    <div class="hero__nav" *ngIf="articles.length > 1">
+      <button type="button" class="hero__arrow" (click)="prev()" aria-label="Slide anterior">
+        <app-icon name="arrow-right" [size]="12" color="var(--color-primary)" style="transform: rotate(180deg)"></app-icon>
+      </button>
+
+      <div class="hero__dots">
+        <button
+          type="button"
+          class="hero__dot"
+          *ngFor="let a of articles; let i = index"
+          [class.is-active]="i === activeIndex()"
+          [attr.aria-current]="i === activeIndex()"
+          [attr.aria-label]="'Ir para o slide ' + (i + 1)"
+          (click)="goTo(i)"
+        ></button>
+      </div>
+
+      <button type="button" class="hero__arrow" (click)="next()" aria-label="Próximo slide">
+        <app-icon name="arrow-right" [size]="12" color="var(--color-primary)"></app-icon>
+      </button>
     </div>
   </div>
 </section>

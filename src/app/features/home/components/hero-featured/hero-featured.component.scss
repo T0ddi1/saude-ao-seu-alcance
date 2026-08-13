@@ -41,8 +41,37 @@
 .hero__row {
   display: flex;
   align-items: center;
-  gap: 24px;
+  flex-wrap: wrap;
+  gap: 16px 24px;
   margin-top: 8px;
+}
+
+@media (max-width: 480px) {
+  .hero__title {
+    letter-spacing: normal;
+  }
+}
+
+.hero__nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero__arrow {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-border-strong);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.hero__arrow:hover {
+  border-color: var(--color-primary);
 }
 
 .hero__dots {
@@ -52,8 +81,11 @@
 .hero__dot {
   width: 8px;
   height: 8px;
+  padding: 0;
+  border: none;
   border-radius: 50%;
   background: var(--color-border-strong);
+  cursor: pointer;
 }
 .hero__dot.is-active {
   background: var(--color-primary);

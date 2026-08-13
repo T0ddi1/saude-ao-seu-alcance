@@ -1,0 +1,158 @@
+{
+  "breadcrumbs": [
+    { "label": "Home", "href": "/" },
+    { "label": "Artigos", "href": "/blog" },
+    { "label": "Cuidados com a Saúde", "href": "/blog" }
+  ],
+  "title": "Viver mais ou viver melhor? O desafio da longevidade saudável no Brasil",
+  "subtitle": "A expectativa de vida aumentou, mas o grande desafio agora é garantir que esses anos extras sejam vividos com autonomia, independência e qualidade de vida.",
+  "date": "05/08/2026",
+  "author": "Dr. Alexandre Pimenta",
+  "authorRole": "Médico – Professor – Escritor – CEO",
+  "shareLinks": [
+    { "icon": "facebook", "href": "#", "label": "Compartilhar no Facebook" },
+    { "icon": "whatsapp", "href": "#", "label": "Compartilhar no WhatsApp" },
+    { "icon": "linkedin", "href": "#", "label": "Compartilhar no LinkedIn" },
+    { "icon": "x", "href": "#", "label": "Compartilhar no X" }
+  ],
+  "heroImage": "assets/images/blog-yoga.jpg",
+  "blocks": [
+    { "type": "paragraph", "text": "Nas últimas décadas, o Brasil conquistou um avanço extraordinário: estamos vivendo mais." },
+    { "type": "paragraph", "text": "Os progressos da medicina, das vacinas, do saneamento básico, dos medicamentos e do acesso aos serviços de saúde fizeram com que a expectativa de vida aumentasse significativamente. No entanto, um estudo recente publicado na revista The Lancet Regional Health – Americas, baseado nos dados do Global Burden of Disease 2023, trouxe um importante alerta: embora estejamos vivendo mais, uma parcela considerável desses anos é vivida com doenças crônicas ou limitações que comprometem a qualidade de vida." },
+    { "type": "quote", "text": "Longevidade não deve ser medida apenas pelo número de anos vividos, mas pela capacidade de viver bem durante esses anos." },
+
+    { "type": "display", "text": "O que significa viver com qualidade?" },
+    { "type": "paragraph", "text": "Quando pensamos em saúde, normalmente imaginamos a ausência de doenças. Mas saúde é muito mais do que isso." },
+    { "type": "paragraph", "text": "Segundo a Organização Mundial da Saúde (OMS), saúde envolve bem-estar físico, mental e social. Significa conseguir trabalhar, caminhar, dormir bem, manter relações familiares, praticar atividades que tragam satisfação e preservar a independência nas tarefas do dia a dia." },
+    { "type": "paragraph", "text": "Em outras palavras, viver mais só faz sentido quando continuamos capazes de aproveitar a vida." },
+    { "type": "paragraph", "text": "O objetivo da medicina moderna deixou de ser apenas aumentar a expectativa de vida. Hoje buscamos ampliar também a expectativa de vida saudável, ou seja, os anos vividos com autonomia, funcionalidade e boa qualidade de vida." },
+
+    { "type": "display", "text": "As doenças que mais roubam qualidade de vida" },
+    { "type": "paragraph", "text": "O Brasil passou por uma importante mudança no perfil das doenças nas últimas décadas." },
+    { "type": "paragraph", "text": "Se antes as infecções eram as principais causas de adoecimento, hoje predominam as chamadas doenças crônicas não transmissíveis, responsáveis por grande parte das limitações que surgem com o envelhecimento." },
+    { "type": "paragraph", "text": "Entre elas destacam-se:" },
+    { "type": "list", "items": [
+      "hipertensão arterial;",
+      "diabetes mellitus;",
+      "obesidade;",
+      "doenças cardiovasculares;",
+      "acidente vascular cerebral (AVC);",
+      "doenças respiratórias crônicas;",
+      "câncer;",
+      "doenças osteoarticulares;",
+      "demências e outras doenças neurodegenerativas."
+    ]},
+    { "type": "paragraph", "text": "O ponto mais preocupante é que muitas dessas condições evoluem silenciosamente durante anos." },
+    { "type": "paragraph", "text": "Pressão alta, colesterol elevado, diabetes e doença renal, por exemplo, frequentemente não provocam sintomas nas fases iniciais. Quando finalmente aparecem sinais clínicos, parte dos danos já pode estar instalada." },
+    { "type": "paragraph", "text": "É exatamente por isso que a prevenção continua sendo uma das ferramentas mais importantes da medicina." },
+
+    { "type": "display", "text": "A saúde não depende de protocolos complexos" },
+    { "type": "paragraph", "text": "Vivemos uma época em que cuidar da saúde parece exigir suplementos, equipamentos tecnológicos, dietas extremamente restritivas e treinos intensos." },
+    { "type": "paragraph", "text": "Mas a ciência mostra que os maiores benefícios continuam vindo de hábitos relativamente simples." },
+    { "type": "paragraph", "text": "Os pilares mais importantes para envelhecer com qualidade permanecem praticamente os mesmos:" },
+    { "type": "list", "items": [
+      "praticar atividade física regularmente;",
+      "manter alimentação equilibrada;",
+      "dormir bem;",
+      "não fumar;",
+      "evitar o consumo excessivo de bebidas alcoólicas;",
+      "controlar pressão arterial, glicemia e colesterol;",
+      "manter peso adequado;",
+      "cuidar da saúde mental;",
+      "preservar vínculos familiares e sociais;",
+      "manter vacinação atualizada;",
+      "realizar consultas preventivas."
+    ]},
+    { "type": "paragraph", "text": "Esses hábitos possuem impacto comprovado na redução da mortalidade e das principais doenças crônicas." },
+    { "type": "paragraph", "text": "Mais importante do que buscar soluções rápidas é construir uma rotina sustentável." },
+
+    { "type": "display", "text": "Exercício é um dos melhores medicamentos" },
+    { "type": "paragraph", "text": "Entre todas as estratégias preventivas disponíveis atualmente, poucas apresentam resultados tão consistentes quanto a atividade física." },
+    { "type": "paragraph", "text": "A Organização Mundial da Saúde recomenda que adultos pratiquem entre 150 e 300 minutos semanais de atividade física moderada, além de exercícios de fortalecimento muscular pelo menos duas vezes por semana." },
+    { "type": "paragraph", "text": "Isso não significa que seja necessário começar frequentando academias diariamente." },
+    { "type": "paragraph", "text": "Pequenas mudanças já fazem diferença:" },
+    { "type": "list", "items": [
+      "caminhar alguns minutos por dia;",
+      "utilizar escadas;",
+      "reduzir o tempo sentado;",
+      "brincar com os filhos ou netos;",
+      "passear com o cachorro;",
+      "realizar atividades domésticas com mais movimento."
+    ]},
+    { "type": "paragraph", "text": "Para pessoas acima dos 60 anos, os exercícios de força ganham importância ainda maior, pois ajudam a preservar massa muscular, equilíbrio, mobilidade e independência, reduzindo significativamente o risco de quedas e fraturas." },
+
+    { "type": "display", "text": "Fazer exames não significa fazer prevenção" },
+    { "type": "paragraph", "text": "Existe um equívoco bastante comum: acreditar que prevenção significa realizar inúmeros exames todos os anos." },
+    { "type": "paragraph", "text": "Na verdade, prevenção é muito mais ampla." },
+    { "type": "paragraph", "text": "Ela começa com uma consulta médica capaz de identificar fatores de risco, orientar mudanças no estilo de vida e definir quais exames realmente fazem sentido para cada pessoa." },
+    { "type": "paragraph", "text": "Hipertensão, diabetes, colesterol elevado, alguns tipos de câncer e doenças renais podem permanecer silenciosos por muitos anos." },
+    { "type": "paragraph", "text": "Detectá-los precocemente permite tratamentos mais simples, menos complicações e melhores resultados." },
+    { "type": "paragraph", "text": "Por isso, o check-up deve ser individualizado." },
+    { "type": "paragraph", "text": "Não existe um pacote único de exames adequado para toda a população." },
+    { "type": "paragraph", "text": "A prevenção de qualidade não consiste em solicitar muitos exames, mas em escolher aqueles que realmente podem modificar o cuidado daquele paciente." },
+
+    { "type": "display", "text": "Nunca é cedo para começar" },
+    { "type": "paragraph", "text": "Muitas pessoas acreditam que precisam começar a cuidar da saúde apenas após os 50 ou 60 anos." },
+    { "type": "paragraph", "text": "Esse talvez seja um dos maiores equívocos." },
+    { "type": "paragraph", "text": "As doenças que aparecem na maturidade frequentemente começam a se desenvolver décadas antes." },
+    { "type": "paragraph", "text": "A obesidade infantil aumenta o risco de diabetes no adulto." },
+    { "type": "paragraph", "text": "O sedentarismo praticado durante muitos anos favorece doenças cardiovasculares." },
+    { "type": "paragraph", "text": "O tabagismo produz danos cumulativos." },
+    { "type": "paragraph", "text": "O excesso de peso sobrecarrega articulações durante décadas." },
+    { "type": "paragraph", "text": "Por isso, o envelhecimento saudável é construído diariamente, muito antes da velhice." },
+
+    { "type": "display", "text": "Pequenas escolhas mudam o futuro" },
+    { "type": "paragraph", "text": "Cuidar da saúde não precisa ser caro nem complicado." },
+    { "type": "paragraph", "text": "Algumas atitudes simples produzem benefícios importantes quando mantidas ao longo dos anos:" },
+    { "type": "list", "items": [
+      "caminhar regularmente;",
+      "consumir mais frutas, verduras e legumes;",
+      "reduzir alimentos ultraprocessados;",
+      "beber mais água;",
+      "dormir em horários regulares;",
+      "abandonar o cigarro;",
+      "moderar o consumo de álcool;",
+      "manter a vacinação atualizada;",
+      "controlar pressão arterial e glicemia;",
+      "realizar consultas preventivas."
+    ]},
+    { "type": "paragraph", "text": "Não é necessário mudar toda a rotina de uma só vez." },
+    { "type": "paragraph", "text": "A consistência costuma ser muito mais importante do que a intensidade." },
+
+    { "type": "display", "text": "O verdadeiro significado da longevidade" },
+    { "type": "paragraph", "text": "Vivemos um momento privilegiado da história da medicina." },
+    { "type": "paragraph", "text": "Hoje conseguimos tratar doenças que antes eram fatais, controlar condições crônicas por muitos anos e oferecer melhor qualidade de vida para milhões de pessoas." },
+    { "type": "paragraph", "text": "Mas o próximo desafio vai além de aumentar a expectativa de vida." },
+    { "type": "paragraph", "text": "Precisamos garantir que esses anos adicionais sejam vividos com autonomia, mobilidade, independência, lucidez e bem-estar." },
+    { "type": "paragraph", "text": "A verdadeira longevidade não é apenas celebrar aniversários." },
+    { "type": "paragraph", "text": "É continuar caminhando, aprendendo, convivendo com quem amamos, trabalhando quando desejamos, viajando, sorrindo e mantendo a capacidade de fazer escolhas." },
+    { "type": "paragraph", "text": "Porque viver mais é uma conquista." },
+    { "type": "lead", "segments": [ { "text": "Viver melhor é o verdadeiro objetivo da saúde.", "strong": true } ] },
+
+    { "type": "display", "text": "Referências científicas" },
+    { "type": "list", "items": [
+      "GBD 2023 Brazil Collaborators. Burden of disease and life expectancy decomposition in Brazil and its federated units, 1990–2023. The Lancet Regional Health – Americas. 2026.",
+      "World Health Organization (WHO). Healthy Ageing and Healthy Life Expectancy.",
+      "World Health Organization. WHO Guidelines on Physical Activity and Sedentary Behaviour. 2020.",
+      "Ministério da Saúde. Guia de Atividade Física para a População Brasileira. 2021.",
+      "Ministério da Saúde. Guia Alimentar para a População Brasileira. 2ª edição.",
+      "Institute for Health Metrics and Evaluation (IHME). Global Burden of Disease Study 2023."
+    ]}
+  ],
+  "categories": [
+    { "label": "Cuidados com a saúde", "count": 35, "href": "/blog", "active": true },
+    { "label": "Cuidado Federal", "count": 9, "href": "/blog/cuidado-federal", "active": false },
+    { "label": "Emergências e Primeiros Cuidados", "count": 16, "href": "/blog/emergencias", "active": false },
+    { "label": "Hábitos Saudáveis", "count": 104, "href": "/blog/habitos-saudaveis", "active": false }
+  ],
+  "recentPosts": [
+    { "date": "08/08/2026", "excerpt": "Infodemia: quando o excesso de informação também adoece.", "href": "/artigos/infodemia-excesso-informacao" },
+    { "date": "02/08/2026", "excerpt": "Você não precisa fazer dieta para comer melhor.", "href": "/artigos/comer-melhor-sem-dieta" },
+    { "date": "30/07/2026", "excerpt": "Dengue: o surto pode passar, mas a prevenção precisa continuar.", "href": "/artigos/dengue-prevencao-continua" }
+  ],
+  "extras": [
+    { "kind": "ad", "title": "Medicamentos de qualidade para cuidar de você todos os dias.", "ctaLabel": "Saiba mais", "href": "#" },
+    { "kind": "sponsor", "icon": "ring", "title": "Dasa", "image": null, "description": "Laboratórios Dasa promovem campanha nacional de prevenção e reforçam a importância do diagnóstico precoce.", "linkLabel": "Ler notícia", "href": "/noticias/dasa" }
+  ],
+  "comments": []
+}

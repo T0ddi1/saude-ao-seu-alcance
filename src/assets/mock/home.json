@@ -1,19 +1,47 @@
 {
-  "featuredArticle": {
-    "eyebrow": "ARTIGO EM DESTAQUE",
-    "title": "Prevenção hoje, qualidade de vida amanhã",
-    "excerpt": "Pequenas escolhas diárias podem prevenir doenças, melhorar sua energia e aumentar sua longevidade. Comece agora e colha os benefícios por toda a vida.",
-    "ctaLabel": "Leia o conteúdo",
-    "href": "/artigos/prevencao-hoje-qualidade-de-vida-amanha",
-    "slidesCount": 4,
-    "activeSlide": 3
-  },
-  "trending": [
-    { "rank": 1, "title": "Campanha nacional de vacinação bate recorde de adesão em 2026", "href": "/artigos/trending-1" },
-    { "rank": 2, "title": "Estudo aponta queda na obesidade infantil após programas escolares", "href": "/artigos/trending-2" },
-    { "rank": 3, "title": "Telemedicina já responde por 1 em cada 5 consultas no país", "href": "/artigos/trending-3" },
-    { "rank": 4, "title": "Ministério da Saúde amplia rede de atenção à saúde mental", "href": "/artigos/trending-4" }
+  "featuredArticles": [
+    {
+      "eyebrow": "ARTIGO EM DESTAQUE",
+      "title": "Infodemia: quando o excesso de informação também adoece",
+      "excerpt": "Como aprender a diferenciar conhecimento científico de desinformação é uma das maiores estratégias de prevenção em saúde.",
+      "ctaLabel": "Leia o conteúdo",
+      "href": "/artigos/infodemia-excesso-informacao"
+    },
+    {
+      "eyebrow": "ARTIGO EM DESTAQUE",
+      "title": "Viver mais ou viver melhor? O desafio da longevidade saudável no Brasil",
+      "excerpt": "A expectativa de vida aumentou, mas o grande desafio agora é garantir que esses anos extras sejam vividos com autonomia, independência e qualidade de vida.",
+      "ctaLabel": "Leia o conteúdo",
+      "href": "/artigos/longevidade-saudavel-brasil"
+    },
+    {
+      "eyebrow": "ARTIGO EM DESTAQUE",
+      "title": "Você não precisa fazer dieta para comer melhor",
+      "excerpt": "Pequenas mudanças na alimentação podem trazer grandes benefícios para a saúde.",
+      "ctaLabel": "Leia o conteúdo",
+      "href": "/artigos/comer-melhor-sem-dieta"
+    },
+    {
+      "eyebrow": "ARTIGO EM DESTAQUE",
+      "title": "Dengue: o surto pode passar, mas a prevenção precisa continuar",
+      "excerpt": "Conhecer os sinais de alerta e eliminar os focos do mosquito continuam sendo as formas mais eficazes de proteger sua família.",
+      "ctaLabel": "Leia o conteúdo",
+      "href": "/artigos/dengue-prevencao-continua"
+    }
   ],
+  "trending": {
+    "label": "Em alta",
+    "limit": 4,
+    "linkLabel": "Ver todos",
+    "href": "/em-alta",
+    "items": [
+      { "title": "Campanha nacional de vacinação bate recorde de adesão em 2026", "href": "/artigos/trending-1", "score": 985 },
+      { "title": "Estudo aponta queda na obesidade infantil após programas escolares", "href": "/artigos/trending-2", "score": 872 },
+      { "title": "Telemedicina já responde por 1 em cada 5 consultas no país", "href": "/artigos/trending-3", "score": 810 },
+      { "title": "Ministério da Saúde amplia rede de atenção à saúde mental", "href": "/artigos/trending-4", "score": 754 },
+      { "title": "Novo estudo relaciona sono de qualidade à longevidade", "href": "/artigos/trending-5", "score": 611 }
+    ]
+  },
   "contentCards": [
     { "icon": "ring", "title": "Cuidado com a saúde", "image": "assets/images/cuidado-com-a-saude.jpg", "excerpt": "Orientação pública para cuidar de você e de quem você ama.", "linkLabel": "Ver conteúdos", "href": "/blog" },
     { "icon": "square", "title": "Cuidado Federal", "image": "assets/images/cuidado-com-a-saude.jpg", "excerpt": "Governo lança nova etapa do programa de vacinação e amplia a cobertura em áreas prioritárias.", "linkLabel": "Ler notícia", "href": "/artigos/cuidado-federal", "sponsored": true },

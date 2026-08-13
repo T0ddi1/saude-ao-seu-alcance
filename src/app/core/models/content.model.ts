@@ -12,7 +12,8 @@ export type ContentBlock =
   | { type: 'lead'; segments: ContentSegment[] }
   | { type: 'paragraph'; text: string }
   | { type: 'display'; text: string }
-  | { type: 'quote'; text: string };
+  | { type: 'quote'; text: string }
+  | { type: 'list'; items: string[] };
 
 export interface InstitutionalPageData {
   breadcrumbs: Breadcrumb[];

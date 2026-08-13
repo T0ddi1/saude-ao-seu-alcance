@@ -6,14 +6,23 @@ export interface FeaturedArticle {
   excerpt: string;
   ctaLabel: string;
   href: string;
-  slidesCount: number;
-  activeSlide: number;
 }
 
 export interface TrendingItem {
-  rank: number;
   title: string;
   href: string;
+  /** Engagement score from the API (views, clicks…) — determines rank order. */
+  score: number;
+}
+
+export interface TrendingData {
+  /** Heading label for the panel, e.g. "Em alta" or "Mais lidos da semana" — comes from the API. */
+  label: string;
+  /** How many top items to show — comes from the API. */
+  limit: number;
+  items: TrendingItem[];
+  href: string;
+  linkLabel: string;
 }
 
 export interface ContentCard {
@@ -63,8 +72,8 @@ export interface TrustBadge {
 }
 
 export interface HomePageData {
-  featuredArticle: FeaturedArticle;
-  trending: TrendingItem[];
+  featuredArticles: FeaturedArticle[];
+  trending: TrendingData;
   contentCards: ContentCard[];
   healthStats: {
     title: string;

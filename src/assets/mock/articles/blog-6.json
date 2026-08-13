@@ -40,12 +40,6 @@
     }
   ],
   "heroImage": "assets/images/blog-familia-bike.jpg",
-  "paragraphs": [
-    "Pequenas mudanças de hábito, mantidas com consistência, têm impacto real na saúde ao longo dos anos. Dormir bem, se movimentar com regularidade e cuidar da alimentação são passos simples que, somados, reduzem o risco de doenças crônicas e melhoram a qualidade de vida.",
-    "A prevenção também passa por acompanhamento médico regular. Exames de rotina ajudam a identificar alterações antes que se tornem problemas maiores, tornando o tratamento mais simples e eficaz quando necessário.",
-    "Cuidar da saúde mental é parte inseparável desse processo. Pausas de descanso genuíno, momentos de lazer e uma rede de apoio próxima ajudam a equilibrar as exigências do dia a dia.",
-    "Investir em prevenção hoje é investir em mais anos de vida com autonomia e bem-estar amanhã — um compromisso que vale a pena manter todos os dias."
-  ],
   "categories": [
     {
       "label": "Cuidados com a saúde",
@@ -116,6 +110,24 @@
       "name": "Mariana Abreu",
       "date": "Julho 2026",
       "text": "Gostei bastante da parte sobre saúde mental — é um ponto que a gente costuma deixar de lado no dia a dia."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "Pequenas mudanças de hábito, mantidas com consistência, têm impacto real na saúde ao longo dos anos. Dormir bem, se movimentar com regularidade e cuidar da alimentação são passos simples que, somados, reduzem o risco de doenças crônicas e melhoram a qualidade de vida."
+    },
+    {
+      "type": "paragraph",
+      "text": "A prevenção também passa por acompanhamento médico regular. Exames de rotina ajudam a identificar alterações antes que se tornem problemas maiores, tornando o tratamento mais simples e eficaz quando necessário."
+    },
+    {
+      "type": "paragraph",
+      "text": "Cuidar da saúde mental é parte inseparável desse processo. Pausas de descanso genuíno, momentos de lazer e uma rede de apoio próxima ajudam a equilibrar as exigências do dia a dia."
+    },
+    {
+      "type": "paragraph",
+      "text": "Investir em prevenção hoje é investir em mais anos de vida com autonomia e bem-estar amanhã — um compromisso que vale a pena manter todos os dias."
     }
   ]
 }

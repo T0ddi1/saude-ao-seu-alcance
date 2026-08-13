@@ -38,6 +38,13 @@
 .article__meta strong {
   color: var(--color-ink);
 }
+.article__author-role {
+  display: block;
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--fs-label-s);
+  color: var(--color-muted);
+}
 
 .article__share {
   display: flex;
@@ -75,6 +82,64 @@
   font-size: var(--fs-body-m);
   line-height: 1.7;
   margin-bottom: 20px;
+}
+
+.article__lead {
+  font-family: var(--font-heading);
+  font-size: var(--fs-h4);
+  line-height: 1.5;
+  color: var(--color-ink);
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+.article__lead strong {
+  font-weight: 700;
+}
+
+.article__display {
+  font-family: var(--font-heading);
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  color: var(--color-ink);
+  line-height: 1.25;
+  margin: 8px 0 4px;
+}
+
+.article__quote {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  background: var(--color-surface-alt);
+  border-radius: var(--radius-m);
+  padding: 28px;
+  margin: 0 0 20px;
+}
+.article__quote-mark {
+  font-family: var(--font-heading);
+  font-size: 40px;
+  font-weight: 700;
+  color: var(--color-secondary);
+  line-height: 1;
+  flex-shrink: 0;
+}
+.article__quote p {
+  font-size: var(--fs-body-m);
+  font-style: italic;
+  color: var(--color-body-text);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.article__list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0 0 20px;
+  padding-left: 22px;
+}
+.article__list li {
+  font-size: var(--fs-body-m);
+  line-height: 1.6;
 }
 
 @media (max-width: 1000px) {

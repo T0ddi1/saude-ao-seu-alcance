@@ -1,0 +1,118 @@
+{
+  "breadcrumbs": [
+    { "label": "Home", "href": "/" },
+    { "label": "Artigos", "href": "/blog" },
+    { "label": "Cuidados com a Saúde", "href": "/blog" }
+  ],
+  "title": "Dengue: o surto pode passar, mas a prevenção precisa continuar",
+  "subtitle": "Conhecer os sinais de alerta e eliminar os focos do mosquito continuam sendo as formas mais eficazes de proteger sua família.",
+  "date": "30/07/2026",
+  "author": "Dr. Alexandre Pimenta",
+  "authorRole": "Médico – Professor – Escritor – CEO",
+  "shareLinks": [
+    { "icon": "facebook", "href": "#", "label": "Compartilhar no Facebook" },
+    { "icon": "whatsapp", "href": "#", "label": "Compartilhar no WhatsApp" },
+    { "icon": "linkedin", "href": "#", "label": "Compartilhar no LinkedIn" },
+    { "icon": "x", "href": "#", "label": "Compartilhar no X" }
+  ],
+  "heroImage": "assets/images/cuidado-com-a-saude.jpg",
+  "blocks": [
+    { "type": "paragraph", "text": "A cada verão, a dengue volta a ocupar espaço nos noticiários brasileiros. Quando o número de casos diminui, muitas pessoas acreditam que o problema foi resolvido. No entanto, essa é uma percepção equivocada." },
+    { "type": "paragraph", "text": "A dengue permanece como um dos maiores desafios de saúde pública do Brasil. O mosquito Aedes aegypti continua presente em praticamente todo o território nacional e, enquanto existirem recipientes com água parada, haverá risco de transmissão." },
+    { "type": "paragraph", "text": "A boa notícia é que grande parte dos casos pode ser evitada por meio de medidas simples de prevenção e do reconhecimento precoce dos sinais de alerta." },
+
+    { "type": "display", "text": "A dengue continua sendo uma doença que merece atenção" },
+    { "type": "paragraph", "text": "A dengue é causada por um vírus transmitido pela picada do mosquito Aedes aegypti. Existem quatro sorotipos do vírus (DENV-1, DENV-2, DENV-3 e DENV-4), o que significa que uma mesma pessoa pode contrair a doença mais de uma vez ao longo da vida." },
+    { "type": "paragraph", "text": "Na maioria dos casos, a evolução é favorável. Entretanto, algumas pessoas podem desenvolver formas graves, principalmente quando o diagnóstico e o acompanhamento médico são retardados." },
+    { "type": "paragraph", "text": "Os sintomas costumam aparecer entre quatro e dez dias após a picada do mosquito e incluem:" },
+    { "type": "list", "items": [
+      "febre alta de início súbito;",
+      "dor de cabeça intensa;",
+      "dor atrás dos olhos;",
+      "dores musculares e articulares;",
+      "manchas avermelhadas na pele;",
+      "náuseas e vômitos;",
+      "cansaço intenso."
+    ]},
+    { "type": "paragraph", "text": "Nem toda febre é dengue, mas durante períodos de maior circulação do vírus é importante considerar essa possibilidade e procurar avaliação médica." },
+
+    { "type": "display", "text": "As novidades na prevenção" },
+    { "type": "paragraph", "text": "Nos últimos anos, o Brasil avançou de forma importante na prevenção da dengue com a incorporação de vacinas ao Sistema Único de Saúde." },
+    { "type": "paragraph", "text": "Em 2026, a estratégia nacional foi ampliada com novas recomendações de vacinação, incluindo a utilização da vacina desenvolvida pelo Instituto Butantan em grupos definidos pelo Ministério da Saúde. Como ocorre com qualquer novo imunizante, o programa é acompanhado continuamente por sistemas de farmacovigilância, que monitoram segurança e eficácia e podem levar a ajustes temporários na estratégia sempre que necessário. Esse processo demonstra o funcionamento adequado da vigilância em saúde e reforça o compromisso com a segurança da população." },
+    { "type": "paragraph", "text": "É importante lembrar que a vacinação representa uma ferramenta adicional de proteção, mas não substitui o combate ao mosquito." },
+
+    { "type": "display", "text": "Cinco minutos que podem evitar uma doença" },
+    { "type": "paragraph", "text": "O Aedes aegypti utiliza pequenos recipientes com água parada para depositar seus ovos. Por isso, a prevenção começa dentro de casa." },
+    { "type": "paragraph", "text": "Reserve alguns minutos da semana para verificar:" },
+    { "type": "list", "items": [
+      "vasos de plantas;",
+      "pratos sob os vasos;",
+      "calhas;",
+      "caixas d'água;",
+      "pneus;",
+      "garrafas;",
+      "baldes;",
+      "ralos externos;",
+      "recipientes deixados no quintal."
+    ]},
+    { "type": "paragraph", "text": "Uma simples tampa de garrafa contendo água já pode servir de criadouro." },
+    { "type": "paragraph", "text": "Eliminar esses locais continua sendo a medida mais eficiente para reduzir a transmissão da doença." },
+
+    { "type": "display", "text": "Hidratação faz parte do tratamento" },
+    { "type": "paragraph", "text": "Quando a dengue é confirmada, um dos cuidados mais importantes é manter boa hidratação." },
+    { "type": "paragraph", "text": "A perda de líquidos provocada pela febre e pelo aumento da permeabilidade dos vasos sanguíneos pode favorecer complicações." },
+    { "type": "paragraph", "text": "Por isso, água, água de coco, soluções de reidratação oral e outros líquidos são importantes durante a recuperação, sempre seguindo a orientação médica." },
+    { "type": "paragraph", "text": "Outro cuidado fundamental é evitar a automedicação." },
+    { "type": "paragraph", "text": "Medicamentos que contenham ácido acetilsalicílico (AAS) e alguns anti-inflamatórios podem aumentar o risco de sangramentos e só devem ser utilizados quando houver indicação médica." },
+
+    { "type": "display", "text": "Quando procurar atendimento médico imediatamente?" },
+    { "type": "paragraph", "text": "Embora muitas pessoas apresentem quadros leves, alguns sinais indicam maior risco de evolução para formas graves." },
+    { "type": "paragraph", "text": "Procure atendimento médico imediatamente se ocorrer:" },
+    { "type": "list", "items": [
+      "dor abdominal intensa e persistente;",
+      "vômitos repetidos;",
+      "dificuldade para respirar;",
+      "sangramentos pelo nariz, gengivas ou presença de sangue nas fezes ou vômitos;",
+      "sonolência excessiva ou dificuldade para acordar;",
+      "sensação de desmaio;",
+      "pele fria e úmida;",
+      "diminuição importante da quantidade de urina."
+    ]},
+    { "type": "paragraph", "text": "Esses sintomas exigem avaliação médica urgente e não devem ser ignorados." },
+
+    { "type": "display", "text": "Prevenção é responsabilidade de todos" },
+    { "type": "paragraph", "text": "O combate à dengue depende do trabalho dos serviços de saúde, das equipes de vigilância epidemiológica e das campanhas de vacinação. Mas depende, principalmente, da participação da população." },
+    { "type": "paragraph", "text": "Cada recipiente eliminado representa menos um local para reprodução do mosquito." },
+    { "type": "paragraph", "text": "Cada pessoa que procura atendimento diante dos sinais de alerta aumenta as chances de diagnóstico precoce e tratamento adequado." },
+    { "type": "paragraph", "text": "A dengue pode ser uma doença grave, mas também é uma doença amplamente evitável quando informação, prevenção e responsabilidade caminham juntas." },
+    { "type": "lead", "segments": [ { "text": "Cuidar da própria saúde também significa cuidar do ambiente onde vivemos. Se você apresentar sintomas compatíveis com dengue ou sinais de alerta, procure seu médico ou o serviço de saúde mais próximo. O diagnóstico precoce continua sendo a melhor forma de prevenir complicações.", "strong": true } ] },
+
+    { "type": "display", "text": "Referências científicas" },
+    { "type": "list", "items": [
+      "Organização Mundial da Saúde (WHO). Dengue and Severe Dengue. Atualização mais recente.",
+      "Organização Pan-Americana da Saúde (OPAS). Dengue: informações para profissionais de saúde e população.",
+      "Ministério da Saúde. Guia de Vigilância em Saúde – Arboviroses Urbanas. Brasília.",
+      "Ministério da Saúde. Nota Técnica nº 7/2026-CGARB/DEDT/SVSA/MS – Orientações para detecção, investigação e encerramento dos casos de dengue no contexto da ampliação da vacinação.",
+      "Ministério da Saúde. Notas Técnicas sobre vacinação contra dengue – Programa Nacional de Imunizações (2026).",
+      "Sociedade Brasileira de Infectologia (SBI). Atualizações sobre diagnóstico e manejo clínico da dengue.",
+      "Sociedade Brasileira de Medicina Tropical (SBMT). Recomendações para prevenção e manejo das arboviroses.",
+      "Instituto Butantan. Dados de eficácia e segurança da vacina Butantan-DV e comunicados de farmacovigilância."
+    ]}
+  ],
+  "categories": [
+    { "label": "Cuidados com a saúde", "count": 35, "href": "/blog", "active": true },
+    { "label": "Cuidado Federal", "count": 9, "href": "/blog/cuidado-federal", "active": false },
+    { "label": "Emergências e Primeiros Cuidados", "count": 16, "href": "/blog/emergencias", "active": false },
+    { "label": "Hábitos Saudáveis", "count": 104, "href": "/blog/habitos-saudaveis", "active": false }
+  ],
+  "recentPosts": [
+    { "date": "08/08/2026", "excerpt": "Infodemia: quando o excesso de informação também adoece.", "href": "/artigos/infodemia-excesso-informacao" },
+    { "date": "05/08/2026", "excerpt": "Viver mais ou viver melhor? O desafio da longevidade saudável no Brasil.", "href": "/artigos/longevidade-saudavel-brasil" },
+    { "date": "02/08/2026", "excerpt": "Você não precisa fazer dieta para comer melhor.", "href": "/artigos/comer-melhor-sem-dieta" }
+  ],
+  "extras": [
+    { "kind": "ad", "title": "Medicamentos de qualidade para cuidar de você todos os dias.", "ctaLabel": "Saiba mais", "href": "#" },
+    { "kind": "sponsor", "icon": "ring", "title": "Dasa", "image": null, "description": "Laboratórios Dasa promovem campanha nacional de prevenção e reforçam a importância do diagnóstico precoce.", "linkLabel": "Ler notícia", "href": "/noticias/dasa" }
+  ],
+  "comments": []
+}

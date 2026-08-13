@@ -1,5 +1,5 @@
 import { Breadcrumb, BlogCategory, RecentPost } from './blog.model';
-import { SidebarExtra } from './content.model';
+import { SidebarExtra, ContentBlock } from './content.model';
 
 export interface ShareLink {
   icon: 'facebook' | 'whatsapp' | 'linkedin' | 'x';
@@ -19,9 +19,10 @@ export interface ArticleDetail {
   subtitle: string;
   date: string;
   author: string;
+  authorRole?: string;
   shareLinks: ShareLink[];
   heroImage: string | null;
-  paragraphs: string[];
+  blocks: ContentBlock[];
   categories: BlogCategory[];
   recentPosts: RecentPost[];
   extras: SidebarExtra[];

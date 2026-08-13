@@ -1,0 +1,81 @@
+{
+  "breadcrumbs": [
+    { "label": "Home", "href": "/" },
+    { "label": "Artigos", "href": "/blog" },
+    { "label": "Cuidados com a Saúde", "href": "/blog" }
+  ],
+  "title": "Você não precisa fazer dieta para comer melhor",
+  "subtitle": "Pequenas mudanças na alimentação podem trazer grandes benefícios para a saúde",
+  "date": "02/08/2026",
+  "author": "Dr. Alexandre Pimenta",
+  "authorRole": "Médico – Professor – Escritor – CEO",
+  "shareLinks": [
+    { "icon": "facebook", "href": "#", "label": "Compartilhar no Facebook" },
+    { "icon": "whatsapp", "href": "#", "label": "Compartilhar no WhatsApp" },
+    { "icon": "linkedin", "href": "#", "label": "Compartilhar no LinkedIn" },
+    { "icon": "x", "href": "#", "label": "Compartilhar no X" }
+  ],
+  "heroImage": "assets/images/nutricao.jpg",
+  "blocks": [
+    { "type": "paragraph", "text": "Quando se fala em alimentação saudável, muitas pessoas imaginam dietas restritivas, alimentos caros ou mudanças radicais na rotina. Esse pensamento acaba afastando quem gostaria de cuidar melhor da própria saúde." },
+    { "type": "paragraph", "text": "A boa notícia é que comer bem não significa seguir modismos ou eliminar todos os alimentos de que você gosta. Na maioria das vezes, os maiores benefícios vêm de escolhas simples e consistentes, feitas todos os dias." },
+    { "type": "paragraph", "text": "Uma alimentação equilibrada ajuda a controlar o peso, reduz o risco de doenças cardiovasculares, diabetes, hipertensão, alguns tipos de câncer e ainda melhora a disposição, o sono e a qualidade de vida." },
+
+    { "type": "display", "text": "O segredo está na rotina" },
+    { "type": "paragraph", "text": "Não existe alimento milagroso nem dieta capaz de compensar hábitos inadequados mantidos por muito tempo." },
+    { "type": "paragraph", "text": "O que realmente faz diferença é construir uma rotina alimentar baseada em alimentos naturais ou minimamente processados." },
+    { "type": "paragraph", "text": "Algumas atitudes simples podem transformar a saúde:" },
+    { "type": "list", "items": [
+      "aumentar o consumo de frutas, verduras e legumes;",
+      "incluir feijão e outras leguminosas nas refeições;",
+      "preferir alimentos preparados em casa;",
+      "reduzir refrigerantes e bebidas açucaradas;",
+      "evitar o excesso de produtos ultraprocessados;",
+      "beber água regularmente;",
+      "comer com atenção, sem pressa e evitando distrações."
+    ]},
+    { "type": "paragraph", "text": "Essas mudanças parecem pequenas, mas, mantidas ao longo dos anos, reduzem significativamente o risco de diversas doenças crônicas." },
+
+    { "type": "display", "text": "Nem todo alimento \"fit\" é saudável" },
+    { "type": "paragraph", "text": "As redes sociais popularizaram inúmeros produtos vendidos como saudáveis. Barras proteicas, suplementos, bebidas funcionais e alimentos industrializados com apelo \"fitness\" nem sempre são a melhor escolha." },
+    { "type": "paragraph", "text": "Antes de acreditar em promessas de emagrecimento rápido ou soluções milagrosas, vale lembrar que saúde não depende de um único alimento, mas do conjunto dos hábitos." },
+    { "type": "paragraph", "text": "Sempre que possível, dê preferência aos alimentos conhecidos pela nossa cultura alimentar: arroz, feijão, frutas, verduras, legumes, ovos, carnes magras, leite e seus derivados, preparados de forma equilibrada." },
+
+    { "type": "display", "text": "Alimentação também é prevenção" },
+    { "type": "paragraph", "text": "Grande parte das doenças que mais acometem os brasileiros está relacionada ao estilo de vida." },
+    { "type": "paragraph", "text": "Uma alimentação adequada contribui para controlar pressão arterial, colesterol, glicemia e peso corporal, além de favorecer o funcionamento do intestino, fortalecer o sistema imunológico e melhorar a disposição para as atividades do dia a dia." },
+    { "type": "paragraph", "text": "Mais importante do que buscar uma dieta perfeita é encontrar um padrão alimentar que possa ser mantido por muitos anos." },
+
+    { "type": "display", "text": "Quando procurar orientação médica?" },
+    { "type": "paragraph", "text": "Mudanças na alimentação são importantes para todos, mas algumas situações merecem avaliação profissional." },
+    { "type": "paragraph", "text": "Procure seu médico se você apresentar:" },
+    { "type": "list", "items": [
+      "perda de peso sem explicação;",
+      "dificuldade persistente para se alimentar;",
+      "aumento importante da sede ou da fome;",
+      "alterações persistentes do intestino;",
+      "dor abdominal frequente;",
+      "histórico familiar de diabetes, colesterol elevado ou doenças cardiovasculares;",
+      "obesidade ou dificuldade para controlar o peso."
+    ]},
+    { "type": "paragraph", "text": "Cada pessoa possui necessidades diferentes. Por isso, orientações alimentares devem considerar idade, doenças pré-existentes, uso de medicamentos e estilo de vida." },
+
+    { "type": "lead", "segments": [ { "text": "Cuidar da alimentação não significa buscar perfeição. Significa fazer escolhas melhores, um dia de cada vez. Quando surgirem dúvidas ou sintomas persistentes, procure seu médico para uma avaliação individualizada. A prevenção continua sendo o melhor caminho para viver mais e viver com qualidade.", "strong": true } ] }
+  ],
+  "categories": [
+    { "label": "Cuidados com a saúde", "count": 35, "href": "/blog", "active": true },
+    { "label": "Cuidado Federal", "count": 9, "href": "/blog/cuidado-federal", "active": false },
+    { "label": "Emergências e Primeiros Cuidados", "count": 16, "href": "/blog/emergencias", "active": false },
+    { "label": "Hábitos Saudáveis", "count": 104, "href": "/blog/habitos-saudaveis", "active": false }
+  ],
+  "recentPosts": [
+    { "date": "08/08/2026", "excerpt": "Infodemia: quando o excesso de informação também adoece.", "href": "/artigos/infodemia-excesso-informacao" },
+    { "date": "05/08/2026", "excerpt": "Viver mais ou viver melhor? O desafio da longevidade saudável no Brasil.", "href": "/artigos/longevidade-saudavel-brasil" },
+    { "date": "30/07/2026", "excerpt": "Dengue: o surto pode passar, mas a prevenção precisa continuar.", "href": "/artigos/dengue-prevencao-continua" }
+  ],
+  "extras": [
+    { "kind": "ad", "title": "Medicamentos de qualidade para cuidar de você todos os dias.", "ctaLabel": "Saiba mais", "href": "#" },
+    { "kind": "sponsor", "icon": "ring", "title": "Dasa", "image": null, "description": "Laboratórios Dasa promovem campanha nacional de prevenção e reforçam a importância do diagnóstico precoce.", "linkLabel": "Ler notícia", "href": "/noticias/dasa" }
+  ],
+  "comments": []
+}

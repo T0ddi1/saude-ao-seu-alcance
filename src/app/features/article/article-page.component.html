@@ -8,7 +8,10 @@
 
       <div class="article__meta">
         <span>{{ d.date }}</span>
-        <span>Por: <strong>{{ d.author }}</strong></span>
+        <span>
+          Por: <strong>{{ d.author }}</strong>
+          <em class="article__author-role" *ngIf="d.authorRole">{{ d.authorRole }}</em>
+        </span>
         <span class="article__share">
           Compartilhar:
           <a *ngFor="let s of d.shareLinks" [href]="s.href" [attr.aria-label]="s.label" class="article__share-btn">
@@ -21,7 +24,27 @@
         <img [src]="d.heroImage" [alt]="d.title" />
       </div>
 
-      <p class="article__paragraph" *ngFor="let p of d.paragraphs">{{ p }}</p>
+      <ng-container *ngFor="let block of d.blocks">
+        <p class="article__lead" *ngIf="block.type === 'lead'">
+          <ng-container *ngFor="let seg of block.segments">
+            <strong *ngIf="seg.strong">{{ seg.text }}</strong>
+            <ng-container *ngIf="!seg.strong">{{ seg.text }}</ng-container>
+          </ng-container>
+        </p>
+
+        <p class="article__paragraph" *ngIf="block.type === 'paragraph'">{{ block.text }}</p>
+
+        <h2 class="article__display" *ngIf="block.type === 'display'">{{ block.text }}</h2>
+
+        <blockquote class="article__quote" *ngIf="block.type === 'quote'">
+          <span class="article__quote-mark" aria-hidden="true">&rdquo;&rdquo;</span>
+          <p>{{ block.text }}</p>
+        </blockquote>
+
+        <ul class="article__list" *ngIf="block.type === 'list'">
+          <li *ngFor="let item of block.items">{{ item }}</li>
+        </ul>
+      </ng-container>
 
       <app-comment-section [comments]="d.comments"></app-comment-section>
     </article>

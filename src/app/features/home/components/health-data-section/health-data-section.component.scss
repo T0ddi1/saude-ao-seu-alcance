@@ -169,6 +169,28 @@
   }
 }
 
+/* A tall, wide portrait screen (kiosk totem, tablet in portrait) has plenty of
+   width even though it's under the tablet-landscape breakpoint above — keep
+   the roomy single-row layout instead of the cramped 2-column fallback. */
+@media (min-width: 820px) and (orientation: portrait) {
+  .health-data {
+    grid-template-columns: 1fr 2fr 1.2fr 1.2fr 1.2fr;
+  }
+  .health-data__intro {
+    grid-column: auto;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-end;
+  }
+  .health-data__map {
+    margin-left: auto;
+    max-width: 160px;
+  }
+  .health-data__stats-wrap {
+    grid-column: auto;
+  }
+}
+
 @media (max-width: 700px) {
   .health-data {
     grid-template-columns: 1fr;

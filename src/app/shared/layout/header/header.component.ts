@@ -15,6 +15,7 @@ import { IconComponent } from '../../components/icon/icon.component';
 export class HeaderComponent implements OnInit {
   navItems = signal<NavItem[]>([]);
   openIndex = signal<number | null>(null);
+  mobileMenuOpen = signal(false);
 
   constructor(private navigationService: NavigationService, private elementRef: ElementRef<HTMLElement>) {}
 
@@ -31,6 +32,11 @@ export class HeaderComponent implements OnInit {
     this.openIndex.set(null);
   }
 
+  toggleMobileMenu(): void {
+    this.mobileMenuOpen.update((open) => !open);
+    this.openIndex.set(null);
+  }
+
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event): void {
     if (!this.elementRef.nativeElement.contains(event.target as Node)) {
@@ -41,5 +47,6 @@ export class HeaderComponent implements OnInit {
   @HostListener('document:keydown.escape')
   onEscape(): void {
     this.closeMenu();
+    this.mobileMenuOpen.set(false);
   }
 }

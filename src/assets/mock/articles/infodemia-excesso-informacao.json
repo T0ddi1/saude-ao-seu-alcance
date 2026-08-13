@@ -1,0 +1,114 @@
+{
+  "breadcrumbs": [
+    { "label": "Home", "href": "/" },
+    { "label": "Artigos", "href": "/blog" },
+    { "label": "Cuidados com a Saúde", "href": "/blog" }
+  ],
+  "title": "Infodemia: quando o excesso de informação também adoece",
+  "subtitle": "Como aprender a diferenciar conhecimento científico de desinformação é uma das maiores estratégias de prevenção em saúde",
+  "date": "08/08/2026",
+  "author": "Dr. Alexandre Pimenta",
+  "authorRole": "Médico – Professor – Escritor – CEO",
+  "shareLinks": [
+    { "icon": "facebook", "href": "#", "label": "Compartilhar no Facebook" },
+    { "icon": "whatsapp", "href": "#", "label": "Compartilhar no WhatsApp" },
+    { "icon": "linkedin", "href": "#", "label": "Compartilhar no LinkedIn" },
+    { "icon": "x", "href": "#", "label": "Compartilhar no X" }
+  ],
+  "heroImage": "assets/images/inovacao.png",
+  "blocks": [
+    { "type": "paragraph", "text": "Nunca tivemos tanto acesso à informação quanto nos dias atuais. Com apenas alguns segundos e um telefone celular nas mãos, é possível pesquisar sintomas, conhecer tratamentos, assistir a cirurgias, acompanhar especialistas e obter orientações sobre praticamente qualquer doença." },
+    { "type": "paragraph", "text": "Esse avanço representa uma conquista extraordinária da sociedade. Afinal, uma população bem informada tende a participar mais ativamente das decisões relacionadas à própria saúde. Entretanto, existe um efeito colateral dessa revolução digital que preocupa médicos, pesquisadores e organismos internacionais: o excesso de informação." },
+    { "type": "paragraph", "text": "A Organização Mundial da Saúde (OMS) denomina esse fenômeno de infodemia, caracterizado pela enorme quantidade de informações disponíveis — corretas e incorretas — que dificulta identificar quais conteúdos realmente são confiáveis. Em outras palavras, nunca foi tão fácil encontrar informações sobre saúde, mas também nunca foi tão difícil separar evidências científicas de opiniões pessoais, interesses comerciais ou notícias falsas." },
+    { "type": "paragraph", "text": "Mais do que um problema de comunicação, a infodemia tornou-se um importante desafio de saúde pública." },
+
+    { "type": "display", "text": "Quando pesquisar demais faz mal" },
+    { "type": "paragraph", "text": "Quem nunca sentiu uma dor de cabeça e decidiu pesquisar na internet?" },
+    { "type": "paragraph", "text": "Em poucos minutos, o que poderia representar uma noite mal dormida ou um quadro simples de tensão muscular pode parecer um tumor cerebral, uma doença neurológica rara ou uma condição grave. Esse fenômeno é tão frequente que recebeu um nome na literatura médica: cybercondria." },
+    { "type": "paragraph", "text": "Trata-se do aumento da ansiedade provocado pela busca excessiva de informações médicas na internet. Quanto mais a pessoa pesquisa, maior tende a ser sua preocupação, criando um ciclo em que novos sintomas passam a ser interpretados como sinais de doenças graves." },
+    { "type": "paragraph", "text": "Isso acontece porque nosso cérebro naturalmente presta mais atenção às informações que despertam medo. As redes sociais, por sua vez, potencializam esse comportamento ao privilegiar conteúdos que geram impacto emocional, compartilhamentos e engajamento." },
+    { "type": "paragraph", "text": "O resultado é uma população cada vez mais informada, porém muitas vezes mais ansiosa." },
+
+    { "type": "display", "text": "Informação demais também pode atrapalhar o tratamento" },
+    { "type": "paragraph", "text": "Essa realidade já faz parte do cotidiano dos consultórios." },
+    { "type": "paragraph", "text": "É comum receber pacientes que chegam após assistir dezenas de vídeos, ler diversos blogs, participar de grupos em aplicativos de mensagens e acompanhar influenciadores digitais que apresentam opiniões completamente diferentes entre si." },
+    { "type": "paragraph", "text": "Em muitos casos, o paciente chega convencido do diagnóstico antes mesmo da consulta." },
+    { "type": "paragraph", "text": "Naturalmente, buscar conhecimento não é um problema. Pelo contrário. O paciente bem informado costuma participar melhor das decisões terapêuticas e compreender mais facilmente as orientações médicas." },
+    { "type": "paragraph", "text": "A dificuldade surge quando informações sem respaldo científico passam a competir com a medicina baseada em evidências." },
+    { "type": "paragraph", "text": "Isso pode levar ao abandono de tratamentos eficazes, à solicitação de exames desnecessários, ao uso indiscriminado de suplementos e medicamentos ou à adoção de terapias que nunca demonstraram benefício clínico." },
+    { "type": "paragraph", "text": "Na gastroenterologia, por exemplo, é cada vez mais frequente atender pacientes convencidos de que possuem múltiplas intolerâncias alimentares após assistirem conteúdos nas redes sociais. Após avaliação clínica adequada, muitas vezes identificamos alterações funcionais do trato gastrointestinal ou hábitos alimentares inadequados, situações completamente diferentes daquelas inicialmente imaginadas." },
+    { "type": "paragraph", "text": "Outro exemplo bastante atual envolve os medicamentos utilizados para tratamento da obesidade. Informações fragmentadas divulgadas nas redes sociais fazem muitas pessoas iniciarem ou interromperem tratamentos por conta própria, aumentando significativamente os riscos de efeitos adversos e comprometendo os resultados." },
+
+    { "type": "display", "text": "Fake news podem custar vidas" },
+    { "type": "paragraph", "text": "As consequências da desinformação vão muito além da ansiedade." },
+    { "type": "paragraph", "text": "Acreditar em informações falsas pode atrasar diagnósticos, estimular a automedicação, reduzir a adesão às vacinas, favorecer complicações de doenças crônicas e até aumentar a mortalidade em determinadas situações." },
+    { "type": "paragraph", "text": "Na medicina, tempo frequentemente significa prognóstico." },
+    { "type": "paragraph", "text": "Uma pessoa que adia a procura por atendimento porque acreditou que um sintoma era \"normal\" ou que determinada doença poderia ser tratada apenas com receitas divulgadas na internet pode perder oportunidades importantes de diagnóstico precoce e tratamento curativo." },
+    { "type": "paragraph", "text": "Infelizmente, muitas fake news utilizam estratégias bastante conhecidas: linguagem emocional, promessas de cura rápida, teorias conspiratórias e discursos que desacreditam instituições científicas." },
+    { "type": "paragraph", "text": "A ciência, por sua própria natureza, evolui continuamente. Novas pesquisas aperfeiçoam tratamentos, revisam conceitos e atualizam recomendações. Já a desinformação costuma oferecer respostas simples para problemas extremamente complexos." },
+    { "type": "paragraph", "text": "Essa diferença precisa ser compreendida pela população." },
+
+    { "type": "display", "text": "A internet informa, mas não examina" },
+    { "type": "paragraph", "text": "Existe uma frase frequentemente repetida entre médicos que continua extremamente atual:" },
+    { "type": "quote", "text": "A internet pode informar, mas ela não examina o paciente." },
+    { "type": "paragraph", "text": "Sintomas semelhantes podem representar doenças completamente diferentes." },
+    { "type": "paragraph", "text": "Uma dor abdominal pode indicar apenas uma indisposição alimentar, mas também pode representar uma apendicite, uma colecistite, uma pancreatite ou até um infarto em determinadas situações." },
+    { "type": "paragraph", "text": "Somente uma avaliação médica consegue integrar história clínica, exame físico, fatores de risco, antecedentes familiares, medicamentos em uso e exames complementares quando realmente necessários." },
+    { "type": "paragraph", "text": "É exatamente essa análise individualizada que diferencia informação de diagnóstico." },
+
+    { "type": "display", "text": "Como reconhecer informações confiáveis" },
+    { "type": "paragraph", "text": "Antes de acreditar ou compartilhar qualquer conteúdo relacionado à saúde, algumas perguntas podem ajudar:" },
+    { "type": "list", "items": [
+      "Quem produziu essa informação? É um profissional habilitado ou uma instituição reconhecida?",
+      "O conteúdo cita estudos científicos ou diretrizes médicas?",
+      "Organizações como a Organização Mundial da Saúde, o Ministério da Saúde ou sociedades médicas apresentam orientações semelhantes?",
+      "Existe promessa de cura rápida ou resultados garantidos?",
+      "O conteúdo utiliza medo, urgência ou teorias conspiratórias para convencer o leitor?"
+    ]},
+    { "type": "paragraph", "text": "Na medicina, promessas extraordinárias exigem evidências igualmente extraordinárias." },
+    { "type": "paragraph", "text": "Sempre que houver dúvida, vale conversar com seu médico antes de modificar qualquer tratamento ou iniciar novas terapias." },
+
+    { "type": "display", "text": "O papel do médico na era da informação" },
+    { "type": "paragraph", "text": "O profissional de saúde deixou de ser apenas aquele que diagnostica doenças e prescreve medicamentos." },
+    { "type": "paragraph", "text": "Hoje, uma das funções mais importantes do médico é ajudar o paciente a interpretar criticamente a enorme quantidade de informações disponíveis." },
+    { "type": "paragraph", "text": "Nem toda informação verdadeira é adequada para todas as pessoas." },
+    { "type": "paragraph", "text": "Cada paciente possui características próprias, doenças associadas, histórico familiar, fatores genéticos e necessidades individuais que somente podem ser avaliados durante uma consulta." },
+    { "type": "paragraph", "text": "Por isso, a relação médico-paciente permanece insubstituível." },
+    { "type": "paragraph", "text": "A tecnologia amplia o acesso ao conhecimento. A inteligência artificial pode apoiar decisões clínicas. As plataformas digitais democratizam a educação em saúde. Mas nenhuma dessas ferramentas substitui o julgamento clínico construído a partir da ciência, da experiência e da individualização do cuidado." },
+
+    { "type": "display", "text": "Informação de qualidade também salva vidas" },
+    { "type": "paragraph", "text": "A informação é uma das ferramentas mais poderosas da medicina moderna. Quando baseada em evidências científicas, ela empodera pacientes, melhora a prevenção, fortalece a adesão aos tratamentos e contribui para melhores resultados em saúde." },
+    { "type": "paragraph", "text": "Entretanto, quando distorcida, incompleta ou falsa, pode gerar exatamente o efeito contrário: medo, insegurança, atraso no diagnóstico e decisões potencialmente perigosas." },
+    { "type": "paragraph", "text": "Combater a infodemia é uma responsabilidade compartilhada entre profissionais de saúde, instituições, meios de comunicação, plataformas digitais e toda a sociedade." },
+    { "type": "paragraph", "text": "Mais do que nunca, precisamos aprender que nem toda informação disponível merece nossa confiança." },
+    { "type": "paragraph", "text": "No cuidado com a saúde, conhecimento é fundamental. Mas conhecimento de qualidade continua sendo o melhor tratamento." },
+
+    { "type": "display", "text": "Referências" },
+    { "type": "list", "items": [
+      "World Health Organization (WHO). Managing Infodemics in Health Emergencies: Infodemic Management. Geneva: WHO, 2023.",
+      "World Health Organization (WHO). Managing the COVID-19 Infodemic: Promoting healthy behaviours and mitigating the harm from misinformation and disinformation. 2020.",
+      "Organização Pan-Americana da Saúde (OPAS). Infodemia e desinformação em saúde. Washington, DC.",
+      "Eysenbach G. From intermediation to disintermediation and apomediation. Journal of Medical Internet Research. 2008;10(4):e30.",
+      "Starcevic V, Berle D. Cyberchondria: Towards a better understanding of excessive health-related Internet use. Expert Review of Neurotherapeutics. 2013;13(2):205-213.",
+      "Vosoughi S, Roy D, Aral S. The spread of true and false news online. Science. 2018;359(6380):1146-1151.",
+      "National Academy of Medicine. Countering Health Misinformation: A National Academies Workshop. Washington, DC, 2022.",
+      "The Lancet Digital Health. Infodemics are the new pandemics. Editorial. 2021;3(6):e321."
+    ]}
+  ],
+  "categories": [
+    { "label": "Cuidados com a saúde", "count": 35, "href": "/blog", "active": true },
+    { "label": "Cuidado Federal", "count": 9, "href": "/blog/cuidado-federal", "active": false },
+    { "label": "Emergências e Primeiros Cuidados", "count": 16, "href": "/blog/emergencias", "active": false },
+    { "label": "Hábitos Saudáveis", "count": 104, "href": "/blog/habitos-saudaveis", "active": false }
+  ],
+  "recentPosts": [
+    { "date": "05/08/2026", "excerpt": "Viver mais ou viver melhor? O desafio da longevidade saudável no Brasil.", "href": "/artigos/longevidade-saudavel-brasil" },
+    { "date": "02/08/2026", "excerpt": "Você não precisa fazer dieta para comer melhor.", "href": "/artigos/comer-melhor-sem-dieta" },
+    { "date": "30/07/2026", "excerpt": "Dengue: o surto pode passar, mas a prevenção precisa continuar.", "href": "/artigos/dengue-prevencao-continua" }
+  ],
+  "extras": [
+    { "kind": "ad", "title": "Medicamentos de qualidade para cuidar de você todos os dias.", "ctaLabel": "Saiba mais", "href": "#" },
+    { "kind": "sponsor", "icon": "ring", "title": "Dasa", "image": null, "description": "Laboratórios Dasa promovem campanha nacional de prevenção e reforçam a importância do diagnóstico precoce.", "linkLabel": "Ler notícia", "href": "/noticias/dasa" }
+  ],
+  "comments": []
+}

@@ -1,7 +1,7 @@
 <ng-container *ngIf="data() as d">
   <section class="home__top">
-    <app-hero-featured [article]="d.featuredArticle"></app-hero-featured>
-    <app-trending-panel [items]="d.trending"></app-trending-panel>
+    <app-hero-featured [articles]="d.featuredArticles"></app-hero-featured>
+    <app-trending-panel [data]="d.trending"></app-trending-panel>
   </section>
 
   <section class="home__grid">

@@ -172,11 +172,116 @@
   text-decoration: none;
 }
 
+.header__burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  margin-left: auto;
+}
+.header__burger span {
+  width: 20px;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.header__burger.is-open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.header__burger.is-open span:nth-child(2) {
+  opacity: 0;
+}
+.header__burger.is-open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+.header__mobile-panel {
+  display: none;
+}
+
 @media (max-width: 900px) {
-  .header__nav {
+  .header__nav,
+  .header__actions {
     display: none;
   }
-  .header__search input {
-    width: 90px;
+  .header__burger {
+    display: flex;
+  }
+
+  .header__mobile-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 0 var(--gutter) 20px;
+    max-width: var(--container-max);
+    margin: 0 auto;
+  }
+  .header__search--mobile {
+    margin-bottom: 12px;
+  }
+  .header__search--mobile input {
+    width: 100%;
+    flex: 1;
+  }
+
+  .header__mobile-nav-item {
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+  }
+  .header__mobile-nav-trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    font-size: var(--fs-body-s);
+    padding: 14px 4px;
+    cursor: pointer;
+  }
+  .header__mobile-nav-trigger app-icon {
+    transition: transform 0.2s ease;
+  }
+  .header__mobile-nav-trigger.is-open app-icon {
+    transform: rotate(180deg);
+  }
+
+  .header__mobile-submenu {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 4px 4px 18px;
+  }
+  .header__mobile-submenu .header__mega-col h4 {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .header__mobile-submenu .header__mega-col a {
+    color: #fff;
+    padding: 8px 0;
+  }
+  .header__mobile-submenu .header__mega-col a:hover {
+    color: var(--color-secondary);
+  }
+
+  .header__mobile-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+  }
+  .header__mobile-actions .header__login {
+    flex: 1;
+    justify-content: center;
   }
 }
