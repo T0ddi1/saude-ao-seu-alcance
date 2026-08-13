@@ -50,8 +50,8 @@
     "ctaLabel": "Inscrever"
   },
   "specialProjects": [
-    { "icon": "ring", "title": "Outubro Rosa", "description": "Prevenção do câncer de mama", "href": "/projetos/outubro-rosa" },
-    { "icon": "dot", "title": "Novembro Azul", "description": "Cuidados com o câncer de próstata", "href": "/projetos/novembro-azul" },
+    { "icon": "ribbon", "title": "Agosto Lilás", "description": "Combate à violência contra a mulher", "href": "/projetos/agosto-lilas" },
+    { "icon": "ribbon", "title": "Agosto Dourado", "description": "Incentivo ao aleitamento materno", "href": "/projetos/agosto-dourado" },
     { "icon": "square", "title": "Saúde na Escola", "description": "Educação para toda a vida", "href": "/projetos/saude-na-escola" },
     { "icon": "cross", "title": "Envelhecer Bem", "description": "Qualidade de vida na terceira idade", "href": "/projetos/envelhecer-bem" }
   ]

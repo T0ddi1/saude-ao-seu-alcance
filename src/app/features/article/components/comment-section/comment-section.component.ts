@@ -14,6 +14,9 @@ import { ArticleComment } from '../../../../core/models/article.model';
 export class CommentSectionComponent {
   @Input({ required: true }) comments!: ArticleComment[];
 
+  /** Flip to true once comments have a real backend to post to. */
+  commentsEnabled = false;
+
   name = '';
   email = '';
   message = '';
@@ -21,7 +24,7 @@ export class CommentSectionComponent {
   posted = signal(false);
 
   onSubmit(): void {
-    if (!this.name || !this.email || !this.message) {
+    if (!this.commentsEnabled || !this.name || !this.email || !this.message) {
       return;
     }
     // TODO: POST to the real comments endpoint once available

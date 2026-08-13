@@ -2,29 +2,40 @@
   <h3>Deixe um comentário</h3>
   <p class="comments__note">Seu endereço de e-mail não será publicado. Os campos obrigatórios estão marcados com *</p>
 
-  <form class="comments__form" (ngSubmit)="onSubmit()">
+  <p class="comments__disabled-note" *ngIf="!commentsEnabled">
+    Os comentários estão temporariamente desativados. Volte em breve!
+  </p>
+
+  <form class="comments__form" [class.comments__form--disabled]="!commentsEnabled" (ngSubmit)="onSubmit()">
     <div class="comments__row">
       <label>
         Nome *
-        <input type="text" name="name" [(ngModel)]="name" required />
+        <input type="text" name="name" [(ngModel)]="name" [disabled]="!commentsEnabled" required />
       </label>
       <label>
         Seu E-mail *
-        <input type="email" name="email" [(ngModel)]="email" required />
+        <input type="email" name="email" [(ngModel)]="email" [disabled]="!commentsEnabled" required />
       </label>
     </div>
 
     <label class="comments__message">
       Mensagem *
-      <textarea name="message" rows="6" [(ngModel)]="message" placeholder="Digite sua mensagem aqui." required></textarea>
+      <textarea
+        name="message"
+        rows="6"
+        [(ngModel)]="message"
+        [disabled]="!commentsEnabled"
+        placeholder="Digite sua mensagem aqui."
+        required
+      ></textarea>
     </label>
 
     <label class="comments__checkbox">
-      <input type="checkbox" name="saveInfo" [(ngModel)]="saveInfo" />
+      <input type="checkbox" name="saveInfo" [(ngModel)]="saveInfo" [disabled]="!commentsEnabled" />
       Salve meu nome, e-mail e site neste navegador para a próxima vez que eu comentar.
     </label>
 
-    <app-button type="submit" variant="primary">Postar Comentário →</app-button>
+    <app-button type="submit" variant="primary" [disabled]="!commentsEnabled">Postar Comentário →</app-button>
     <p class="comments__thanks" *ngIf="posted()">Comentário publicado — obrigado por participar!</p>
   </form>
 

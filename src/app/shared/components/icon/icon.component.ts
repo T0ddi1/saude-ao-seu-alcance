@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 /** Maps semantic icon names used across templates to Font Awesome classes. */
 const ICON_MAP: Record<string, string> = {
   ring: 'fa-solid fa-heart-pulse',
+  ribbon: 'fa-solid fa-ribbon',
   dot: 'fa-solid fa-circle-dot',
   cross: 'fa-solid fa-plus',
   square: 'fa-solid fa-hospital',

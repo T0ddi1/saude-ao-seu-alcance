@@ -7,6 +7,6 @@
 <a *ngIf="href" [href]="href" class="btn" [ngClass]="variant">
   <ng-container *ngTemplateOutlet="label"></ng-container>
 </a>
-<button *ngIf="!href" [type]="type" class="btn" [ngClass]="variant">
+<button *ngIf="!href" [type]="type" [disabled]="disabled" class="btn" [ngClass]="variant">
   <ng-container *ngTemplateOutlet="label"></ng-container>
 </button>

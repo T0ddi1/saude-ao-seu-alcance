@@ -13,6 +13,14 @@
   transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
   white-space: nowrap;
 }
+.btn:disabled {
+  cursor: not-allowed;
+  /* Not opacity: the primary variant's background is the same purple as
+     the footer behind it — fading the whole button also fades the white
+     label text to near-illegible. Desaturating/darkening the fill keeps
+     the text at full contrast while still reading as "inactive". */
+  filter: saturate(0.6) brightness(0.85);
+}
 
 .primary {
   background: var(--color-primary);

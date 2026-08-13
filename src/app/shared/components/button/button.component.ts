@@ -13,4 +13,5 @@ export class ButtonComponent {
   @Input() href: string | null = null;
   @Input() type: 'button' | 'submit' = 'button';
   @Input() showArrow = false;
+  @Input() disabled = false;
 }

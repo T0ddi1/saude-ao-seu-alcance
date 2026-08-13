@@ -1,4 +1,4 @@
-export type IconGlyph = 'ring' | 'dot' | 'cross' | 'square' | 'doc' | 'mic' | 'play' | 'arrow-right' | 'search' | 'bookmark' | 'chevron-down';
+export type IconGlyph = 'ring' | 'ribbon' | 'dot' | 'cross' | 'square' | 'doc' | 'mic' | 'play' | 'arrow-right' | 'search' | 'bookmark' | 'chevron-down';
 
 export interface FeaturedArticle {
   eyebrow: string;

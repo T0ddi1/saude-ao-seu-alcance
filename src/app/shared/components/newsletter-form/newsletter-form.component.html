@@ -1,14 +1,33 @@
 <form class="newsletter" (ngSubmit)="onSubmit()" *ngIf="!submitted(); else thanks">
+  <!-- Honeypot: invisible to real visitors and skipped in tab order; bots that
+       auto-fill every field trip it and get silently ignored. -->
   <input
-    class="newsletter__input"
-    type="email"
-    name="email"
-    required
-    [(ngModel)]="email"
-    [placeholder]="placeholder"
-    aria-label="E-mail para newsletter"
+    class="newsletter__honeypot"
+    type="text"
+    name="website"
+    tabindex="-1"
+    autocomplete="off"
+    aria-hidden="true"
+    [(ngModel)]="website"
   />
-  <app-button type="submit" variant="primary">{{ ctaLabel }}</app-button>
+
+  <div class="newsletter__row">
+    <input
+      class="newsletter__input"
+      type="email"
+      name="email"
+      required
+      [(ngModel)]="email"
+      [placeholder]="placeholder"
+      [disabled]="submitting()"
+      aria-label="E-mail para newsletter"
+    />
+    <app-button type="submit" variant="primary" [disabled]="submitting()">
+      {{ submitting() ? 'Enviando…' : ctaLabel }}
+    </app-button>
+  </div>
+
+  <p class="newsletter__error" *ngIf="error()">{{ error() }}</p>
 </form>
 <ng-template #thanks>
   <p class="newsletter__thanks">Inscrição confirmada — obrigado!</p>
