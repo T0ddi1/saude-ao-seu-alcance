@@ -1,0 +1,49 @@
+<div class="search" [class.search--mobile]="variant === 'mobile'">
+  <form class="search__bar" (submit)="onSubmit($event)" role="search">
+    <input
+      type="search"
+      placeholder="Buscar"
+      aria-label="Buscar no portal"
+      autocomplete="off"
+      [value]="query()"
+      (input)="onInput($event)"
+      (focus)="onFocus()"
+    />
+    <button type="submit" class="search__submit" aria-label="Buscar">
+      <app-icon name="search" [size]="16" color="var(--color-muted)"></app-icon>
+    </button>
+  </form>
+
+  <div class="search__dropdown" *ngIf="isOpen()">
+    <ng-container *ngIf="results().length; else noResults">
+      <a
+        class="search__result"
+        *ngFor="let item of results()"
+        [href]="item.href"
+        (click)="onResultClick()"
+      >
+        <div class="search__result-media" *ngIf="item.image; else noImage">
+          <img [src]="item.image" [alt]="item.title" loading="lazy" />
+        </div>
+        <ng-template #noImage>
+          <div class="search__result-media search__result-media--placeholder">
+            <app-icon name="search" [size]="14" color="var(--color-muted)"></app-icon>
+          </div>
+        </ng-template>
+
+        <div class="search__result-body">
+          <span class="search__result-category">{{ item.category }}</span>
+          <span class="search__result-title">{{ item.title }}</span>
+        </div>
+      </a>
+
+      <a class="search__see-all" [href]="'/buscar?q=' + query()" (click)="onResultClick()">
+        Ver todos os resultados para "{{ query() }}"
+      </a>
+    </ng-container>
+
+    <ng-template #noResults>
+      <p class="search__empty">Nenhum resultado para "{{ query() }}".</p>
+    </ng-template>
+  </div>
+</div>

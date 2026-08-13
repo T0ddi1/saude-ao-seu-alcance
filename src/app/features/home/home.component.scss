@@ -38,3 +38,27 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Totem kiosk (1080x1920 portrait): the hero becomes a full-bleed poster,
+   so it must break out of :host's padding and drop the side-by-side trending panel. */
+@media (min-width: 1000px) and (orientation: portrait) {
+  :host {
+    padding-top: 0;
+  }
+
+  .home__top {
+    display: block;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  app-trending-panel {
+    display: none;
+  }
+
+  .home__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px 32px;
+    padding: 56px 0;
+  }
+}

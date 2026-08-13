@@ -1,6 +1,12 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
 .card {
   display: flex;
   flex-direction: column;
+  height: 100%;
   gap: 16px;
   color: inherit;
   border-radius: var(--radius-m);
@@ -18,8 +24,11 @@
 
 .card__head {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 10px;
+}
+.card__head app-icon {
+  margin-top: 2px;
 }
 
 .card__badge {
@@ -37,6 +46,11 @@
   font-size: var(--fs-body-m);
   font-weight: 600;
   line-height: 1.3;
+  min-height: calc(1.3em * 2);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .card__media {

@@ -1,0 +1,32 @@
+<app-breadcrumb [items]="breadcrumbs"></app-breadcrumb>
+
+<div class="search-page">
+  <h1 class="search-page__title" *ngIf="query(); else noQuery">
+    Resultados para "{{ query() }}"
+  </h1>
+  <ng-template #noQuery>
+    <h1 class="search-page__title">Buscar</h1>
+    <p class="search-page__hint">Digite pelo menos {{ minChars }} caracteres para buscar no portal.</p>
+  </ng-template>
+
+  <p class="search-page__count" *ngIf="query()">
+    {{ results().length }} {{ results().length === 1 ? 'resultado encontrado' : 'resultados encontrados' }}
+  </p>
+
+  <div class="search-page__grid" *ngIf="results().length">
+    <a class="search-page__card" *ngFor="let item of results()" [href]="item.href">
+      <div class="search-page__media" *ngIf="item.image">
+        <img [src]="item.image" [alt]="item.title" loading="lazy" />
+      </div>
+      <div class="search-page__body">
+        <span class="search-page__category">{{ item.category }}</span>
+        <h2 class="search-page__card-title">{{ item.title }}</h2>
+        <p class="search-page__excerpt">{{ item.excerpt }}</p>
+      </div>
+    </a>
+  </div>
+
+  <p class="search-page__empty" *ngIf="query() && !results().length">
+    Nenhum resultado encontrado para "{{ query() }}". Tente outro termo.
+  </p>
+</div>

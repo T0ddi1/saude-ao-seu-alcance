@@ -47,5 +47,10 @@ export const routes: Routes = [
     loadComponent: () => import('./features/contact/contact.component').then((m) => m.ContactComponent),
     title: 'Contato — Saúde ao Seu Alcance',
   },
+  {
+    path: 'buscar',
+    loadComponent: () => import('./features/search/search-page.component').then((m) => m.SearchPageComponent),
+    title: 'Busca — Saúde ao Seu Alcance',
+  },
   { path: '**', redirectTo: '' },
 ];

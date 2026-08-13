@@ -15,7 +15,7 @@
     { "icon": "linkedin", "href": "#", "label": "Compartilhar no LinkedIn" },
     { "icon": "x", "href": "#", "label": "Compartilhar no X" }
   ],
-  "heroImage": "assets/images/cuidado-com-a-saude.jpg",
+  "heroImage": "assets/images/articles/dengue-mosquito-agua.jpg",
   "blocks": [
     { "type": "paragraph", "text": "A cada verão, a dengue volta a ocupar espaço nos noticiários brasileiros. Quando o número de casos diminui, muitas pessoas acreditam que o problema foi resolvido. No entanto, essa é uma percepção equivocada." },
     { "type": "paragraph", "text": "A dengue permanece como um dos maiores desafios de saúde pública do Brasil. O mosquito Aedes aegypti continua presente em praticamente todo o território nacional e, enquanto existirem recipientes com água parada, haverá risco de transmissão." },
@@ -57,6 +57,8 @@
     ]},
     { "type": "paragraph", "text": "Uma simples tampa de garrafa contendo água já pode servir de criadouro." },
     { "type": "paragraph", "text": "Eliminar esses locais continua sendo a medida mais eficiente para reduzir a transmissão da doença." },
+
+    { "type": "image", "src": "assets/images/articles/dengue-eliminando-agua.jpg", "alt": "Mãos despejando fora a água acumulada de um vaso de planta", "caption": "Cinco minutos que podem evitar uma doença." },
 
     { "type": "display", "text": "Hidratação faz parte do tratamento" },
     { "type": "paragraph", "text": "Quando a dengue é confirmada, um dos cuidados mais importantes é manter boa hidratação." },

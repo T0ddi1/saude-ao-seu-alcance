@@ -1,5 +1,6 @@
 <section
   class="hero"
+  [style.--hero-image]="article().image ? 'url(' + article().image + ')' : 'none'"
   (mouseenter)="pauseAutoplay()"
   (mouseleave)="resumeAutoplay()"
   (touchstart)="onTouchStart($event)"

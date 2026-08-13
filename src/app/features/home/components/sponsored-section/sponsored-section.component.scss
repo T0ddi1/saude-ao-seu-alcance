@@ -125,8 +125,8 @@
 .is-brand .sponsored__logo {
   align-self: center;
   height: 34px;
-  /* gama's logo ships with a baked-in dark background — screen blends it into the brand card */
-  mix-blend-mode: screen;
+  /* gama's logo file has real alpha transparency — no blend hack needed */
+  mix-blend-mode: normal;
 }
 
 .sponsored__card h3 {

@@ -1,8 +1,11 @@
 .health-data {
   display: grid;
-  grid-template-columns: 1fr 2fr 1.2fr 1.2fr 1.2fr;
+  grid-template-columns: 1.8fr 2fr 1.2fr 1.2fr 1.2fr;
   gap: 24px;
-  align-items: start;
+  /* stretch (the default) so every column matches the tallest row —
+     .health-data__intro's height:100% and the category links below
+     depend on this to line up instead of following their own content height. */
+  align-items: stretch;
   padding: 48px 0;
   border-top: 1px solid var(--color-border);
 }
@@ -16,7 +19,7 @@
 }
 .health-data__map {
   width: 100%;
-  max-width: 160px;
+  max-width: 320px;
   aspect-ratio: 124 / 124;
   margin-left: auto;
   background-color: var(--color-primary);
@@ -109,6 +112,11 @@
 .health-data__category-head h3 {
   font-size: var(--fs-body-m);
   line-height: 1.2;
+  min-height: calc(1.2em * 2);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .health-data__category-media {
@@ -126,6 +134,7 @@
 .health-data__category p {
   font-size: var(--fs-label-m);
   color: var(--color-body-text);
+  flex: 1;
 }
 
 .health-data__category-link {
@@ -162,7 +171,7 @@
   }
   .health-data__map {
     margin-left: 0;
-    max-width: 100px;
+    max-width: 180px;
   }
   .health-data__stats-wrap {
     grid-column: 1 / -1;
@@ -174,7 +183,7 @@
    the roomy single-row layout instead of the cramped 2-column fallback. */
 @media (min-width: 820px) and (orientation: portrait) {
   .health-data {
-    grid-template-columns: 1fr 2fr 1.2fr 1.2fr 1.2fr;
+    grid-template-columns: 1.8fr 2fr 1.2fr 1.2fr 1.2fr;
   }
   .health-data__intro {
     grid-column: auto;
@@ -184,7 +193,7 @@
   }
   .health-data__map {
     margin-left: auto;
-    max-width: 160px;
+    max-width: 320px;
   }
   .health-data__stats-wrap {
     grid-column: auto;

@@ -90,3 +90,67 @@
 .hero__dot.is-active {
   background: var(--color-primary);
 }
+
+/*
+ * Totem kiosk (1080x1920 portrait). Regular phones/tablets never hit
+ * min-width:1000px in portrait, so this only fires on the totem display.
+ * The featured article becomes a full-bleed poster with the image as
+ * background and the text/controls anchored to the bottom, within reach
+ * of someone standing in front of the screen.
+ */
+@media (min-width: 1000px) and (orientation: portrait) {
+  .hero {
+    max-width: none;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    min-height: 78vh;
+    padding: 0 64px 72px;
+    justify-content: flex-end;
+    gap: 28px;
+    color: #fff;
+    background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.15) 35%, rgba(0, 0, 0, 0.75) 68%, rgba(0, 0, 0, 0.92) 100%), var(--hero-image, none);
+    background-size: cover;
+    background-position: center;
+  }
+
+  /*
+   * The global h1/p color rules (styles.scss) win over the inherited
+   * white from .hero, since an explicit element-matching rule always
+   * beats an inherited value. Set colors explicitly here, plus a
+   * text-shadow as a safety net against busy/bright photos.
+   */
+  .hero__eyebrow,
+  .hero__title,
+  .hero__excerpt {
+    color: #fff;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
+  }
+
+  .hero__title {
+    font-size: 64px;
+  }
+
+  .hero__excerpt {
+    font-size: 28px;
+    font-weight: 500;
+  }
+
+  .hero__row {
+    margin-top: 16px;
+  }
+
+  .hero__arrow {
+    width: 56px;
+    height: 56px;
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+
+  .hero__dot {
+    width: 14px;
+    height: 14px;
+    background: rgba(255, 255, 255, 0.5);
+  }
+  .hero__dot.is-active {
+    background: #fff;
+  }
+}

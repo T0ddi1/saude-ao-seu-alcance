@@ -44,6 +44,11 @@
         <ul class="article__list" *ngIf="block.type === 'list'">
           <li *ngFor="let item of block.items">{{ item }}</li>
         </ul>
+
+        <figure class="article__figure" *ngIf="block.type === 'image'">
+          <img [src]="block.src" [alt]="block.alt" loading="lazy" />
+          <figcaption *ngIf="block.caption">{{ block.caption }}</figcaption>
+        </figure>
       </ng-container>
 
       <app-comment-section [comments]="d.comments"></app-comment-section>

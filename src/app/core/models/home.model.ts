@@ -6,6 +6,8 @@ export interface FeaturedArticle {
   excerpt: string;
   ctaLabel: string;
   href: string;
+  /** Used only for the totem (1080x1920) poster layout — not shown on web. */
+  image?: string;
 }
 
 export interface TrendingItem {

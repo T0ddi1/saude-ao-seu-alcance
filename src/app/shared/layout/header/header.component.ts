@@ -4,11 +4,12 @@ import { RouterLink } from '@angular/router';
 import { NavigationService } from '../../../core/services/navigation.service';
 import { NavItem } from '../../../core/models/navigation.model';
 import { IconComponent } from '../../components/icon/icon.component';
+import { SearchBoxComponent } from '../../components/search-box/search-box.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterLink, IconComponent],
+  imports: [CommonModule, RouterLink, IconComponent, SearchBoxComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })

@@ -111,21 +111,6 @@
   flex-shrink: 0;
 }
 
-.header__search {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: #fff;
-  border-radius: var(--radius-pill);
-  padding: 8px 14px;
-}
-.header__search input {
-  border: none;
-  outline: none;
-  font-size: var(--fs-body-s);
-  width: 140px;
-}
-
 .header__icon-btn {
   width: 38px;
   height: 38px;
@@ -226,11 +211,8 @@
     margin: 0 auto;
   }
   .header__search--mobile {
+    display: block;
     margin-bottom: 12px;
-  }
-  .header__search--mobile input {
-    width: 100%;
-    flex: 1;
   }
 
   .header__mobile-nav-item {

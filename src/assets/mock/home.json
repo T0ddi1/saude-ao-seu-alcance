@@ -5,28 +5,32 @@
       "title": "Infodemia: quando o excesso de informação também adoece",
       "excerpt": "Como aprender a diferenciar conhecimento científico de desinformação é uma das maiores estratégias de prevenção em saúde.",
       "ctaLabel": "Leia o conteúdo",
-      "href": "/artigos/infodemia-excesso-informacao"
+      "href": "/artigos/infodemia-excesso-informacao",
+      "image": "assets/images/articles/infodemia-mulher-celular.jpg"
     },
     {
       "eyebrow": "ARTIGO EM DESTAQUE",
       "title": "Viver mais ou viver melhor? O desafio da longevidade saudável no Brasil",
       "excerpt": "A expectativa de vida aumentou, mas o grande desafio agora é garantir que esses anos extras sejam vividos com autonomia, independência e qualidade de vida.",
       "ctaLabel": "Leia o conteúdo",
-      "href": "/artigos/longevidade-saudavel-brasil"
+      "href": "/artigos/longevidade-saudavel-brasil",
+      "image": "assets/images/articles/longevidade-homem-surf.jpg"
     },
     {
       "eyebrow": "ARTIGO EM DESTAQUE",
       "title": "Você não precisa fazer dieta para comer melhor",
       "excerpt": "Pequenas mudanças na alimentação podem trazer grandes benefícios para a saúde.",
       "ctaLabel": "Leia o conteúdo",
-      "href": "/artigos/comer-melhor-sem-dieta"
+      "href": "/artigos/comer-melhor-sem-dieta",
+      "image": "assets/images/articles/dieta-mesa-comida.jpg"
     },
     {
       "eyebrow": "ARTIGO EM DESTAQUE",
       "title": "Dengue: o surto pode passar, mas a prevenção precisa continuar",
       "excerpt": "Conhecer os sinais de alerta e eliminar os focos do mosquito continuam sendo as formas mais eficazes de proteger sua família.",
       "ctaLabel": "Leia o conteúdo",
-      "href": "/artigos/dengue-prevencao-continua"
+      "href": "/artigos/dengue-prevencao-continua",
+      "image": "assets/images/articles/dengue-mosquito-agua.jpg"
     }
   ],
   "trending": {
@@ -44,13 +48,13 @@
   },
   "contentCards": [
     { "icon": "ring", "title": "Cuidado com a saúde", "image": "assets/images/cuidado-com-a-saude.jpg", "excerpt": "Orientação pública para cuidar de você e de quem você ama.", "linkLabel": "Ver conteúdos", "href": "/blog" },
-    { "icon": "square", "title": "Cuidado Federal", "image": "assets/images/cuidado-com-a-saude.jpg", "excerpt": "Governo lança nova etapa do programa de vacinação e amplia a cobertura em áreas prioritárias.", "linkLabel": "Ler notícia", "href": "/artigos/cuidado-federal", "sponsored": true },
+    { "icon": "doc", "title": "Infodemia: quando o excesso de informação também adoece", "image": "assets/images/articles/infodemia-mulher-celular.jpg", "excerpt": "Como aprender a diferenciar conhecimento científico de desinformação é uma das maiores estratégias de prevenção em saúde.", "linkLabel": "Leia o artigo", "href": "/artigos/infodemia-excesso-informacao" },
     { "icon": "cross", "title": "Emergências e Primeiros Cuidados", "image": null, "excerpt": "Saiba como agir em situações de emergência e salvar vidas.", "linkLabel": "Ver conteúdos", "href": "/blog" },
-    { "icon": "ring", "title": "Dasa", "image": "assets/images/outubro-rosa.png", "excerpt": "Laboratórios Dasa promovem campanha nacional de prevenção e reforçam a importância do diagnóstico precoce.", "linkLabel": "Ler notícia", "href": "/artigos/dasa", "sponsored": true },
+    { "icon": "doc", "title": "Viver mais ou viver melhor? O desafio da longevidade saudável no Brasil", "image": "assets/images/articles/longevidade-homem-surf.jpg", "excerpt": "A expectativa de vida aumentou, mas o grande desafio agora é garantir que esses anos extras sejam vividos com autonomia e qualidade de vida.", "linkLabel": "Leia o artigo", "href": "/artigos/longevidade-saudavel-brasil" },
     { "icon": "dot", "title": "Hábitos saudáveis", "image": null, "excerpt": "Sono, movimento, equilíbrio mental e bem-estar no dia a dia.", "linkLabel": "Ver conteúdos", "href": "/blog" },
-    { "icon": "square", "title": "Hospital São José", "image": "assets/images/blog-sofa.jpg", "excerpt": "Hospital São José inicia programa de cuidado integrado com foco em prevenção e atendimento humanizado.", "linkLabel": "Ler notícia", "href": "/artigos/hospital-sao-jose", "sponsored": true },
+    { "icon": "doc", "title": "Você não precisa fazer dieta para comer melhor", "image": "assets/images/articles/dieta-mesa-comida.jpg", "excerpt": "Pequenas mudanças na alimentação podem trazer grandes benefícios para a saúde.", "linkLabel": "Leia o artigo", "href": "/artigos/comer-melhor-sem-dieta" },
     { "icon": "ring", "title": "Nutrição", "image": "assets/images/nutricao.jpg", "excerpt": "Alimentação equilibrada para mais saúde, energia e longevidade.", "linkLabel": "Ver conteúdos", "href": "/blog" },
-    { "icon": "square", "title": "PBH", "image": "assets/images/blog-familia-bike.jpg", "excerpt": "Inaugurado novo centro de saúde em BH para ampliar o acesso da população à atenção básica.", "linkLabel": "Ler notícia", "href": "/artigos/pbh", "sponsored": true }
+    { "icon": "doc", "title": "Dengue: o surto pode passar, mas a prevenção precisa continuar", "image": "assets/images/articles/dengue-mosquito-agua.jpg", "excerpt": "Conhecer os sinais de alerta e eliminar os focos do mosquito continuam sendo as formas mais eficazes de proteger sua família.", "linkLabel": "Leia o artigo", "href": "/artigos/dengue-prevencao-continua" }
   ],
   "healthStats": {
     "title": "Dados da Saúde no Brasil",

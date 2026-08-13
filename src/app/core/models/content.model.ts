@@ -13,7 +13,8 @@ export type ContentBlock =
   | { type: 'paragraph'; text: string }
   | { type: 'display'; text: string }
   | { type: 'quote'; text: string }
-  | { type: 'list'; items: string[] };
+  | { type: 'list'; items: string[] }
+  | { type: 'image'; src: string; alt: string; caption?: string };
 
 export interface InstitutionalPageData {
   breadcrumbs: Breadcrumb[];

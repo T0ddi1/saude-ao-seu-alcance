@@ -15,7 +15,7 @@
     { "icon": "linkedin", "href": "#", "label": "Compartilhar no LinkedIn" },
     { "icon": "x", "href": "#", "label": "Compartilhar no X" }
   ],
-  "heroImage": "assets/images/inovacao.png",
+  "heroImage": "assets/images/articles/infodemia-mulher-celular.jpg",
   "blocks": [
     { "type": "paragraph", "text": "Nunca tivemos tanto acesso à informação quanto nos dias atuais. Com apenas alguns segundos e um telefone celular nas mãos, é possível pesquisar sintomas, conhecer tratamentos, assistir a cirurgias, acompanhar especialistas e obter orientações sobre praticamente qualquer doença." },
     { "type": "paragraph", "text": "Esse avanço representa uma conquista extraordinária da sociedade. Afinal, uma população bem informada tende a participar mais ativamente das decisões relacionadas à própria saúde. Entretanto, existe um efeito colateral dessa revolução digital que preocupa médicos, pesquisadores e organismos internacionais: o excesso de informação." },
@@ -28,6 +28,8 @@
     { "type": "paragraph", "text": "Trata-se do aumento da ansiedade provocado pela busca excessiva de informações médicas na internet. Quanto mais a pessoa pesquisa, maior tende a ser sua preocupação, criando um ciclo em que novos sintomas passam a ser interpretados como sinais de doenças graves." },
     { "type": "paragraph", "text": "Isso acontece porque nosso cérebro naturalmente presta mais atenção às informações que despertam medo. As redes sociais, por sua vez, potencializam esse comportamento ao privilegiar conteúdos que geram impacto emocional, compartilhamentos e engajamento." },
     { "type": "paragraph", "text": "O resultado é uma população cada vez mais informada, porém muitas vezes mais ansiosa." },
+
+    { "type": "image", "src": "assets/images/articles/infodemia-homem-avalanche.jpg", "alt": "Homem de costas diante de dezenas de telas com notícias, alertas e vídeos sobre saúde", "caption": "O volume de conteúdos de diferentes origens e níveis de evidência é o que caracteriza a infodemia." },
 
     { "type": "display", "text": "Informação demais também pode atrapalhar o tratamento" },
     { "type": "paragraph", "text": "Essa realidade já faz parte do cotidiano dos consultórios." },

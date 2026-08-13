@@ -15,7 +15,7 @@
     { "icon": "linkedin", "href": "#", "label": "Compartilhar no LinkedIn" },
     { "icon": "x", "href": "#", "label": "Compartilhar no X" }
   ],
-  "heroImage": "assets/images/blog-yoga.jpg",
+  "heroImage": "assets/images/articles/longevidade-homem-surf.jpg",
   "blocks": [
     { "type": "paragraph", "text": "Nas últimas décadas, o Brasil conquistou um avanço extraordinário: estamos vivendo mais." },
     { "type": "paragraph", "text": "Os progressos da medicina, das vacinas, do saneamento básico, dos medicamentos e do acesso aos serviços de saúde fizeram com que a expectativa de vida aumentasse significativamente. No entanto, um estudo recente publicado na revista The Lancet Regional Health – Americas, baseado nos dados do Global Burden of Disease 2023, trouxe um importante alerta: embora estejamos vivendo mais, uma parcela considerável desses anos é vivida com doenças crônicas ou limitações que comprometem a qualidade de vida." },
@@ -126,6 +126,9 @@
     { "type": "paragraph", "text": "Precisamos garantir que esses anos adicionais sejam vividos com autonomia, mobilidade, independência, lucidez e bem-estar." },
     { "type": "paragraph", "text": "A verdadeira longevidade não é apenas celebrar aniversários." },
     { "type": "paragraph", "text": "É continuar caminhando, aprendendo, convivendo com quem amamos, trabalhando quando desejamos, viajando, sorrindo e mantendo a capacidade de fazer escolhas." },
+
+    { "type": "image", "src": "assets/images/articles/longevidade-mulher-aeroporto.jpg", "alt": "Mulher mais velha caminhando sozinha em um terminal de aeroporto, puxando uma mala e olhando o celular", "caption": "Autonomia para ir e vir é um dos maiores indicadores de longevidade saudável." },
+
     { "type": "paragraph", "text": "Porque viver mais é uma conquista." },
     { "type": "lead", "segments": [ { "text": "Viver melhor é o verdadeiro objetivo da saúde.", "strong": true } ] },
 

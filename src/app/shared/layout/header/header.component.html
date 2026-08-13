@@ -31,17 +31,14 @@
     </nav>
 
     <div class="header__actions">
-      <label class="header__search">
-        <app-icon name="search" [size]="16" color="var(--color-muted)"></app-icon>
-        <input type="search" placeholder="Buscar" aria-label="Buscar no portal" />
-      </label>
-      <button type="button" class="header__icon-btn" aria-label="Favoritos">
-        <app-icon name="bookmark" [size]="18"></app-icon>
-      </button>
-      <a class="header__login" routerLink="/cadastre-se">
-        <app-icon name="user" [size]="16"></app-icon>
-        Entrar
-      </a>
+      <app-search-box></app-search-box>
+<!--      <button type="button" class="header__icon-btn" aria-label="Favoritos">-->
+<!--        <app-icon name="bookmark" [size]="18"></app-icon>-->
+<!--      </button>-->
+<!--      <a class="header__login" routerLink="/cadastre-se">-->
+<!--        <app-icon name="user" [size]="16"></app-icon>-->
+<!--        Entrar-->
+<!--      </a>-->
       <a class="header__contact" routerLink="/contato">Contato</a>
     </div>
 
@@ -60,10 +57,7 @@
   </div>
 
   <div class="header__mobile-panel" *ngIf="mobileMenuOpen()">
-    <label class="header__search header__search--mobile">
-      <app-icon name="search" [size]="16" color="var(--color-muted)"></app-icon>
-      <input type="search" placeholder="Buscar" aria-label="Buscar no portal" />
-    </label>
+    <app-search-box variant="mobile" class="header__search--mobile"></app-search-box>
 
     <div class="header__mobile-nav-item" *ngFor="let item of navItems(); let i = index">
       <button

@@ -142,6 +142,23 @@
   line-height: 1.6;
 }
 
+.article__figure {
+  margin: 8px 0 28px;
+}
+.article__figure img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--radius-m);
+  display: block;
+}
+.article__figure figcaption {
+  margin-top: 10px;
+  font-size: var(--fs-label-s);
+  color: var(--color-muted);
+  text-align: center;
+}
+
 @media (max-width: 1000px) {
   .article {
     grid-template-columns: 1fr;

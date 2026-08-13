@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls \"C:\\\\Users\\\\fernando.maia\\\\Pictures\\\\fotos\")",
+      "Bash(cp 'C:\\\\Users\\\\fernando.maia\\\\Pictures\\\\fotos/WhatsApp Image 2026-08-12 at 20.40.32.jpeg' 'C:\\\\Users\\\\fernando.maia\\\\WebstormProjects\\\\saude-ao-seu-alcance\\\\src\\\\assets\\\\images\\\\articles/infodemia-mulher-celular.jpg')",
+      "Bash(cp 'C:\\\\Users\\\\fernando.maia\\\\Pictures\\\\fotos/WhatsApp Image 2026-08-12 at 20.40.34 \\(2\\).jpeg' 'C:\\\\Users\\\\fernando.maia\\\\WebstormProjects\\\\saude-ao-seu-alcance\\\\src\\\\assets\\\\images\\\\articles/infodemia-homem-avalanche.jpg')",
+      "Bash(cp 'C:\\\\Users\\\\fernando.maia\\\\Pictures\\\\fotos/WhatsApp Image 2026-08-12 at 20.40.34 \\(1\\).jpeg' 'C:\\\\Users\\\\fernando.maia\\\\WebstormProjects\\\\saude-ao-seu-alcance\\\\src\\\\assets\\\\images\\\\articles/longevidade-homem-surf.jpg')",
+      "Bash(cp 'C:\\\\Users\\\\fernando.maia\\\\Pictures\\\\fotos/WhatsApp Image 2026-08-12 at 20.40.33 \\(3\\).jpeg' 'C:\\\\Users\\\\fernando.maia\\\\WebstormProjects\\\\saude-ao-seu-alcance\\\\src\\\\assets\\\\images\\\\articles/longevidade-mulher-aeroporto.jpg')",
+      "Bash(cp 'C:\\\\Users\\\\fernando.maia\\\\Pictures\\\\fotos/WhatsApp Image 2026-08-12 at 20.40.33 \\(1\\).jpeg' 'C:\\\\Users\\\\fernando.maia\\\\WebstormProjects\\\\saude-ao-seu-alcance\\\\src\\\\assets\\\\images\\\\articles/dieta-mesa-comida.jpg')",
+      "PowerShell(Add-Type -AssemblyName System.Drawing; $img = [System.Drawing.Image]::FromFile\\('C:\\\\Users\\\\fernando.maia\\\\Pictures\\\\fotos\\\\logo.png'\\); \"$\\($img.Width\\)x$\\($img.Height\\) PixelFormat=$\\($img.PixelFormat\\)\")",
+      "Bash(cp \"C:\\\\Users\\\\fernando.maia\\\\Pictures\\\\fotos\\\\logo.png\" \"C:\\\\Users\\\\fernando.maia\\\\WebstormProjects\\\\saude-ao-seu-alcance\\\\src\\\\assets\\\\images\\\\gama-logo.png\")",
+      "Bash(rm \"C:\\\\Users\\\\fernando.maia\\\\Pictures\\\\fotos\\\\logo-preview-on-purple.png\")"
+    ]
+  }
+}
