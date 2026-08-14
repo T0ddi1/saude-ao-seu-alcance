@@ -1,13 +1,33 @@
+/*
+ * Two independent groups side by side — map+stats ("left") and the 3
+ * content categories ("right") — instead of one flat 5-column grid.
+ * Previously everything shared one grid row, so align-items:stretch made
+ * the categories match the height of whichever side was taller, leaving
+ * a big gap before their "Ver conteúdos" links whenever map+stats were
+ * the taller side. Splitting them means each group only stretches its
+ * own children to match each other, not the unrelated group next to it.
+ */
 .health-data {
   display: grid;
-  grid-template-columns: 1.8fr 2fr 1.2fr 1.2fr 1.2fr;
-  gap: 24px;
-  /* stretch (the default) so every column matches the tallest row —
-     .health-data__intro's height:100% and the category links below
-     depend on this to line up instead of following their own content height. */
-  align-items: stretch;
+  grid-template-columns: 3.8fr 3.6fr;
+  gap: 40px;
+  align-items: start;
   padding: 48px 0;
   border-top: 1px solid var(--color-border);
+}
+
+.health-data__left {
+  display: grid;
+  grid-template-columns: 1.9fr 1.5fr;
+  gap: 24px;
+  align-items: stretch;
+}
+
+.health-data__right {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  align-items: stretch;
 }
 
 .health-data__intro {
@@ -19,7 +39,7 @@
 }
 .health-data__map {
   width: 100%;
-  max-width: 320px;
+  max-width: 380px;
   aspect-ratio: 124 / 124;
   margin-left: auto;
   background-color: var(--color-primary);
@@ -41,12 +61,25 @@
   gap: 12px;
 }
 
+/*
+ * Modular stat grid: the number of stats comes from the API and can be
+ * 1, 2, 3, or more. The grid always keeps 2 columns; when the count is
+ * odd, the component flags the trailing item with --full so it spans
+ * both columns instead of sitting alone in a half-empty row. Each stat
+ * is its own cell — the 1px gap (filled by the container's translucent
+ * background) reads as the dividing line.
+ */
 .health-data__stats {
-  background: var(--color-primary);
-  border-radius: var(--radius-l);
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-l);
   overflow: hidden;
+}
+
+.health-data__stat--full {
+  grid-column: 1 / -1;
 }
 
 .health-data__stat {
@@ -54,15 +87,8 @@
   flex-direction: column;
   gap: 6px;
   padding: 20px;
-  border-right: 1px solid rgba(255, 255, 255, 0.2);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  background: var(--color-primary);
   color: #fff;
-}
-.health-data__stat:nth-child(2n) {
-  border-right: none;
-}
-.health-data__stat:nth-last-child(-n + 2) {
-  border-bottom: none;
 }
 
 .health-data__stat-label {
@@ -161,56 +187,51 @@
 
 @media (max-width: 1100px) {
   .health-data {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .health-data__left {
+    grid-template-columns: 1fr;
   }
   .health-data__intro {
-    grid-column: 1 / -1;
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
+    height: auto;
   }
   .health-data__map {
     margin-left: 0;
     max-width: 180px;
   }
-  .health-data__stats-wrap {
-    grid-column: 1 / -1;
-  }
 }
 
 /* A tall, wide portrait screen (kiosk totem, tablet in portrait) has plenty of
    width even though it's under the tablet-landscape breakpoint above — keep
-   the roomy single-row layout instead of the cramped 2-column fallback. */
+   the roomy side-by-side layout instead of the cramped stacked fallback. */
 @media (min-width: 820px) and (orientation: portrait) {
   .health-data {
-    grid-template-columns: 1.8fr 2fr 1.2fr 1.2fr 1.2fr;
+    grid-template-columns: 3.8fr 3.6fr;
+  }
+  .health-data__left {
+    grid-template-columns: 1.9fr 1.5fr;
   }
   .health-data__intro {
-    grid-column: auto;
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-end;
+    height: 100%;
   }
   .health-data__map {
     margin-left: auto;
-    max-width: 320px;
-  }
-  .health-data__stats-wrap {
-    grid-column: auto;
+    max-width: 380px;
   }
 }
 
 @media (max-width: 700px) {
-  .health-data {
+  .health-data__right {
     grid-template-columns: 1fr;
   }
   .health-data__stats {
     grid-template-columns: 1fr;
-  }
-  .health-data__stat:nth-child(2n) {
-    border-right: none;
-  }
-  .health-data__stat {
-    border-right: none;
   }
 }

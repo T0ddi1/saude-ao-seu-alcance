@@ -59,10 +59,9 @@
   "healthStats": {
     "title": "Dados da Saúde no Brasil",
     "stats": [
-      { "label": "Expectativa de vida", "value": "76,6", "sublabel": "anos (IBGE, 2023)" },
-      { "label": "Mortalidade infantil", "value": "12,4", "sublabel": "por mil nascidos (IBGE, 2023)" },
-      { "label": "Cobertura vacinal", "value": "85%", "sublabel": "crianças até 2 anos (IBGE, 2023)" },
-      { "label": "Cuidar da vida", "value": "9,6%", "sublabel": "do PIB (IBGE, 2022)" }
+      { "label": "Expectativa de vida", "value": "76,6", "sublabel": "anos de expectativa de vida ao nascer (IBGE, 2024)" },
+      { "label": "Mortalidade infantil", "value": "12,3", "sublabel": "óbitos por mil nascidos vivos (IBGE, 2024)" },
+      { "label": "Mortalidade infantil", "value": "12,3", "sublabel": "óbitos por mil nascidos vivos (IBGE, 2024)" }
     ]
   },
   "contentCategories": [

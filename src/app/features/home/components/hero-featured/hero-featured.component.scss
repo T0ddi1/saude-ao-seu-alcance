@@ -18,6 +18,15 @@
   flex-direction: column;
   gap: 16px;
   color: inherit;
+  /*
+   * Reserve height for the worst case (a 4-line title + a 3-line excerpt)
+   * on the whole block, not on each piece of text individually. A column
+   * flex container with the default flex-start alignment stacks title and
+   * excerpt tightly at the top and leaves any unused reserved height as
+   * blank space *after* the excerpt — so the excerpt always sits right
+   * under the title, and the button/dots row below still never moves.
+   */
+  min-height: calc(var(--fs-display-l) * 1.1 * 4 + 16px + var(--fs-body-l) * 1.5 * 3);
 }
 .hero__link:hover {
   text-decoration: none;
@@ -31,11 +40,19 @@
   font-weight: 700;
   line-height: 1.1;
   letter-spacing: -0.01em;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .hero__excerpt {
   font-size: var(--fs-body-l);
   line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .hero__row {
@@ -124,6 +141,12 @@
   .hero__excerpt {
     color: #fff;
     text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
+  }
+
+  .hero__link {
+    /* Same reservation as the base rule, recomputed for the totem's fixed
+       64px/28px sizes instead of the fluid --fs-display-l/--fs-body-l. */
+    min-height: calc(64px * 1.1 * 4 + 16px + 28px * 1.5 * 3);
   }
 
   .hero__title {

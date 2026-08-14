@@ -13,4 +13,10 @@ import { HomePageData } from '../../../../core/models/home.model';
 export class HealthDataSectionComponent {
   @Input({ required: true }) healthStats!: HomePageData['healthStats'];
   @Input({ required: true }) contentCategories!: HomePageData['contentCategories'];
+
+  /** The grid is fixed at 2 columns; a trailing odd-one-out spans both so it doesn't sit alone in a half-empty row. */
+  isLastOddStat(index: number): boolean {
+    const count = this.healthStats.stats.length;
+    return count % 2 !== 0 && index === count - 1;
+  }
 }
