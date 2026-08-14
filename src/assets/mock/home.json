@@ -60,7 +60,7 @@
     "title": "Dados da Saúde no Brasil",
     "stats": [
       { "label": "Expectativa de vida", "value": "76,6", "sublabel": "anos de expectativa de vida ao nascer (IBGE, 2024)" },
-      { "label": "Mortalidade infantil", "value": "12,3", "sublabel": "óbitos por mil nascidos vivos (IBGE, 2024)" },
+      { "label": "Mortalidade infantil", "value": "12,3", "sublabel": "óbitos por mil nascidos vivos (IBGE, 2024)" }
     ]
   },
   "contentCategories": [
