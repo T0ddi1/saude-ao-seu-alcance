@@ -9,7 +9,10 @@
       "Bash(cp 'C:\\\\Users\\\\fernando.maia\\\\Pictures\\\\fotos/WhatsApp Image 2026-08-12 at 20.40.33 \\(1\\).jpeg' 'C:\\\\Users\\\\fernando.maia\\\\WebstormProjects\\\\saude-ao-seu-alcance\\\\src\\\\assets\\\\images\\\\articles/dieta-mesa-comida.jpg')",
       "PowerShell(Add-Type -AssemblyName System.Drawing; $img = [System.Drawing.Image]::FromFile\\('C:\\\\Users\\\\fernando.maia\\\\Pictures\\\\fotos\\\\logo.png'\\); \"$\\($img.Width\\)x$\\($img.Height\\) PixelFormat=$\\($img.PixelFormat\\)\")",
       "Bash(cp \"C:\\\\Users\\\\fernando.maia\\\\Pictures\\\\fotos\\\\logo.png\" \"C:\\\\Users\\\\fernando.maia\\\\WebstormProjects\\\\saude-ao-seu-alcance\\\\src\\\\assets\\\\images\\\\gama-logo.png\")",
-      "Bash(rm \"C:\\\\Users\\\\fernando.maia\\\\Pictures\\\\fotos\\\\logo-preview-on-purple.png\")"
+      "Bash(rm \"C:\\\\Users\\\\fernando.maia\\\\Pictures\\\\fotos\\\\logo-preview-on-purple.png\")",
+      "Bash(ls -la \"C:\\\\Users\\\\fernando.maia\\\\Downloads\" | grep -i hcsj)",
+      "Bash(cp \"C:\\\\Users\\\\fernando.maia\\\\Downloads\\\\hcsj022-1024x585.webp\" \"C:\\\\Users\\\\fernando.maia\\\\WebstormProjects\\\\saude-ao-seu-alcance\\\\src\\\\assets\\\\images\\\\articles\\\\hospital-sao-jose.webp\" *)",
+      "Bash(cp \"C:\\\\Users\\\\fernando.maia\\\\Pictures\\\\fotos\\\\WhatsApp Image 2026-08-17 at 13.54.05.jpeg\" \"C:\\\\Users\\\\fernando.maia\\\\WebstormProjects\\\\saude-ao-seu-alcance\\\\src\\\\assets\\\\images\\\\articles\\\\hospital-sao-jose.jpg\" *)"
     ]
   }
 }

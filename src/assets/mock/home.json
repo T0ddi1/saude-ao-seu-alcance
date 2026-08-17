@@ -64,9 +64,7 @@
     ]
   },
   "contentCategories": [
-    { "icon": "doc", "title": "Inovação em Saúde", "description": "Tecnologias, startups e estudos que estão transformando a saúde.", "linkLabel": "Ver conteúdos", "href": "/blog", "image": "assets/images/inovacao.png" },
-    { "icon": "mic", "title": "Entrevistas", "description": "Especialistas compartilham conhecimento e experiências.", "linkLabel": "Ver entrevistas", "href": "/blog", "image": "assets/images/entrevistas.jpg" },
-    { "icon": "play", "title": "Vídeos", "description": "Conteúdos em vídeo com informação confiável e essencial.", "linkLabel": "Ver vídeos", "href": "/blog", "image": "assets/images/skyline.jpg" }
+    { "icon": "doc", "title": "O futuro da saúde acontece quando diferentes competências se encontram", "description": "Na Expo-Hospital Brasil 2026, ESB.Corp e Hospital São José reforçam a importância da integração entre diferentes áreas para acompanhar as transformações e os desafios do setor.", "linkLabel": "Leia o artigo", "href": "/artigos/hospital-sao-jose", "image": "assets/images/articles/hospital-sao-jose.jpg" }
   ],
   "sponsored": [
     { "kind": "ad", "eyebrow": "PUBLICIDADE", "title": "Soluções completas para uma saúde mais eficiente.", "description": "Tecnologia e profissionalidade integrada para o sucesso em um mundo da saúde.", "ctaLabel": "Saiba mais", "href": "https://onmedsaude.com.br", "image": "assets/images/solucoes-saude.png", "theme": "light", "size": "lg", "logo": "assets/images/onmed-logo.png", "external": true },

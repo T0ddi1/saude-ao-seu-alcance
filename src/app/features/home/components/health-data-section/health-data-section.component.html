@@ -21,7 +21,7 @@
     </div>
   </div>
 
-  <div class="health-data__right">
+  <div class="health-data__right" [style.--category-columns]="categoryColumns">
     <div class="health-data__category" *ngFor="let cat of contentCategories">
       <div class="health-data__category-head">
         <div class="health-data__category-icon">

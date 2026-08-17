@@ -23,9 +23,10 @@
   align-items: stretch;
 }
 
+/* Modular: 1 category fills the row ("big"), 2 split it evenly ("medium"), 3 keeps the usual layout — set via --category-columns. */
 .health-data__right {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(var(--category-columns, 3), 1fr);
   gap: 24px;
   align-items: stretch;
 }

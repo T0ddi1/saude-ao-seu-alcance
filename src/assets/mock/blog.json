@@ -6,6 +6,7 @@
   ],
   "pageTitle": "Cuidados com a saúde",
   "articles": [
+    { "date": "10/08/2026", "title": "O futuro da saúde acontece quando diferentes competências se encontram", "excerpt": "Na Expo-Hospital Brasil 2026, ESB.Corp e Hospital São José reforçam a importância da integração entre diferentes áreas para acompanhar as transformações e os desafios do setor.", "image": "assets/images/articles/hospital-sao-jose.jpg", "href": "/artigos/hospital-sao-jose", "sponsored": true },
     { "date": "08/08/2026", "title": "Infodemia: quando o excesso de informação também adoece", "excerpt": "Como aprender a diferenciar conhecimento científico de desinformação é uma das maiores estratégias de prevenção em saúde.", "image": "assets/images/articles/infodemia-mulher-celular.jpg", "href": "/artigos/infodemia-excesso-informacao" },
     { "date": "05/08/2026", "title": "Viver mais ou viver melhor? O desafio da longevidade saudável no Brasil", "excerpt": "A expectativa de vida aumentou, mas o grande desafio agora é garantir que esses anos extras sejam vividos com autonomia, independência e qualidade de vida.", "image": "assets/images/articles/longevidade-homem-surf.jpg", "href": "/artigos/longevidade-saudavel-brasil" },
     { "date": "02/08/2026", "title": "Você não precisa fazer dieta para comer melhor", "excerpt": "Pequenas mudanças na alimentação podem trazer grandes benefícios para a saúde.", "image": "assets/images/articles/dieta-mesa-comida.jpg", "href": "/artigos/comer-melhor-sem-dieta" },

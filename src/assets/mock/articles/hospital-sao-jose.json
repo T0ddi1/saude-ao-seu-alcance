@@ -1,133 +1,56 @@
 {
   "breadcrumbs": [
-    {
-      "label": "Home",
-      "href": "/"
-    },
-    {
-      "label": "Artigos",
-      "href": "/blog"
-    },
-    {
-      "label": "Cuidado Federal",
-      "href": "/blog"
-    }
+    { "label": "Home", "href": "/" },
+    { "label": "Artigos", "href": "/blog" },
+    { "label": "Cuidados com a Saúde", "href": "/blog" }
   ],
-  "title": "Hospital São José inicia programa de cuidado integrado",
-  "subtitle": "Nova iniciativa tem foco em prevenção e atendimento humanizado.",
-  "date": "05/07/2027",
-  "author": "Redação SaSA",
+  "title": "O futuro da saúde acontece quando diferentes competências se encontram",
+  "subtitle": "Na Expo-Hospital Brasil 2026, ESB.Corp e Hospital São José reforçam a importância da integração entre diferentes áreas para acompanhar as transformações e os desafios do setor.",
+  "date": "10/08/2026",
+  "author": "Hospital São José",
+  "authorRole": "Conteúdo institucional — grupo ESB.Corp",
   "shareLinks": [
-    {
-      "icon": "facebook",
-      "href": "#",
-      "label": "Compartilhar no Facebook"
-    },
-    {
-      "icon": "whatsapp",
-      "href": "#",
-      "label": "Compartilhar no WhatsApp"
-    },
-    {
-      "icon": "linkedin",
-      "href": "#",
-      "label": "Compartilhar no LinkedIn"
-    },
-    {
-      "icon": "x",
-      "href": "#",
-      "label": "Compartilhar no X"
-    }
+    { "icon": "facebook", "href": "#", "label": "Compartilhar no Facebook" },
+    { "icon": "whatsapp", "href": "#", "label": "Compartilhar no WhatsApp" },
+    { "icon": "linkedin", "href": "#", "label": "Compartilhar no LinkedIn" },
+    { "icon": "x", "href": "#", "label": "Compartilhar no X" }
   ],
-  "heroImage": "assets/images/blog-sofa.jpg",
+  "heroImage": "assets/images/articles/hospital-sao-jose.jpg",
+  "blocks": [
+    { "type": "paragraph", "text": "As mudanças que estão acontecendo na saúde passam por diferentes áreas. Novas tecnologias chegam às operações, o uso de dados ganha espaço nas decisões e hospitais e empresas do setor buscam alternativas para melhorar processos, ampliar a eficiência e acompanhar as novas demandas assistenciais." },
+    { "type": "paragraph", "text": "Esse cenário tem relação direta com a atuação da ESB.Corp, que reúne empresas com presença em diferentes frentes do mercado. Saúde, tecnologia, dados e serviços fazem parte de uma estrutura que permite ao grupo acompanhar os desafios do setor sob perspectivas distintas." },
+    { "type": "paragraph", "text": "Foi nesse contexto que representantes da ESB.Corp e do Hospital São José, integrante do grupo, participaram da Expo-Hospital Brasil 2026, realizada no Expominas, em Belo Horizonte." },
+    { "type": "paragraph", "text": "A agenda do evento reuniu profissionais e empresas de diferentes áreas para discutir gestão hospitalar, inteligência artificial, tecnologia em saúde, engenharia clínica, eficiência operacional, farmácia hospitalar e outros temas que já fazem parte da rotina e do planejamento das instituições." },
+    { "type": "paragraph", "text": "Para a ESB.Corp, acompanhar essas discussões de perto é uma forma de manter suas empresas conectadas ao mercado e, principalmente, às mudanças que podem ter aplicação prática em suas operações." },
+
+    { "type": "display", "text": "Da discussão do mercado para a rotina das empresas" },
+    { "type": "paragraph", "text": "Em saúde, decisões estratégicas têm reflexos diretos na operação. Uma nova tecnologia pode modificar processos internos, melhorar o acesso à informação ou apoiar profissionais na tomada de decisão. Da mesma forma, mudanças na gestão podem trazer ganhos de eficiência e contribuir para a qualidade dos serviços prestados." },
+    { "type": "paragraph", "text": "Por isso, a participação em encontros como a Expo-Hospital também permite comparar experiências, conhecer soluções que estão sendo adotadas por outras organizações e estabelecer contato com empresas e profissionais que enfrentam desafios semelhantes." },
+    { "type": "paragraph", "text": "No Hospital São José, essa aproximação ganha uma dimensão prática. A instituição mantém uma operação que envolve assistência, corpo clínico, equipes multiprofissionais, processos administrativos, infraestrutura e relacionamento com diferentes públicos. Conhecer novas soluções e acompanhar experiências de outras instituições contribui para avaliar oportunidades que possam apoiar a evolução do hospital." },
+    { "type": "paragraph", "text": "A presença de representantes do Hospital São José no evento também reforça o compromisso da instituição com a atualização permanente de suas práticas e com a busca por melhorias que contribuam para uma assistência segura, qualificada e eficiente." },
+
+    { "type": "display", "text": "Um setor que exige cada vez mais integração" },
+    { "type": "paragraph", "text": "A própria diversidade de temas presentes na Expo-Hospital mostra como a gestão da saúde deixou de ser uma discussão restrita à assistência. Tecnologia, infraestrutura, dados, processos, gestão financeira, experiência do paciente e desenvolvimento de equipes passaram a ocupar a mesma mesa." },
+    { "type": "paragraph", "text": "Essa realidade também está presente na estratégia da ESB.Corp. A atuação do grupo em diferentes segmentos cria possibilidades de integração entre competências e amplia a capacidade de analisar problemas sob diferentes perspectivas." },
+    { "type": "paragraph", "text": "Estar em contato com gestores, fornecedores, especialistas e outras organizações ajuda a identificar movimentos relevantes, avaliar novas soluções e ampliar relacionamentos institucionais que podem gerar oportunidades para as empresas do grupo." },
+    { "type": "paragraph", "text": "Eventos como a Expo-Hospital também cumprem um papel importante ao aproximar quem desenvolve soluções de quem vive diariamente os desafios da operação. É nesse contato que tendências podem ser avaliadas com mais critério e que novas ideias começam a ser traduzidas para a realidade de cada instituição." },
+
+    { "type": "lead", "segments": [ { "text": "A participação da ESB.Corp e do Hospital São José na Expo-Hospital Brasil 2026 integra esse movimento de aproximação com o mercado e atualização permanente — um trabalho que continua depois do evento, na avaliação do que foi apresentado, nas relações construídas e nas oportunidades que podem contribuir para o desenvolvimento das empresas e para a evolução dos serviços de saúde.", "strong": true } ] }
+  ],
   "categories": [
-    {
-      "label": "Cuidados com a saúde",
-      "count": 35,
-      "href": "/blog",
-      "active": false
-    },
-    {
-      "label": "Cuidado Federal",
-      "count": 9,
-      "href": "/blog/cuidado-federal",
-      "active": false
-    },
-    {
-      "label": "Emergências e Primeiros Cuidados",
-      "count": 16,
-      "href": "/blog/emergencias",
-      "active": false
-    },
-    {
-      "label": "Hábitos Saudáveis",
-      "count": 104,
-      "href": "/blog/habitos-saudaveis",
-      "active": false
-    }
+    { "label": "Cuidados com a saúde", "count": 35, "href": "/blog", "active": true },
+    { "label": "Cuidado Federal", "count": 9, "href": "/blog/cuidado-federal", "active": false },
+    { "label": "Emergências e Primeiros Cuidados", "count": 16, "href": "/blog/emergencias", "active": false },
+    { "label": "Hábitos Saudáveis", "count": 104, "href": "/blog/habitos-saudaveis", "active": false }
   ],
   "recentPosts": [
-    {
-      "date": "01/07/2027",
-      "excerpt": "Saiba como agir em situações de emergência e salvar vidas.",
-      "href": "/artigos/recente-1"
-    },
-    {
-      "date": "01/07/2027",
-      "excerpt": "Saiba como agir em situações de emergência e salvar vidas.",
-      "href": "/artigos/recente-2"
-    },
-    {
-      "date": "01/07/2027",
-      "excerpt": "Saiba como agir em situações de emergência e salvar vidas.",
-      "href": "/artigos/recente-3"
-    }
+    { "date": "08/08/2026", "excerpt": "Infodemia: quando o excesso de informação também adoece.", "href": "/artigos/infodemia-excesso-informacao" },
+    { "date": "05/08/2026", "excerpt": "Viver mais ou viver melhor? O desafio da longevidade saudável no Brasil.", "href": "/artigos/longevidade-saudavel-brasil" },
+    { "date": "30/07/2026", "excerpt": "Dengue: o surto pode passar, mas a prevenção precisa continuar.", "href": "/artigos/dengue-prevencao-continua" }
   ],
   "extras": [
-    {
-      "kind": "ad",
-      "title": "Medicamentos de qualidade para cuidar de você todos os dias.",
-      "ctaLabel": "Saiba mais",
-      "href": "/artigos/medicamentos-qualidade"
-    },
-    {
-      "kind": "sponsor",
-      "icon": "ring",
-      "title": "Dasa",
-      "image": "assets/images/outubro-rosa.png",
-      "description": "Laboratórios Dasa promovem campanha nacional de prevenção e reforçam a importância do diagnóstico precoce.",
-      "linkLabel": "Ler notícia",
-      "href": "/artigos/dasa"
-    }
+    { "kind": "ad", "title": "Medicamentos de qualidade para cuidar de você todos os dias.", "ctaLabel": "Saiba mais", "href": "/artigos/medicamentos-qualidade" },
+    { "kind": "sponsor", "icon": "ring", "title": "Dasa", "image": "assets/images/outubro-rosa.png", "description": "Laboratórios Dasa promovem campanha nacional de prevenção e reforçam a importância do diagnóstico precoce.", "linkLabel": "Ler notícia", "href": "/artigos/dasa" }
   ],
-  "comments": [
-    {
-      "name": "Marcelo Dutra",
-      "date": "Julho 2026",
-      "text": "Muito bom o texto, ajudou a repensar alguns hábitos aqui em casa. Vamos tentar aplicar as dicas aos poucos."
-    },
-    {
-      "name": "Mariana Abreu",
-      "date": "Julho 2026",
-      "text": "Gostei bastante da parte sobre saúde mental — é um ponto que a gente costuma deixar de lado no dia a dia."
-    }
-  ],
-  "blocks": [
-    {
-      "type": "paragraph",
-      "text": "Pequenas mudanças de hábito, mantidas com consistência, têm impacto real na saúde ao longo dos anos. Dormir bem, se movimentar com regularidade e cuidar da alimentação são passos simples que, somados, reduzem o risco de doenças crônicas e melhoram a qualidade de vida."
-    },
-    {
-      "type": "paragraph",
-      "text": "A prevenção também passa por acompanhamento médico regular. Exames de rotina ajudam a identificar alterações antes que se tornem problemas maiores, tornando o tratamento mais simples e eficaz quando necessário."
-    },
-    {
-      "type": "paragraph",
-      "text": "Cuidar da saúde mental é parte inseparável desse processo. Pausas de descanso genuíno, momentos de lazer e uma rede de apoio próxima ajudam a equilibrar as exigências do dia a dia."
-    },
-    {
-      "type": "paragraph",
-      "text": "Investir em prevenção hoje é investir em mais anos de vida com autonomia e bem-estar amanhã — um compromisso que vale a pena manter todos os dias."
-    }
-  ]
+  "comments": []
 }

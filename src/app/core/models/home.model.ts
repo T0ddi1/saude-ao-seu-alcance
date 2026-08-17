@@ -61,7 +61,15 @@ export interface SponsoredItem {
   href: string;
   image: string | null;
   imagePosition?: string;
-  theme: 'light' | 'dark' | 'brand';
+  /**
+   * 'banner' is the image-only mode: marketing supplies one flat image sized
+   * to the slot (see BANNER_PRESETS in sponsored-section.component.ts) and
+   * it fills the whole card, no text overlaid. The other three themes are
+   * the current text+logo/photo layouts. Both can be mixed in the same
+   * `sponsored` array — each item picks its own theme — so the section
+   * works whether marketing sends finished banner art or just copy.
+   */
+  theme: 'light' | 'dark' | 'brand' | 'banner';
   size?: 'sm' | 'md' | 'lg' | 'xl';
   logo?: string | null;
   siteLabel?: string | null;

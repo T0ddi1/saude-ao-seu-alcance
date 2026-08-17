@@ -36,6 +36,10 @@
           </div>
         </ng-container>
 
+        <ng-container *ngIf="item.theme === 'banner'">
+          <img class="sponsored__banner-img" [src]="item.image" [alt]="item.title" loading="lazy" />
+        </ng-container>
+
         <ng-container *ngIf="item.theme === 'brand'">
           <img *ngIf="item.logo" class="sponsored__logo" [src]="item.logo" [alt]="item.title" />
           <h3>{{ item.title }}</h3>
