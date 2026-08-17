@@ -49,8 +49,8 @@
     { "date": "30/07/2026", "excerpt": "Dengue: o surto pode passar, mas a prevenção precisa continuar.", "href": "/artigos/dengue-prevencao-continua" }
   ],
   "extras": [
-    { "kind": "ad", "title": "Medicamentos de qualidade para cuidar de você todos os dias.", "ctaLabel": "Saiba mais", "href": "/artigos/medicamentos-qualidade" },
-    { "kind": "sponsor", "icon": "ring", "title": "Dasa", "image": "assets/images/outubro-rosa.png", "description": "Laboratórios Dasa promovem campanha nacional de prevenção e reforçam a importância do diagnóstico precoce.", "linkLabel": "Ler notícia", "href": "/artigos/dasa" }
+    { "kind": "ad", "title": "Medicamentos de qualidade para cuidar de você todos os dias.", "ctaLabel": "Saiba mais", "href": "#" },
+    { "kind": "sponsor", "icon": "ring", "title": "Dasa", "image": null, "description": "Laboratórios Dasa promovem campanha nacional de prevenção e reforçam a importância do diagnóstico precoce.", "linkLabel": "Ler notícia", "href": "/noticias/dasa" }
   ],
   "comments": []
 }

@@ -37,13 +37,13 @@
     "label": "Em alta",
     "limit": 4,
     "linkLabel": "Ver todos",
-    "href": "/em-alta",
+    "href": "/blog",
     "items": [
-      { "title": "Campanha nacional de vacinação bate recorde de adesão em 2026", "href": "/artigos/trending-1", "score": 985 },
-      { "title": "Estudo aponta queda na obesidade infantil após programas escolares", "href": "/artigos/trending-2", "score": 872 },
-      { "title": "Telemedicina já responde por 1 em cada 5 consultas no país", "href": "/artigos/trending-3", "score": 810 },
-      { "title": "Ministério da Saúde amplia rede de atenção à saúde mental", "href": "/artigos/trending-4", "score": 754 },
-      { "title": "Novo estudo relaciona sono de qualidade à longevidade", "href": "/artigos/trending-5", "score": 611 }
+      { "title": "Infodemia: quando o excesso de informação também adoece", "href": "/artigos/infodemia-excesso-informacao", "score": 985 },
+      { "title": "O futuro da saúde acontece quando diferentes competências se encontram", "href": "/artigos/hospital-sao-jose", "score": 872 },
+      { "title": "Viver mais ou viver melhor? O desafio da longevidade saudável no Brasil", "href": "/artigos/longevidade-saudavel-brasil", "score": 810 },
+      { "title": "Dengue: o surto pode passar, mas a prevenção precisa continuar", "href": "/artigos/dengue-prevencao-continua", "score": 754 },
+      { "title": "Você não precisa fazer dieta para comer melhor", "href": "/artigos/comer-melhor-sem-dieta", "score": 611 }
     ]
   },
   "contentCards": [

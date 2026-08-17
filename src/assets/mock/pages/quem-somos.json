@@ -29,11 +29,11 @@
     { "label": "Hábitos Saudáveis", "count": 104, "href": "/blog/habitos-saudaveis", "active": false }
   ],
   "recentPosts": [
-    { "date": "01/07/2027", "excerpt": "Saiba como agir em situações de emergência e salvar vidas.", "href": "/artigos/recente-1" },
-    { "date": "01/07/2027", "excerpt": "Saiba como agir em situações de emergência e salvar vidas.", "href": "/artigos/recente-2" },
-    { "date": "01/07/2027", "excerpt": "Saiba como agir em situações de emergência e salvar vidas.", "href": "/artigos/recente-3" }
+    { "date": "08/08/2026", "excerpt": "Infodemia: quando o excesso de informação também adoece.", "href": "/artigos/infodemia-excesso-informacao" },
+    { "date": "05/08/2026", "excerpt": "Viver mais ou viver melhor? O desafio da longevidade saudável no Brasil.", "href": "/artigos/longevidade-saudavel-brasil" },
+    { "date": "30/07/2026", "excerpt": "Dengue: o surto pode passar, mas a prevenção precisa continuar.", "href": "/artigos/dengue-prevencao-continua" }
   ],
   "extras": [
-    { "kind": "ad", "title": "Medicamentos de qualidade para cuidar de você todos os dias.", "ctaLabel": "Saiba mais", "href": "/artigos/medicamentos-qualidade" }
+    { "kind": "ad", "title": "Medicamentos de qualidade para cuidar de você todos os dias.", "ctaLabel": "Saiba mais", "href": "#" }
   ]
 }
