@@ -1,0 +1,22 @@
+{
+  "breadcrumbs": [
+    { "label": "Home", "href": "/" },
+    { "label": "LGPD", "href": "/lgpd" }
+  ],
+  "title": "LGPD",
+  "blocks": [
+    { "type": "lead", "segments": [
+      { "text": "Conteúdo em preparação.", "strong": true }
+    ] },
+    { "type": "paragraph", "text": "Esta página vai reunir as informações sobre o tratamento de dados pessoais no Portal Saúde ao Seu Alcance, conforme a Lei Geral de Proteção de Dados (LGPD). Volte em breve." }
+  ],
+  "categories": [],
+  "_archived_categories": "Bloco 'Categorias' tirado do sidebar (2026-08): Cuidados com a saúde (/blog, ativa), Cuidado Federal (/blog/cuidado-federal), Emergências e Primeiros Cuidados (/blog/emergencias), Hábitos Saudáveis (/blog/habitos-saudaveis) — nenhuma dessas rotas existe de verdade.",
+  "recentPosts": [
+    { "date": "08/08/2026", "excerpt": "Infodemia: quando o excesso de informação também adoece.", "href": "/artigos/infodemia-excesso-informacao" },
+    { "date": "05/08/2026", "excerpt": "Viver mais ou viver melhor? O desafio da longevidade saudável no Brasil.", "href": "/artigos/longevidade-saudavel-brasil" },
+    { "date": "30/07/2026", "excerpt": "Dengue: o surto pode passar, mas a prevenção precisa continuar.", "href": "/artigos/dengue-prevencao-continua" }
+  ],
+  "extras": [],
+  "_archived_extras": "Anúncio 'Medicamentos de qualidade' tirado (2026-08) por não ter link real: { kind: 'ad', href: '#' }."
+}

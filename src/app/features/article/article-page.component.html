@@ -14,7 +14,14 @@
         </span>
         <span class="article__share">
           Compartilhar:
-          <a *ngFor="let s of d.shareLinks" [href]="s.href" [attr.aria-label]="s.label" class="article__share-btn">
+          <a
+            *ngFor="let s of d.shareLinks"
+            [href]="shareUrl(s.icon)"
+            target="_blank"
+            rel="noopener noreferrer"
+            [attr.aria-label]="s.label"
+            class="article__share-btn"
+          >
             <app-icon [name]="s.icon" [size]="14" color="#fff"></app-icon>
           </a>
         </span>

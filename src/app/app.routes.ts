@@ -33,6 +33,20 @@ export const routes: Routes = [
     title: 'Linha Editorial — Saúde ao Seu Alcance',
   },
   {
+    path: 'videos',
+    loadComponent: () =>
+      import('./features/institutional/institutional-page.component').then((m) => m.InstitutionalPageComponent),
+    data: { slug: 'videos' },
+    title: 'Vídeos — Saúde ao Seu Alcance',
+  },
+  {
+    path: 'lgpd',
+    loadComponent: () =>
+      import('./features/institutional/institutional-page.component').then((m) => m.InstitutionalPageComponent),
+    data: { slug: 'lgpd' },
+    title: 'LGPD — Saúde ao Seu Alcance',
+  },
+  {
     path: 'cadastre-se',
     loadComponent: () => import('./features/auth/create-account.component').then((m) => m.CreateAccountComponent),
     title: 'Criar nova conta — Saúde ao Seu Alcance',

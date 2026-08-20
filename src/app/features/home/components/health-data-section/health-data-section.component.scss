@@ -1,48 +1,40 @@
 /*
- * Two independent groups side by side — map+stats ("left") and the 3
- * content categories ("right") — instead of one flat 5-column grid.
- * Previously everything shared one grid row, so align-items:stretch made
- * the categories match the height of whichever side was taller, leaving
- * a big gap before their "Ver conteúdos" links whenever map+stats were
- * the taller side. Splitting them means each group only stretches its
- * own children to match each other, not the unrelated group next to it.
+ * health-data__right (the 3 content categories) is commented out in the
+ * template. The row below is a straight line: title → stats square → map,
+ * in that order, per request (2026-08) — no more map+title stacked
+ * together on one side and stats on the other.
  */
 .health-data {
-  display: grid;
-  grid-template-columns: 3.8fr 3.6fr;
-  gap: 40px;
-  align-items: start;
   padding: 48px 0;
   border-top: 1px solid var(--color-border);
 }
 
-.health-data__left {
-  display: grid;
-  grid-template-columns: 1.9fr 1.5fr;
-  gap: 24px;
-  align-items: stretch;
+.health-data__row {
+  display: flex;
+  align-items: center;
+  gap: 40px;
 }
 
-/* Modular: 1 category fills the row ("big"), 2 split it evenly ("medium"), 3 keeps the usual layout — set via --category-columns. */
+.health-data__title {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--fs-h3);
+  line-height: 1.15;
+}
+
+/* Modular: 1 category fills the row ("big"), 2 split it evenly ("medium"), 3 keeps the usual layout — set via --category-columns.
 .health-data__right {
   display: grid;
   grid-template-columns: repeat(var(--category-columns, 3), 1fr);
   gap: 24px;
   align-items: stretch;
 }
+*/
 
-.health-data__intro {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  justify-content: flex-end;
-  height: 100%;
-}
 .health-data__map {
-  width: 100%;
-  max-width: 380px;
+  flex: 0 0 auto;
+  width: 320px;
   aspect-ratio: 124 / 124;
-  margin-left: auto;
   background-color: var(--color-primary);
   mask-image: url('/assets/images/mapa-brasil.svg');
   mask-repeat: no-repeat;
@@ -50,16 +42,6 @@
   -webkit-mask-image: url('/assets/images/mapa-brasil.svg');
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-size: contain;
-}
-.health-data__intro h2 {
-  font-size: var(--fs-h3);
-  line-height: 1.15;
-}
-
-.health-data__stats-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
 }
 
 /*
@@ -71,6 +53,7 @@
  * background) reads as the dividing line.
  */
 .health-data__stats {
+  flex: 0 0 340px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1px;
@@ -106,13 +89,7 @@
   color: rgba(255, 255, 255, 0.75);
 }
 
-.health-data__ad-label {
-  font-size: var(--fs-label-s);
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  color: var(--color-muted);
-}
-
+/* health-data__category* rules — unused while health-data__right stays commented out above.
 .health-data__category {
   display: flex;
   flex-direction: column;
@@ -185,53 +162,44 @@
   justify-content: center;
   flex-shrink: 0;
 }
+*/
 
 @media (max-width: 1100px) {
-  .health-data {
-    grid-template-columns: 1fr;
-    gap: 32px;
+  .health-data__row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
   }
-  .health-data__left {
-    grid-template-columns: 1fr;
-  }
-  .health-data__intro {
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    height: auto;
+  .health-data__stats {
+    flex-basis: auto;
+    width: 100%;
+    max-width: 400px;
   }
   .health-data__map {
-    margin-left: 0;
-    max-width: 180px;
+    width: 280px;
   }
 }
 
 /* A tall, wide portrait screen (kiosk totem, tablet in portrait) has plenty of
    width even though it's under the tablet-landscape breakpoint above — keep
-   the roomy side-by-side layout instead of the cramped stacked fallback. */
+   the roomy single-row layout instead of the cramped stacked fallback. */
 @media (min-width: 820px) and (orientation: portrait) {
-  .health-data {
-    grid-template-columns: 3.8fr 3.6fr;
+  .health-data__row {
+    flex-direction: row;
+    align-items: center;
+    gap: 40px;
   }
-  .health-data__left {
-    grid-template-columns: 1.9fr 1.5fr;
-  }
-  .health-data__intro {
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: flex-end;
-    height: 100%;
+  .health-data__stats {
+    flex-basis: 340px;
+    width: auto;
+    max-width: none;
   }
   .health-data__map {
-    margin-left: auto;
-    max-width: 380px;
+    width: 360px;
   }
 }
 
 @media (max-width: 700px) {
-  .health-data__right {
-    grid-template-columns: 1fr;
-  }
   .health-data__stats {
     grid-template-columns: 1fr;
   }

@@ -6,10 +6,9 @@
       {
         "title": "Cuidados com a Saúde",
         "items": [
-          { "label": "Cuidados com a Saúde", "href": "/blog" },
-          { "label": "Hábitos Saudáveis", "href": "/habitos-saudaveis" },
-          { "label": "Nutrição", "href": "/nutricao" }
-        ]
+          { "label": "Cuidados com a Saúde", "href": "/blog" }
+        ],
+        "_archived": "Removidos a pedido (2026-08): { label: 'Hábitos Saudáveis', href: '/habitos-saudaveis' }, { label: 'Nutrição', href: '/nutricao' }"
       }
     ]
   },
@@ -20,10 +19,9 @@
       {
         "title": "O Sistema de Saúde",
         "items": [
-          { "label": "Saúde Corporativa", "href": "/saude-corporativa" },
-          { "label": "Mercado de saúde", "href": "/mercado-de-saude" },
-          { "label": "Dados da saúde", "href": "/dados-da-saude" }
-        ]
+          { "label": "Dados da saúde", "href": "/#dados-da-saude" }
+        ],
+        "_archived": "Removidos a pedido (2026-08): { label: 'Saúde Corporativa', href: '/saude-corporativa' }, { label: 'Mercado de saúde', href: '/mercado-de-saude' }. 'Dados da saúde' agora aponta pra âncora #dados-da-saude na home (seção do mapa) em vez de uma página própria."
       }
     ]
   },
@@ -36,7 +34,21 @@
         "items": [
           { "label": "Inovação em Saúde", "href": "/inovacao" },
           { "label": "Entrevistas", "href": "/entrevistas" },
-          { "label": "Vídeos", "href": "/videos" },
+          { "label": "Vídeos", "href": "/videos" }
+        ],
+        "_archived": "Removido a pedido (2026-08): { label: 'Linha Editorial', href: '/linha-editorial' } — mudou para o novo dropdown 'Sobre o Portal'."
+      }
+    ]
+  },
+  {
+    "label": "Sobre o Portal",
+    "href": "#",
+    "columns": [
+      {
+        "title": "Institucional",
+        "items": [
+          { "label": "Sobre o Portal", "href": "/sobre-o-portal" },
+          { "label": "Quem Somos", "href": "/quem-somos" },
           { "label": "Linha Editorial", "href": "/linha-editorial" }
         ]
       }

@@ -1,26 +1,27 @@
-<section class="health-data">
-  <div class="health-data__left">
-    <div class="health-data__intro">
-      <div class="health-data__map" aria-hidden="true"></div>
-      <h2>{{ healthStats.title }}</h2>
-    </div>
+<section class="health-data" id="dados-da-saude">
+  <!-- Em reta: título → mapa (no meio) → quadrado (stats), a pedido (2026-08). O "PUBLICIDADE"
+       que ficava embaixo do quadrado foi removido junto. -->
+  <div class="health-data__row">
+    <h2 class="health-data__title">{{ healthStats.title }}</h2>
 
-    <div class="health-data__stats-wrap">
-      <div class="health-data__stats">
-        <div
-          class="health-data__stat"
-          *ngFor="let stat of healthStats.stats; let i = index"
-          [class.health-data__stat--full]="isLastOddStat(i)"
-        >
-          <span class="health-data__stat-label">{{ stat.label }}</span>
-          <span class="health-data__stat-value">{{ stat.value }}</span>
-          <span class="health-data__stat-sublabel">{{ stat.sublabel }}</span>
-        </div>
+    <div class="health-data__map" aria-hidden="true"></div>
+
+    <div class="health-data__stats">
+      <div
+        class="health-data__stat"
+        *ngFor="let stat of healthStats.stats; let i = index"
+        [class.health-data__stat--full]="isLastOddStat(i)"
+      >
+        <span class="health-data__stat-label">{{ stat.label }}</span>
+        <span class="health-data__stat-value">{{ stat.value }}</span>
+        <span class="health-data__stat-sublabel">{{ stat.sublabel }}</span>
       </div>
-      <p class="health-data__ad-label">PUBLICIDADE</p>
     </div>
   </div>
 
+  <!-- Categorias (Inovação/Entrevistas/Vídeos) removidas a pedido em 2026-08 — mapa+dados agora ficam
+       em uma linha só. O card único que estava aqui (Hospital São José) foi para a seção de patrocínio.
+       Bloco mantido comentado para reaproveitar depois; ver categoryColumns/isLastOddStat no .ts.
   <div class="health-data__right" [style.--category-columns]="categoryColumns">
     <div class="health-data__category" *ngFor="let cat of contentCategories">
       <div class="health-data__category-head">
@@ -41,4 +42,5 @@
       </a>
     </div>
   </div>
+  -->
 </section>

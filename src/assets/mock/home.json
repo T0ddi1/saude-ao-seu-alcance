@@ -47,15 +47,12 @@
     ]
   },
   "contentCards": [
-    { "icon": "ring", "title": "Cuidado com a saúde", "image": "assets/images/cuidado-com-a-saude.jpg", "excerpt": "Orientação pública para cuidar de você e de quem você ama.", "linkLabel": "Ver conteúdos", "href": "/blog" },
     { "icon": "doc", "title": "Infodemia: quando o excesso de informação também adoece", "image": "assets/images/articles/infodemia-mulher-celular.jpg", "excerpt": "Como aprender a diferenciar conhecimento científico de desinformação é uma das maiores estratégias de prevenção em saúde.", "linkLabel": "Leia o artigo", "href": "/artigos/infodemia-excesso-informacao" },
-    { "icon": "cross", "title": "Emergências e Primeiros Cuidados", "image": null, "excerpt": "Saiba como agir em situações de emergência e salvar vidas.", "linkLabel": "Ver conteúdos", "href": "/blog" },
     { "icon": "doc", "title": "Viver mais ou viver melhor? O desafio da longevidade saudável no Brasil", "image": "assets/images/articles/longevidade-homem-surf.jpg", "excerpt": "A expectativa de vida aumentou, mas o grande desafio agora é garantir que esses anos extras sejam vividos com autonomia e qualidade de vida.", "linkLabel": "Leia o artigo", "href": "/artigos/longevidade-saudavel-brasil" },
-    { "icon": "dot", "title": "Hábitos saudáveis", "image": null, "excerpt": "Sono, movimento, equilíbrio mental e bem-estar no dia a dia.", "linkLabel": "Ver conteúdos", "href": "/blog" },
     { "icon": "doc", "title": "Você não precisa fazer dieta para comer melhor", "image": "assets/images/articles/dieta-mesa-comida.jpg", "excerpt": "Pequenas mudanças na alimentação podem trazer grandes benefícios para a saúde.", "linkLabel": "Leia o artigo", "href": "/artigos/comer-melhor-sem-dieta" },
-    { "icon": "ring", "title": "Nutrição", "image": "assets/images/nutricao.jpg", "excerpt": "Alimentação equilibrada para mais saúde, energia e longevidade.", "linkLabel": "Ver conteúdos", "href": "/blog" },
     { "icon": "doc", "title": "Dengue: o surto pode passar, mas a prevenção precisa continuar", "image": "assets/images/articles/dengue-mosquito-agua.jpg", "excerpt": "Conhecer os sinais de alerta e eliminar os focos do mosquito continuam sendo as formas mais eficazes de proteger sua família.", "linkLabel": "Leia o artigo", "href": "/artigos/dengue-prevencao-continua" }
   ],
+  "_archived_contentCards": "Removidos por não serem artigos de verdade: Cuidado com a saúde (/blog), Emergências e Primeiros Cuidados (/blog), Hábitos saudáveis (/blog), Nutrição (/blog). Ver histórico do git para os objetos completos.",
   "healthStats": {
     "title": "Dados da Saúde no Brasil",
     "stats": [
@@ -67,10 +64,11 @@
     { "icon": "doc", "title": "O futuro da saúde acontece quando diferentes competências se encontram", "description": "Na Expo-Hospital Brasil 2026, ESB.Corp e Hospital São José reforçam a importância da integração entre diferentes áreas para acompanhar as transformações e os desafios do setor.", "linkLabel": "Leia o artigo", "href": "/artigos/hospital-sao-jose", "image": "assets/images/articles/hospital-sao-jose.jpg" }
   ],
   "sponsored": [
-    { "kind": "ad", "eyebrow": "PUBLICIDADE", "title": "Soluções completas para uma saúde mais eficiente.", "description": "Tecnologia e profissionalidade integrada para o sucesso em um mundo da saúde.", "ctaLabel": "Saiba mais", "href": "https://onmedsaude.com.br", "image": "assets/images/solucoes-saude.png", "theme": "light", "size": "lg", "logo": "assets/images/onmed-logo.png", "external": true },
-    { "kind": "sponsored", "eyebrow": "CONTEÚDO PATROCINADO", "title": "Eficiência e estratégia para a transformação do setor de saúde.", "description": "Conteúdo, tecnologia e gestão inteligente que impulsionam resultados sustentáveis.", "ctaLabel": "Leia o artigo", "href": "https://www.tessera-partners.com/pt/index.html", "image": "assets/images/tessera-bg.png", "imagePosition": "center 85%", "theme": "light", "size": "md", "logo": "assets/images/tessera-logo.jpeg", "siteLabel": "www.tessera-partners.com", "external": true },
-    { "kind": "sponsorship", "eyebrow": "PATROCÍNIO", "title": "Medicamentos de qualidade para cuidar de você todos os dias.", "description": "", "ctaLabel": "Saiba mais", "href": "https://gamasaude.com.br", "image": null, "theme": "brand", "size": "sm", "logo": "assets/images/gama-logo.png", "external": true }
+    { "kind": "sponsored", "eyebrow": "CONTEÚDO PATROCINADO", "title": "O futuro da saúde acontece quando diferentes competências se encontram", "description": "", "ctaLabel": "Leia o artigo", "href": "/artigos/hospital-sao-jose", "image": "assets/images/articles/hospital-sao-jose.jpg", "theme": "banner", "size": "md" },
+    { "kind": "sponsored", "eyebrow": "CONTEÚDO PATROCINADO", "title": "Eficiência e estratégia para a transformação do setor de saúde", "description": "", "ctaLabel": "Leia o artigo", "href": "https://www.tessera-partners.com/pt/index.html", "image": "assets/images/tessera-banner.jpg", "theme": "banner", "size": "md", "external": true },
+    { "kind": "sponsorship", "eyebrow": "PATROCÍNIO", "title": "Medicamentos de qualidade para cuidar de você todos os dias.", "description": "", "ctaLabel": "Saiba mais", "href": "https://gamasaude.com.br", "image": null, "theme": "brand", "size": "md", "logo": "assets/images/gama-logo.png", "external": true }
   ],
+  "_archived_sponsored": "Onmed removido a pedido (2026-08). Slot antigo: { kind: 'ad', eyebrow: 'PUBLICIDADE', title: 'Soluções completas para uma saúde mais eficiente.', href: 'https://onmedsaude.com.br', image: 'assets/images/solucoes-saude.png', theme: 'light', size: 'lg', logo: 'assets/images/onmed-logo.png' }.",
   "trustBadges": [
     { "icon": "ring", "label": "Fontes nativas integradas ao conteúdo" },
     { "icon": "dot", "label": "Audiência qualificada e engajada" },

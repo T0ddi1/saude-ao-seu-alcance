@@ -52,6 +52,16 @@ html, body {
   padding: 0;
 }
 
+html {
+  /* Smooth scroll for in-page anchors like /#dados-da-saude — jump links glide instead of teleporting. */
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 body {
   font-family: var(--font-body);
   color: var(--color-body-text);

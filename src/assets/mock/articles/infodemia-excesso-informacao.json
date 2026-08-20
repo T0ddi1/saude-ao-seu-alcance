@@ -97,20 +97,14 @@
       "The Lancet Digital Health. Infodemics are the new pandemics. Editorial. 2021;3(6):e321."
     ]}
   ],
-  "categories": [
-    { "label": "Cuidados com a saúde", "count": 35, "href": "/blog", "active": true },
-    { "label": "Cuidado Federal", "count": 9, "href": "/blog/cuidado-federal", "active": false },
-    { "label": "Emergências e Primeiros Cuidados", "count": 16, "href": "/blog/emergencias", "active": false },
-    { "label": "Hábitos Saudáveis", "count": 104, "href": "/blog/habitos-saudaveis", "active": false }
-  ],
+  "categories": [],
+  "_archived_categories": "Bloco 'Categorias' tirado do sidebar (2026-08): Cuidados com a saúde (/blog, ativa), Cuidado Federal (/blog/cuidado-federal), Emergências e Primeiros Cuidados (/blog/emergencias), Hábitos Saudáveis (/blog/habitos-saudaveis) — nenhuma dessas rotas existe de verdade.",
   "recentPosts": [
     { "date": "05/08/2026", "excerpt": "Viver mais ou viver melhor? O desafio da longevidade saudável no Brasil.", "href": "/artigos/longevidade-saudavel-brasil" },
     { "date": "02/08/2026", "excerpt": "Você não precisa fazer dieta para comer melhor.", "href": "/artigos/comer-melhor-sem-dieta" },
     { "date": "30/07/2026", "excerpt": "Dengue: o surto pode passar, mas a prevenção precisa continuar.", "href": "/artigos/dengue-prevencao-continua" }
   ],
-  "extras": [
-    { "kind": "ad", "title": "Medicamentos de qualidade para cuidar de você todos os dias.", "ctaLabel": "Saiba mais", "href": "#" },
-    { "kind": "sponsor", "icon": "ring", "title": "Dasa", "image": null, "description": "Laboratórios Dasa promovem campanha nacional de prevenção e reforçam a importância do diagnóstico precoce.", "linkLabel": "Ler notícia", "href": "/noticias/dasa" }
-  ],
+  "extras": [],
+  "_archived_extras": "Removidos (2026-08) por não terem link real: { kind: 'ad', title: 'Medicamentos de qualidade...', href: '#' } e { kind: 'sponsor', title: 'Dasa', href: '/noticias/dasa' }.",
   "comments": []
 }

@@ -31,8 +31,17 @@
   border-radius: var(--radius-m);
   color: inherit;
   overflow: hidden;
-  min-height: 220px;
-  flex: 1;
+  /*
+   * Fixed, not min-height: a banner <img> with object-fit:contain still
+   * carries its own intrinsic aspect ratio, which — with no fixed height
+   * here — was winning the flex/grid auto-sizing fight and stretching
+   * every card in the row up to whatever height the widest banner (São
+   * José, 3:2 at the lg column width) needed to show uncropped. That left
+   * the narrower Tessera banner floating in a much taller box with empty
+   * letterbox bars top/bottom. Fixing the height to Tessera's own natural
+   * fit keeps every card that same height on purpose.
+   */
+  height: 267px;
   transition: box-shadow 0.15s ease, transform 0.15s ease;
   display: flex;
 }
@@ -114,14 +123,23 @@
   color: #fff;
 }
 
-/* banner: a single flat image supplied by marketing, sized to the slot (see BANNER_PRESETS) — no text overlaid on top of it. */
+/*
+ * banner: a single flat image supplied by marketing — no text overlaid on
+ * top of it. Real banners rarely land pre-cropped to our exact slot ratio
+ * (e.g. these two are ~3:2, much taller than the wide sm/md/lg slots), so
+ * `contain` keeps the whole image — including any text baked into it —
+ * always visible instead of `cover` slicing off the top/bottom. The dark
+ * fill behind it is the letterbox color when the image doesn't fill the
+ * slot; most banner art has a dark background already, so it blends in.
+ */
 .sponsored__card.is-banner {
   padding: 0;
+  background: #0a0c14;
 }
 .sponsored__banner-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
 }
 

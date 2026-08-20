@@ -2,27 +2,15 @@
   "tagline": "Saúde ao Seu Alcance",
   "columns": [
     {
-      "title": "Cuidados com a Saúde",
-      "links": [
-        { "label": "Hábitos Saudáveis", "href": "/blog/habitos-saudaveis" },
-        { "label": "Nutrição", "href": "/nutricao" },
-        { "label": "O Sistema de Saúde", "href": "/sistema-de-saude" }
-      ]
-    },
-    {
       "title": "Observatório",
       "links": [
-        { "label": "Saúde Corporativa", "href": "/saude-corporativa" },
-        { "label": "Mercado de Saúde", "href": "/mercado-de-saude" },
-        { "label": "Dados da Saúde", "href": "/dados-da-saude" }
+        { "label": "Dados da Saúde", "href": "/#dados-da-saude" }
       ]
     },
     {
       "title": "Conteúdos",
       "links": [
-        { "label": "Entrevistas", "href": "/entrevistas" },
-        { "label": "Vídeos", "href": "/videos" },
-        { "label": "Inovação", "href": "/inovacao" }
+        { "label": "Vídeos", "href": "/videos" }
       ]
     },
     {
@@ -31,18 +19,17 @@
         { "label": "Sobre o Portal", "href": "/sobre-o-portal" },
         { "label": "Quem Somos", "href": "/quem-somos" },
         { "label": "Linha Editorial", "href": "/linha-editorial" },
-        { "label": "Termos de Uso", "href": "/termos-de-uso" },
-        { "label": "Política de Privacidade", "href": "/politica-de-privacidade" },
-        { "label": "Fale Conosco", "href": "/fale-conosco" }
+        { "label": "LGPD", "href": "/lgpd" },
+        { "label": "Fale Conosco", "href": "/contato" }
       ]
     }
   ],
+  "_archived_columns": "Removida a pedido (2026-08) a coluna inteira 'Cuidados com a Saúde' ({ label: 'Hábitos Saudáveis', href: '/blog/habitos-saudaveis' }, { label: 'Nutrição', href: '/nutricao' }, { label: 'O Sistema de Saúde', href: '/sistema-de-saude' }). Em 'Observatório' e 'Conteúdos' também removidos: Saúde Corporativa, Mercado de Saúde, Entrevistas, Inovação. Em 'Institucional': Termos de Uso e Política de Privacidade viraram um único item 'LGPD' (aguardando página do Raphael); Fale Conosco agora aponta para /contato em vez de /fale-conosco (que não existia).",
   "social": [
-    { "icon": "facebook", "href": "#", "label": "Facebook" },
-    { "icon": "instagram", "href": "#", "label": "Instagram" },
-    { "icon": "youtube", "href": "#", "label": "YouTube" },
-    { "icon": "linkedin", "href": "#", "label": "LinkedIn" }
+    { "icon": "instagram", "href": "https://www.instagram.com/saudeao.seualcance/", "label": "Instagram" },
+    { "icon": "linkedin", "href": "https://www.linkedin.com/company/sa%C3%BAde-ao-seu-alcance/", "label": "LinkedIn" }
   ],
+  "_archived_social": "Facebook e YouTube removidos a pedido (2026-08) por não termos link de verdade pra eles: { icon: 'facebook', href: '#' }, { icon: 'youtube', href: '#' }. Se um dia tiverem página real, é só adicionar de volta aqui.",
   "newsletter": {
     "title": "Receba conteúdos exclusivos",
     "description": "Assine nossa newsletter e fique por dentro das principais novidades da saúde.",
