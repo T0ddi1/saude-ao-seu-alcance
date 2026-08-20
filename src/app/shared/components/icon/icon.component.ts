@@ -9,6 +9,7 @@ const ICON_MAP: Record<string, string> = {
   cross: 'fa-solid fa-plus',
   square: 'fa-solid fa-hospital',
   doc: 'fa-solid fa-file-lines',
+  download: 'fa-solid fa-download',
   mic: 'fa-solid fa-microphone',
   play: 'fa-solid fa-circle-play',
   'arrow-right': 'fa-solid fa-arrow-right',

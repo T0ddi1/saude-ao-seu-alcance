@@ -6,9 +6,14 @@
   "title": "LGPD",
   "blocks": [
     { "type": "lead", "segments": [
-      { "text": "Conteúdo em preparação.", "strong": true }
+      { "text": "Esta é a ", "strong": false },
+      { "text": "Política de Privacidade e Proteção de Dados", "strong": true },
+      { "text": " do Portal Saúde ao Seu Alcance.", "strong": false }
     ] },
-    { "type": "paragraph", "text": "Esta página vai reunir as informações sobre o tratamento de dados pessoais no Portal Saúde ao Seu Alcance, conforme a Lei Geral de Proteção de Dados (LGPD). Volte em breve." }
+    { "type": "paragraph", "text": "Ela existe para explicar, de forma simples e transparente, quais dados coletamos quando você usa nosso site — como e-mail, nome ou informações de navegação — e por que precisamos deles: identificar você, viabilizar os serviços que oferecemos e melhorar cada vez mais a sua experiência no portal." },
+    { "type": "paragraph", "text": "Ela também detalha os seus direitos como titular dos dados (acesso, correção, exclusão, portabilidade e revogação do consentimento, entre outros), como exercê-los, e as medidas de segurança que adotamos para proteger essas informações — tudo em conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018) e o Marco Civil da Internet." },
+    { "type": "paragraph", "text": "Qualquer dúvida sobre como tratamos seus dados pode ser enviada para o e-mail privacidade@saudeaoseualcance.com.br." },
+    { "type": "download", "label": "Baixar a Política de Privacidade completa", "fileLabel": "PDF · Última atualização em 20/08/2026", "href": "assets/docs/politica-de-privacidade-lgpd.pdf" }
   ],
   "categories": [],
   "_archived_categories": "Bloco 'Categorias' tirado do sidebar (2026-08): Cuidados com a saúde (/blog, ativa), Cuidado Federal (/blog/cuidado-federal), Emergências e Primeiros Cuidados (/blog/emergencias), Hábitos Saudáveis (/blog/habitos-saudaveis) — nenhuma dessas rotas existe de verdade.",

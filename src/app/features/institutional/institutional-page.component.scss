@@ -73,6 +73,45 @@
   line-height: 1.6;
 }
 
+.page__download {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  border-radius: var(--radius-m);
+  background: var(--color-primary);
+  color: #fff;
+  width: fit-content;
+  max-width: 100%;
+}
+.page__download:hover {
+  background: var(--color-primary-dark);
+  text-decoration: none;
+}
+.page__download-icon {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.page__download-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.page__download-text strong {
+  font-size: var(--fs-body-m);
+}
+.page__download-text span:last-child {
+  font-size: var(--fs-label-s);
+  opacity: 0.8;
+}
+
 @media (max-width: 1000px) {
   .page {
     grid-template-columns: 1fr;

@@ -21,6 +21,16 @@
           <span class="page__quote-mark" aria-hidden="true">&rdquo;&rdquo;</span>
           <p>{{ block.text }}</p>
         </blockquote>
+
+        <a class="page__download" *ngIf="block.type === 'download'" [href]="block.href" target="_blank" rel="noopener noreferrer">
+          <span class="page__download-icon">
+            <app-icon name="download" [size]="18" color="#fff"></app-icon>
+          </span>
+          <span class="page__download-text">
+            <strong>{{ block.label }}</strong>
+            <span>{{ block.fileLabel }}</span>
+          </span>
+        </a>
       </ng-container>
     </article>
 

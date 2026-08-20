@@ -14,7 +14,8 @@ export type ContentBlock =
   | { type: 'display'; text: string }
   | { type: 'quote'; text: string }
   | { type: 'list'; items: string[] }
-  | { type: 'image'; src: string; alt: string; caption?: string };
+  | { type: 'image'; src: string; alt: string; caption?: string }
+  | { type: 'download'; label: string; fileLabel: string; href: string };
 
 export interface InstitutionalPageData {
   breadcrumbs: Breadcrumb[];
