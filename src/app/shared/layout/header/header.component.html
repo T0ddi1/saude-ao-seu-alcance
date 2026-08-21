@@ -1,6 +1,6 @@
 <header class="header">
   <div class="header__bar">
-    <a class="header__logo" routerLink="/" aria-label="Saúde ao Seu Alcance — página inicial"></a>
+    <a class="header__logo" routerLink="/" (click)="onLogoTap()" aria-label="Saúde ao Seu Alcance — página inicial"></a>
 
     <nav class="header__nav">
       <div class="header__nav-item" *ngFor="let item of navItems(); let i = index">
@@ -18,7 +18,10 @@
         <div class="header__mega" *ngIf="openIndex() === i && item.columns?.length">
           <div class="header__mega-col" *ngFor="let col of item.columns">
             <h4>{{ col.title }}</h4>
-            <a *ngFor="let link of col.items" [routerLink]="link.href">{{ link.label }}</a>
+            <ng-container *ngFor="let link of col.items">
+              <a *ngIf="!anchorNav.isAnchorLink(link.href)" [routerLink]="link.href">{{ link.label }}</a>
+              <a *ngIf="anchorNav.isAnchorLink(link.href)" [href]="link.href" (click)="anchorNav.navigate(link.href, $event)">{{ link.label }}</a>
+            </ng-container>
           </div>
         </div>
       </div>
@@ -35,6 +38,16 @@
 <!--      </a>-->
       <a class="header__contact" routerLink="/contato">Contato</a>
     </div>
+
+    <button
+      type="button"
+      class="header__exit-fullscreen"
+      *ngIf="totem.isTotem() && totem.isFullscreen()"
+      (click)="totem.exitFullscreen()"
+      aria-label="Sair da tela cheia"
+    >
+      <app-icon name="compress" [size]="16" color="#fff"></app-icon>
+    </button>
 
     <button
       type="button"
@@ -68,17 +81,24 @@
       <div class="header__mobile-submenu" *ngIf="openIndex() === i && item.columns?.length">
         <div class="header__mega-col" *ngFor="let col of item.columns">
           <h4>{{ col.title }}</h4>
-          <a *ngFor="let link of col.items" [routerLink]="link.href">{{ link.label }}</a>
+          <ng-container *ngFor="let link of col.items">
+            <a *ngIf="!anchorNav.isAnchorLink(link.href)" [routerLink]="link.href" (click)="closeMobileMenu()">{{ link.label }}</a>
+            <a
+              *ngIf="anchorNav.isAnchorLink(link.href)"
+              [href]="link.href"
+              (click)="anchorNav.navigate(link.href, $event); closeMobileMenu()"
+            >{{ link.label }}</a>
+          </ng-container>
         </div>
       </div>
     </div>
 
     <div class="header__mobile-actions">
-      <a class="header__login" *ngIf="!totem.isTotem()" routerLink="/cadastre-se">
+      <a class="header__login" *ngIf="!totem.isTotem()" routerLink="/cadastre-se" (click)="closeMobileMenu()">
         <app-icon name="user" [size]="16"></app-icon>
         Entrar
       </a>
-      <a class="header__contact" routerLink="/contato">Contato</a>
+      <a class="header__contact" routerLink="/contato" (click)="closeMobileMenu()">Contato</a>
     </div>
   </div>
 </header>

@@ -4,12 +4,12 @@
     <app-icon name="arrow-right" [size]="12" color="var(--color-primary)"></app-icon>
   </span>
 </ng-template>
-<a *ngIf="href && isInternal" [routerLink]="href" class="btn" [ngClass]="variant">
+<a *ngIf="href && isInternal" [routerLink]="href" class="btn" [ngClass]="variant" [class.btn--lg]="large" [class.btn--compact]="compact">
   <ng-container *ngTemplateOutlet="label"></ng-container>
 </a>
-<a *ngIf="href && !isInternal" [href]="href" class="btn" [ngClass]="variant">
+<a *ngIf="href && !isInternal" [href]="href" class="btn" [ngClass]="variant" [class.btn--lg]="large" [class.btn--compact]="compact">
   <ng-container *ngTemplateOutlet="label"></ng-container>
 </a>
-<button *ngIf="!href" [type]="type" [disabled]="disabled" class="btn" [ngClass]="variant">
+<button *ngIf="!href" [type]="type" [disabled]="disabled" class="btn" [ngClass]="variant" [class.btn--lg]="large" [class.btn--compact]="compact">
   <ng-container *ngTemplateOutlet="label"></ng-container>
 </button>

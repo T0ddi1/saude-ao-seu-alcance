@@ -22,7 +22,7 @@
       [disabled]="submitting()"
       aria-label="E-mail para newsletter"
     />
-    <app-button type="submit" variant="primary" [disabled]="submitting()">
+    <app-button type="submit" variant="primary" [disabled]="submitting()" [compact]="true">
       {{ submitting() ? 'Enviando…' : ctaLabel }}
     </app-button>
   </div>

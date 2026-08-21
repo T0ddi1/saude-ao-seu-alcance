@@ -10,7 +10,10 @@
     <div class="footer__columns">
       <div class="footer__col" *ngFor="let col of d.columns">
         <h4>{{ col.title }}</h4>
-        <a *ngFor="let link of col.links" [routerLink]="link.href">{{ link.label }}</a>
+        <ng-container *ngFor="let link of col.links">
+          <a *ngIf="!anchorNav.isAnchorLink(link.href)" [routerLink]="link.href">{{ link.label }}</a>
+          <a *ngIf="anchorNav.isAnchorLink(link.href)" [href]="link.href" (click)="anchorNav.navigate(link.href, $event)">{{ link.label }}</a>
+        </ng-container>
       </div>
     </div>
 

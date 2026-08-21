@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
@@ -15,10 +15,9 @@ import { TotemService } from './core/services/totem.service';
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
-  isFullscreen = signal(!!document.fullscreenElement);
   isHome = signal(false);
 
-  /** totem is public so the template can read isTotem() directly. */
+  /** totem is public so the template can read isTotem()/isFullscreen() directly. */
   constructor(public totem: TotemService, private location: Location, private router: Router) {
     this.isHome.set(this.isHomeUrl(this.router.url));
   }
@@ -33,7 +32,7 @@ export class AppComponent implements OnInit {
       // we can't do it automatically on load — instead, the very first tap
       // anywhere on the kiosk (whatever the visitor meant to tap) doubles as
       // that gesture and quietly goes fullscreen alongside it.
-      document.addEventListener('click', () => this.goFullscreen(), { once: true, capture: true });
+      document.addEventListener('click', () => this.totem.goFullscreen(), { once: true, capture: true });
     }
   }
 
@@ -50,17 +49,5 @@ export class AppComponent implements OnInit {
   private isHomeUrl(url: string): boolean {
     const path = url.split('?')[0].split('#')[0];
     return path === '/' || path === '';
-  }
-
-  goFullscreen(): void {
-    if (document.fullscreenElement) return;
-    document.documentElement.requestFullscreen?.().catch(() => {
-      // Some kiosk browsers block requestFullscreen entirely — nothing more we can do from here.
-    });
-  }
-
-  @HostListener('document:fullscreenchange')
-  onFullscreenChange(): void {
-    this.isFullscreen.set(!!document.fullscreenElement);
   }
 }

@@ -5,6 +5,7 @@ import { FooterService } from '../../../core/services/footer.service';
 import { FooterData } from '../../../core/models/footer.model';
 import { IconComponent } from '../../components/icon/icon.component';
 import { NewsletterFormComponent } from '../../components/newsletter-form/newsletter-form.component';
+import { AnchorNavService } from '../../../core/services/anchor-nav.service';
 
 @Component({
   selector: 'app-footer',
@@ -16,7 +17,7 @@ import { NewsletterFormComponent } from '../../components/newsletter-form/newsle
 export class FooterComponent implements OnInit {
   data = signal<FooterData | null>(null);
 
-  constructor(private footerService: FooterService) {}
+  constructor(private footerService: FooterService, public anchorNav: AnchorNavService) {}
 
   ngOnInit(): void {
     this.footerService.getFooterData().subscribe((data) => this.data.set(data));

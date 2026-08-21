@@ -1,6 +1,6 @@
 <app-breadcrumb [items]="breadcrumbs"></app-breadcrumb>
 
-<div class="contact">
+<div class="contact" [class.contact--totem]="totem.isTotem()">
   <div class="contact__intro">
     <h1>Faça o seu cadastro!</h1>
     <p>Dúvidas, sugestões de pauta ou parcerias? Preencha o formulário abaixo e nossa equipe responderá em breve. Fique por dentro de tudo que acontece no mundo da saúde.</p>
@@ -41,7 +41,7 @@
 
     <p class="contact__error" *ngIf="error()">{{ error() }}</p>
 
-    <app-button type="submit" variant="primary" [disabled]="submitting()">
+    <app-button type="submit" variant="primary" [disabled]="submitting()" [large]="totem.isTotem()">
       {{ submitting() ? 'Enviando…' : 'Enviar mensagem' }}
     </app-button>
   </form>

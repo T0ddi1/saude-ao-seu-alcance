@@ -8,8 +8,8 @@
 <button
   type="button"
   class="fullscreen-btn"
-  *ngIf="totem.isTotem() && !isFullscreen()"
-  (click)="goFullscreen()"
+  *ngIf="totem.isTotem() && !totem.isFullscreen()"
+  (click)="totem.goFullscreen()"
 >
   Tocar para tela cheia
 </button>

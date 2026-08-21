@@ -15,6 +15,8 @@ export class ButtonComponent {
   @Input() type: 'button' | 'submit' = 'button';
   @Input() showArrow = false;
   @Input() disabled = false;
+  @Input() large = false;
+  @Input() compact = false;
 
   /** Internal app routes (starting with "/") use routerLink so they work under hash-based routing. */
   get isInternal(): boolean {

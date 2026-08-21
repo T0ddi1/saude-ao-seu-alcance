@@ -32,7 +32,7 @@ export class ContactComponent {
   submitting = signal(false);
   error = signal<string | null>(null);
 
-  constructor(private totem: TotemService, private toast: ToastService) {}
+  constructor(public totem: TotemService, private toast: ToastService) {}
 
   async onSubmit(): Promise<void> {
     if (this.submitting() || this.submitted()) return;
