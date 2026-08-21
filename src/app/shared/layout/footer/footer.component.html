@@ -1,7 +1,7 @@
 <footer class="footer" *ngIf="data() as d">
   <div class="footer__top">
     <div class="footer__brand">
-      <p class="footer__logo">saúde <span>ao seu alcance</span></p>
+      <p class="footer__logo" role="img" aria-label="Saúde ao Seu Alcance"></p>
       <h3>{{ d.newsletter.title }}</h3>
       <p class="footer__desc">{{ d.newsletter.description }}</p>
       <app-newsletter-form [placeholder]="d.newsletter.placeholder" [ctaLabel]="d.newsletter.ctaLabel"></app-newsletter-form>

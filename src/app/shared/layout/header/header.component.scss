@@ -14,32 +14,19 @@
 }
 
 .header__logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  line-height: 1.15;
-  font-family: var(--font-heading);
-  font-size: 22px;
-  color: #fff;
+  display: block;
+  width: 220px;
+  height: 77px;
   flex-shrink: 0;
-}
-.header__logo-mark {
-  width: 30px;
-  height: 31px;
-  flex-shrink: 0;
-}
-.header__logo-text {
-  display: flex;
-  flex-direction: column;
-}
-.header__logo-line strong {
-  font-weight: 700;
-}
-.header__logo-line em {
-  font-style: normal;
-  font-weight: 400;
-  font-size: 0.7em;
-  color: var(--color-secondary);
+  background-color: #fff;
+  mask-image: url('/assets/images/logo-full.svg');
+  mask-repeat: no-repeat;
+  mask-position: left center;
+  mask-size: contain;
+  -webkit-mask-image: url('/assets/images/logo-full.svg');
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: left center;
+  -webkit-mask-size: contain;
 }
 .header__logo:hover {
   text-decoration: none;

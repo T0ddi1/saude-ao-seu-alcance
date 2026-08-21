@@ -15,14 +15,19 @@
 }
 
 .footer__logo {
-  font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: 18px;
-  color: #fff;
+  display: block;
+  width: 260px;
+  height: 91px;
+  background-color: #fff;
   margin-bottom: 20px;
-}
-.footer__logo span {
-  color: var(--color-secondary);
+  mask-image: url('/assets/images/logo-full.svg');
+  mask-repeat: no-repeat;
+  mask-position: left center;
+  mask-size: contain;
+  -webkit-mask-image: url('/assets/images/logo-full.svg');
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: left center;
+  -webkit-mask-size: contain;
 }
 
 .footer__brand h3 {

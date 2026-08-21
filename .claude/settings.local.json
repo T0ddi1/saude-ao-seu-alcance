@@ -12,7 +12,10 @@
       "Bash(rm \"C:\\\\Users\\\\fernando.maia\\\\Pictures\\\\fotos\\\\logo-preview-on-purple.png\")",
       "Bash(ls -la \"C:\\\\Users\\\\fernando.maia\\\\Downloads\" | grep -i hcsj)",
       "Bash(cp \"C:\\\\Users\\\\fernando.maia\\\\Downloads\\\\hcsj022-1024x585.webp\" \"C:\\\\Users\\\\fernando.maia\\\\WebstormProjects\\\\saude-ao-seu-alcance\\\\src\\\\assets\\\\images\\\\articles\\\\hospital-sao-jose.webp\" *)",
-      "Bash(cp \"C:\\\\Users\\\\fernando.maia\\\\Pictures\\\\fotos\\\\WhatsApp Image 2026-08-17 at 13.54.05.jpeg\" \"C:\\\\Users\\\\fernando.maia\\\\WebstormProjects\\\\saude-ao-seu-alcance\\\\src\\\\assets\\\\images\\\\articles\\\\hospital-sao-jose.jpg\" *)"
+      "Bash(cp \"C:\\\\Users\\\\fernando.maia\\\\Pictures\\\\fotos\\\\WhatsApp Image 2026-08-17 at 13.54.05.jpeg\" \"C:\\\\Users\\\\fernando.maia\\\\WebstormProjects\\\\saude-ao-seu-alcance\\\\src\\\\assets\\\\images\\\\articles\\\\hospital-sao-jose.jpg\" *)",
+      "Bash(curl -s http://localhost:4200/assets/images/logo-full.svg -o /dev/null -w \"logo-full.svg: %{http_code}\\\\n\")",
+      "Bash(curl -s http://localhost:4200/assets/images/logo-icon.svg -o /dev/null -w \"logo-icon.svg: %{http_code}\\\\n\")",
+      "Bash(curl -s http://localhost:4200/assets/images/logo-mark.svg -o /dev/null -w \"logo-mark.svg \\(should be 404 now\\): %{http_code}\\\\n\")"
     ]
   }
 }
