@@ -7,7 +7,7 @@
   (touchend)="onTouchEnd($event)"
 >
   <p class="hero__eyebrow">{{ article().eyebrow }}</p>
-  <a class="hero__link" [href]="article().href">
+  <a class="hero__link" [routerLink]="article().href">
     <h1 class="hero__title">{{ article().title }}</h1>
     <p class="hero__excerpt">{{ article().excerpt }}</p>
   </a>

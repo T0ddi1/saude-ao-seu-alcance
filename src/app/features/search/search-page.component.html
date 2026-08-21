@@ -14,7 +14,7 @@
   </p>
 
   <div class="search-page__grid" *ngIf="results().length">
-    <a class="search-page__card" *ngFor="let item of results()" [href]="item.href">
+    <a class="search-page__card" *ngFor="let item of results()" [routerLink]="item.href">
       <div class="search-page__media" *ngIf="item.image">
         <img [src]="item.image" [alt]="item.title" loading="lazy" />
       </div>

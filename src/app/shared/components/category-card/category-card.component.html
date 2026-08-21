@@ -1,4 +1,4 @@
-<a class="card" [class.card--sponsored]="card.sponsored" [href]="card.href">
+<a class="card" [class.card--sponsored]="card.sponsored" [routerLink]="card.href">
   <header class="card__head">
     <app-icon [name]="card.icon" [size]="22" color="var(--color-primary)"></app-icon>
     <h3 class="card__title">{{ card.title }}</h3>

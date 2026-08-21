@@ -1,3 +1,23 @@
+:host {
+  display: block;
+  position: sticky;
+  top: 24px;
+  align-self: start;
+}
+
+/*
+ * Same mid-width band where the article page moves the sidebar beside the
+ * title only (see article-page.component.scss): the sidebar's grid cell is
+ * short there, so a sticky sidebar could scroll down and sit on top of the
+ * full-width article body below it once its own cell scrolled past. Plain
+ * static positioning there keeps it in place instead.
+ */
+@media (min-width: 1000px) and (max-width: 1250px) {
+  :host {
+    position: static;
+  }
+}
+
 .sidebar {
   display: flex;
   flex-direction: column;

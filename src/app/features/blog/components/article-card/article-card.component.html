@@ -1,4 +1,4 @@
-<a class="article-card" [class.article-card--sponsored]="article.sponsored" [href]="article.href">
+<a class="article-card" [class.article-card--sponsored]="article.sponsored" [routerLink]="article.href">
   <div class="article-card__media" *ngIf="article.image">
     <img [src]="article.image" [alt]="article.title" loading="lazy" />
   </div>

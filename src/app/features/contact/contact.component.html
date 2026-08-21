@@ -3,19 +3,50 @@
 <div class="contact">
   <div class="contact__intro">
     <h1>Faça o seu cadastro!</h1>
-      <p>Dúvidas, sugestões de pauta ou parcerias? Preencha o formulário abaixo e nossa equipe responderá em breve. Fique por dentro de tudo que acontece no mundo da saúde.</p>  </div>
+    <p>Dúvidas, sugestões de pauta ou parcerias? Preencha o formulário abaixo e nossa equipe responderá em breve. Fique por dentro de tudo que acontece no mundo da saúde.</p>
+  </div>
 
-    <div class="contact__form-wrap">
-        <iframe
-                [src]="formUrl"
-                width="100%"
-                height="2500"
-                frameborder="0"
-                marginheight="0"
-                marginwidth="0"
-                title="Formulário de contato"
-        >
-            Carregando…
-        </iframe>
-    </div>
+  <form class="contact__form" *ngIf="!submitted(); else thanks" (ngSubmit)="onSubmit()">
+    <!-- Honeypot: invisible to real visitors and skipped in tab order; bots that
+         auto-fill every field trip it and get silently ignored. -->
+    <input
+      class="contact__honeypot"
+      type="text"
+      name="website"
+      tabindex="-1"
+      autocomplete="off"
+      aria-hidden="true"
+      [(ngModel)]="website"
+    />
+
+    <label class="contact__field">
+      Nome
+      <input type="text" name="name" [(ngModel)]="name" [disabled]="submitting()" required />
+    </label>
+
+    <label class="contact__field">
+      E-mail
+      <input type="email" name="email" [(ngModel)]="email" [disabled]="submitting()" required />
+    </label>
+
+    <label class="contact__field">
+      Você é médico? Se sim, qual é a sua especialidade médica?
+      <input type="text" name="specialty" [(ngModel)]="specialty" [disabled]="submitting()" />
+    </label>
+
+    <label class="contact__field">
+      Mensagem
+      <textarea name="message" rows="6" [(ngModel)]="message" [disabled]="submitting()" required></textarea>
+    </label>
+
+    <p class="contact__error" *ngIf="error()">{{ error() }}</p>
+
+    <app-button type="submit" variant="primary" [disabled]="submitting()">
+      {{ submitting() ? 'Enviando…' : 'Enviar mensagem' }}
+    </app-button>
+  </form>
+
+  <ng-template #thanks>
+    <p class="contact__thanks">Mensagem enviada — obrigado pelo contato! Nossa equipe responderá em breve.</p>
+  </ng-template>
 </div>

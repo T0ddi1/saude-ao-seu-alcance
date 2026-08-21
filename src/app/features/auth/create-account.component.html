@@ -29,7 +29,7 @@
           <input type="checkbox" name="rememberMe" [(ngModel)]="rememberMe" />
           Lembrar de mim
         </label>
-        <a href="/esqueci-a-senha">Esqueceu a senha?</a>
+        <a routerLink="/esqueci-a-senha">Esqueceu a senha?</a>
       </div>
 
       <p class="auth__error" *ngIf="error()">{{ error() }}</p>
@@ -44,6 +44,6 @@
       Login com Facebook
     </button>
 
-    <p class="auth__footnote">Não tem uma conta? <a href="/cadastre-se">Criar uma conta.</a></p>
+    <p class="auth__footnote">Não tem uma conta? <a routerLink="/cadastre-se">Criar uma conta.</a></p>
   </div>
 </div>

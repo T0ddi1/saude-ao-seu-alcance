@@ -16,7 +16,7 @@
 }
 
 .health-data__title {
-  flex: 1;
+  flex: 0 1 auto;
   min-width: 0;
   font-size: var(--fs-h3);
   line-height: 1.15;
@@ -27,6 +27,14 @@
   min-width: 0;
   display: flex;
   justify-content: flex-start;
+}
+
+/* Plenty of desktop-only room past this point — hugging the title looks
+   cramped, so let the map breathe in the middle of the row instead. */
+@media (min-width: 1300px) {
+  .health-data__map-wrap {
+    justify-content: center;
+  }
 }
 
 /* Modular: 1 category fills the row ("big"), 2 split it evenly ("medium"), 3 keeps the usual layout — set via --category-columns.

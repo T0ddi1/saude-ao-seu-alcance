@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { IconComponent } from '../icon/icon.component';
 @Component({
   selector: 'app-button',
   standalone: true,
-  imports: [CommonModule, IconComponent],
+  imports: [CommonModule, RouterLink, IconComponent],
   templateUrl: './button.component.html',
   styleUrl: './button.component.scss',
 })
@@ -14,4 +15,9 @@ export class ButtonComponent {
   @Input() type: 'button' | 'submit' = 'button';
   @Input() showArrow = false;
   @Input() disabled = false;
+
+  /** Internal app routes (starting with "/") use routerLink so they work under hash-based routing. */
+  get isInternal(): boolean {
+    return !!this.href && this.href.startsWith('/');
+  }
 }

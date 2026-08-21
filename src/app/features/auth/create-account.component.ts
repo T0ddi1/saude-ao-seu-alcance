@@ -1,13 +1,14 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { BreadcrumbComponent } from '../../shared/components/breadcrumb/breadcrumb.component';
 import { ButtonComponent } from '../../shared/components/button/button.component';
 
 @Component({
   selector: 'app-create-account',
   standalone: true,
-  imports: [CommonModule, FormsModule, BreadcrumbComponent, ButtonComponent],
+  imports: [CommonModule, FormsModule, RouterLink, BreadcrumbComponent, ButtonComponent],
   templateUrl: './create-account.component.html',
   styleUrl: './create-account.component.scss',
 })

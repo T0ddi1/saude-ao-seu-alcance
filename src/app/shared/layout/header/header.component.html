@@ -18,7 +18,7 @@
         <div class="header__mega" *ngIf="openIndex() === i && item.columns?.length">
           <div class="header__mega-col" *ngFor="let col of item.columns">
             <h4>{{ col.title }}</h4>
-            <a *ngFor="let link of col.items" [href]="link.href">{{ link.label }}</a>
+            <a *ngFor="let link of col.items" [routerLink]="link.href">{{ link.label }}</a>
           </div>
         </div>
       </div>
@@ -68,13 +68,13 @@
       <div class="header__mobile-submenu" *ngIf="openIndex() === i && item.columns?.length">
         <div class="header__mega-col" *ngFor="let col of item.columns">
           <h4>{{ col.title }}</h4>
-          <a *ngFor="let link of col.items" [href]="link.href">{{ link.label }}</a>
+          <a *ngFor="let link of col.items" [routerLink]="link.href">{{ link.label }}</a>
         </div>
       </div>
     </div>
 
     <div class="header__mobile-actions">
-      <a class="header__login" routerLink="/cadastre-se">
+      <a class="header__login" *ngIf="!totem.isTotem()" routerLink="/cadastre-se">
         <app-icon name="user" [size]="16"></app-icon>
         Entrar
       </a>

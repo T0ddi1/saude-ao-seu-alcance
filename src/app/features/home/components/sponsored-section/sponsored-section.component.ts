@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { IconComponent } from '../../../../shared/components/icon/icon.component';
 import { SponsoredItem, TrustBadge } from '../../../../core/models/home.model';
 
@@ -24,7 +25,7 @@ export const BANNER_PRESETS: Record<'sm' | 'md' | 'lg' | 'xl', { width: number; 
 @Component({
   selector: 'app-sponsored-section',
   standalone: true,
-  imports: [CommonModule, IconComponent],
+  imports: [CommonModule, RouterLink, IconComponent],
   templateUrl: './sponsored-section.component.html',
   styleUrl: './sponsored-section.component.scss',
 })

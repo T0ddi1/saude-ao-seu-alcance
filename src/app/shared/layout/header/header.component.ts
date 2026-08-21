@@ -5,6 +5,7 @@ import { NavigationService } from '../../../core/services/navigation.service';
 import { NavItem } from '../../../core/models/navigation.model';
 import { IconComponent } from '../../components/icon/icon.component';
 import { SearchBoxComponent } from '../../components/search-box/search-box.component';
+import { TotemService } from '../../../core/services/totem.service';
 
 @Component({
   selector: 'app-header',
@@ -18,7 +19,11 @@ export class HeaderComponent implements OnInit {
   openIndex = signal<number | null>(null);
   mobileMenuOpen = signal(false);
 
-  constructor(private navigationService: NavigationService, private elementRef: ElementRef<HTMLElement>) {}
+  constructor(
+    private navigationService: NavigationService,
+    private elementRef: ElementRef<HTMLElement>,
+    public totem: TotemService
+  ) {}
 
   ngOnInit(): void {
     this.navigationService.getNavigation().subscribe((items) => this.navItems.set(items));
@@ -36,6 +41,7 @@ export class HeaderComponent implements OnInit {
   toggleMobileMenu(): void {
     this.mobileMenuOpen.update((open) => !open);
     this.openIndex.set(null);
+    this.totem.menuOpen.set(this.mobileMenuOpen());
   }
 
   @HostListener('document:click', ['$event'])
@@ -49,5 +55,6 @@ export class HeaderComponent implements OnInit {
   onEscape(): void {
     this.closeMenu();
     this.mobileMenuOpen.set(false);
+    this.totem.menuOpen.set(false);
   }
 }

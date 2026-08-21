@@ -180,7 +180,7 @@
   display: none;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1250px) {
   .header__nav,
   .header__actions {
     display: none;
@@ -252,5 +252,30 @@
   .header__mobile-actions .header__login {
     flex: 1;
     justify-content: center;
+  }
+}
+
+/*
+ * Mid-width screens (kiosks and similarly-sized tablets), where the burger
+ * menu above is already active: the dropdown used to stay only as tall as
+ * its content, leaving a visible strip of whatever page was behind it and a
+ * blank column to the right on a screen this wide. Pinning it over the full
+ * viewport below the header bar makes it read as its own full screen
+ * instead of a partial overlay. Plain media query, not gated by a totem
+ * flag, so it applies naturally to any screen this size.
+ */
+@media (min-width: 1000px) and (max-width: 1250px) {
+  .header__mobile-panel {
+    position: fixed;
+    top: 109px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    max-width: none;
+    margin: 0;
+    background: var(--color-primary);
+    overflow-y: auto;
+    padding: 20px var(--gutter) 40px;
+    z-index: 40;
   }
 }

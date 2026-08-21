@@ -1,5 +1,6 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { FooterService } from '../../../core/services/footer.service';
 import { FooterData } from '../../../core/models/footer.model';
 import { IconComponent } from '../../components/icon/icon.component';
@@ -8,7 +9,7 @@ import { NewsletterFormComponent } from '../../components/newsletter-form/newsle
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [CommonModule, IconComponent, NewsletterFormComponent],
+  imports: [CommonModule, RouterLink, IconComponent, NewsletterFormComponent],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss',
 })

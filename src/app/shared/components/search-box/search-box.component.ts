@@ -1,6 +1,6 @@
 import { Component, ElementRef, HostListener, Input, OnDestroy, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Subject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 import { SearchService, SEARCH_MIN_CHARS } from '../../../core/services/search.service';
 import { SearchResult } from '../../../core/models/search.model';
@@ -9,7 +9,7 @@ import { IconComponent } from '../icon/icon.component';
 @Component({
   selector: 'app-search-box',
   standalone: true,
-  imports: [CommonModule, IconComponent],
+  imports: [CommonModule, RouterLink, IconComponent],
   templateUrl: './search-box.component.html',
   styleUrl: './search-box.component.scss',
 })

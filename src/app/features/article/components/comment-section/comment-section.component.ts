@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { ArticleComment } from '../../../../core/models/article.model';
+import { TotemService } from '../../../../core/services/totem.service';
 
 @Component({
   selector: 'app-comment-section',
@@ -13,6 +14,8 @@ import { ArticleComment } from '../../../../core/models/article.model';
 })
 export class CommentSectionComponent {
   @Input({ required: true }) comments!: ArticleComment[];
+
+  constructor(public totem: TotemService) {}
 
   /** Flip to true once comments have a real backend to post to. */
   commentsEnabled = false;

@@ -3,13 +3,7 @@
     <div class="sponsored__slot" *ngFor="let item of items" [style.gridColumn]="'span ' + spanFor(item)">
       <p class="sponsored__eyebrow">{{ item.eyebrow }}</p>
 
-      <a
-        class="sponsored__card"
-        [ngClass]="'is-' + item.theme"
-        [href]="item.href"
-        [attr.target]="item.external ? '_blank' : null"
-        [attr.rel]="item.external ? 'noopener noreferrer' : null"
-      >
+      <ng-template #cardContent>
         <ng-container *ngIf="item.theme === 'light'">
           <div class="sponsored__light-text">
             <img *ngIf="item.logo" class="sponsored__logo" [src]="item.logo" [alt]="item.title" />
@@ -46,6 +40,25 @@
           <p class="sponsored__desc" *ngIf="item.description">{{ item.description }}</p>
           <span class="sponsored__cta">{{ item.ctaLabel }} [+]</span>
         </ng-container>
+      </ng-template>
+
+      <a
+        *ngIf="!item.external"
+        class="sponsored__card"
+        [ngClass]="'is-' + item.theme"
+        [routerLink]="item.href"
+      >
+        <ng-container *ngTemplateOutlet="cardContent"></ng-container>
+      </a>
+      <a
+        *ngIf="item.external"
+        class="sponsored__card"
+        [ngClass]="'is-' + item.theme"
+        [href]="item.href"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <ng-container *ngTemplateOutlet="cardContent"></ng-container>
       </a>
     </div>
   </div>

@@ -3,3 +3,23 @@
   <router-outlet></router-outlet>
 </main>
 <app-footer></app-footer>
+<app-toast></app-toast>
+
+<button
+  type="button"
+  class="fullscreen-btn"
+  *ngIf="totem.isTotem() && !isFullscreen()"
+  (click)="goFullscreen()"
+>
+  Tocar para tela cheia
+</button>
+
+<button
+  type="button"
+  class="back-btn"
+  *ngIf="totem.isTotem() && !isHome() && !totem.menuOpen()"
+  (click)="goBack()"
+  aria-label="Voltar"
+>
+  ← Voltar
+</button>

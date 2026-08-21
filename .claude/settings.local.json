@@ -15,7 +15,18 @@
       "Bash(cp \"C:\\\\Users\\\\fernando.maia\\\\Pictures\\\\fotos\\\\WhatsApp Image 2026-08-17 at 13.54.05.jpeg\" \"C:\\\\Users\\\\fernando.maia\\\\WebstormProjects\\\\saude-ao-seu-alcance\\\\src\\\\assets\\\\images\\\\articles\\\\hospital-sao-jose.jpg\" *)",
       "Bash(curl -s http://localhost:4200/assets/images/logo-full.svg -o /dev/null -w \"logo-full.svg: %{http_code}\\\\n\")",
       "Bash(curl -s http://localhost:4200/assets/images/logo-icon.svg -o /dev/null -w \"logo-icon.svg: %{http_code}\\\\n\")",
-      "Bash(curl -s http://localhost:4200/assets/images/logo-mark.svg -o /dev/null -w \"logo-mark.svg \\(should be 404 now\\): %{http_code}\\\\n\")"
+      "Bash(curl -s http://localhost:4200/assets/images/logo-mark.svg -o /dev/null -w \"logo-mark.svg \\(should be 404 now\\): %{http_code}\\\\n\")",
+      "Bash(npm run *)",
+      "Bash(curl -s -o /dev/null -w \"index.html: %{http_code}\\\\n\" https://saudeaoseualcance.com/index.html)",
+      "Bash(curl -s -o /dev/null -w \".htaccess: %{http_code}\\\\n\" https://saudeaoseualcance.com/.htaccess)",
+      "Bash(curl -s -I https://saudeaoseualcance.com/artigos/comer-melhor-sem-dieta)",
+      "Bash(curl -s https://saudeaoseualcance.com/artigos/comer-melhor-sem-dieta)",
+      "Bash(curl -s -o /dev/null -w \"/artigos/: %{http_code}\\\\n\" https://saudeaoseualcance.com/artigos/)",
+      "Bash(curl -s -o /dev/null -w \"/artigos \\(no slash\\): %{http_code}\\\\n\" https://saudeaoseualcance.com/artigos)",
+      "Bash(curl -s -o /dev/null -w \"/blog: %{http_code}\\\\n\" https://saudeaoseualcance.com/blog)",
+      "Bash(curl -s -o /dev/null -w \"/nonexistent-random-xyz: %{http_code}\\\\n\" https://saudeaoseualcance.com/nonexistent-random-xyz)",
+      "Bash(curl -s -o /dev/null -w \"/assets/mock/home.json: %{http_code}\\\\n\" https://saudeaoseualcance.com/assets/mock/home.json)",
+      "Bash(curl -s https://saudeaoseualcance.com/blog)"
     ]
   }
 }

@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, OnDestroy, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { IconComponent } from '../../../../shared/components/icon/icon.component';
 import { FeaturedArticle } from '../../../../core/models/home.model';
@@ -9,7 +10,7 @@ const AUTOPLAY_MS = 6000;
 @Component({
   selector: 'app-hero-featured',
   standalone: true,
-  imports: [CommonModule, ButtonComponent, IconComponent],
+  imports: [CommonModule, RouterLink, ButtonComponent, IconComponent],
   templateUrl: './hero-featured.component.html',
   styleUrl: './hero-featured.component.scss',
 })

@@ -2,6 +2,8 @@ import { Component, Input, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ButtonComponent } from '../button/button.component';
+import { TotemService } from '../../../core/services/totem.service';
+import { ToastService } from '../../../core/services/toast.service';
 
 /** localStorage key marking that this browser already subscribed — blocks resubmission client-side. */
 const STORAGE_KEY = 'saude-newsletter-subscribed';
@@ -33,8 +35,12 @@ export class NewsletterFormComponent implements OnInit {
   submitting = signal(false);
   error = signal<string | null>(null);
 
+  constructor(private totem: TotemService, private toast: ToastService) {}
+
   ngOnInit(): void {
-    if (localStorage.getItem(STORAGE_KEY)) {
+    // On the totem, a new person uses this form every few minutes, so it must
+    // never lock up from a previous visitor's submission.
+    if (!this.totem.isTotem() && localStorage.getItem(STORAGE_KEY)) {
       this.submitted.set(true);
     }
   }
@@ -68,8 +74,13 @@ export class NewsletterFormComponent implements OnInit {
       // only means the request went out, not that the server confirmed it.
       await fetch(ENDPOINT_URL, { method: 'POST', mode: 'no-cors', body });
 
-      localStorage.setItem(STORAGE_KEY, this.email);
-      this.submitted.set(true);
+      if (this.totem.isTotem()) {
+        this.toast.show('Inscrição enviada — obrigado!');
+        this.email = '';
+      } else {
+        localStorage.setItem(STORAGE_KEY, this.email);
+        this.submitted.set(true);
+      }
     } catch {
       this.error.set('Não foi possível concluir a inscrição agora. Tente novamente em instantes.');
     } finally {

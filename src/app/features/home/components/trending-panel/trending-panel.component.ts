@@ -1,12 +1,13 @@
 import { Component, Input, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { IconComponent } from '../../../../shared/components/icon/icon.component';
 import { TrendingData } from '../../../../core/models/home.model';
 
 @Component({
   selector: 'app-trending-panel',
   standalone: true,
-  imports: [CommonModule, IconComponent],
+  imports: [CommonModule, RouterLink, IconComponent],
   templateUrl: './trending-panel.component.html',
   styleUrl: './trending-panel.component.scss',
 })

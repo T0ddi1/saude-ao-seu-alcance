@@ -7,11 +7,11 @@
   <ol class="trending__list">
     <li class="trending__item" *ngFor="let item of ranked()">
       <span class="trending__rank">{{ item.rank }}</span>
-      <a [href]="item.href">{{ item.title }}</a>
+      <a [routerLink]="item.href">{{ item.title }}</a>
     </li>
   </ol>
 
-  <a class="trending__all" [href]="href()">
+  <a class="trending__all" [routerLink]="href()">
     {{ linkLabel() }}
     <app-icon name="arrow-right" [size]="16" color="#fff"></app-icon>
   </a>

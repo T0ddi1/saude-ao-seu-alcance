@@ -6,7 +6,7 @@
     </header>
     <ul class="sidebar__categories">
       <li *ngFor="let cat of categories" [class.is-active]="cat.active">
-        <a [href]="cat.href">{{ cat.label }}</a>
+        <a [routerLink]="cat.href">{{ cat.label }}</a>
         <span class="sidebar__count">{{ cat.count < 10 ? '0' + cat.count : cat.count }}</span>
       </li>
     </ul>
@@ -20,11 +20,15 @@
     <div class="sidebar__post" *ngFor="let post of recentPosts">
       <p class="sidebar__post-date">{{ post.date }}</p>
       <p class="sidebar__post-excerpt">{{ post.excerpt }}</p>
-      <a class="sidebar__post-link" [href]="post.href">Ler Artigo +</a>
+      <a class="sidebar__post-link" [routerLink]="post.href">Ler Artigo +</a>
     </div>
   </section>
 
-  <a class="sidebar__ad" [href]="adBanner.href">
+  <a class="sidebar__ad" *ngIf="!adBanner.href.startsWith('http')" [routerLink]="adBanner.href">
+    <p>{{ adBanner.title }}</p>
+    <span>{{ adBanner.ctaLabel }} [+]</span>
+  </a>
+  <a class="sidebar__ad" *ngIf="adBanner.href.startsWith('http')" [href]="adBanner.href" target="_blank" rel="noopener noreferrer">
     <p>{{ adBanner.title }}</p>
     <span>{{ adBanner.ctaLabel }} [+]</span>
   </a>
@@ -41,7 +45,11 @@
       <span>foto: {{ sponsor.title | lowercase }}</span>
     </div>
     <p>{{ sponsor.description }}</p>
-    <a class="sidebar__sponsor-link" [href]="sponsor.href">
+    <a class="sidebar__sponsor-link" *ngIf="!sponsor.href.startsWith('http')" [routerLink]="sponsor.href">
+      {{ sponsor.linkLabel }}
+      <app-icon name="arrow-right" [size]="14"></app-icon>
+    </a>
+    <a class="sidebar__sponsor-link" *ngIf="sponsor.href.startsWith('http')" [href]="sponsor.href" target="_blank" rel="noopener noreferrer">
       {{ sponsor.linkLabel }}
       <app-icon name="arrow-right" [size]="14"></app-icon>
     </a>

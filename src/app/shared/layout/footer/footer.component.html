@@ -10,7 +10,7 @@
     <div class="footer__columns">
       <div class="footer__col" *ngFor="let col of d.columns">
         <h4>{{ col.title }}</h4>
-        <a *ngFor="let link of col.links" [href]="link.href">{{ link.label }}</a>
+        <a *ngFor="let link of col.links" [routerLink]="link.href">{{ link.label }}</a>
       </div>
     </div>
 
@@ -24,7 +24,7 @@
   <div class="footer__projects">
     <h4>Projetos especiais</h4>
     <div class="footer__projects-grid">
-      <a class="footer__project" *ngFor="let p of d.specialProjects" [href]="p.href">
+      <a class="footer__project" *ngFor="let p of d.specialProjects" [routerLink]="p.href">
         <app-icon [name]="p.icon" [size]="20" color="var(--color-secondary)"></app-icon>
         <span class="footer__project-title">{{ p.title }}</span>
         <span class="footer__project-desc">{{ p.description }}</span>

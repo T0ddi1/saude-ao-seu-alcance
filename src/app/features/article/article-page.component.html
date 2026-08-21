@@ -3,62 +3,66 @@
 
   <div class="article">
     <article class="article__main">
-      <h1 class="article__title">{{ d.title }}</h1>
-      <p class="article__subtitle">{{ d.subtitle }}</p>
+      <div class="article__head">
+        <h1 class="article__title">{{ d.title }}</h1>
+        <p class="article__subtitle">{{ d.subtitle }}</p>
 
-      <div class="article__meta">
-        <span>{{ d.date }}</span>
-        <span>
-          Por: <strong>{{ d.author }}</strong>
-          <em class="article__author-role" *ngIf="d.authorRole">{{ d.authorRole }}</em>
-        </span>
-        <span class="article__share">
-          Compartilhar:
-          <a
-            *ngFor="let s of d.shareLinks"
-            [href]="shareUrl(s.icon)"
-            target="_blank"
-            rel="noopener noreferrer"
-            [attr.aria-label]="s.label"
-            class="article__share-btn"
-          >
-            <app-icon [name]="s.icon" [size]="14" color="#fff"></app-icon>
-          </a>
-        </span>
+        <div class="article__meta">
+          <span>{{ d.date }}</span>
+          <span>
+            Por: <strong>{{ d.author }}</strong>
+            <em class="article__author-role" *ngIf="d.authorRole">{{ d.authorRole }}</em>
+          </span>
+          <span class="article__share">
+            Compartilhar:
+            <a
+              *ngFor="let s of d.shareLinks"
+              [href]="shareUrl(s.icon)"
+              target="_blank"
+              rel="noopener noreferrer"
+              [attr.aria-label]="s.label"
+              class="article__share-btn"
+            >
+              <app-icon [name]="s.icon" [size]="14" color="#fff"></app-icon>
+            </a>
+          </span>
+        </div>
       </div>
 
-      <div class="article__hero" *ngIf="d.heroImage">
-        <img [src]="d.heroImage" [alt]="d.title" />
+      <div class="article__body">
+        <div class="article__hero" *ngIf="d.heroImage">
+          <img [src]="d.heroImage" [alt]="d.title" />
+        </div>
+
+        <ng-container *ngFor="let block of d.blocks">
+          <p class="article__lead" *ngIf="block.type === 'lead'">
+            <ng-container *ngFor="let seg of block.segments">
+              <strong *ngIf="seg.strong">{{ seg.text }}</strong>
+              <ng-container *ngIf="!seg.strong">{{ seg.text }}</ng-container>
+            </ng-container>
+          </p>
+
+          <p class="article__paragraph" *ngIf="block.type === 'paragraph'">{{ block.text }}</p>
+
+          <h2 class="article__display" *ngIf="block.type === 'display'">{{ block.text }}</h2>
+
+          <blockquote class="article__quote" *ngIf="block.type === 'quote'">
+            <span class="article__quote-mark" aria-hidden="true">&rdquo;&rdquo;</span>
+            <p>{{ block.text }}</p>
+          </blockquote>
+
+          <ul class="article__list" *ngIf="block.type === 'list'">
+            <li *ngFor="let item of block.items">{{ item }}</li>
+          </ul>
+
+          <figure class="article__figure" *ngIf="block.type === 'image'">
+            <img [src]="block.src" [alt]="block.alt" loading="lazy" />
+            <figcaption *ngIf="block.caption">{{ block.caption }}</figcaption>
+          </figure>
+        </ng-container>
+
+        <app-comment-section [comments]="d.comments"></app-comment-section>
       </div>
-
-      <ng-container *ngFor="let block of d.blocks">
-        <p class="article__lead" *ngIf="block.type === 'lead'">
-          <ng-container *ngFor="let seg of block.segments">
-            <strong *ngIf="seg.strong">{{ seg.text }}</strong>
-            <ng-container *ngIf="!seg.strong">{{ seg.text }}</ng-container>
-          </ng-container>
-        </p>
-
-        <p class="article__paragraph" *ngIf="block.type === 'paragraph'">{{ block.text }}</p>
-
-        <h2 class="article__display" *ngIf="block.type === 'display'">{{ block.text }}</h2>
-
-        <blockquote class="article__quote" *ngIf="block.type === 'quote'">
-          <span class="article__quote-mark" aria-hidden="true">&rdquo;&rdquo;</span>
-          <p>{{ block.text }}</p>
-        </blockquote>
-
-        <ul class="article__list" *ngIf="block.type === 'list'">
-          <li *ngFor="let item of block.items">{{ item }}</li>
-        </ul>
-
-        <figure class="article__figure" *ngIf="block.type === 'image'">
-          <img [src]="block.src" [alt]="block.alt" loading="lazy" />
-          <figcaption *ngIf="block.caption">{{ block.caption }}</figcaption>
-        </figure>
-      </ng-container>
-
-      <app-comment-section [comments]="d.comments"></app-comment-section>
     </article>
 
     <app-content-sidebar

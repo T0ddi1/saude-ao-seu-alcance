@@ -19,7 +19,7 @@
       <a
         class="search__result"
         *ngFor="let item of results()"
-        [href]="item.href"
+        [routerLink]="item.href"
         (click)="onResultClick()"
       >
         <div class="search__result-media" *ngIf="item.image; else noImage">
@@ -37,7 +37,7 @@
         </div>
       </a>
 
-      <a class="search__see-all" [href]="'/buscar?q=' + query()" (click)="onResultClick()">
+      <a class="search__see-all" routerLink="/buscar" [queryParams]="{ q: query() }" (click)="onResultClick()">
         Ver todos os resultados para "{{ query() }}"
       </a>
     </ng-container>

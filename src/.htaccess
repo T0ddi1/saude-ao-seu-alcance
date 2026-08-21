@@ -1,0 +1,9 @@
+DirectoryIndex index.html
+
+# If the requested path isn't a real file (e.g. /blog or /artigos/algum-slug),
+# serve index.html instead so Angular's router can handle it. This avoids
+# mod_rewrite's RewriteRule/RewriteCond chains entirely (some LiteSpeed/shared
+# hosting setups mishandle those and return a 500 instead of falling back).
+<IfModule mod_dir.c>
+  FallbackResource /index.html
+</IfModule>

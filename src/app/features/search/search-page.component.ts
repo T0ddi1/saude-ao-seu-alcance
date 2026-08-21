@@ -1,6 +1,6 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { SearchService, SEARCH_MIN_CHARS } from '../../core/services/search.service';
 import { SearchResult } from '../../core/models/search.model';
@@ -9,7 +9,7 @@ import { BreadcrumbComponent } from '../../shared/components/breadcrumb/breadcru
 @Component({
   selector: 'app-search-page',
   standalone: true,
-  imports: [CommonModule, BreadcrumbComponent],
+  imports: [CommonModule, RouterLink, BreadcrumbComponent],
   templateUrl: './search-page.component.html',
   styleUrl: './search-page.component.scss',
 })
