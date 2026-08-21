@@ -22,6 +22,13 @@
   line-height: 1.15;
 }
 
+.health-data__map-wrap {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  justify-content: flex-start;
+}
+
 /* Modular: 1 category fills the row ("big"), 2 split it evenly ("medium"), 3 keeps the usual layout — set via --category-columns.
 .health-data__right {
   display: grid;
@@ -174,6 +181,9 @@
     flex-basis: auto;
     width: 100%;
     max-width: 400px;
+  }
+  .health-data__map-wrap {
+    width: 100%;
   }
   .health-data__map {
     width: 280px;
