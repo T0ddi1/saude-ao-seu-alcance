@@ -3,12 +3,10 @@
 <div class="contact" [class.contact--totem]="totem.isTotem()">
   <div class="contact__intro">
     <h1>Faça o seu cadastro!</h1>
-    <p>Dúvidas, sugestões de pauta ou parcerias? Preencha o formulário abaixo e nossa equipe responderá em breve. Fique por dentro de tudo que acontece no mundo da saúde.</p>
+    <p>Quer escrever para o portal, sugerir uma pauta ou falar sobre parcerias? Preencha o formulário abaixo e nossa equipe entrará em contato. Fique por dentro de tudo que acontece no mundo da saúde.</p>
   </div>
 
   <form class="contact__form" *ngIf="!submitted(); else thanks" (ngSubmit)="onSubmit()">
-    <!-- Honeypot: invisible to real visitors and skipped in tab order; bots that
-         auto-fill every field trip it and get silently ignored. -->
     <input
       class="contact__honeypot"
       type="text"
@@ -20,33 +18,85 @@
     />
 
     <label class="contact__field">
-      Nome
-      <input type="text" name="name" [(ngModel)]="name" [disabled]="submitting()" required />
+      Nome completo *
+      <input type="text" name="fullName" autocomplete="name" [(ngModel)]="fullName" [disabled]="submitting()" required />
     </label>
 
     <label class="contact__field">
-      E-mail
-      <input type="email" name="email" [(ngModel)]="email" [disabled]="submitting()" required />
+      E-mail *
+      <input type="email" name="email" autocomplete="email" [(ngModel)]="email" [disabled]="submitting()" required />
     </label>
 
     <label class="contact__field">
-      Você é médico? Se sim, qual é a sua especialidade médica?
-      <input type="text" name="specialty" [(ngModel)]="specialty" [disabled]="submitting()" />
+      Telefone (com DDD) *
+      <input
+        type="tel"
+        name="phone"
+        autocomplete="tel"
+        inputmode="tel"
+        placeholder="(11) 99999-9999"
+        [(ngModel)]="phone"
+        (ngModelChange)="onPhoneInput()"
+        [disabled]="submitting()"
+        required
+      />
     </label>
 
     <label class="contact__field">
-      Mensagem
-      <textarea name="message" rows="6" [(ngModel)]="message" [disabled]="submitting()" required></textarea>
+      Especialidade médica *
+      <select name="specialtyId" [(ngModel)]="specialtyId" [disabled]="submitting()" required>
+        <option [ngValue]="null" disabled>Selecione</option>
+        <option *ngFor="let option of options().specialties; trackBy: trackById" [ngValue]="option.id">{{ option.name }}</option>
+      </select>
+    </label>
+
+    <div class="contact__row">
+      <label class="contact__field">
+        Estado *
+        <select name="state" [(ngModel)]="state" (ngModelChange)="onStateChange()" [disabled]="submitting()" required>
+          <option value="" disabled>Selecione</option>
+          <option *ngFor="let s of states" [value]="s.uf">{{ s.nome }}</option>
+        </select>
+      </label>
+
+      <label class="contact__field">
+        Cidade *
+        <select name="city" [(ngModel)]="city" [disabled]="submitting() || !state || loadingCities()" required>
+          <option value="" disabled>{{ !state ? 'Escolha o estado' : loadingCities() ? 'Carregando...' : 'Selecione' }}</option>
+          <option *ngFor="let c of cities()" [value]="c">{{ c }}</option>
+        </select>
+      </label>
+    </div>
+
+    <label class="contact__field">
+      De onde você veio? *
+      <select name="sourceId" [(ngModel)]="sourceId" [disabled]="submitting()" required>
+        <option [ngValue]="null" disabled>Selecione</option>
+        <option *ngFor="let option of options().sources; trackBy: trackById" [ngValue]="option.id">{{ option.name }}</option>
+      </select>
+    </label>
+
+    <label class="contact__field">
+      Qual é o seu interesse? *
+      <select name="interestTypeId" [(ngModel)]="interestTypeId" [disabled]="submitting()" required>
+        <option [ngValue]="null" disabled>Selecione</option>
+        <option *ngFor="let option of options().interestTypes; trackBy: trackById" [ngValue]="option.id">{{ option.name }}</option>
+      </select>
+    </label>
+
+    <label class="contact__field">
+      Mensagem (opcional)
+      <textarea name="message" rows="4" [(ngModel)]="message" [disabled]="submitting()"></textarea>
     </label>
 
     <p class="contact__error" *ngIf="error()">{{ error() }}</p>
 
     <app-button type="submit" variant="primary" [disabled]="submitting()" [large]="totem.isTotem()">
-      {{ submitting() ? 'Enviando…' : 'Enviar mensagem' }}
+      {{ submitting() ? 'Enviando…' : 'Enviar cadastro' }}
     </app-button>
   </form>
 
   <ng-template #thanks>
-    <p class="contact__thanks">Mensagem enviada — obrigado pelo contato! Nossa equipe responderá em breve.</p>
+    <p class="contact__thanks">Cadastro enviado — obrigado pelo contato! Nossa equipe falará com você em breve.</p>
   </ng-template>
 </div>

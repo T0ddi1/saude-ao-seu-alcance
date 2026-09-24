@@ -1,0 +1,158 @@
+<div class="dash">
+  <div class="adm-page-head">
+    <h2>Dashboard</h2>
+    <p *ngIf="aba === 'newsletter'">Acompanhe as inscrições na newsletter: quem entrou, quando e por quais assuntos.</p>
+    <p *ngIf="aba === 'leads'">Acompanhe os cadastros de contato: quem são, de onde vieram e o que buscam.</p>
+  </div>
+
+  <div class="adm-tabs dash__abas" role="tablist">
+    <button type="button" role="tab" [class.is-ativo]="aba === 'newsletter'" [attr.aria-selected]="aba === 'newsletter'" (click)="aba = 'newsletter'">Newsletter</button>
+    <button type="button" role="tab" [class.is-ativo]="aba === 'leads'" [attr.aria-selected]="aba === 'leads'" (click)="aba = 'leads'">Leads de contato</button>
+  </div>
+
+  <div [hidden]="aba !== 'newsletter'">
+  <p class="adm-alert adm-alert--erro" *ngIf="erro">{{ erro }}</p>
+  <p class="adm-empty" *ngIf="carregando">Carregando...</p>
+
+  <ng-container *ngIf="dados">
+    <div class="dash__kpis">
+      <div class="adm-card dash__kpi dash__kpi--destaque">
+        <span class="dash__kpi-rotulo">Inscritos hoje</span>
+        <strong>{{ dados.hoje }}</strong>
+        <span class="dash__kpi-sub" *ngIf="variacaoHoje !== null" [class.is-neg]="variacaoHoje < 0">
+          {{ variacaoHoje >= 0 ? '▲' : '▼' }} {{ variacaoHoje < 0 ? -variacaoHoje : variacaoHoje }}% vs. ontem ({{ dados.ontem }})
+        </span>
+        <span class="dash__kpi-sub" *ngIf="variacaoHoje === null">Ontem: {{ dados.ontem }}</span>
+      </div>
+      <div class="adm-card dash__kpi">
+        <span class="dash__kpi-rotulo">Últimos 7 dias</span>
+        <strong>{{ dados.ultimos7Dias }}</strong>
+      </div>
+      <div class="adm-card dash__kpi">
+        <span class="dash__kpi-rotulo">Últimos 30 dias</span>
+        <strong>{{ dados.ultimos30Dias }}</strong>
+        <span class="dash__kpi-sub">Média de {{ mediaDiaria30 }} por dia</span>
+      </div>
+      <div class="adm-card dash__kpi">
+        <span class="dash__kpi-rotulo">Total de inscritos</span>
+        <strong>{{ dados.total }}</strong>
+      </div>
+    </div>
+
+    <div class="adm-card">
+      <h3 class="dash__titulo">Inscrições por dia (últimos 30 dias)</h3>
+      <div class="dash__grafico dash__grafico--largo"><canvas #graficoDia aria-label="Inscrições por dia"></canvas></div>
+    </div>
+
+    <div class="dash__grid">
+      <div class="adm-card">
+        <h3 class="dash__titulo">Assuntos de interesse</h3>
+        <p class="adm-empty" *ngIf="!dados.porInteresse.length">Sem inscrições ainda.</p>
+        <div class="dash__grafico" [hidden]="!dados.porInteresse.length"><canvas #graficoInteresse aria-label="Assuntos de interesse"></canvas></div>
+      </div>
+      <div class="adm-card">
+        <h3 class="dash__titulo">Dia da semana com mais inscrições</h3>
+        <div class="dash__grafico"><canvas #graficoSemana aria-label="Inscrições por dia da semana"></canvas></div>
+      </div>
+    </div>
+
+    <div class="adm-card">
+      <h3 class="dash__titulo">
+        <button type="button" class="dash__voltar-estados" *ngIf="estadoSelecionado || mostrarOutrosEstados" (click)="voltarEstados()" aria-label="Voltar">←</button>
+        {{ estadoSelecionado ? 'Cidades em ' + estadoSelecionado : (mostrarOutrosEstados ? 'Outros estados' : 'Inscritos por estado') }}
+      </h3>
+      <p class="adm-dica" *ngIf="!estadoSelecionado && !mostrarOutrosEstados">Baseado na localização compartilhada no navegador. Clique em um estado para ver as cidades, ou em "Outros" para ver os estados com menos inscritos.</p>
+      <p class="adm-empty" *ngIf="!dados.porEstado.length">Sem localizações registradas ainda.</p>
+      <div class="dash__grafico" [hidden]="!dados.porEstado.length"><canvas #graficoCidade aria-label="Inscritos por estado, com detalhamento por cidade"></canvas></div>
+    </div>
+
+    <app-relatorio-newsletter></app-relatorio-newsletter>
+
+    <h3 class="adm-section-title">Inscritos</h3>
+    <div class="adm-card adm-card--flush">
+      <table class="adm-table">
+        <thead>
+          <tr>
+            <th>E-mail</th>
+            <th>Assuntos</th>
+            <th>Cidade</th>
+            <th>Quando</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let inscrito of pagina?.itens">
+            <td>{{ inscrito.email }}</td>
+            <td>{{ inscrito.todosInteresses ? 'Todos' : inscrito.interesses.join(', ') }}</td>
+            <td>{{ inscrito.cidade ? inscrito.cidade + (inscrito.estado ? ' (' + inscrito.estado + ')' : '') : '-' }}</td>
+            <td>{{ formatarData(inscrito.criadoEm) }}</td>
+            <td class="adm-table__acoes">
+              <button type="button" (click)="abrir(inscrito)" [attr.aria-label]="'Ver informações de ' + inscrito.email">
+                <i class="fa-regular fa-eye" aria-hidden="true"></i> Ver
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="adm-empty" *ngIf="pagina && !pagina.itens.length">Nenhuma inscrição ainda.</p>
+      <p class="adm-empty" *ngIf="!pagina && carregandoPagina">Carregando...</p>
+
+      <nav class="dash__paginacao" *ngIf="pagina && pagina.totalPaginas > 1" aria-label="Paginação dos inscritos">
+        <span class="dash__paginacao-info">{{ pagina.totalItens }} inscritos · página {{ pagina.paginaAtual }} de {{ pagina.totalPaginas }}</span>
+        <div class="dash__paginacao-botoes">
+          <button type="button" (click)="irParaPagina(pagina.paginaAtual - 1)" [disabled]="pagina.paginaAtual === 1 || carregandoPagina" aria-label="Página anterior">‹</button>
+          <ng-container *ngFor="let p of paginasVisiveis">
+            <span *ngIf="p === 0" class="dash__paginacao-reticencias">…</span>
+            <button
+              *ngIf="p !== 0"
+              type="button"
+              [class.is-ativa]="p === pagina.paginaAtual"
+              [attr.aria-current]="p === pagina.paginaAtual ? 'page' : null"
+              (click)="irParaPagina(p)"
+              [disabled]="carregandoPagina"
+            >{{ p }}</button>
+          </ng-container>
+          <button type="button" (click)="irParaPagina(pagina.paginaAtual + 1)" [disabled]="pagina.paginaAtual === pagina.totalPaginas || carregandoPagina" aria-label="Próxima página">›</button>
+        </div>
+      </nav>
+    </div>
+
+    <div class="dash__modal-fundo" *ngIf="selecionado" (click)="fechar()">
+      <div class="dash__modal" appDialogFoco role="dialog" aria-modal="true" aria-labelledby="inscrito-titulo" (click)="$event.stopPropagation()" (keydown.escape)="fechar()">
+        <div class="dash__modal-cabecalho">
+          <h3 id="inscrito-titulo">Inscrito na newsletter</h3>
+          <button type="button" class="dash__modal-fechar" (click)="fechar()" aria-label="Fechar">×</button>
+        </div>
+
+        <dl class="dash__detalhes">
+          <div class="dash__detalhes-largo">
+            <dt>E-mail</dt>
+            <dd class="dash__copiavel">
+              <a [href]="'mailto:' + selecionado.email">{{ selecionado.email }}</a>
+              <button type="button" class="dash__copiar" [class.is-copiado]="copiado" (click)="copiar(selecionado.email)" [attr.aria-label]="copiado ? 'E-mail copiado' : 'Copiar e-mail'" [title]="copiado ? 'Copiado!' : 'Copiar e-mail'">
+                <i class="fa-regular" [ngClass]="copiado ? 'fa-circle-check' : 'fa-copy'" aria-hidden="true"></i>
+              </button>
+            </dd>
+          </div>
+          <div class="dash__detalhes-largo">
+            <dt>Assuntos de interesse</dt>
+            <dd>{{ selecionado.todosInteresses ? 'Todos os assuntos' : selecionado.interesses.join(', ') }}</dd>
+          </div>
+          <div *ngIf="selecionado.nome"><dt>Nome</dt><dd>{{ selecionado.nome }}</dd></div>
+          <div *ngIf="selecionado.telefone"><dt>Telefone</dt><dd>{{ selecionado.telefone }}</dd></div>
+          <div><dt>Origem</dt><dd>{{ selecionado.origem || '-' }}</dd></div>
+          <div><dt>Cidade</dt><dd>{{ selecionado.cidade || '-' }}{{ selecionado.cidade && selecionado.estado ? ' (' + selecionado.estado + ')' : '' }}</dd></div>
+          <div><dt>Inscrição em</dt><dd>{{ formatarDataCompleta(selecionado.criadoEm) }}</dd></div>
+          <div class="dash__detalhes-largo"><dt>Comunicações</dt><dd>Aceitou receber comunicações por e-mail.</dd></div>
+        </dl>
+
+        <div class="dash__modal-acoes">
+          <button type="button" class="adm-btn adm-btn--primario" (click)="fechar()">Fechar</button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  </div>
+
+  <app-dashboard-contatos *ngIf="aba === 'leads'"></app-dashboard-contatos>
+</div>

@@ -6,7 +6,7 @@
     </header>
     <ul class="sidebar__categories">
       <li *ngFor="let cat of categories" [class.is-active]="cat.active">
-        <a [routerLink]="cat.href">{{ cat.label }}</a>
+        <a [routerLink]="caminho(cat.href)" [queryParams]="queryParams(cat.href)">{{ cat.label }}</a>
         <span class="sidebar__count">{{ cat.count < 10 ? '0' + cat.count : cat.count }}</span>
       </li>
     </ul>

@@ -1,0 +1,75 @@
+<button type="button" class="icon-picker__gatilho" (click)="abrir()" [disabled]="disabled">
+  <span class="icon-picker__preview">
+    <app-icon *ngIf="valor" [name]="valor" [size]="18" color="var(--adm-accent)"></app-icon>
+  </span>
+  <span class="icon-picker__nome">{{ valor ? nomeExibicao(valor) : 'Escolher ícone...' }}</span>
+  <i class="fa-solid fa-chevron-down"></i>
+</button>
+
+<div class="icon-picker__backdrop" *ngIf="aberto" (click)="fechar()">
+  <div class="icon-picker__modal" (click)="$event.stopPropagation()">
+    <div class="icon-picker__modal-head">
+      <h4>Escolha um ícone</h4>
+      <button type="button" class="icon-picker__fechar" (click)="fechar()" aria-label="Fechar">×</button>
+    </div>
+
+    <div class="icon-picker__busca">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input
+        type="text"
+        [placeholder]="modoTodos ? 'Buscar nos mais de 2 mil ícones do Font Awesome...' : 'Buscar ícone...'"
+        [(ngModel)]="busca"
+        [ngModelOptions]="{ standalone: true }"
+        autofocus
+      />
+    </div>
+
+    <div class="icon-picker__abas">
+      <button type="button" [class.is-ativo]="!modoTodos" (click)="voltarPrincipais()">Principais</button>
+      <button type="button" [class.is-ativo]="modoTodos" (click)="mostrarTodos()">Mostrar todos (Font Awesome)</button>
+    </div>
+
+    <div class="icon-picker__cores">
+      <span class="icon-picker__cores-titulo">Cor do ícone</span>
+      <div class="icon-picker__cores-lista">
+        <button type="button" class="icon-picker__cor icon-picker__cor--padrao" [class.is-ativa]="!cor" (click)="escolherCor(null)" title="Cor padrão do site" aria-label="Cor padrão">A</button>
+        <button
+          type="button"
+          class="icon-picker__cor"
+          *ngFor="let c of coresSugeridas"
+          [style.background]="c"
+          [class.is-ativa]="cor === c"
+          [title]="c"
+          [attr.aria-label]="'Cor ' + c"
+          (click)="escolherCor(c)"
+        ></button>
+        <label class="icon-picker__cor icon-picker__cor--livre" title="Escolher outra cor" [class.is-ativa]="!!cor && !coresSugeridas.includes(cor)">
+          <i class="fa-solid fa-eye-dropper" aria-hidden="true"></i>
+          <input type="color" [value]="cor || '#5c26e4'" (input)="aoEscolherCorLivre($event)" aria-label="Escolher outra cor" />
+        </label>
+      </div>
+    </div>
+
+    <p class="icon-picker__dica" *ngIf="modoTodos && !carregandoTodos && busca.trim().length < 2">
+      Digite pelo menos 2 letras pra buscar entre os mais de 2 mil ícones.
+    </p>
+    <p class="icon-picker__dica" *ngIf="modoTodos && carregandoTodos">Carregando catálogo completo...</p>
+
+    <div class="icon-picker__grade" *ngIf="iconesFiltrados.length">
+      <button
+        type="button"
+        class="icon-picker__item"
+        *ngFor="let icone of iconesFiltrados"
+        [class.is-selecionado]="icone === nome"
+        (click)="escolher(icone)"
+      >
+        <app-icon [name]="icone" [size]="22" [color]="icone === nome ? '#fff' : (cor || 'var(--adm-accent)')"></app-icon>
+        <span>{{ nomeExibicao(icone) }}</span>
+      </button>
+    </div>
+
+    <p class="icon-picker__vazio" *ngIf="!iconesFiltrados.length && !carregandoTodos && (!modoTodos || busca.trim().length >= 2)">
+      Nenhum ícone encontrado pra "{{ busca }}".
+    </p>
+  </div>
+</div>

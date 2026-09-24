@@ -31,16 +31,7 @@
   border-radius: var(--radius-m);
   color: inherit;
   overflow: hidden;
-  /*
-   * Fixed, not min-height: a banner <img> with object-fit:contain still
-   * carries its own intrinsic aspect ratio, which — with no fixed height
-   * here — was winning the flex/grid auto-sizing fight and stretching
-   * every card in the row up to whatever height the widest banner (São
-   * José, 3:2 at the lg column width) needed to show uncropped. That left
-   * the narrower Tessera banner floating in a much taller box with empty
-   * letterbox bars top/bottom. Fixing the height to Tessera's own natural
-   * fit keeps every card that same height on purpose.
-   */
+  
   height: 267px;
   transition: box-shadow 0.15s ease, transform 0.15s ease;
   display: flex;
@@ -51,7 +42,7 @@
   transform: translateY(-2px);
 }
 
-/* light (Onmed): text left, photo right */
+
 .sponsored__card.is-light {
   background: var(--color-surface-alt);
   align-items: stretch;
@@ -77,7 +68,7 @@
   color: var(--color-primary);
 }
 
-/* dark (Tessera): full-bleed photo + overlay */
+
 .sponsored__card.is-dark {
   color: #fff;
   align-items: flex-end;
@@ -108,7 +99,7 @@
   width: 100%;
 }
 
-/* brand (Gama): solid color, centered */
+
 .sponsored__card.is-brand {
   background: var(--color-info);
   color: #fff;
@@ -123,15 +114,7 @@
   color: #fff;
 }
 
-/*
- * banner: a single flat image supplied by marketing — no text overlaid on
- * top of it. Real banners rarely land pre-cropped to our exact slot ratio
- * (e.g. these two are ~3:2, much taller than the wide sm/md/lg slots), so
- * `contain` keeps the whole image — including any text baked into it —
- * always visible instead of `cover` slicing off the top/bottom. The dark
- * fill behind it is the letterbox color when the image doesn't fill the
- * slot; most banner art has a dark background already, so it blends in.
- */
+
 .sponsored__card.is-banner {
   padding: 0;
   background: #fff;
@@ -148,13 +131,13 @@
   width: auto;
   object-fit: contain;
   align-self: flex-start;
-  /* logo source files ship with a baked-in white background — multiply blends it into the card */
+  
   mix-blend-mode: multiply;
 }
 .is-brand .sponsored__logo {
   align-self: center;
   height: 34px;
-  /* gama's logo file has real alpha transparency — no blend hack needed */
+  
   mix-blend-mode: normal;
 }
 
@@ -217,7 +200,7 @@
 }
 
 @media (max-width: 600px) {
-  /* side-by-side text/photo split doesn't have room on a phone — stack instead */
+  
   .sponsored__card.is-light {
     flex-direction: column;
   }

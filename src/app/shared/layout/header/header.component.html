@@ -1,8 +1,15 @@
 <header class="header">
   <div class="header__bar">
-    <a class="header__logo" routerLink="/" (click)="onLogoTap()" aria-label="Saúde ao Seu Alcance — página inicial"></a>
+    <a
+      class="header__logo"
+      [class.header__logo--personalizado]="logoPersonalizado()"
+      [style.background-image]="logoPersonalizado() ? 'url(' + logoPersonalizado() + ')' : null"
+      routerLink="/"
+      (click)="onLogoTap()"
+      aria-label="Saúde ao Seu Alcance — página inicial"
+    ></a>
 
-    <nav class="header__nav">
+    <nav class="header__nav" aria-label="Menu principal">
       <div class="header__nav-item" *ngFor="let item of navItems(); let i = index">
         <button
           type="button"
@@ -29,13 +36,14 @@
 
     <div class="header__actions">
       <app-search-box></app-search-box>
-<!--      <button type="button" class="header__icon-btn" aria-label="Favoritos">-->
-<!--        <app-icon name="bookmark" [size]="18"></app-icon>-->
-<!--      </button>-->
-<!--      <a class="header__login" routerLink="/cadastre-se">-->
-<!--        <app-icon name="user" [size]="16"></app-icon>-->
-<!--        Entrar-->
-<!--      </a>-->
+      <a class="header__login" *ngIf="!authService.estaLogado" routerLink="/entrar">
+        <app-icon name="user" [size]="16"></app-icon>
+        Entrar
+      </a>
+      <a class="header__login" *ngIf="authService.estaLogado" [routerLink]="linkContaLogada">
+        <app-icon name="user" [size]="16"></app-icon>
+        {{ rotuloContaLogada }}
+      </a>
       <a class="header__contact" routerLink="/contato">Contato</a>
     </div>
 
@@ -55,7 +63,8 @@
       (click)="toggleMobileMenu()"
       [class.is-open]="mobileMenuOpen()"
       [attr.aria-expanded]="mobileMenuOpen()"
-      aria-label="Abrir menu"
+      [attr.aria-label]="mobileMenuOpen() ? 'Fechar menu' : 'Abrir menu'"
+      aria-controls="menu-mobile"
     >
       <span></span>
       <span></span>
@@ -63,7 +72,7 @@
     </button>
   </div>
 
-  <div class="header__mobile-panel" *ngIf="mobileMenuOpen()">
+  <div class="header__mobile-panel" id="menu-mobile" role="navigation" aria-label="Menu principal" *ngIf="mobileMenuOpen()">
     <app-search-box variant="mobile" class="header__search--mobile"></app-search-box>
 
     <div class="header__mobile-nav-item" *ngFor="let item of navItems(); let i = index">
@@ -94,10 +103,14 @@
     </div>
 
     <div class="header__mobile-actions">
-        <!--      <a class="header__login" *ngIf="!totem.isTotem()" routerLink="/cadastre-se" (click)="closeMobileMenu()">
-               <app-icon name="user" [size]="16"></app-icon>
-               Entrar
-             </a>-->
+        <a class="header__login" *ngIf="!authService.estaLogado" routerLink="/entrar" (click)="closeMobileMenu()">
+          <app-icon name="user" [size]="16"></app-icon>
+          Entrar
+        </a>
+        <a class="header__login" *ngIf="authService.estaLogado" [routerLink]="linkContaLogada" (click)="closeMobileMenu()">
+          <app-icon name="user" [size]="16"></app-icon>
+          {{ rotuloContaLogada }}
+        </a>
         <a class="header__contact" routerLink="/contato" (click)="closeMobileMenu()">Contato</a>
     </div>
   </div>

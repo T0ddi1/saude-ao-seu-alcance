@@ -1,0 +1,90 @@
+<div class="adm-card rel">
+  <h3 class="rel__titulo">Relatórios e exportação</h3>
+  <p class="rel__sub">Todos os filtros são opcionais. Escolha o que precisa e baixe em PDF, CSV ou planilha Excel.</p>
+
+  <div class="rel__filtros">
+    <div class="adm-field">
+      <label>De</label>
+      <app-date-picker [(ngModel)]="de" name="rc-de" placeholder="dd/mm/aaaa" ariaLabel="Data inicial"></app-date-picker>
+    </div>
+    <div class="adm-field">
+      <label>Até</label>
+      <app-date-picker [(ngModel)]="ate" name="rc-ate" placeholder="dd/mm/aaaa" ariaLabel="Data final"></app-date-picker>
+    </div>
+    <div class="adm-field">
+      <label for="rc-esp">Especialidade</label>
+      <select id="rc-esp" [(ngModel)]="especialidadeId" name="rc-esp">
+        <option value="">Todas</option>
+        <option *ngFor="let o of especialidades" [value]="o.id">{{ o.nome }}</option>
+      </select>
+    </div>
+    <div class="adm-field">
+      <label for="rc-ori">Origem</label>
+      <select id="rc-ori" [(ngModel)]="origemId" name="rc-ori">
+        <option value="">Todas</option>
+        <option *ngFor="let o of origens" [value]="o.id">{{ o.nome }}</option>
+      </select>
+    </div>
+    <div class="adm-field">
+      <label for="rc-tip">Tipo de interesse</label>
+      <select id="rc-tip" [(ngModel)]="tipoInteresseId" name="rc-tip">
+        <option value="">Todos</option>
+        <option *ngFor="let o of tipos" [value]="o.id">{{ o.nome }}</option>
+      </select>
+    </div>
+    <div class="adm-field">
+      <label for="rc-uf">Estado</label>
+      <select id="rc-uf" [(ngModel)]="estado" name="rc-uf">
+        <option value="">Todos</option>
+        <option *ngFor="let e of estados" [value]="e.uf">{{ e.nome }}</option>
+      </select>
+    </div>
+    <div class="adm-field">
+      <label for="rc-cam">Campanha (UTM)</label>
+      <select id="rc-cam" [(ngModel)]="campanhaId" name="rc-cam">
+        <option value="">Todas</option>
+        <option *ngFor="let o of campanhas" [value]="o.id">{{ o.nome }}</option>
+      </select>
+    </div>
+    <button type="button" class="adm-btn adm-btn--fantasma" (click)="limpar()">Limpar filtros</button>
+  </div>
+
+  <p class="adm-alert adm-alert--erro" *ngIf="periodoInvalido">A data inicial não pode ser depois da data final.</p>
+
+  <div class="rel__grupos">
+    <div class="rel__grupo">
+      <strong>Relatório resumido</strong>
+      <span>Totais, leads por dia e por especialidade, origem, interesse, estado e campanha.</span>
+      <div class="rel__botoes">
+        <button type="button" class="adm-btn adm-btn--outline" [disabled]="!!gerando || periodoInvalido" (click)="gerar('relatorio', 'pdf')">
+          <i class="fa-solid fa-file-pdf"></i> {{ gerando === 'relatorio-pdf' ? 'Gerando...' : 'PDF' }}
+        </button>
+        <button type="button" class="adm-btn adm-btn--outline" [disabled]="!!gerando || periodoInvalido" (click)="gerar('relatorio', 'csv')">
+          <i class="fa-solid fa-file-csv"></i> {{ gerando === 'relatorio-csv' ? 'Gerando...' : 'CSV' }}
+        </button>
+        <button type="button" class="adm-btn adm-btn--outline" [disabled]="!!gerando || periodoInvalido" (click)="gerar('relatorio', 'xlsx')">
+          <i class="fa-solid fa-file-excel"></i> {{ gerando === 'relatorio-xlsx' ? 'Gerando...' : 'Excel' }}
+        </button>
+      </div>
+    </div>
+
+    <div class="rel__grupo">
+      <strong>Lista de leads</strong>
+      <span>Nome, e-mail, telefone, especialidade, cidade/UF, origem, interesse, campanha e data.</span>
+      <div class="rel__botoes">
+        <button type="button" class="adm-btn adm-btn--outline" [disabled]="!!gerando || periodoInvalido" (click)="gerar('contatos', 'pdf')">
+          <i class="fa-solid fa-file-pdf"></i> {{ gerando === 'contatos-pdf' ? 'Gerando...' : 'PDF' }}
+        </button>
+        <button type="button" class="adm-btn adm-btn--outline" [disabled]="!!gerando || periodoInvalido" (click)="gerar('contatos', 'csv')">
+          <i class="fa-solid fa-file-csv"></i> {{ gerando === 'contatos-csv' ? 'Gerando...' : 'CSV' }}
+        </button>
+        <button type="button" class="adm-btn adm-btn--outline" [disabled]="!!gerando || periodoInvalido" (click)="gerar('contatos', 'xlsx')">
+          <i class="fa-solid fa-file-excel"></i> {{ gerando === 'contatos-xlsx' ? 'Gerando...' : 'Excel' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <p class="rel__msg rel__msg--ok" *ngIf="mensagem">{{ mensagem }}</p>
+  <p class="rel__msg rel__msg--erro" *ngIf="erro">{{ erro }}</p>
+</div>

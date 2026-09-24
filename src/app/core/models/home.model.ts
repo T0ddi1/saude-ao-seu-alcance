@@ -6,21 +6,21 @@ export interface FeaturedArticle {
   excerpt: string;
   ctaLabel: string;
   href: string;
-  /** Used only for the totem (1080x1920) poster layout — not shown on web. */
+  
   image?: string;
 }
 
 export interface TrendingItem {
   title: string;
   href: string;
-  /** Engagement score from the API (views, clicks…) — determines rank order. */
+  
   score: number;
 }
 
 export interface TrendingData {
-  /** Heading label for the panel, e.g. "Em alta" or "Mais lidos da semana" — comes from the API. */
+  
   label: string;
-  /** How many top items to show — comes from the API. */
+  
   limit: number;
   items: TrendingItem[];
   href: string;
@@ -61,14 +61,7 @@ export interface SponsoredItem {
   href: string;
   image: string | null;
   imagePosition?: string;
-  /**
-   * 'banner' is the image-only mode: marketing supplies one flat image sized
-   * to the slot (see BANNER_PRESETS in sponsored-section.component.ts) and
-   * it fills the whole card, no text overlaid. The other three themes are
-   * the current text+logo/photo layouts. Both can be mixed in the same
-   * `sponsored` array — each item picks its own theme — so the section
-   * works whether marketing sends finished banner art or just copy.
-   */
+  
   theme: 'light' | 'dark' | 'brand' | 'banner';
   size?: 'sm' | 'md' | 'lg' | 'xl';
   logo?: string | null;
@@ -83,6 +76,7 @@ export interface TrustBadge {
 
 export interface HomePageData {
   featuredArticles: FeaturedArticle[];
+  carrosselAutoplaySegundos?: number;
   trending: TrendingData;
   contentCards: ContentCard[];
   healthStats: {

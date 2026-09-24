@@ -1,0 +1,23 @@
+:host {
+  display: block;
+}
+
+.quill-host {
+  background: #fff;
+}
+
+::ng-deep .quill-host .ql-toolbar.ql-snow {
+  border-radius: 8px 8px 0 0;
+  border-color: #ccc;
+}
+
+::ng-deep .quill-host .ql-container.ql-snow {
+  border-radius: 0 0 8px 8px;
+  border-color: #ccc;
+  min-height: 260px;
+  font-size: 14px;
+}
+
+::ng-deep .quill-host .ql-editor {
+  min-height: 260px;
+}

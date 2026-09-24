@@ -2,7 +2,7 @@
   <header class="card__head">
     <app-icon [name]="card.icon" [size]="22" color="var(--color-primary)"></app-icon>
     <h3 class="card__title">{{ card.title }}</h3>
-    <span class="card__badge" *ngIf="card.sponsored">Patrocinado</span>
+    <span class="card__badge" *ngIf="card.sponsored">Conteúdo de marca</span>
   </header>
 
   <div class="card__media" *ngIf="card.image; else placeholder">

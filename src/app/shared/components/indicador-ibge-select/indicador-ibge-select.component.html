@@ -1,0 +1,46 @@
+<button type="button" class="indicador-select__gatilho" (click)="abrir()" [disabled]="disabled">
+  <span class="indicador-select__nome">{{ rotuloSelecionado || 'Nenhum — preencher valor manualmente' }}</span>
+  <i class="fa-solid fa-chevron-down"></i>
+</button>
+
+<div class="indicador-select__backdrop" *ngIf="aberto" (click)="fechar()">
+  <div class="indicador-select__painel" (click)="$event.stopPropagation()">
+    <div class="indicador-select__cabecalho">
+      <h4>Fonte do dado</h4>
+      <button type="button" class="indicador-select__fechar" (click)="fechar()" aria-label="Fechar">×</button>
+    </div>
+
+    <div class="indicador-select__busca">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input
+        type="text"
+        placeholder="Buscar indicador do IBGE..."
+        [(ngModel)]="busca"
+        [ngModelOptions]="{ standalone: true }"
+        autofocus
+      />
+    </div>
+
+    <ul class="indicador-select__lista">
+      <li>
+        <button type="button" class="indicador-select__item" [class.is-selecionado]="!valor" (click)="escolher(null)">
+          <span>Nenhum</span>
+          <span class="indicador-select__unidade">preencher valor manualmente</span>
+        </button>
+      </li>
+      <li *ngFor="let opcao of opcoesFiltradas">
+        <button
+          type="button"
+          class="indicador-select__item"
+          [class.is-selecionado]="opcao.chave === valor"
+          (click)="escolher(opcao.chave)"
+        >
+          <span>{{ opcao.rotulo }}</span>
+          <span class="indicador-select__unidade">{{ opcao.unidade }}</span>
+        </button>
+      </li>
+    </ul>
+
+    <p class="indicador-select__vazio" *ngIf="!opcoesFiltradas.length">Nenhum indicador encontrado pra "{{ busca }}".</p>
+  </div>
+</div>

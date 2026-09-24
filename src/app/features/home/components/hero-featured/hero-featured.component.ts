@@ -5,8 +5,6 @@ import { ButtonComponent } from '../../../../shared/components/button/button.com
 import { IconComponent } from '../../../../shared/components/icon/icon.component';
 import { FeaturedArticle } from '../../../../core/models/home.model';
 
-const AUTOPLAY_MS = 6000;
-
 @Component({
   selector: 'app-hero-featured',
   standalone: true,
@@ -16,9 +14,11 @@ const AUTOPLAY_MS = 6000;
 })
 export class HeroFeaturedComponent implements OnChanges, OnDestroy {
   @Input({ required: true }) articles!: FeaturedArticle[];
+  @Input() autoplaySegundos = 6;
 
   activeIndex = signal(0);
   article = computed(() => this.articles[this.activeIndex()]);
+  temImagem = computed(() => !!this.article()?.image);
 
   private timer: ReturnType<typeof setInterval> | null = null;
   private touchStartX = 0;
@@ -69,9 +69,10 @@ export class HeroFeaturedComponent implements OnChanges, OnDestroy {
   private restartAutoplay(): void {
     this.stopAutoplay();
     if (!this.articles || this.articles.length < 2) return;
+    const intervaloMs = Math.max(1, this.autoplaySegundos || 6) * 1000;
     this.timer = setInterval(() => {
       this.activeIndex.set((this.activeIndex() + 1) % this.articles.length);
-    }, AUTOPLAY_MS);
+    }, intervaloMs);
   }
 
   private stopAutoplay(): void {

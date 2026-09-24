@@ -1,9 +1,10 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { BreadcrumbComponent } from '../../shared/components/breadcrumb/breadcrumb.component';
 import { ButtonComponent } from '../../shared/components/button/button.component';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-create-account',
@@ -15,7 +16,7 @@ import { ButtonComponent } from '../../shared/components/button/button.component
 export class CreateAccountComponent {
   breadcrumbs = [
     { label: 'Home', href: '/' },
-    { label: 'Cadastre-se', href: '/cadastre-se' },
+    { label: 'Entrar', href: '/entrar' },
   ];
 
   email = '';
@@ -24,6 +25,8 @@ export class CreateAccountComponent {
   rememberMe = false;
   submitting = signal(false);
   error = signal<string | null>(null);
+
+  constructor(private authService: AuthService, private router: Router) {}
 
   togglePassword(): void {
     this.showPassword = !this.showPassword;
@@ -36,7 +39,17 @@ export class CreateAccountComponent {
     }
     this.error.set(null);
     this.submitting.set(true);
-    // TODO: replace with a real auth API call (e.g. this.authService.login(...))
-    setTimeout(() => this.submitting.set(false), 800);
+
+    this.authService.login({ email: this.email, senha: this.password }).subscribe({
+      next: (resposta) => {
+        this.submitting.set(false);
+        const ehStaff = resposta.papeis?.includes('Admin') || resposta.papeis?.includes('Editor');
+        this.router.navigate([ehStaff ? '/admin' : '/perfil']);
+      },
+      error: () => {
+        this.submitting.set(false);
+        this.error.set('Email ou senha inválidos.');
+      },
+    });
   }
 }

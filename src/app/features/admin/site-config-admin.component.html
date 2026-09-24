@@ -1,0 +1,106 @@
+<div class="site-config">
+  <div class="adm-page-head">
+    <h2>Identidade do site</h2>
+    <p>Logo, favicon e a paleta de cores usada em todo o site. Deixe em branco ou clique em "Restaurar padrão" para usar o visual original.</p>
+  </div>
+
+  <p class="adm-alert adm-alert--erro" *ngIf="erro">{{ erro }}</p>
+  <p class="adm-alert" *ngIf="sucesso">Salvo com sucesso. Recarregue a página para ver a mudança.</p>
+  <p class="adm-empty" *ngIf="carregando">Carregando...</p>
+
+  <form class="adm-card adm-form" *ngIf="!carregando" [formGroup]="formulario" (ngSubmit)="salvar()">
+    <div class="adm-field">
+      <label>Logo (PNG/SVG com fundo transparente funciona melhor)</label>
+      <div class="site-config__preview">
+        <img *ngIf="formulario.value.logoUrl" [src]="formulario.value.logoUrl" alt="" />
+        <div class="site-config__placeholder" *ngIf="!formulario.value.logoUrl">Usando o logo padrão</div>
+        <label class="adm-btn adm-btn--outline">
+          {{ enviando['logoUrl'] ? 'Enviando...' : 'Enviar logo' }}
+          <input type="file" accept="image/*" (change)="selecionarArquivo($event, 'logoUrl')" [disabled]="enviando['logoUrl']" hidden />
+        </label>
+      </div>
+    </div>
+
+    <div class="adm-field">
+      <label>Favicon (ícone quadrado, ideal 512x512)</label>
+      <div class="site-config__preview">
+        <img *ngIf="formulario.value.faviconUrl" [src]="formulario.value.faviconUrl" alt="" class="site-config__favicon" />
+        <div class="site-config__placeholder" *ngIf="!formulario.value.faviconUrl">Usando o favicon padrão</div>
+        <label class="adm-btn adm-btn--outline">
+          {{ enviando['faviconUrl'] ? 'Enviando...' : 'Enviar favicon' }}
+          <input type="file" accept="image/*" (change)="selecionarArquivo($event, 'faviconUrl')" [disabled]="enviando['faviconUrl']" hidden />
+        </label>
+      </div>
+    </div>
+
+    <div class="adm-form-acoes">
+      <button type="submit" class="adm-btn adm-btn--primario" [disabled]="salvando">{{ salvando ? 'Salvando...' : 'Salvar' }}</button>
+    </div>
+  </form>
+
+  <div class="adm-card paleta" *ngIf="!carregando" [formGroup]="formularioCores">
+    <div class="paleta__cabecalho">
+      <div>
+        <h3>Paleta de cores</h3>
+        <p class="adm-dica">Vale para o site inteiro (as cores do próprio painel admin não mudam).</p>
+      </div>
+      <div class="paleta__cabecalho-acoes">
+        <button type="button" class="adm-btn adm-btn--outline" (click)="restaurarCoresPadrao()">Restaurar padrão</button>
+        <button type="button" class="adm-btn adm-btn--primario" [disabled]="salvando" (click)="salvar()">{{ salvando ? 'Salvando...' : 'Salvar' }}</button>
+      </div>
+    </div>
+
+    <div class="paleta__preview" [ngStyle]="previewStyle">
+      <span class="paleta__preview-rotulo">Pré-visualização ao vivo</span>
+      <div class="paleta__preview-header">
+        <span class="paleta__preview-logo"></span>
+        <span class="paleta__preview-link">Menu</span>
+        <span class="paleta__preview-cta">Contato</span>
+      </div>
+      <div class="paleta__preview-card">
+        <strong>Título de exemplo</strong>
+        <p>Texto de parágrafo padrão usado nas páginas do site.</p>
+        <span class="paleta__preview-muted">Legenda ou data secundária</span>
+        <div class="paleta__preview-linha">
+          <button type="button" class="paleta__preview-botao">Botão primário</button>
+          <a class="paleta__preview-link-secundario">Link secundário</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="paleta__grupo" *ngFor="let grupo of grupos">
+      <h4>{{ grupo.titulo }}</h4>
+      <div class="paleta__itens">
+        <div class="paleta__item" *ngFor="let token of grupo.tokens">
+          <label class="paleta__swatch" [style.background]="formularioCores.value[token.chave]" [for]="'cor-' + token.chave">
+            <input type="color" [id]="'cor-' + token.chave" [formControlName]="token.chave" />
+          </label>
+          <div class="paleta__item-texto">
+            <div class="paleta__item-linha">
+              <strong>{{ token.rotulo }}</strong>
+              <div class="paleta__item-controles">
+                <input type="text" class="paleta__hex" [value]="formularioCores.value[token.chave]" (change)="atualizarHex(token.chave, $event)" maxlength="7" />
+                <button
+                  type="button"
+                  class="paleta__restaurar-item"
+                  [class.is-desabilitado]="formularioCores.value[token.chave] === token.padrao"
+                  [disabled]="formularioCores.value[token.chave] === token.padrao"
+                  (click)="restaurarCor(token)"
+                  [title]="'Restaurar para ' + token.padrao"
+                  [attr.aria-label]="'Restaurar ' + token.rotulo + ' para a cor padrão (' + token.padrao + ')'"
+                >
+                  <i class="fa-solid fa-rotate-left" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+            <p class="paleta__usado-em">Usado em: {{ token.usadoEm }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="adm-form-acoes">
+      <button type="button" class="adm-btn adm-btn--primario" [disabled]="salvando" (click)="salvar()">{{ salvando ? 'Salvando...' : 'Salvar cores' }}</button>
+    </div>
+  </div>
+</div>

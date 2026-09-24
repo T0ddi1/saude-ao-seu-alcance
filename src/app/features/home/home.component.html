@@ -1,6 +1,6 @@
 <ng-container *ngIf="data() as d">
   <section class="home__top">
-    <app-hero-featured [articles]="d.featuredArticles"></app-hero-featured>
+    <app-hero-featured [articles]="d.featuredArticles" [autoplaySegundos]="d.carrosselAutoplaySegundos || 6"></app-hero-featured>
     <app-trending-panel [data]="d.trending"></app-trending-panel>
   </section>
 

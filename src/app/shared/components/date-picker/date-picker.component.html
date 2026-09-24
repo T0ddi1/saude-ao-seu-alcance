@@ -1,0 +1,50 @@
+<button
+  type="button"
+  class="dp__gatilho"
+  [class.is-vazio]="!valor"
+  [class.is-aberto]="aberto"
+  [disabled]="disabled"
+  [attr.aria-label]="ariaLabel + (valor ? ': ' + textoExibicao : '')"
+  aria-haspopup="dialog"
+  [attr.aria-expanded]="aberto"
+  (click)="alternar()"
+>
+  <i class="fa-regular fa-calendar" aria-hidden="true"></i>
+  <span>{{ valor ? textoExibicao : placeholder }}</span>
+</button>
+
+<div class="dp__painel" *ngIf="aberto" role="dialog" aria-label="Calendário">
+  <div class="dp__cabecalho">
+    <button type="button" class="dp__nav" (click)="mudarMes(-1)" aria-label="Mês anterior">
+      <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+    </button>
+    <strong>{{ tituloMes }}</strong>
+    <button type="button" class="dp__nav" (click)="mudarMes(1)" aria-label="Próximo mês">
+      <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+    </button>
+  </div>
+
+  <div class="dp__grade dp__semana" aria-hidden="true">
+    <span *ngFor="let dia of diasSemana">{{ dia }}</span>
+  </div>
+
+  <div class="dp__grade">
+    <button
+      type="button"
+      class="dp__dia"
+      *ngFor="let dia of dias"
+      [class.is-fora]="dia.foraDoMes"
+      [class.is-hoje]="dia.hoje"
+      [class.is-selecionado]="dia.selecionado"
+      [attr.aria-pressed]="dia.selecionado"
+      (click)="escolher(dia.iso)"
+    >
+      {{ dia.numero }}
+    </button>
+  </div>
+
+  <div class="dp__rodape">
+    <button type="button" class="dp__link" (click)="limpar()">Limpar</button>
+    <button type="button" class="dp__link" (click)="hoje()">Hoje</button>
+  </div>
+</div>

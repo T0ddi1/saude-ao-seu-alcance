@@ -1,6 +1,4 @@
 <form class="newsletter" (ngSubmit)="onSubmit()" *ngIf="!submitted(); else thanks">
-  <!-- Honeypot: invisible to real visitors and skipped in tab order; bots that
-       auto-fill every field trip it and get silently ignored. -->
   <input
     class="newsletter__honeypot"
     type="text"
@@ -19,12 +17,11 @@
       required
       [(ngModel)]="email"
       [placeholder]="placeholder"
-      [disabled]="submitting()"
       aria-label="E-mail para newsletter"
     />
-    <app-button type="submit" variant="primary" [disabled]="submitting()" [compact]="true">
-      {{ submitting() ? 'Enviando…' : ctaLabel }}
-    </app-button>
+    <button type="submit" class="newsletter__submit" [attr.aria-label]="ctaLabel" [title]="ctaLabel">
+      <app-icon name="arrow-right" [size]="14" color="#fff"></app-icon>
+    </button>
   </div>
 
   <p class="newsletter__error" *ngIf="error()">{{ error() }}</p>
@@ -32,3 +29,57 @@
 <ng-template #thanks>
   <p class="newsletter__thanks">Inscrição confirmada — obrigado!</p>
 </ng-template>
+
+<div class="nl-modal__backdrop" *ngIf="modalOpen()" (click)="closeModal()">
+  <div
+    class="nl-modal"
+    appDialogFoco role="dialog"
+    aria-modal="true"
+    aria-labelledby="nl-modal-titulo"
+    (click)="$event.stopPropagation()"
+    (keydown.escape)="closeModal()"
+  >
+    <div class="nl-modal__head">
+      <h3 id="nl-modal-titulo">Quase lá! Personalize sua newsletter</h3>
+      <button type="button" class="nl-modal__close" (click)="closeModal()" aria-label="Fechar">×</button>
+    </div>
+
+    <div class="nl-modal__body">
+      <label class="nl-modal__label" for="nl-email">Seu e-mail</label>
+      <input id="nl-email" class="nl-modal__input" type="email" name="nl-email" [(ngModel)]="email" />
+
+      <label class="nl-modal__label" for="nl-nome">Nome (opcional)</label>
+      <input id="nl-nome" class="nl-modal__input" type="text" name="nl-nome" autocomplete="name" [(ngModel)]="nome" />
+
+      <label class="nl-modal__label" for="nl-telefone">Telefone (opcional)</label>
+      <input id="nl-telefone" class="nl-modal__input" type="tel" name="nl-telefone" autocomplete="tel" [(ngModel)]="telefone" />
+
+      <span class="nl-modal__label">Assuntos de maior interesse</span>
+      <p class="nl-modal__hint">Você pode escolher mais de um assunto.</p>
+      <div class="nl-modal__chips">
+        <label class="nl-chip" [class.is-active]="allTopics">
+          <input type="checkbox" [checked]="allTopics" (change)="toggleAllTopics()" />
+          Todos
+        </label>
+        <label class="nl-chip" *ngFor="let topic of topics()" [class.is-active]="selectedTopics.has(topic.slug)">
+          <input type="checkbox" [checked]="selectedTopics.has(topic.slug)" (change)="toggleTopic(topic.slug)" />
+          {{ topic.nome }}
+        </label>
+      </div>
+
+      <label class="nl-modal__consent">
+        <input type="checkbox" name="nl-aceite" [(ngModel)]="accepted" />
+        <span>Aceito receber comunicações do Saúde ao Seu Alcance por e-mail e sei que posso cancelar a qualquer momento.</span>
+      </label>
+
+      <p class="nl-modal__error" *ngIf="modalError()">{{ modalError() }}</p>
+    </div>
+
+    <div class="nl-modal__actions">
+      <button type="button" class="nl-modal__cancel" (click)="closeModal()" [disabled]="submitting()">Cancelar</button>
+      <button type="button" class="nl-modal__confirm" (click)="confirm()" [disabled]="submitting()">
+        {{ submitting() ? 'Enviando…' : 'Confirmar inscrição' }}
+      </button>
+    </div>
+  </div>
+</div>

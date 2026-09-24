@@ -1,37 +1,60 @@
 <footer class="footer" *ngIf="data() as d">
-  <div class="footer__top">
-    <div class="footer__brand">
-      <p class="footer__logo" role="img" aria-label="Saúde ao Seu Alcance"></p>
-      <h3>{{ d.newsletter.title }}</h3>
-      <p class="footer__desc">{{ d.newsletter.description }}</p>
-      <app-newsletter-form [placeholder]="d.newsletter.placeholder" [ctaLabel]="d.newsletter.ctaLabel"></app-newsletter-form>
-    </div>
+  <div class="footer__band">
+    <div class="footer__band-inner">
+      <a class="footer__logo" routerLink="/" aria-label="Saúde ao Seu Alcance — página inicial"></a>
 
-    <div class="footer__columns">
-      <div class="footer__col" *ngFor="let col of d.columns">
-        <h4>{{ col.title }}</h4>
-        <ng-container *ngFor="let link of col.links">
-          <a *ngIf="!anchorNav.isAnchorLink(link.href)" [routerLink]="link.href">{{ link.label }}</a>
-          <a *ngIf="anchorNav.isAnchorLink(link.href)" [href]="link.href" (click)="anchorNav.navigate(link.href, $event)">{{ link.label }}</a>
-        </ng-container>
+      <div class="footer__columns">
+        <div class="footer__col" *ngFor="let col of colunasSimples(d.columns)">
+          <div class="footer__col-links">
+            <ng-container *ngFor="let link of col.links">
+              <a *ngIf="!anchorNav.isAnchorLink(link.href)" [routerLink]="link.href">{{ link.label }}</a>
+              <a *ngIf="anchorNav.isAnchorLink(link.href)" [href]="link.href" (click)="anchorNav.navigate(link.href, $event)">{{ link.label }}</a>
+            </ng-container>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <div class="footer__social">
-      <a *ngFor="let s of d.social" [href]="s.href" class="footer__social-btn" [attr.aria-label]="s.label">
-        <app-icon [name]="s.icon" [size]="16" color="#fff"></app-icon>
-      </a>
+      <div class="footer__aside">
+        <div class="footer__col footer__col--destaque" *ngIf="colunaInstitucional(d.columns) as col">
+          <h4>{{ col.title }}</h4>
+          <div class="footer__col-links footer__col-links--duas">
+            <ng-container *ngFor="let link of col.links">
+              <a *ngIf="!anchorNav.isAnchorLink(link.href)" [routerLink]="link.href">{{ link.label }}</a>
+              <a *ngIf="anchorNav.isAnchorLink(link.href)" [href]="link.href" (click)="anchorNav.navigate(link.href, $event)">{{ link.label }}</a>
+            </ng-container>
+          </div>
+        </div>
+
+        <div class="footer__social">
+          <a *ngFor="let s of d.social" [href]="s.href" class="footer__social-btn" target="_blank" rel="noopener noreferrer" [attr.aria-label]="s.label">
+            <app-icon [name]="s.icon" [size]="16" color="#fff"></app-icon>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="footer__projects">
-    <h4>Projetos especiais</h4>
-    <div class="footer__projects-grid">
-      <a class="footer__project" *ngFor="let p of d.specialProjects" [routerLink]="p.href">
-        <app-icon [name]="p.icon" [size]="20" color="var(--color-secondary)"></app-icon>
-        <span class="footer__project-title">{{ p.title }}</span>
-        <span class="footer__project-desc">{{ p.description }}</span>
-      </a>
+  <div class="footer__bottom">
+    <div class="footer__bottom-inner">
+      <div class="footer__newsletter-text">
+        <h4>{{ d.newsletter.title }}</h4>
+        <p>{{ d.newsletter.description }}</p>
+      </div>
+
+      <div class="footer__newsletter-input">
+        <app-newsletter-form [placeholder]="d.newsletter.placeholder" [ctaLabel]="d.newsletter.ctaLabel"></app-newsletter-form>
+      </div>
+
+      <div class="footer__projects">
+        <h4>Projetos especiais</h4>
+        <div class="footer__projects-grid">
+          <a class="footer__project" *ngFor="let p of d.specialProjects" [routerLink]="p.href">
+            <app-icon [name]="p.icon" [size]="24"></app-icon>
+            <span class="footer__project-title" [style.color]="corDoProjeto(p.icon)">{{ p.title }}</span>
+            <span class="footer__project-desc">{{ p.description }}</span>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </footer>

@@ -1,0 +1,55 @@
+<div class="rodape-config">
+  <div class="adm-page-head">
+    <h2>Rodapé — Textos fixos</h2>
+    <p>Tagline e textos da newsletter que aparecem no rodapé do site. Os links por coluna, redes sociais e projetos especiais ficam nos outros itens do menu.</p>
+  </div>
+
+  <p class="adm-alert adm-alert--erro" *ngIf="erro">{{ erro }}</p>
+  <p class="adm-alert" *ngIf="sucesso">Salvo com sucesso.</p>
+  <p class="adm-empty" *ngIf="carregando">Carregando...</p>
+
+  <form class="adm-card adm-form" *ngIf="!carregando" [formGroup]="formulario" (ngSubmit)="salvar()">
+    <div class="adm-field">
+      <label for="tagline">Tagline</label>
+      <input id="tagline" type="text" formControlName="tagline" />
+    </div>
+
+    <div class="adm-field">
+      <label for="newsletterTitulo">Título da newsletter</label>
+      <input id="newsletterTitulo" type="text" formControlName="newsletterTitulo" />
+    </div>
+
+    <div class="adm-field">
+      <label for="newsletterDescricao">Descrição da newsletter</label>
+      <textarea id="newsletterDescricao" rows="2" formControlName="newsletterDescricao"></textarea>
+    </div>
+
+    <div class="adm-field-row">
+      <div class="adm-field">
+        <label for="newsletterPlaceholder">Placeholder do campo</label>
+        <input id="newsletterPlaceholder" type="text" formControlName="newsletterPlaceholder" />
+      </div>
+      <div class="adm-field">
+        <label for="newsletterCta">Texto do botão</label>
+        <input id="newsletterCta" type="text" formControlName="newsletterCta" />
+      </div>
+    </div>
+
+    <div class="adm-form-acoes">
+      <button type="submit" class="adm-btn adm-btn--primario" [disabled]="salvando">{{ salvando ? 'Salvando...' : 'Salvar' }}</button>
+    </div>
+  </form>
+
+  <div class="adm-card rodape-config__preview" *ngIf="!carregando">
+    <span class="crud__preview-label">Preview</span>
+    <p class="rodape-config__tagline">{{ formulario.value.tagline || 'Tagline' }}</p>
+    <div class="rodape-config__newsletter">
+      <strong>{{ formulario.value.newsletterTitulo || 'Título da newsletter' }}</strong>
+      <p>{{ formulario.value.newsletterDescricao }}</p>
+      <div class="rodape-config__form">
+        <span class="rodape-config__input">{{ formulario.value.newsletterPlaceholder || 'Seu e-mail' }}</span>
+        <span class="rodape-config__cta">{{ formulario.value.newsletterCta || 'Inscrever' }}</span>
+      </div>
+    </div>
+  </div>
+</div>

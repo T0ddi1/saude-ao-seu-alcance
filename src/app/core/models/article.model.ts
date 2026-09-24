@@ -8,12 +8,18 @@ export interface ShareLink {
 }
 
 export interface ArticleComment {
+  id: number;
   name: string;
+  photo: string | null;
   date: string;
   text: string;
+  likes: number;
+  likedByMe: boolean;
+  replies: ArticleComment[];
 }
 
 export interface ArticleDetail {
+  slug: string;
   breadcrumbs: Breadcrumb[];
   title: string;
   subtitle: string;
@@ -27,4 +33,5 @@ export interface ArticleDetail {
   recentPosts: RecentPost[];
   extras: SidebarExtra[];
   comments: ArticleComment[];
+  favoritedByMe: boolean;
 }

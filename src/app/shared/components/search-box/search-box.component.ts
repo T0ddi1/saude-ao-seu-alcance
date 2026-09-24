@@ -14,7 +14,7 @@ import { IconComponent } from '../icon/icon.component';
   styleUrl: './search-box.component.scss',
 })
 export class SearchBoxComponent implements OnInit, OnDestroy {
-  /** Styling context — the mobile panel sits on a solid header background, not a floating bar. */
+  
   @Input() variant: 'header' | 'mobile' = 'header';
 
   query = signal('');

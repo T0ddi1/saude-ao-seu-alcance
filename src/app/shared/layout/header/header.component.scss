@@ -31,6 +31,14 @@
 .header__logo:hover {
   text-decoration: none;
 }
+.header__logo--personalizado {
+  mask-image: none;
+  -webkit-mask-image: none;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: contain;
+}
 
 .header__nav {
   display: flex;
@@ -140,7 +148,7 @@
   white-space: nowrap;
 }
 .header__contact:hover {
-  color: var(--color-secondary);
+  color: #efe3f8;
   text-decoration: none;
 }
 
@@ -255,7 +263,7 @@
     padding: 8px 0;
   }
   .header__mobile-submenu .header__mega-col a:hover {
-    color: var(--color-secondary);
+    color: #efe3f8;
   }
 
   .header__mobile-actions {
@@ -271,16 +279,7 @@
   }
 }
 
-/*
- * Mid-width screens (kiosks and similarly-sized tablets), where the burger
- * menu above is already active: the dropdown used to stay only as wide as
- * its content column, leaving a visible strip of whatever page was behind
- * it on a screen this wide. Pinning it as a full-width overlay fixes that —
- * but it should still only take up as much height as its own content needs
- * (capped so it can scroll instead of overflowing on short viewports), not
- * stretch all the way to the bottom of the screen. Plain media query, not
- * gated by a totem flag, so it applies naturally to any screen this size.
- */
+
 @media (min-width: 1000px) and (max-width: 1250px) {
   .header__mobile-panel {
     position: fixed;

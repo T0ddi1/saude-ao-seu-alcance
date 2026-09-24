@@ -1,9 +1,4 @@
-/*
- * health-data__right (the 3 content categories) is commented out in the
- * template. The row below is a straight line: title → stats square → map,
- * in that order, per request (2026-08) — no more map+title stacked
- * together on one side and stats on the other.
- */
+
 .health-data {
   padding: 48px 0;
   border-top: 1px solid var(--color-border);
@@ -29,22 +24,14 @@
   justify-content: flex-start;
 }
 
-/* Plenty of desktop-only room past this point — hugging the title looks
-   cramped, so let the map breathe in the middle of the row instead. */
+
 @media (min-width: 1300px) {
   .health-data__map-wrap {
     justify-content: center;
   }
 }
 
-/* Modular: 1 category fills the row ("big"), 2 split it evenly ("medium"), 3 keeps the usual layout — set via --category-columns.
-.health-data__right {
-  display: grid;
-  grid-template-columns: repeat(var(--category-columns, 3), 1fr);
-  gap: 24px;
-  align-items: stretch;
-}
-*/
+
 
 .health-data__map {
   flex: 0 0 auto;
@@ -59,14 +46,7 @@
   -webkit-mask-size: contain;
 }
 
-/*
- * Modular stat grid: the number of stats comes from the API and can be
- * 1, 2, 3, or more. The grid always keeps 2 columns; when the count is
- * odd, the component flags the trailing item with --full so it spans
- * both columns instead of sitting alone in a half-empty row. Each stat
- * is its own cell — the 1px gap (filled by the container's translucent
- * background) reads as the dividing line.
- */
+
 .health-data__stats {
   flex: 0 0 340px;
   display: grid;
@@ -104,80 +84,7 @@
   color: rgba(255, 255, 255, 0.75);
 }
 
-/* health-data__category* rules — unused while health-data__right stays commented out above.
-.health-data__category {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  min-width: 0;
-}
 
-.health-data__category-head {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.health-data__category-icon {
-  width: 28px;
-  height: 28px;
-  flex-shrink: 0;
-  border-radius: 50%;
-  border: 1.5px solid var(--color-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.health-data__category-head h3 {
-  font-size: var(--fs-body-m);
-  line-height: 1.2;
-  min-height: calc(1.2em * 2);
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.health-data__category-media {
-  aspect-ratio: 16 / 10;
-  border-radius: var(--radius-m);
-  overflow: hidden;
-  border: 1.5px solid var(--color-secondary);
-}
-.health-data__category-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.health-data__category p {
-  font-size: var(--fs-label-m);
-  color: var(--color-body-text);
-  flex: 1;
-}
-
-.health-data__category-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 600;
-  font-size: var(--fs-label-m);
-  margin-top: 2px;
-  padding-bottom: 4px;
-  border-bottom: 1.5px solid var(--color-primary);
-}
-.health-data__category-arrow {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 1.5px solid var(--color-primary);
-  color: var(--color-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-*/
 
 @media (max-width: 1100px) {
   .health-data__row {
@@ -198,9 +105,7 @@
   }
 }
 
-/* A tall, wide portrait screen (kiosk totem, tablet in portrait) has plenty of
-   width even though it's under the tablet-landscape breakpoint above — keep
-   the roomy single-row layout instead of the cramped stacked fallback. */
+
 @media (min-width: 820px) and (orientation: portrait) {
   .health-data__row {
     flex-direction: row;

@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-/** Maps semantic icon names used across templates to Font Awesome classes. */
+
 const ICON_MAP: Record<string, string> = {
   ring: 'fa-solid fa-heart-pulse',
   ribbon: 'fa-solid fa-ribbon',
@@ -28,6 +28,18 @@ const ICON_MAP: Record<string, string> = {
   compress: 'fa-solid fa-compress',
 };
 
+
+export function separarIcone(valor: string | null | undefined): { nome: string; cor: string | null } {
+  const [nome, cor] = (valor ?? '').split('|');
+  return { nome, cor: cor && /^#[0-9a-f]{6}$/i.test(cor) ? cor : null };
+}
+
+export function montarIcone(nome: string, cor: string | null): string {
+  return cor ? `${nome}|${cor}` : nome;
+}
+
+export const ICONES_DISPONIVEIS = Object.keys(ICON_MAP);
+
 @Component({
   selector: 'app-icon',
   standalone: true,
@@ -40,7 +52,13 @@ export class IconComponent {
   @Input() size = 20;
   @Input() color = 'currentColor';
 
+  get corFinal(): string {
+    return separarIcone(this.name).cor ?? this.color;
+  }
+
   get faClass(): string {
-    return ICON_MAP[this.name] ?? 'fa-solid fa-circle';
+    const nome = separarIcone(this.name).nome;
+    if (nome.includes(' ')) return nome;
+    return ICON_MAP[nome] ?? 'fa-solid fa-circle';
   }
 }

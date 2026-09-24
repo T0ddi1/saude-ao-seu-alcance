@@ -6,20 +6,16 @@
   (touchstart)="onTouchStart($event)"
   (touchend)="onTouchEnd($event)"
 >
-  <p class="hero__eyebrow">{{ article().eyebrow }}</p>
-  <a class="hero__link" [routerLink]="article().href">
-    <h1 class="hero__title">{{ article().title }}</h1>
-    <p class="hero__excerpt">{{ article().excerpt }}</p>
-  </a>
-  <div class="hero__row">
-    <app-button variant="primary" [href]="article().href" [showArrow]="true">{{ article().ctaLabel }}</app-button>
+  <div class="hero__text">
+    <p class="hero__eyebrow">{{ article().eyebrow }}</p>
+    <a class="hero__link" [routerLink]="article().href">
+      <h1 class="hero__title">{{ article().title }}</h1>
+      <p class="hero__excerpt">{{ article().excerpt }}</p>
+    </a>
+    <div class="hero__row">
+      <app-button variant="primary" [href]="article().href" [showArrow]="true">{{ article().ctaLabel }}</app-button>
 
-    <div class="hero__nav" *ngIf="articles.length > 1">
-      <button type="button" class="hero__arrow" (click)="prev()" aria-label="Slide anterior">
-        <app-icon name="arrow-right" [size]="12" color="var(--color-primary)" style="transform: rotate(180deg)"></app-icon>
-      </button>
-
-      <div class="hero__dots">
+      <div class="hero__dots" *ngIf="articles.length > 1">
         <button
           type="button"
           class="hero__dot"
@@ -30,10 +26,19 @@
           (click)="goTo(i)"
         ></button>
       </div>
-
-      <button type="button" class="hero__arrow" (click)="next()" aria-label="Próximo slide">
-        <app-icon name="arrow-right" [size]="12" color="var(--color-primary)"></app-icon>
-      </button>
     </div>
+  </div>
+
+  <div class="hero__media" [class.hero__media--vazio]="!temImagem()" aria-hidden="true">
+    <ng-container *ngFor="let a of articles; let i = index">
+      <img
+        *ngIf="a.image"
+        class="hero__slide"
+        [class.is-active]="i === activeIndex()"
+        [src]="a.image"
+        alt=""
+        [attr.loading]="i === 0 ? 'eager' : 'lazy'"
+      />
+    </ng-container>
   </div>
 </section>

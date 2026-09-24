@@ -1,0 +1,63 @@
+<div class="adm-card rel">
+  <h3 class="rel__titulo">Relatórios e exportação</h3>
+  <p class="rel__sub">Escolha o período e o assunto (opcional) e baixe em PDF, CSV ou planilha Excel.</p>
+
+  <div class="rel__filtros">
+    <div class="adm-field">
+      <label>De</label>
+      <app-date-picker [(ngModel)]="de" name="rel-de" placeholder="dd/mm/aaaa" ariaLabel="Data inicial"></app-date-picker>
+    </div>
+    <div class="adm-field">
+      <label>Até</label>
+      <app-date-picker [(ngModel)]="ate" name="rel-ate" placeholder="dd/mm/aaaa" ariaLabel="Data final"></app-date-picker>
+    </div>
+    <div class="adm-field">
+      <label for="rel-topico">Assunto</label>
+      <select id="rel-topico" [(ngModel)]="topico" name="rel-topico">
+        <option value="">Todos os assuntos</option>
+        <option *ngFor="let categoria of categorias" [value]="categoria.slug">{{ categoria.nome }}</option>
+      </select>
+    </div>
+    <button type="button" class="adm-btn adm-btn--fantasma" (click)="limpar()">Limpar filtros</button>
+  </div>
+
+  <p class="adm-alert adm-alert--erro" *ngIf="periodoInvalido">A data inicial não pode ser depois da data final.</p>
+
+  <div class="rel__grupos">
+    <div class="rel__grupo">
+      <strong>Relatório resumido</strong>
+      <span>Totais, inscrições por dia e por assunto.</span>
+      <div class="rel__botoes">
+        <button type="button" class="adm-btn adm-btn--outline" [disabled]="!!gerando || periodoInvalido" (click)="gerar('relatorio', 'pdf')">
+          <i class="fa-solid fa-file-pdf"></i> {{ gerando === 'relatorio-pdf' ? 'Gerando...' : 'PDF' }}
+        </button>
+        <button type="button" class="adm-btn adm-btn--outline" [disabled]="!!gerando || periodoInvalido" (click)="gerar('relatorio', 'csv')">
+          <i class="fa-solid fa-file-csv"></i> {{ gerando === 'relatorio-csv' ? 'Gerando...' : 'CSV' }}
+        </button>
+        <button type="button" class="adm-btn adm-btn--outline" [disabled]="!!gerando || periodoInvalido" (click)="gerar('relatorio', 'xlsx')">
+          <i class="fa-solid fa-file-excel"></i> {{ gerando === 'relatorio-xlsx' ? 'Gerando...' : 'Excel' }}
+        </button>
+      </div>
+    </div>
+
+    <div class="rel__grupo">
+      <strong>Lista de inscritos</strong>
+      <span>E-mail, assuntos, origem e data de cada inscrição.</span>
+      <div class="rel__botoes">
+        <button type="button" class="adm-btn adm-btn--outline" [disabled]="!!gerando || periodoInvalido" (click)="gerar('inscritos', 'pdf')">
+          <i class="fa-solid fa-file-pdf"></i> {{ gerando === 'inscritos-pdf' ? 'Gerando...' : 'PDF' }}
+        </button>
+        <button type="button" class="adm-btn adm-btn--outline" [disabled]="!!gerando || periodoInvalido" (click)="gerar('inscritos', 'csv')">
+          <i class="fa-solid fa-file-csv"></i> {{ gerando === 'inscritos-csv' ? 'Gerando...' : 'CSV' }}
+        </button>
+        <button type="button" class="adm-btn adm-btn--outline" [disabled]="!!gerando || periodoInvalido" (click)="gerar('inscritos', 'xlsx')">
+          <i class="fa-solid fa-file-excel"></i> {{ gerando === 'inscritos-xlsx' ? 'Gerando...' : 'Excel' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <p class="rel__msg rel__msg--ok" *ngIf="mensagem">{{ mensagem }}</p>
+  <p class="rel__msg rel__msg--erro" *ngIf="erro">{{ erro }}</p>
+  <p class="rel__dica">Ao filtrar por assunto, entram também os inscritos que escolheram "Todos".</p>
+</div>

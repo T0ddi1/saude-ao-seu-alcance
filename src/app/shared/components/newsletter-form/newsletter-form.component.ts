@@ -1,26 +1,19 @@
-import { Component, Input, OnInit, signal } from '@angular/core';
+import { Component, Input, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ButtonComponent } from '../button/button.component';
+import { IconComponent } from '../icon/icon.component';
 import { TotemService } from '../../../core/services/totem.service';
 import { ToastService } from '../../../core/services/toast.service';
+import { DialogFocoDirective } from '../../directives/dialog-foco.directive';
+import { NewsletterService, NewsletterTopic } from '../../../core/services/newsletter.service';
+import { GeolocationService } from '../../../core/services/geolocation.service';
 
-/** localStorage key marking that this browser already subscribed — blocks resubmission client-side. */
 const STORAGE_KEY = 'saude-newsletter-subscribed';
-
-/**
- * Google Apps Script web app (doPost) that appends [timestamp, email] to the
- * "Inscricoes" sheet. Deployed with access "Anyone" so it can be called
- * straight from the browser — no credentials involved, only the public
- * exec URL. See the sheet's Apps Script project to change behavior.
- */
-const ENDPOINT_URL =
-  'https://script.google.com/macros/s/AKfycbx6rQn1JKXu26XZdSAe6owV-podwvqM3t7cL0lrHEs1PQ-VX-ISKRAO0AJVwa5WJYyt3g/exec';
 
 @Component({
   selector: 'app-newsletter-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ButtonComponent],
+  imports: [DialogFocoDirective, CommonModule, FormsModule, IconComponent],
   templateUrl: './newsletter-form.component.html',
   styleUrl: './newsletter-form.component.scss',
 })
@@ -28,63 +21,130 @@ export class NewsletterFormComponent implements OnInit {
   @Input() placeholder = 'Seu e-mail';
   @Input() ctaLabel = 'Inscrever';
 
+  private totem = inject(TotemService);
+  private toast = inject(ToastService);
+  private newsletterService = inject(NewsletterService);
+  private geolocation = inject(GeolocationService);
+
   email = '';
-  /** Honeypot — a field real users never see or fill. Any value here means a bot filled the form. */
   website = '';
   submitted = signal(false);
   submitting = signal(false);
   error = signal<string | null>(null);
 
-  constructor(private totem: TotemService, private toast: ToastService) {}
+  modalOpen = signal(false);
+  topics = signal<NewsletterTopic[]>([]);
+  allTopics = true;
+  selectedTopics = new Set<string>();
+  accepted = false;
+  modalError = signal<string | null>(null);
+  nome = '';
+  telefone = '';
 
   ngOnInit(): void {
-    // On the totem, a new person uses this form every few minutes, so it must
-    // never lock up from a previous visitor's submission.
     if (!this.totem.isTotem() && localStorage.getItem(STORAGE_KEY)) {
       this.submitted.set(true);
     }
   }
 
-  async onSubmit(): Promise<void> {
+  onSubmit(): void {
     if (this.submitting() || this.submitted()) return;
 
     if (this.website.trim()) {
-      // Bot caught by the honeypot — pretend success without actually
-      // sending anything, so it doesn't learn to leave the field empty.
       this.submitted.set(true);
       return;
     }
 
-    if (!this.email.includes('@')) {
+    if (!/^\S+@\S+\.\S+$/.test(this.email.trim())) {
       this.error.set('Digite um e-mail válido.');
       return;
     }
 
     this.error.set(null);
+    this.openModal();
+  }
+
+  openModal(): void {
+    this.allTopics = true;
+    this.selectedTopics.clear();
+    this.accepted = false;
+    this.nome = '';
+    this.telefone = '';
+    this.modalError.set(null);
+    this.modalOpen.set(true);
+
+    if (!this.topics().length) {
+      this.newsletterService.listTopics().subscribe({
+        next: (topics) => this.topics.set(topics),
+        error: () => this.modalError.set('Não foi possível carregar os assuntos agora.'),
+      });
+    }
+  }
+
+  closeModal(): void {
+    if (this.submitting()) return;
+    this.modalOpen.set(false);
+  }
+
+  toggleAllTopics(): void {
+    this.allTopics = true;
+    this.selectedTopics.clear();
+  }
+
+  toggleTopic(slug: string): void {
+    if (this.selectedTopics.has(slug)) this.selectedTopics.delete(slug);
+    else this.selectedTopics.add(slug);
+    this.allTopics = this.selectedTopics.size === 0;
+  }
+
+  confirm(): void {
+    if (this.submitting()) return;
+
+    if (!/^\S+@\S+\.\S+$/.test(this.email.trim())) {
+      this.modalError.set('Digite um e-mail válido.');
+      return;
+    }
+    if (!this.accepted) {
+      this.modalError.set('Para se inscrever, aceite receber nossas comunicações.');
+      return;
+    }
+
+    this.modalError.set(null);
     this.submitting.set(true);
 
-    const body = new URLSearchParams();
-    body.set('email', this.email);
+    const local = this.geolocation.getStoredLocation();
 
-    try {
-      // Apps Script exec URLs don't send Access-Control-Allow-Origin, so a
-      // normal cross-origin fetch is blocked before we can read the
-      // response. `no-cors` still delivers the POST (the row lands in the
-      // sheet) — we just can't read the JSON body back, so success here
-      // only means the request went out, not that the server confirmed it.
-      await fetch(ENDPOINT_URL, { method: 'POST', mode: 'no-cors', body });
+    this.newsletterService
+      .subscribe({
+        email: this.email.trim(),
+        allTopics: this.allTopics,
+        topics: [...this.selectedTopics],
+        acceptedCommunications: this.accepted,
+        source: this.totem.isTotem() ? 'totem' : 'footer',
+        name: this.nome.trim() || undefined,
+        phone: this.telefone.trim() || undefined,
+        latitude: local?.latitude,
+        longitude: local?.longitude,
+      })
+      .subscribe({
+        next: () => {
+          this.submitting.set(false);
+          this.modalOpen.set(false);
 
-      if (this.totem.isTotem()) {
-        this.toast.show('Inscrição enviada — obrigado!');
-        this.email = '';
-      } else {
-        localStorage.setItem(STORAGE_KEY, this.email);
-        this.submitted.set(true);
-      }
-    } catch {
-      this.error.set('Não foi possível concluir a inscrição agora. Tente novamente em instantes.');
-    } finally {
-      this.submitting.set(false);
-    }
+          if (this.totem.isTotem()) {
+            this.toast.show('Inscrição enviada — obrigado!');
+            this.email = '';
+          } else {
+            localStorage.setItem(STORAGE_KEY, this.email);
+            this.submitted.set(true);
+          }
+        },
+        error: (err) => {
+          this.submitting.set(false);
+          this.modalError.set(
+            typeof err?.error === 'string' ? err.error : 'Não foi possível concluir a inscrição agora. Tente novamente em instantes.',
+          );
+        },
+      });
   }
 }

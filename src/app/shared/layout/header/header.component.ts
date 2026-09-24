@@ -8,6 +8,8 @@ import { SearchBoxComponent } from '../../components/search-box/search-box.compo
 import { TotemService } from '../../../core/services/totem.service';
 import { AnchorNavService } from '../../../core/services/anchor-nav.service';
 import { ToastService } from '../../../core/services/toast.service';
+import { AuthService } from '../../../core/services/auth.service';
+import { SiteConfigService } from '../../../core/services/site-config.service';
 
 @Component({
   selector: 'app-header',
@@ -20,17 +22,29 @@ export class HeaderComponent implements OnInit {
   navItems = signal<NavItem[]>([]);
   openIndex = signal<number | null>(null);
   mobileMenuOpen = signal(false);
+  logoPersonalizado = signal<string | null>(null);
 
   constructor(
     private navigationService: NavigationService,
     private elementRef: ElementRef<HTMLElement>,
     public totem: TotemService,
     public anchorNav: AnchorNavService,
-    private toast: ToastService
+    private toast: ToastService,
+    public authService: AuthService,
+    private siteConfig: SiteConfigService
   ) {}
 
   ngOnInit(): void {
     this.navigationService.getNavigation().subscribe((items) => this.navItems.set(items));
+    this.siteConfig.getConfig().subscribe((config) => this.logoPersonalizado.set(config.logoUrl));
+  }
+
+  get linkContaLogada(): string {
+    return this.authService.ehAdmin || this.authService.ehStaff ? '/admin' : '/perfil';
+  }
+
+  get rotuloContaLogada(): string {
+    return this.authService.ehAdmin || this.authService.ehStaff ? 'Painel Admin' : 'Meu Perfil';
   }
 
   toggleMenu(index: number, event: Event): void {
@@ -57,14 +71,7 @@ export class HeaderComponent implements OnInit {
   private logoTapCount = 0;
   private logoTapResetTimer: ReturnType<typeof setTimeout> | null = null;
 
-  /**
-   * The kiosk's browser can't be pointed at a custom setup URL, so there's no
-   * `?totem=1` to visit on a real device. Tapping the logo 7 times within 3s
-   * is the manual equivalent — a gesture a regular visitor won't stumble
-   * into by accident, but simple enough for whoever installs the kiosk to
-   * remember without needing a URL at all. Toggles on OR off, so the same
-   * gesture also undoes it if it's ever set by mistake.
-   */
+  
   onLogoTap(): void {
     this.logoTapCount++;
     if (this.logoTapResetTimer) clearTimeout(this.logoTapResetTimer);

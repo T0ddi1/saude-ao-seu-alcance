@@ -1,0 +1,140 @@
+.perfil {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 40px var(--gutter) 80px;
+
+  h1 {
+    font-size: var(--fs-h2);
+    color: var(--color-primary);
+    margin-bottom: 24px;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    label {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-weight: 600;
+      font-size: var(--fs-body-s);
+    }
+
+    input {
+      padding: 10px 14px;
+      border-radius: var(--radius-s);
+      border: 1.5px solid var(--color-border);
+      font-weight: 400;
+    }
+  }
+
+  &__avatar-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 8px;
+  }
+
+  &__avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--color-surface-alt);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__avatar-placeholder {
+    font-size: var(--fs-label-s);
+    color: var(--color-muted);
+  }
+
+  &__upload-btn {
+    display: inline-block;
+    padding: 8px 16px;
+    border: 1.5px solid var(--color-primary);
+    color: var(--color-primary);
+    border-radius: var(--radius-pill);
+    font-size: var(--fs-body-s);
+    font-weight: 600;
+    cursor: pointer;
+  }
+  &__upload-btn:hover {
+    background: var(--color-primary-tint);
+  }
+
+  &__hint {
+    font-size: var(--fs-label-s);
+    color: var(--color-muted);
+    margin: 6px 0 0;
+  }
+
+  &__erro {
+    color: #c0392b;
+    font-size: var(--fs-label-s);
+    font-weight: 600;
+    margin: 6px 0 0;
+  }
+
+  &__endereco {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-s);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__linha {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  &__salvo {
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+
+  &__acoes {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  &__sair {
+    background: none;
+    border: none;
+    color: var(--color-muted);
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  &__favoritos {
+    margin-top: 40px;
+
+    h2 {
+      font-size: var(--fs-h3);
+      margin-bottom: 12px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+  }
+}

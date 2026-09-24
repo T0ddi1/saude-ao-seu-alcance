@@ -1,0 +1,169 @@
+<div class="crud" *ngIf="config">
+  <div class="adm-page-head">
+    <h2>{{ config.titulo }}</h2>
+  </div>
+
+  <p class="adm-alert adm-alert--erro" *ngIf="erro">{{ erro }}</p>
+
+  <app-secao-home-config
+    *ngIf="config.secaoHome"
+    [secao]="config.secaoHome"
+    (itensReordenados)="carregar()"
+    (itemSelecionado)="editar($event)"
+  ></app-secao-home-config>
+
+  <div class="crud__grid">
+    <div class="adm-card" #cardFormulario>
+      <form class="adm-form" [formGroup]="formulario" (ngSubmit)="salvar()">
+        <h3>{{ editandoId ? 'Editar registro' : 'Novo registro' }}</h3>
+
+        <div class="adm-field" *ngFor="let campo of config.campos">
+          <label [for]="campo.chave">{{ campo.rotulo }}</label>
+
+          <input
+            *ngIf="campo.tipo === 'text'"
+            [id]="campo.chave"
+            type="text"
+            [formControlName]="campo.chave"
+          />
+
+          <textarea
+            *ngIf="campo.tipo === 'textarea'"
+            [id]="campo.chave"
+            rows="3"
+            [formControlName]="campo.chave"
+          ></textarea>
+
+          <input
+            *ngIf="campo.tipo === 'number'"
+            [id]="campo.chave"
+            type="number"
+            [formControlName]="campo.chave"
+          />
+
+          <input
+            *ngIf="campo.tipo === 'checkbox'"
+            [id]="campo.chave"
+            type="checkbox"
+            [formControlName]="campo.chave"
+          />
+
+          <select *ngIf="campo.tipo === 'select'" [id]="campo.chave" [formControlName]="campo.chave">
+            <option *ngFor="let opcao of campo.opcoes" [value]="opcao">{{ campo.rotulosOpcoes?.[opcao] ?? opcao }}</option>
+          </select>
+
+          <app-icon-picker
+            *ngIf="campo.tipo === 'icone'"
+            [opcoes]="campo.opcoes ?? []"
+            [formControlName]="campo.chave"
+          ></app-icon-picker>
+
+          <app-indicador-ibge-select
+            *ngIf="campo.tipo === 'indicador-ibge'"
+            [formControlName]="campo.chave"
+          ></app-indicador-ibge-select>
+
+          <div class="crud__link" *ngIf="campo.tipo === 'link'">
+            <input [id]="campo.chave" type="text" placeholder="/caminho ou https://..." [formControlName]="campo.chave" />
+            <select (change)="vincular(campo.chave, $any($event.target).value); $any($event.target).value = ''">
+              <option value="">↳ ou vincular a um artigo, página ou tópico...</option>
+              <optgroup label="Artigos">
+                <option *ngFor="let artigo of artigos" [value]="'artigo:' + artigo.id">{{ artigo.titulo }}</option>
+              </optgroup>
+              <optgroup label="Páginas institucionais">
+                <option *ngFor="let pagina of paginas" [value]="'pagina:' + pagina.id">{{ pagina.titulo }}</option>
+              </optgroup>
+              <optgroup label="Tópicos (categorias)">
+                <option *ngFor="let categoria of categorias" [value]="'categoria:' + categoria.id">{{ categoria.nome }}</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <app-quill-editor
+            *ngIf="campo.tipo === 'richtext'"
+            [formControlName]="campo.chave"
+          ></app-quill-editor>
+
+          <div class="crud__imagem" *ngIf="campo.tipo === 'arquivo'">
+            <a *ngIf="formulario.value[campo.chave]" [href]="formulario.value[campo.chave]" target="_blank" rel="noopener noreferrer">
+              {{ formulario.value[campo.chave] }}
+            </a>
+            <div class="crud__imagem-placeholder" *ngIf="!formulario.value[campo.chave]">Nenhum arquivo</div>
+            <label class="adm-btn adm-btn--outline">
+              {{ enviandoImagem[campo.chave] ? 'Enviando...' : 'Enviar arquivo' }}
+              <input type="file" accept="application/pdf,image/*" (change)="selecionarImagem($event, campo.chave)" [disabled]="enviandoImagem[campo.chave]" hidden />
+            </label>
+          </div>
+
+          <div class="crud__imagem" *ngIf="campo.tipo === 'image'">
+            <img *ngIf="formulario.value[campo.chave]" [src]="formulario.value[campo.chave]" alt="" />
+            <div class="crud__imagem-placeholder" *ngIf="!formulario.value[campo.chave]">Sem imagem</div>
+            <label class="adm-btn adm-btn--outline">
+              {{ enviandoImagem[campo.chave] ? 'Enviando...' : 'Enviar imagem' }}
+              <input type="file" accept="image/jpeg,image/png,image/gif,image/webp" (change)="selecionarImagem($event, campo.chave)" [disabled]="enviandoImagem[campo.chave]" hidden />
+            </label>
+          </div>
+
+          <span class="crud__campo-erro" *ngIf="campoInvalido(campo)">Campo obrigatório.</span>
+        </div>
+
+        <div class="adm-form-acoes">
+          <button type="submit" class="adm-btn adm-btn--primario">{{ editandoId ? 'Salvar alterações' : 'Criar' }}</button>
+          <button type="button" class="adm-btn adm-btn--fantasma" *ngIf="editandoId" (click)="cancelarEdicao()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="adm-card crud__preview">
+      <span class="crud__preview-label">Preview</span>
+
+      <div class="crud__preview-richtext" *ngIf="previewRichtextCampo">
+        <div [innerHTML]="previewRichtextHtml"></div>
+      </div>
+
+      <div class="crud__preview-card" *ngIf="!previewRichtextCampo">
+        <img *ngIf="previewImagem" [src]="previewImagem" alt="" />
+        <div class="crud__preview-corpo">
+          <span class="crud__preview-eyebrow" *ngIf="previewIcone">
+            <app-icon [name]="previewIcone" [size]="14"></app-icon>
+          </span>
+          <strong>{{ previewTitulo }}</strong>
+          <p *ngIf="previewResumo">{{ previewResumo }}</p>
+          <span class="crud__preview-cta" *ngIf="formulario.value['textoLink'] || formulario.value['textoBotao']">
+            {{ formulario.value['textoLink'] || formulario.value['textoBotao'] }} →
+          </span>
+          <span class="crud__preview-link" *ngIf="previewLink">{{ previewLink }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngIf="!config.escondeListaAbaixo">
+    <h3 class="adm-section-title">Todos os registros</h3>
+    <div class="adm-card adm-card--flush">
+      <table class="adm-table" *ngIf="!carregando">
+        <thead>
+          <tr>
+            <th *ngFor="let coluna of config.colunasTabela">{{ coluna }}</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of itens">
+            <td *ngFor="let coluna of config.colunasTabela">
+              <ng-container *ngIf="coluna === 'icone'; else textoCelula">
+                <app-icon [name]="$any(item[coluna])" [size]="18" color="var(--adm-accent)"></app-icon>
+              </ng-container>
+              <ng-template #textoCelula>{{ item[coluna] }}</ng-template>
+            </td>
+            <td class="adm-table__acoes">
+              <button type="button" (click)="editar(item)">Editar</button>
+              <button type="button" class="is-perigo" (click)="excluir(item)">Excluir</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="adm-empty" *ngIf="carregando">Carregando...</p>
+    </div>
+  </ng-container>
+</div>

@@ -1,0 +1,217 @@
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  font-family: 'Inter', system-ui, sans-serif;
+
+  &__sidebar {
+    width: 264px;
+    flex-shrink: 0;
+    background: #1a1230;
+    color: #fff;
+    padding: 18px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: width 0.18s ease;
+  }
+
+  &--recolhida &__sidebar {
+    width: 76px;
+  }
+  &--recolhida &__marca-texto,
+  &--recolhida &__usuario-texto,
+  &--recolhida &__grupo-titulo,
+  &--recolhida &__nav a span,
+  &--recolhida &__ver-site span,
+  &--recolhida &__sair span {
+    display: none;
+  }
+  &--recolhida &__recolher i {
+    transform: rotate(180deg);
+  }
+
+  &__marca {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 4px 6px 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  &__logo {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #8b5cf6, #6b3fd4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 16px;
+  }
+  &__marca-texto {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    strong {
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    span {
+      font-size: 10.5px;
+      color: #9c8dc4;
+    }
+  }
+  &__recolher {
+    background: none;
+    border: none;
+    color: #9c8dc4;
+    cursor: pointer;
+    font-size: 13px;
+    padding: 4px;
+    flex-shrink: 0;
+  }
+  &__recolher:hover { color: #fff; }
+  &__recolher i { transition: transform 0.18s ease; }
+
+  &__usuario {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 6px;
+  }
+  &__avatar {
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+  }
+  &__usuario-texto {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    strong {
+      font-size: 12.5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    span {
+      font-size: 10.5px;
+      color: #9c8dc4;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  &__nav {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-right: 2px;
+  }
+
+  &__grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  &__grupo-titulo {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #6f5f99;
+    padding: 6px 12px 4px;
+  }
+
+  &__nav a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #cabdf0;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.15s ease, color 0.15s ease;
+    white-space: nowrap;
+
+    i { width: 16px; text-align: center; font-size: 13px; opacity: 0.9; }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: #fff;
+    }
+
+    &.is-ativo {
+      background: #6b3fd4;
+      color: #fff;
+      font-weight: 700;
+    }
+  }
+
+  &__rodape-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  &__ver-site {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #cabdf0;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+
+    &:hover { background: rgba(255, 255, 255, 0.06); color: #fff; }
+    i { width: 16px; text-align: center; font-size: 12px; }
+  }
+
+  &__sair {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    color: #cabdf0;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+
+    &:hover { background: rgba(255, 255, 255, 0.06); color: #fff; }
+    i { width: 16px; text-align: center; font-size: 12px; }
+  }
+
+  &__conteudo {
+    flex: 1;
+    background: var(--adm-bg, #f4f3fa);
+    overflow-y: auto;
+    min-width: 0;
+  }
+}

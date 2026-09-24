@@ -1,0 +1,10 @@
+<div class="secoes">
+  <div class="adm-page-head">
+    <h2>Seções da Home</h2>
+    <p>Aqui ficam só as seções que ainda não têm uma tela própria. Carrossel, Grade de Conteúdo, Espaços Patrocinados, Dados da Saúde e Selos de Confiança agora são configurados direto na tela de cada um.</p>
+  </div>
+
+  <p class="adm-empty" *ngIf="carregando">Carregando...</p>
+
+  <app-secao-home-config *ngFor="let secao of secoesSemTelaPropria" [secao]="secao"></app-secao-home-config>
+</div>

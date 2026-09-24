@@ -18,7 +18,7 @@ export class ButtonComponent {
   @Input() large = false;
   @Input() compact = false;
 
-  /** Internal app routes (starting with "/") use routerLink so they work under hash-based routing. */
+  
   get isInternal(): boolean {
     return !!this.href && this.href.startsWith('/');
   }

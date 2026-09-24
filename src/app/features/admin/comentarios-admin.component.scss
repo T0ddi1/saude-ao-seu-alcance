@@ -1,0 +1,41 @@
+.moderacao {
+  padding: 24px;
+  max-width: 800px;
+
+  &__abas {
+    margin-bottom: 20px;
+    width: fit-content;
+  }
+
+  &__item {
+    header {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 13px;
+      color: var(--adm-muted);
+      flex-wrap: wrap;
+
+      strong { color: var(--adm-ink); }
+    }
+  }
+
+  &__data {
+    margin-left: auto;
+  }
+
+  &__resposta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+
+    textarea {
+      padding: 8px;
+      border: 1px solid var(--adm-border);
+      border-radius: 6px;
+      font-family: inherit;
+    }
+  }
+}

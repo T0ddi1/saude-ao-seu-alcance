@@ -7,6 +7,8 @@
   flex-direction: column;
   gap: 16px;
   min-width: 320px;
+  position: relative;
+  z-index: 1;
 }
 
 .trending__head {
@@ -68,4 +70,10 @@
 }
 .trending__all:hover {
   color: var(--color-secondary);
+}
+
+@media (min-width: 901px) {
+  .trending {
+    padding-left: 128px;
+  }
 }

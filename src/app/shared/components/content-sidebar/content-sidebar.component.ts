@@ -16,4 +16,21 @@ export class ContentSidebarComponent {
   @Input({ required: true }) categories!: BlogCategory[];
   @Input({ required: true }) recentPosts!: RecentPost[];
   @Input({ required: true }) extras!: SidebarExtra[];
+
+  
+  caminho(href: string): string {
+    return href.split('?')[0];
+  }
+
+  queryParams(href: string): Record<string, string> {
+    const [, query] = href.split('?');
+    if (!query) return {};
+
+    const params: Record<string, string> = {};
+    query.split('&').forEach((par) => {
+      const [chave, valor] = par.split('=');
+      if (chave) params[decodeURIComponent(chave)] = decodeURIComponent(valor ?? '');
+    });
+    return params;
+  }
 }

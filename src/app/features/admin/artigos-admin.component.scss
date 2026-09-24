@@ -1,0 +1,120 @@
+.artigos {
+  padding: 24px;
+  max-width: 1000px;
+
+  &__editor-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+
+    h3 {
+      font-size: 15px;
+      font-weight: 700;
+    }
+  }
+
+  &__capa {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    img {
+      width: 96px;
+      height: 64px;
+      object-fit: cover;
+      border-radius: 8px;
+      background: #f2f2f2;
+    }
+  }
+
+  &__capa-placeholder {
+    width: 96px;
+    height: 64px;
+    border-radius: 8px;
+    background: #f2f2f2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: #6b6b6b;
+  }
+
+  &__preview {
+    margin-top: 16px;
+    padding: 20px;
+    border: 1px dashed var(--adm-border);
+    border-radius: 8px;
+    background: #fcfbff;
+
+    h1 {
+      font-size: 22px;
+      margin: 6px 0 10px;
+    }
+  }
+
+  &__preview-topico {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--adm-accent);
+    background: var(--adm-accent-soft);
+    padding: 2px 10px;
+    border-radius: 999px;
+  }
+
+  &__preview-resumo {
+    color: var(--adm-muted);
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  &__preview-capa {
+    width: 100%;
+    max-height: 280px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 16px;
+  }
+
+  &__preview-corpo {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--adm-ink);
+
+    ::ng-deep p { margin-bottom: 12px; }
+    ::ng-deep img { max-width: 100%; border-radius: 8px; margin: 12px 0; }
+
+    ::ng-deep blockquote {
+      position: relative;
+      background: var(--adm-bg);
+      border-left: none;
+      border-radius: 10px;
+      padding: 24px 36px;
+      margin: 16px 0;
+      font-style: italic;
+      color: var(--adm-ink);
+
+      &::before,
+      &::after {
+        position: absolute;
+        font-family: 'Poppins', sans-serif;
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--adm-accent);
+        line-height: 1;
+      }
+      &::before {
+        content: '\201C';
+        top: 10px;
+        left: 12px;
+      }
+      &::after {
+        content: '\201D';
+        bottom: 2px;
+        right: 12px;
+      }
+    }
+  }
+}

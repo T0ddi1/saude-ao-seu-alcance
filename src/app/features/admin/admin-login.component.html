@@ -1,0 +1,16 @@
+<div class="login">
+  <form class="login__form" [formGroup]="formulario" (ngSubmit)="entrar()">
+    <h1>Painel Admin</h1>
+    <p>Saúde ao Seu Alcance</p>
+
+    <label for="email">Email</label>
+    <input id="email" type="email" formControlName="email" />
+
+    <label for="senha">Senha</label>
+    <input id="senha" type="password" formControlName="senha" />
+
+    <p class="login__erro" *ngIf="erro">{{ erro }}</p>
+
+    <button type="submit" [disabled]="enviando">{{ enviando ? 'Entrando...' : 'Entrar' }}</button>
+  </form>
+</div>

@@ -66,6 +66,25 @@
   text-decoration: none;
 }
 
+.article__favorite {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  padding: 6px 12px;
+  border: 1.5px solid var(--color-border-strong);
+  border-radius: var(--radius-s);
+  background: transparent;
+  font-size: var(--fs-body-s);
+  font-weight: 600;
+  cursor: pointer;
+}
+.article__favorite.is-active {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: var(--color-primary-tint);
+}
+
 .article__hero {
   aspect-ratio: 16 / 8;
   border-radius: var(--radius-m);
@@ -106,21 +125,30 @@
 }
 
 .article__quote {
-  display: flex;
-  gap: 20px;
-  align-items: flex-start;
+  position: relative;
   background: var(--color-surface-alt);
   border-radius: var(--radius-m);
-  padding: 28px;
+  padding: 32px 44px;
   margin: 0 0 20px;
 }
-.article__quote-mark {
+.article__quote::before,
+.article__quote::after {
+  position: absolute;
   font-family: var(--font-heading);
-  font-size: 40px;
+  font-size: 34px;
   font-weight: 700;
   color: var(--color-secondary);
   line-height: 1;
-  flex-shrink: 0;
+}
+.article__quote::before {
+  content: '\201C';
+  top: 12px;
+  left: 14px;
+}
+.article__quote::after {
+  content: '\201D';
+  bottom: 2px;
+  right: 14px;
 }
 .article__quote p {
   font-size: var(--fs-body-m);
@@ -165,18 +193,7 @@
   }
 }
 
-/*
- * Mid-width screens (kiosks and similarly-sized tablets/laptops, between the
- * "sidebar stacks below" breakpoint above and the point where there's room
- * for the full desktop nav): the sidebar's content ("Postagens Recentes"
- * etc.) is much shorter than the full article body, which — with the
- * regular 2-column grid running the sidebar the full height of the article
- * — left a tall blank column of white space to the right once the body ran
- * past the sidebar's height. Here the sidebar sits beside just the
- * title/meta block (both short), and the body drops to a full-width row
- * below, so nothing is ever left empty beside it. Plain media query, not
- * gated by a totem flag, so it applies naturally to any screen this size.
- */
+
 @media (min-width: 1000px) and (max-width: 1250px) {
   .article {
     grid-template-columns: 1.3fr 1fr;

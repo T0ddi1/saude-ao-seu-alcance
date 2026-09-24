@@ -1,40 +1,59 @@
-import { Component, Input, signal } from '@angular/core';
+import { Component, Input, Output, EventEmitter, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { ArticleComment } from '../../../../core/models/article.model';
 import { TotemService } from '../../../../core/services/totem.service';
+import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-comment-section',
   standalone: true,
-  imports: [CommonModule, FormsModule, ButtonComponent],
+  imports: [CommonModule, FormsModule, RouterLink, ButtonComponent],
   templateUrl: './comment-section.component.html',
   styleUrl: './comment-section.component.scss',
 })
 export class CommentSectionComponent {
   @Input({ required: true }) comments!: ArticleComment[];
 
-  constructor(public totem: TotemService) {}
+  @Output() enviarComentario = new EventEmitter<{ texto: string; comentarioPaiId: number | null }>();
+  @Output() curtirComentario = new EventEmitter<number>();
 
-  /** Flip to true once comments have a real backend to post to. */
-  commentsEnabled = false;
+  constructor(public totem: TotemService, public authService: AuthService) {}
 
-  name = '';
-  email = '';
   message = '';
-  saveInfo = false;
+  respondendoId: number | null = null;
+  respostaTexto = '';
   posted = signal(false);
 
+  get estaLogado(): boolean {
+    return this.authService.estaLogado;
+  }
+
   onSubmit(): void {
-    if (!this.commentsEnabled || !this.name || !this.email || !this.message) {
-      return;
-    }
-    // TODO: POST to the real comments endpoint once available
-    this.comments = [{ name: this.name, date: 'Agora', text: this.message }, ...this.comments];
-    this.name = '';
-    this.email = '';
+    if (!this.estaLogado || !this.message.trim()) return;
+
+    this.enviarComentario.emit({ texto: this.message.trim(), comentarioPaiId: null });
     this.message = '';
     this.posted.set(true);
+  }
+
+  abrirResposta(comentarioId: number): void {
+    this.respondendoId = this.respondendoId === comentarioId ? null : comentarioId;
+    this.respostaTexto = '';
+  }
+
+  enviarResposta(comentarioPaiId: number): void {
+    if (!this.respostaTexto.trim()) return;
+
+    this.enviarComentario.emit({ texto: this.respostaTexto.trim(), comentarioPaiId });
+    this.respostaTexto = '';
+    this.respondendoId = null;
+  }
+
+  curtir(comentarioId: number): void {
+    if (!this.estaLogado) return;
+    this.curtirComentario.emit(comentarioId);
   }
 }

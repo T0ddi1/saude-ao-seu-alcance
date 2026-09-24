@@ -1,0 +1,119 @@
+<div class="artigos">
+  <div class="adm-page-head">
+    <h2>Artigos</h2>
+    <p>Crie e edite artigos com o editor rico e veja o preview antes de publicar.</p>
+  </div>
+
+  <p class="adm-alert adm-alert--erro" *ngIf="erro">{{ erro }}</p>
+
+  <div class="adm-card artigos__editor">
+    <div class="artigos__editor-head">
+      <h3>{{ editandoId ? 'Editar artigo' : 'Novo artigo' }}</h3>
+      <div class="adm-tabs">
+        <button type="button" [class.is-ativo]="abaAtiva === 'editar'" (click)="abaAtiva = 'editar'">Editar</button>
+        <button type="button" [class.is-ativo]="abaAtiva === 'preview'" (click)="abaAtiva = 'preview'">Preview</button>
+      </div>
+    </div>
+
+    <form class="adm-form" *ngIf="abaAtiva === 'editar'" [formGroup]="formulario" (ngSubmit)="salvar()">
+      <div class="adm-field">
+        <label for="titulo">Título</label>
+        <input id="titulo" type="text" formControlName="titulo" />
+      </div>
+
+      <div class="adm-field">
+        <label for="resumo">Resumo</label>
+        <textarea id="resumo" rows="2" formControlName="resumo"></textarea>
+      </div>
+
+      <div class="adm-field">
+        <label>Conteúdo</label>
+        <app-quill-editor formControlName="conteudoHtml"></app-quill-editor>
+      </div>
+
+      <div class="adm-field">
+        <label>Imagem de capa</label>
+        <div class="artigos__capa">
+          <img *ngIf="formulario.value.imagemCapaUrl" [src]="formulario.value.imagemCapaUrl" alt="" />
+          <div class="artigos__capa-placeholder" *ngIf="!formulario.value.imagemCapaUrl">Sem imagem</div>
+          <label class="adm-btn adm-btn--outline">
+            {{ enviandoCapa ? 'Enviando...' : 'Enviar imagem' }}
+            <input type="file" accept="image/jpeg,image/png,image/gif,image/webp" (change)="selecionarCapa($event)" [disabled]="enviandoCapa" hidden />
+          </label>
+        </div>
+        <p class="adm-dica">
+          Use uma foto na horizontal, com pelo menos 1200x800px. Ela aparece cortada de formas diferentes (mais estreita nas listagens, mais larga na página do artigo) —
+          mantenha o assunto principal centralizado na imagem pra não cortar em nenhum dos dois formatos.
+        </p>
+      </div>
+
+      <div class="adm-field-row">
+        <div class="adm-field">
+          <label for="categoriaId">Tópico / Categoria</label>
+          <select id="categoriaId" formControlName="categoriaId">
+            <option [ngValue]="null" disabled>Selecione um tópico</option>
+            <option *ngFor="let categoria of categorias" [ngValue]="categoria.id">{{ categoria.nome }}</option>
+          </select>
+        </div>
+        <div class="adm-field">
+          <label for="autorExibicao">Autor (exibição)</label>
+          <input id="autorExibicao" type="text" formControlName="autorExibicao" />
+        </div>
+        <div class="adm-field">
+          <label for="autorCargo">Cargo/qualificação do autor</label>
+          <input id="autorCargo" type="text" formControlName="autorCargo" placeholder="Ex: Médico – Professor – Escritor" />
+        </div>
+      </div>
+
+      <label class="adm-checkbox">
+        <input type="checkbox" formControlName="destaque" />
+        Destaque (carrossel da home)
+      </label>
+
+      <div class="adm-form-acoes">
+        <button type="submit" class="adm-btn adm-btn--primario">{{ editandoId ? 'Salvar alterações' : 'Criar artigo' }}</button>
+        <button type="button" class="adm-btn adm-btn--fantasma" *ngIf="editandoId" (click)="cancelarEdicao()">Cancelar</button>
+      </div>
+    </form>
+
+    <div class="artigos__preview" *ngIf="abaAtiva === 'preview'">
+      <span class="artigos__preview-topico" *ngIf="categoriaNomeSelecionada">{{ categoriaNomeSelecionada }}</span>
+      <h1>{{ formulario.value.titulo || 'Título do artigo' }}</h1>
+      <p class="artigos__preview-resumo">{{ formulario.value.resumo }}</p>
+      <img *ngIf="formulario.value.imagemCapaUrl" class="artigos__preview-capa" [src]="formulario.value.imagemCapaUrl" alt="" />
+      <div class="artigos__preview-corpo" [innerHTML]="conteudoPreview"></div>
+    </div>
+  </div>
+
+  <h3 class="adm-section-title">Todos os artigos</h3>
+  <div class="adm-card adm-card--flush">
+    <table class="adm-table" *ngIf="!carregando">
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Categoria</th>
+          <th>Destaque</th>
+          <th>Views</th>
+          <th>Publicado</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let artigo of artigos">
+          <td>{{ artigo.titulo }}</td>
+          <td>{{ artigo.categoriaNome ?? '—' }}</td>
+          <td>{{ artigo.destaque ? 'Sim' : 'Não' }}</td>
+          <td>{{ artigo.visualizacoes }}</td>
+          <td><span class="adm-badge" [class.adm-badge--ok]="artigo.publicado">{{ artigo.publicado ? 'Sim' : 'Não' }}</span></td>
+          <td class="adm-table__acoes">
+            <button type="button" (click)="editar(artigo)">Editar</button>
+            <button type="button" (click)="alternarPublicacao(artigo)">{{ artigo.publicado ? 'Despublicar' : 'Publicar' }}</button>
+            <button type="button" class="is-perigo" (click)="excluir(artigo)">Excluir</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="adm-empty" *ngIf="carregando">Carregando...</p>
+  </div>
+</div>

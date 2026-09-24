@@ -19,7 +19,7 @@ export class TrendingPanelComponent {
     this.dataInput.set(value);
   }
 
-  /** Sorted by API-provided score and capped to the API-provided limit — the ranking is not hardcoded. */
+  
   ranked = computed(() => {
     const data = this.dataInput();
     if (!data) return [];

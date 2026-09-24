@@ -1,0 +1,36 @@
+<div class="moderacao">
+  <div class="adm-page-head">
+    <h2>Moderação de Comentários</h2>
+    <p>Aprove, rejeite ou responda como equipe — a resposta da equipe já sai aprovada.</p>
+  </div>
+
+  <div class="adm-tabs moderacao__abas">
+    <button type="button" [class.is-ativo]="status === 'pendente'" (click)="mudarStatus('pendente')">Pendentes</button>
+    <button type="button" [class.is-ativo]="status === 'aprovado'" (click)="mudarStatus('aprovado')">Aprovados</button>
+    <button type="button" [class.is-ativo]="status === 'todos'" (click)="mudarStatus('todos')">Todos</button>
+  </div>
+
+  <p class="adm-empty" *ngIf="carregando">Carregando...</p>
+  <p class="adm-empty" *ngIf="!carregando && comentarios.length === 0">Nenhum comentário aqui.</p>
+
+  <div class="adm-card moderacao__item" *ngFor="let c of comentarios">
+    <header>
+      <strong>{{ c.autorNome }}</strong>
+      <span>em "{{ c.artigoTitulo }}"</span>
+      <span class="adm-badge" [class.adm-badge--ok]="c.aprovado">{{ c.aprovado ? 'Aprovado' : 'Pendente' }}</span>
+      <span class="moderacao__data">{{ c.criadoEm | date: 'dd/MM/yyyy HH:mm' }}</span>
+    </header>
+    <p>{{ c.texto }}</p>
+
+    <div class="adm-table__acoes">
+      <button type="button" *ngIf="!c.aprovado" (click)="aprovar(c.id)">Aprovar</button>
+      <button type="button" *ngIf="c.aprovado" class="is-perigo" (click)="rejeitar(c.id)">Rejeitar/Ocultar</button>
+      <button type="button" (click)="abrirResposta(c.id)">Responder</button>
+    </div>
+
+    <form class="moderacao__resposta" *ngIf="respondendoId === c.id" (ngSubmit)="enviarResposta(c.id)">
+      <textarea rows="2" [(ngModel)]="textoResposta" name="resposta-{{ c.id }}" placeholder="Escreva a resposta oficial..."></textarea>
+      <button type="submit" class="adm-btn adm-btn--primario">Enviar resposta</button>
+    </form>
+  </div>
+</div>

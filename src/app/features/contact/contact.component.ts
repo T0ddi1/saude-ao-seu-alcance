@@ -1,12 +1,12 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BreadcrumbComponent } from '../../shared/components/breadcrumb/breadcrumb.component';
 import { ButtonComponent } from '../../shared/components/button/button.component';
 import { TotemService } from '../../core/services/totem.service';
 import { ToastService } from '../../core/services/toast.service';
-
-const ENDPOINT_URL = 'https://script.google.com/macros/s/AKfycbx1ogZG9xV_0ziO7LT7lKG71PrYrLHTD5El4pWForgY56Goq6ilo11H9iAVBYSeBAs6/exec';
+import { ContactOption, ContactOptions, ContatoService } from '../../core/services/contato.service';
+import { ESTADOS_BR } from '../../core/data/estados-br';
 
 @Component({
   selector: 'app-contact',
@@ -15,26 +15,67 @@ const ENDPOINT_URL = 'https://script.google.com/macros/s/AKfycbx1ogZG9xV_0ziO7LT
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss',
 })
-export class ContactComponent {
+export class ContactComponent implements OnInit {
+  private contato = inject(ContatoService);
+  private toast = inject(ToastService);
+  totem = inject(TotemService);
+
   breadcrumbs = [
     { label: 'Home', href: '/' },
     { label: 'Contato', href: '/contato' },
   ];
 
-  name = '';
+  states = ESTADOS_BR;
+  options = signal<ContactOptions>({ specialties: [], sources: [], interestTypes: [] });
+  cities = signal<string[]>([]);
+  loadingCities = signal(false);
+
+  fullName = '';
   email = '';
-  specialty = '';
+  phone = '';
+  specialtyId: number | null = null;
+  sourceId: number | null = null;
+  interestTypeId: number | null = null;
+  state = '';
+  city = '';
   message = '';
-  /** Honeypot — a field real users never see or fill. Any value here means a bot filled the form. */
   website = '';
 
   submitted = signal(false);
   submitting = signal(false);
   error = signal<string | null>(null);
 
-  constructor(public totem: TotemService, private toast: ToastService) {}
+  ngOnInit(): void {
+    this.contato.getOptions().subscribe({
+      next: (options) => this.options.set(options),
+      error: () => this.error.set('Não foi possível carregar o formulário agora. Tente novamente em instantes.'),
+    });
+  }
 
-  async onSubmit(): Promise<void> {
+  onStateChange(): void {
+    this.city = '';
+    this.cities.set([]);
+    if (!this.state) return;
+
+    this.loadingCities.set(true);
+    this.contato.getCities(this.state).subscribe({
+      next: (cities) => {
+        this.cities.set(cities);
+        this.loadingCities.set(false);
+      },
+      error: () => this.loadingCities.set(false),
+    });
+  }
+
+  onPhoneInput(): void {
+    const digits = this.phone.replace(/\D/g, '').slice(0, 11);
+    if (digits.length <= 2) this.phone = digits ? `(${digits}` : '';
+    else if (digits.length <= 6) this.phone = `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+    else if (digits.length <= 10) this.phone = `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`;
+    else this.phone = `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+  }
+
+  onSubmit(): void {
     if (this.submitting() || this.submitted()) return;
 
     if (this.website.trim()) {
@@ -42,41 +83,62 @@ export class ContactComponent {
       return;
     }
 
-    if (!this.name.trim() || !this.email.includes('@') || !this.message.trim()) {
-      this.error.set('Preencha nome, e-mail e mensagem para continuar.');
+    const phoneDigits = this.phone.replace(/\D/g, '');
+    if (!this.fullName.trim() || !/^\S+@\S+\.\S+$/.test(this.email.trim())) {
+      this.error.set('Preencha seu nome completo e um e-mail válido.');
+      return;
+    }
+    if (phoneDigits.length < 10) {
+      this.error.set('Informe um telefone válido com DDD.');
+      return;
+    }
+    if (!this.specialtyId || !this.sourceId || !this.interestTypeId || !this.state || !this.city) {
+      this.error.set('Preencha todos os campos obrigatórios (marcados com *).');
       return;
     }
 
     this.error.set(null);
     this.submitting.set(true);
 
-    const body = new URLSearchParams();
-    body.set('name', this.name);
-    body.set('email', this.email);
-    body.set('specialty', this.specialty);
-    body.set('message', this.message);
+    this.contato
+      .submit({
+        fullName: this.fullName.trim(),
+        email: this.email.trim(),
+        phone: phoneDigits,
+        specialtyId: this.specialtyId,
+        sourceId: this.sourceId,
+        interestTypeId: this.interestTypeId,
+        state: this.state,
+        city: this.city,
+        message: this.message.trim() || undefined,
+        ...this.contato.getUtm(),
+      })
+      .subscribe({
+        next: () => {
+          this.submitting.set(false);
+          if (this.totem.isTotem()) {
+            this.toast.show('Cadastro enviado — obrigado pelo contato!');
+            this.resetForm();
+          } else {
+            this.submitted.set(true);
+          }
+        },
+        error: (err) => {
+          this.submitting.set(false);
+          this.error.set(
+            typeof err?.error === 'string' ? err.error : 'Não foi possível enviar seu cadastro agora. Tente novamente em instantes.',
+          );
+        },
+      });
+  }
 
-    try {
-      // Apps Script exec URLs don't send Access-Control-Allow-Origin, so a
-      // normal cross-origin fetch is blocked before we can read the
-      // response. `no-cors` still delivers the POST — we just can't read
-      // the response body back, so success here means the request went
-      // out, not that the server confirmed it.
-      await fetch(ENDPOINT_URL, { method: 'POST', mode: 'no-cors', body });
+  trackById(_: number, option: ContactOption): number {
+    return option.id;
+  }
 
-      if (this.totem.isTotem()) {
-        this.toast.show('Mensagem enviada — obrigado pelo contato!');
-        this.name = '';
-        this.email = '';
-        this.specialty = '';
-        this.message = '';
-      } else {
-        this.submitted.set(true);
-      }
-    } catch {
-      this.error.set('Não foi possível enviar sua mensagem agora. Tente novamente em instantes.');
-    } finally {
-      this.submitting.set(false);
-    }
+  private resetForm(): void {
+    this.fullName = this.email = this.phone = this.state = this.city = this.message = '';
+    this.specialtyId = this.sourceId = this.interestTypeId = null;
+    this.cities.set([]);
   }
 }

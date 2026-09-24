@@ -4,7 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Meta, Title } from '@angular/platform-browser';
 import { switchMap } from 'rxjs';
 import { ArticleService } from '../../core/services/article.service';
-import { ArticleDetail } from '../../core/models/article.model';
+import { AuthService } from '../../core/services/auth.service';
+import { ArticleComment, ArticleDetail } from '../../core/models/article.model';
 import { BreadcrumbComponent } from '../../shared/components/breadcrumb/breadcrumb.component';
 import { ContentSidebarComponent } from '../../shared/components/content-sidebar/content-sidebar.component';
 import { IconComponent } from '../../shared/components/icon/icon.component';
@@ -23,6 +24,7 @@ export class ArticlePageComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private articleService: ArticleService,
+    public authService: AuthService,
     private meta: Meta,
     private titleService: Title
   ) {}
@@ -36,12 +38,32 @@ export class ArticlePageComponent implements OnInit {
       });
   }
 
-  /**
-   * Facebook and LinkedIn build their share preview by scraping these Open
-   * Graph tags from the page — without them (or on an unreachable URL like
-   * localhost) they fall back to a blank "create post" composer instead of
-   * a real link share. WhatsApp/X don't need this since they don't scrape.
-   */
+  alternarFavorito(): void {
+    const atual = this.data();
+    if (!atual || !this.authService.estaLogado) return;
+
+    this.articleService.toggleFavorite(atual.slug).subscribe(({ favoritado }) => {
+      this.data.set({ ...atual, favoritedByMe: favoritado });
+    });
+  }
+
+  enviarComentario(evt: { texto: string; comentarioPaiId: number | null }): void {
+    const atual = this.data();
+    if (!atual) return;
+
+    this.articleService.postComment(atual.slug, evt.texto, evt.comentarioPaiId).subscribe();
+  }
+
+  curtirComentario(comentarioId: number): void {
+    const atual = this.data();
+    if (!atual) return;
+
+    this.articleService.toggleCommentLike(comentarioId).subscribe(({ curtido, total }) => {
+      const comments = atualizarCurtida(atual.comments, comentarioId, curtido, total);
+      this.data.set({ ...atual, comments });
+    });
+  }
+
   private setSocialMeta(article: ArticleDetail): void {
     const pageTitle = `${article.title} — Saúde ao Seu Alcance`;
     const imageUrl = article.heroImage ? new URL(article.heroImage, window.location.origin).href : '';
@@ -67,7 +89,6 @@ export class ArticlePageComponent implements OnInit {
     }
   }
 
-  /** Builds the real share-intent URL for the current article — the mock JSON's own `href: '#'` can't know the live page URL. */
   shareUrl(icon: string): string {
     const pageUrl = encodeURIComponent(window.location.href);
     const title = encodeURIComponent(this.data()?.title ?? '');
@@ -85,4 +106,12 @@ export class ArticlePageComponent implements OnInit {
         return window.location.href;
     }
   }
+}
+
+function atualizarCurtida(comments: ArticleComment[], id: number, curtido: boolean, total: number): ArticleComment[] {
+  return comments.map((c) =>
+    c.id === id
+      ? { ...c, likedByMe: curtido, likes: total }
+      : { ...c, replies: atualizarCurtida(c.replies, id, curtido, total) },
+  );
 }

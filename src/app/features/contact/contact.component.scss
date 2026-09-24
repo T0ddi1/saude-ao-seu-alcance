@@ -53,6 +53,7 @@
 }
 
 .contact__field input,
+.contact__field select,
 .contact__field textarea {
   font-family: inherit;
   font-size: var(--fs-body-s);
@@ -63,6 +64,7 @@
   resize: vertical;
 }
 .contact__field input:focus,
+.contact__field select:focus,
 .contact__field textarea:focus {
   outline: 2px solid var(--color-primary);
   outline-offset: 1px;
@@ -84,9 +86,7 @@
   max-width: 480px;
 }
 
-/* Totem kiosk: the form is the whole point of that page there, and the screen has
-   plenty of room to spare — scaling it up gives touch targets that are actually
-   comfortable to tap instead of the desktop-sized defaults. */
+
 .contact--totem .contact__intro {
   max-width: 760px;
 }
@@ -105,6 +105,7 @@
   gap: 10px;
 }
 .contact--totem .contact__field input,
+.contact--totem .contact__field select,
 .contact--totem .contact__field textarea {
   padding: 18px 22px;
   font-size: var(--fs-body-m);
@@ -115,4 +116,25 @@
 .contact--totem .contact__thanks {
   font-size: var(--fs-h4);
   max-width: 640px;
+}
+
+.contact__field select {
+  background: #fff;
+  cursor: pointer;
+}
+.contact__field select:disabled {
+  background: var(--color-surface-alt);
+  cursor: not-allowed;
+}
+
+.contact__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 560px) {
+  .contact__row {
+    grid-template-columns: 1fr;
+  }
 }

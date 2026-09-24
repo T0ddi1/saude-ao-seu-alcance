@@ -1,6 +1,5 @@
 <section class="health-data" id="dados-da-saude">
-  <!-- Em reta: título → mapa (no meio) → quadrado (stats), a pedido (2026-08). O "PUBLICIDADE"
-       que ficava embaixo do quadrado foi removido junto. -->
+  
   <div class="health-data__row">
     <h2 class="health-data__title">{{ healthStats.title }}</h2>
 
@@ -21,28 +20,5 @@
     </div>
   </div>
 
-  <!-- Categorias (Inovação/Entrevistas/Vídeos) removidas a pedido em 2026-08 — mapa+dados agora ficam
-       em uma linha só. O card único que estava aqui (Hospital São José) foi para a seção de patrocínio.
-       Bloco mantido comentado para reaproveitar depois; ver categoryColumns/isLastOddStat no .ts.
-  <div class="health-data__right" [style.--category-columns]="categoryColumns">
-    <div class="health-data__category" *ngFor="let cat of contentCategories">
-      <div class="health-data__category-head">
-        <div class="health-data__category-icon">
-          <app-icon [name]="cat.icon" [size]="16" color="var(--color-primary)"></app-icon>
-        </div>
-        <h3>{{ cat.title }}</h3>
-      </div>
-      <div class="health-data__category-media">
-        <img [src]="cat.image" [alt]="cat.title" loading="lazy" />
-      </div>
-      <p>{{ cat.description }}</p>
-      <a [href]="cat.href" class="health-data__category-link">
-        {{ cat.linkLabel }}
-        <span class="health-data__category-arrow">
-          <app-icon name="arrow-right" [size]="12"></app-icon>
-        </span>
-      </a>
-    </div>
-  </div>
-  -->
+  
 </section>

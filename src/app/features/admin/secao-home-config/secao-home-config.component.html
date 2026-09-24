@@ -1,0 +1,163 @@
+<p class="adm-empty" *ngIf="carregando">Carregando configuração da seção...</p>
+
+<div class="adm-card secao-config" *ngIf="!carregando && config">
+  <div class="secao-config__head">
+    <h3>Como este bloco aparece na Home</h3>
+    <span class="secao-config__badge">{{ secao }}</span>
+  </div>
+
+  <div class="secao-config__grid">
+    <div class="secao-config__controles">
+      <div class="adm-field">
+        <label for="campo-modo-{{ secao }}">
+          Modo
+          <i
+            class="fa-regular fa-circle-question secao-config__ajuda-icone"
+            title="Manual: você escolhe o que aparece e em que ordem. Automático: o site preenche sozinho seguindo a regra escolhida (mais recentes, mais vistos etc.)."
+            aria-hidden="true"
+          ></i>
+        </label>
+        <select
+          id="campo-modo-{{ secao }}"
+          [(ngModel)]="config.modo"
+          [ngModelOptions]="{ standalone: true }"
+          title="Como o conteúdo deste bloco é escolhido"
+        >
+          <option *ngFor="let modo of modosDisponiveis()" [value]="modo">{{ rotuloModo(modo) }}</option>
+        </select>
+      </div>
+
+      <div class="adm-field" *ngIf="config.modo !== 'ArtigoFixo'">
+        <label for="campo-limite-{{ secao }}">
+          Limite de itens
+          <i class="fa-regular fa-circle-question secao-config__ajuda-icone" title="Quantidade máxima de itens mostrados nesse bloco da Home." aria-hidden="true"></i>
+        </label>
+        <input
+          id="campo-limite-{{ secao }}"
+          type="number"
+          min="1"
+          [(ngModel)]="config.limiteItens"
+          [ngModelOptions]="{ standalone: true }"
+          title="Quantidade máxima de itens mostrados nesse bloco"
+        />
+      </div>
+
+      <div class="adm-field" *ngIf="ehCarrossel()">
+        <label for="campo-autoplay-{{ secao }}">
+          Segundos por slide
+          <i class="fa-regular fa-circle-question secao-config__ajuda-icone" title="Quanto tempo cada slide fica na tela antes de passar pro próximo, automaticamente." aria-hidden="true"></i>
+        </label>
+        <input
+          id="campo-autoplay-{{ secao }}"
+          type="number"
+          min="1"
+          [ngModel]="autoplaySegundos"
+          (ngModelChange)="atualizarAutoplaySegundos($event)"
+          [ngModelOptions]="{ standalone: true }"
+          title="Segundos que cada slide do carrossel fica na tela"
+        />
+      </div>
+
+      <div class="adm-field" *ngIf="escolheArtigos()">
+        <label for="campo-add-artigo-{{ secao }}">Adicionar artigo</label>
+        <select
+          id="campo-add-artigo-{{ secao }}"
+          (change)="adicionarArtigo($any($event.target).value); $any($event.target).value = ''"
+          [disabled]="atingiuLimite()"
+          [title]="atingiuLimite() ? 'Limite de ' + limiteEfetivo() + ' itens atingido — aumente o limite ou remova algum pra adicionar outro.' : 'Escolha um artigo pra incluir nesse bloco'"
+        >
+          <option value="">Selecione um artigo...</option>
+          <option *ngFor="let artigo of artigosDisponiveis()" [value]="artigo.id">{{ artigo.titulo }}</option>
+        </select>
+        <span class="secao-config__contador">{{ selecionados.length }} de {{ limiteEfetivo() }} selecionado{{ limiteEfetivo() === 1 ? '' : 's' }}</span>
+        <p class="adm-alert adm-alert--erro" *ngIf="avisoLimite">
+          {{ config.modo === 'ArtigoFixo' ? 'O modo "Artigo fixo" usa um único artigo — remova o atual pra escolher outro.' : 'Limite de ' + config.limiteItens + ' itens atingido. Aumente o "Limite de itens" acima ou remova algum artigo da lista pra adicionar outro.' }}
+        </p>
+      </div>
+
+      <button
+        type="button"
+        class="adm-btn adm-btn--primario"
+        [disabled]="salvando"
+        (click)="salvar()"
+        title="Salva o modo, o limite e a ordem escolhidos pra este bloco"
+      >
+        {{ salvando ? 'Salvando...' : (salvo ? 'Salvo ✓' : 'Salvar') }}
+      </button>
+    </div>
+
+    <div class="secao-config__mockup">
+      <span class="secao-config__mockup-label">Como vai ficar</span>
+
+      <p class="secao-config__descricao-auto" *ngIf="descricaoModoAutomatico() as descricao">
+        <i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>
+        {{ descricao }}
+      </p>
+
+      <div
+        class="mock mock--manual-artigos"
+        #areaArrastavel
+        *ngIf="escolheArtigos()"
+        cdkDropList
+        [cdkDropListData]="selecionados"
+        cdkDropListOrientation="mixed"
+        (cdkDropListDropped)="soltar($event)"
+      >
+        <div
+          class="mock__item-artigo"
+          *ngFor="let artigo of selecionados"
+          cdkDrag
+          [cdkDragBoundary]="areaArrastavel"
+        >
+          <span class="mock__arrastar" title="Arraste pra reordenar" aria-hidden="true">⠿</span>
+          <span class="mock__quadro mock__quadro--mini"></span>
+          <span class="mock__item-artigo-titulo">{{ artigo.titulo }}</span>
+          <button type="button" class="mock__remover" (click)="removerArtigo(artigo)" title="Remover da seleção" [attr.aria-label]="'Remover ' + artigo.titulo + ' da seleção'">×</button>
+        </div>
+        <p class="adm-empty" *ngIf="!selecionados.length">Nenhum artigo escolhido ainda — use "Adicionar artigo" ao lado.</p>
+      </div>
+
+      <ng-container *ngIf="infoRecurso() as info">
+        <div
+          class="mock mock--manual-artigos"
+          #areaArrastavelReal
+          cdkDropList
+          [cdkDropListData]="itensReais"
+          cdkDropListOrientation="mixed"
+          (cdkDropListDropped)="soltarItemReal($event)"
+        >
+          <div
+            class="mock__item-artigo mock__item-artigo--editavel"
+            *ngFor="let item of itensReais"
+            cdkDrag
+            [cdkDragBoundary]="areaArrastavelReal"
+            role="button"
+            tabindex="0"
+            title="Clique para editar"
+            [attr.aria-label]="'Editar ' + itemTitulo(item)"
+            (click)="selecionarItemReal(item)"
+            (keydown.enter)="selecionarItemReal(item)"
+            (keydown.space)="$event.preventDefault(); selecionarItemReal(item)"
+          >
+            <span class="mock__arrastar" title="Arraste pra reordenar" aria-hidden="true">⠿</span>
+            <app-icon *ngIf="itemIcone(item)" [name]="itemIcone(item)!" [size]="22" color="var(--adm-accent)"></app-icon>
+            <span class="mock__quadro mock__quadro--mini" *ngIf="!itemIcone(item)"></span>
+            <span class="mock__item-artigo-titulo">{{ itemTitulo(item) }}</span>
+            <span class="mock__item-artigo-sub" *ngIf="itemSubtitulo(item) as sub">{{ sub }}</span>
+            <button
+              type="button"
+              class="mock__remover"
+              (click)="removerItemReal(item, $event)"
+              title="Excluir"
+              [attr.aria-label]="'Excluir ' + itemTitulo(item)"
+            >×</button>
+          </div>
+        </div>
+        <p class="adm-empty" *ngIf="!itensReais.length">
+          Nada cadastrado ainda — use o formulário abaixo pra criar o primeiro item.
+        </p>
+        <p class="secao-config__ajuda-texto">Clique num card pra editar, arraste pra reordenar, ou use o × pra excluir.</p>
+      </ng-container>
+    </div>
+  </div>
+</div>

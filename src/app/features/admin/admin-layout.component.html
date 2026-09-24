@@ -1,0 +1,47 @@
+<div class="admin-layout" [class.admin-layout--recolhida]="!sidebarAberta()">
+  <aside class="admin-layout__sidebar">
+    <div class="admin-layout__marca">
+      <span class="admin-layout__logo">S</span>
+      <div class="admin-layout__marca-texto">
+        <strong>Saúde ao Seu Alcance</strong>
+        <span>Painel administrativo</span>
+      </div>
+      <button type="button" class="admin-layout__recolher" (click)="toggleSidebar()" aria-label="Recolher menu">
+        <i class="fa-solid fa-angles-left"></i>
+      </button>
+    </div>
+
+    <div class="admin-layout__usuario" *ngIf="usuario() as u">
+      <span class="admin-layout__avatar">{{ u.nomeCompleto.charAt(0) }}</span>
+      <div class="admin-layout__usuario-texto">
+        <strong>{{ u.nomeCompleto }}</strong>
+        <span>{{ u.email }}</span>
+      </div>
+    </div>
+
+    <nav class="admin-layout__nav">
+      <div class="admin-layout__grupo" *ngFor="let grupo of grupos">
+        <span class="admin-layout__grupo-titulo">{{ grupo.titulo }}</span>
+        <a *ngFor="let item of grupo.itens" [routerLink]="item.rota" routerLinkActive="is-ativo">
+          <i class="fa-solid" [ngClass]="item.icone"></i>
+          <span>{{ item.rotulo }}</span>
+        </a>
+      </div>
+    </nav>
+
+    <div class="admin-layout__rodape-sidebar">
+      <a routerLink="/" class="admin-layout__ver-site">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        <span>Ver site</span>
+      </a>
+      <button type="button" class="admin-layout__sair" (click)="sair()">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span>Sair</span>
+      </button>
+    </div>
+  </aside>
+
+  <main class="admin-layout__conteudo">
+    <router-outlet></router-outlet>
+  </main>
+</div>

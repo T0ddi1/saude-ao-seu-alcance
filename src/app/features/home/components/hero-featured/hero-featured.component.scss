@@ -1,16 +1,36 @@
+:host {
+  display: block;
+}
+
 .hero {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.25fr);
+  align-items: center;
+  gap: 32px;
+}
+
+.hero__text {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  max-width: 560px;
+  min-width: 0;
 }
 
 .hero__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-weight: 700;
   font-size: var(--fs-label-m);
-  color: var(--color-primary);
+  color: var(--color-muted);
   text-transform: uppercase;
   letter-spacing: 0.06em;
+}
+.hero__eyebrow::before {
+  content: '\203A';
+  font-size: 22px;
+  line-height: 1;
+  color: var(--color-secondary);
 }
 
 .hero__link {
@@ -18,15 +38,6 @@
   flex-direction: column;
   gap: 16px;
   color: inherit;
-  /*
-   * Reserve height for the worst case (a 4-line title + a 3-line excerpt)
-   * on the whole block, not on each piece of text individually. A column
-   * flex container with the default flex-start alignment stacks title and
-   * excerpt tightly at the top and leaves any unused reserved height as
-   * blank space *after* the excerpt — so the excerpt always sits right
-   * under the title, and the button/dots row below still never moves.
-   */
-  min-height: calc(var(--fs-display-l) * 1.1 * 4 + 16px + var(--fs-body-l) * 1.5 * 3);
 }
 .hero__link:hover {
   text-decoration: none;
@@ -38,19 +49,22 @@
 .hero__title {
   font-size: var(--fs-display-l);
   font-weight: 700;
-  line-height: 1.1;
+  line-height: 1.2;
   letter-spacing: -0.01em;
+  color: var(--color-ink);
   display: -webkit-box;
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  padding-bottom: 0.1em;
 }
 
 .hero__excerpt {
-  font-size: var(--fs-body-l);
+  font-size: var(--fs-body-m);
   line-height: 1.5;
+  color: var(--color-body-text);
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -63,66 +77,82 @@
   margin-top: 8px;
 }
 
+.hero__dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.hero__dot {
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--color-ink);
+  opacity: 0.35;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.hero__dot:hover {
+  opacity: 0.7;
+}
+.hero__dot.is-active {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+.hero__media {
+  position: relative;
+  z-index: 2;
+  aspect-ratio: 5 / 4;
+  margin-right: -96px;
+  border: 6px solid #fff;
+  border-radius: 24px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #2a1470 0%, var(--color-primary) 100%);
+  box-shadow: 0 10px 28px rgba(31, 17, 71, 0.2);
+}
+
+.hero__slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+.hero__slide.is-active {
+  opacity: 1;
+}
+
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .hero__media {
+    order: -1;
+    margin-right: 0;
+    aspect-ratio: 16 / 10;
+  }
+}
+
 @media (max-width: 480px) {
   .hero__title {
     letter-spacing: normal;
   }
 }
 
-.hero__nav {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.hero__arrow {
-  width: 30px;
-  height: 30px;
-  flex-shrink: 0;
-  border-radius: 50%;
-  border: 1.5px solid var(--color-border-strong);
-  background: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-.hero__arrow:hover {
-  border-color: var(--color-primary);
-}
-
-.hero__dots {
-  display: flex;
-  gap: 8px;
-}
-.hero__dot {
-  width: 8px;
-  height: 8px;
-  padding: 0;
-  border: none;
-  border-radius: 50%;
-  background: var(--color-border-strong);
-  cursor: pointer;
-}
-.hero__dot.is-active {
-  background: var(--color-primary);
-}
-
-/*
- * Totem kiosk (1080x1920 portrait). Regular phones/tablets never hit
- * min-width:1000px in portrait, so this only fires on the totem display.
- * The featured article becomes a full-bleed poster with the image as
- * background and the text/controls anchored to the bottom, within reach
- * of someone standing in front of the screen.
- */
 @media (min-width: 1000px) and (orientation: portrait) {
   .hero {
-    max-width: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
     width: 100vw;
     margin-left: calc(50% - 50vw);
     min-height: 78vh;
     padding: 0 64px 72px;
-    justify-content: flex-end;
     gap: 28px;
     color: #fff;
     background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.15) 35%, rgba(0, 0, 0, 0.75) 68%, rgba(0, 0, 0, 0.92) 100%), var(--hero-image, none);
@@ -130,23 +160,19 @@
     background-position: center;
   }
 
-  /*
-   * The global h1/p color rules (styles.scss) win over the inherited
-   * white from .hero, since an explicit element-matching rule always
-   * beats an inherited value. Set colors explicitly here, plus a
-   * text-shadow as a safety net against busy/bright photos.
-   */
+  .hero__media {
+    display: none;
+  }
+
+  .hero__text {
+    gap: 28px;
+  }
+
   .hero__eyebrow,
   .hero__title,
   .hero__excerpt {
     color: #fff;
     text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
-  }
-
-  .hero__link {
-    /* Same reservation as the base rule, recomputed for the totem's fixed
-       64px/28px sizes instead of the fluid --fs-display-l/--fs-body-l. */
-    min-height: calc(64px * 1.1 * 4 + 16px + 28px * 1.5 * 3);
   }
 
   .hero__title {
@@ -162,18 +188,9 @@
     margin-top: 16px;
   }
 
-  .hero__arrow {
-    width: 56px;
-    height: 56px;
-    border-color: rgba(255, 255, 255, 0.6);
-  }
-
   .hero__dot {
     width: 14px;
     height: 14px;
-    background: rgba(255, 255, 255, 0.5);
-  }
-  .hero__dot.is-active {
     background: #fff;
   }
 }

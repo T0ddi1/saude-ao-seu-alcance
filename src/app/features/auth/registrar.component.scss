@@ -1,0 +1,71 @@
+:host {
+  display: block;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 40px var(--gutter) 80px;
+}
+
+.auth {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.auth__card {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  text-align: center;
+  gap: 16px;
+}
+
+.auth__card h1 {
+  font-size: var(--fs-h2);
+  color: var(--color-primary);
+}
+
+.auth__subtitle {
+  font-size: var(--fs-body-m);
+  color: var(--color-body-text);
+  margin-bottom: 8px;
+}
+
+.auth__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
+}
+
+.auth__field input {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--color-border);
+  background: var(--color-surface-alt);
+  font-size: var(--fs-body-s);
+}
+.auth__field input:focus {
+  outline: 2px solid currentColor;
+  outline-offset: 1px;
+  border-color: var(--color-primary);
+}
+
+.auth__error {
+  color: #c0392b;
+  font-size: var(--fs-body-s);
+  font-weight: 600;
+}
+
+.auth__footnote {
+  font-size: var(--fs-body-s);
+  color: var(--color-muted);
+}
+
+::ng-deep .auth__form app-button .btn {
+  width: 100%;
+  justify-content: center;
+  padding: 14px;
+}

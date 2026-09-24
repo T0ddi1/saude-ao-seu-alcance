@@ -23,9 +23,7 @@
   height: 28px;
 }
 
-/* Shrinks the button on narrow screens only — a form's submit pill next to a
-   text input is tight on real phone widths otherwise, and can push the row
-   wider than the viewport. */
+
 @media (max-width: 480px) {
   .btn--compact {
     padding: 10px 16px;
@@ -36,10 +34,7 @@
 
 .btn:disabled {
   cursor: not-allowed;
-  /* Not opacity: the primary variant's background is the same purple as
-     the footer behind it — fading the whole button also fades the white
-     label text to near-illegible. Desaturating/darkening the fill keeps
-     the text at full contrast while still reading as "inactive". */
+  
   filter: saturate(0.6) brightness(0.85);
 }
 

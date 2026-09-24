@@ -1,0 +1,91 @@
+<div class="perfil">
+  <h1>Meu Perfil</h1>
+
+  <p *ngIf="carregando()">Carregando...</p>
+
+  <form class="perfil__form" *ngIf="!carregando()" [formGroup]="formulario" (ngSubmit)="salvar()">
+    <div class="perfil__avatar-row">
+      <div class="perfil__avatar">
+        <img *ngIf="formulario.value.fotoUrl" [src]="formulario.value.fotoUrl" alt="Foto de perfil" />
+        <div class="perfil__avatar-placeholder" *ngIf="!formulario.value.fotoUrl">Sem foto</div>
+      </div>
+      <div class="perfil__avatar-upload">
+        <label class="perfil__upload-btn">
+          {{ enviandoFoto() ? 'Enviando...' : 'Trocar foto' }}
+          <input type="file" accept="image/jpeg,image/png,image/gif,image/webp" (change)="selecionarFoto($event)" [disabled]="enviandoFoto()" hidden />
+        </label>
+        <p class="perfil__hint">JPG, PNG, GIF ou WEBP — até 5MB.</p>
+        <p class="perfil__erro" *ngIf="erroFoto()">{{ erroFoto() }}</p>
+      </div>
+    </div>
+
+    <label>
+      Nome completo
+      <input type="text" formControlName="nomeCompleto" />
+    </label>
+
+    <label>
+      Nome social (opcional)
+      <input type="text" formControlName="nomeSocial" />
+    </label>
+
+    <label>
+      Celular
+      <input type="text" formControlName="celular" placeholder="(00) 00000-0000" />
+    </label>
+
+    <fieldset class="perfil__endereco">
+      <legend>Endereço</legend>
+
+      <label>
+        CEP
+        <input type="text" formControlName="cep" />
+      </label>
+      <label>
+        Logradouro
+        <input type="text" formControlName="logradouro" />
+      </label>
+      <div class="perfil__linha">
+        <label>
+          Número
+          <input type="text" formControlName="numero" />
+        </label>
+        <label>
+          Complemento
+          <input type="text" formControlName="complemento" />
+        </label>
+      </div>
+      <label>
+        Bairro
+        <input type="text" formControlName="bairro" />
+      </label>
+      <div class="perfil__linha">
+        <label>
+          Cidade
+          <input type="text" formControlName="cidade" />
+        </label>
+        <label>
+          Estado (UF)
+          <input type="text" formControlName="estado" maxlength="2" />
+        </label>
+      </div>
+    </fieldset>
+
+    <p class="perfil__salvo" *ngIf="salvo()">Perfil atualizado com sucesso!</p>
+
+    <div class="perfil__acoes">
+      <app-button type="submit" variant="primary">{{ salvando() ? 'Salvando...' : 'Salvar alterações' }}</app-button>
+      <button type="button" class="perfil__sair" (click)="sair()">Sair da conta</button>
+    </div>
+  </form>
+
+  <section class="perfil__favoritos" *ngIf="!carregando()">
+    <h2>Meus artigos favoritos</h2>
+    <p *ngIf="favoritos().length === 0">Você ainda não favoritou nenhum artigo.</p>
+    <ul>
+      <li *ngFor="let artigo of favoritos()">
+        <a [routerLink]="'/artigos/' + artigo.categorySlug + '/' + artigo.slug">{{ artigo.title }}</a>
+      </li>
+    </ul>
+  </section>
+</div>
