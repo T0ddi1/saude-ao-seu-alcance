@@ -7,6 +7,12 @@ import { ArticleComment } from '../../../../core/models/article.model';
 import { TotemService } from '../../../../core/services/totem.service';
 import { AuthService } from '../../../../core/services/auth.service';
 
+export interface ComentarioEnviarEvento {
+  texto: string;
+  comentarioPaiId: number | null;
+  aoConcluir: (sucesso: boolean) => void;
+}
+
 @Component({
   selector: 'app-comment-section',
   standalone: true,
@@ -17,7 +23,7 @@ import { AuthService } from '../../../../core/services/auth.service';
 export class CommentSectionComponent {
   @Input({ required: true }) comments!: ArticleComment[];
 
-  @Output() enviarComentario = new EventEmitter<{ texto: string; comentarioPaiId: number | null }>();
+  @Output() enviarComentario = new EventEmitter<ComentarioEnviarEvento>();
   @Output() curtirComentario = new EventEmitter<number>();
 
   constructor(public totem: TotemService, public authService: AuthService) {}
@@ -26,17 +32,27 @@ export class CommentSectionComponent {
   respondendoId: number | null = null;
   respostaTexto = '';
   posted = signal(false);
+  enviando = signal(false);
 
   get estaLogado(): boolean {
     return this.authService.estaLogado;
   }
 
   onSubmit(): void {
-    if (!this.estaLogado || !this.message.trim()) return;
+    if (!this.estaLogado || !this.message.trim() || this.enviando()) return;
 
-    this.enviarComentario.emit({ texto: this.message.trim(), comentarioPaiId: null });
-    this.message = '';
-    this.posted.set(true);
+    this.enviando.set(true);
+    this.enviarComentario.emit({
+      texto: this.message.trim(),
+      comentarioPaiId: null,
+      aoConcluir: (sucesso) => {
+        this.enviando.set(false);
+        if (sucesso) {
+          this.message = '';
+          this.posted.set(true);
+        }
+      },
+    });
   }
 
   abrirResposta(comentarioId: number): void {
@@ -45,11 +61,20 @@ export class CommentSectionComponent {
   }
 
   enviarResposta(comentarioPaiId: number): void {
-    if (!this.respostaTexto.trim()) return;
+    if (!this.respostaTexto.trim() || this.enviando()) return;
 
-    this.enviarComentario.emit({ texto: this.respostaTexto.trim(), comentarioPaiId });
-    this.respostaTexto = '';
-    this.respondendoId = null;
+    this.enviando.set(true);
+    this.enviarComentario.emit({
+      texto: this.respostaTexto.trim(),
+      comentarioPaiId,
+      aoConcluir: (sucesso) => {
+        this.enviando.set(false);
+        if (sucesso) {
+          this.respostaTexto = '';
+          this.respondendoId = null;
+        }
+      },
+    });
   }
 
   curtir(comentarioId: number): void {

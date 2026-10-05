@@ -38,8 +38,10 @@ export class AdminLayoutComponent {
       itens: [
         { rota: '/admin/artigos', rotulo: 'Artigos', icone: 'fa-newspaper' },
         { rota: '/admin/comentarios', rotulo: 'Comentários', icone: 'fa-comments' },
+        { rota: '/admin/recurso/palavras-bloqueadas', rotulo: 'Palavras Bloqueadas', icone: 'fa-ban' },
         { rota: '/admin/recurso/categorias', rotulo: 'Categorias', icone: 'fa-tags' },
         { rota: '/admin/recurso/paginas-institucionais', rotulo: 'Páginas Institucionais', icone: 'fa-file-lines' },
+        { rota: '/admin/observatorio', rotulo: 'Observatório', icone: 'fa-binoculars' },
       ],
     },
     {
@@ -80,7 +82,10 @@ export class AdminLayoutComponent {
     },
     {
       titulo: 'Configurações',
-      itens: [{ rota: '/admin/identidade-site', rotulo: 'Identidade do Site', icone: 'fa-palette' }],
+      itens: [
+        { rota: '/admin/identidade-site', rotulo: 'Identidade do Site', icone: 'fa-palette' },
+        { rota: '/admin/logs-erro', rotulo: 'Log de Erros', icone: 'fa-triangle-exclamation' },
+      ],
     },
   ];
 

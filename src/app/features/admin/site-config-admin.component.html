@@ -18,6 +18,7 @@
           {{ enviando['logoUrl'] ? 'Enviando...' : 'Enviar logo' }}
           <input type="file" accept="image/*" (change)="selecionarArquivo($event, 'logoUrl')" [disabled]="enviando['logoUrl']" hidden />
         </label>
+        <button type="button" class="adm-btn adm-btn--outline" *ngIf="formulario.value.logoUrl" (click)="restaurarArquivoPadrao('logoUrl')">Usar logo padrão</button>
       </div>
     </div>
 
@@ -30,6 +31,7 @@
           {{ enviando['faviconUrl'] ? 'Enviando...' : 'Enviar favicon' }}
           <input type="file" accept="image/*" (change)="selecionarArquivo($event, 'faviconUrl')" [disabled]="enviando['faviconUrl']" hidden />
         </label>
+        <button type="button" class="adm-btn adm-btn--outline" *ngIf="formulario.value.faviconUrl" (click)="restaurarArquivoPadrao('faviconUrl')">Usar favicon padrão</button>
       </div>
     </div>
 

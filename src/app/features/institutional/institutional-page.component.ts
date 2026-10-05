@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { InstitutionalPageService } from '../../core/services/institutional-page.service';
+import { SeoService } from '../../core/services/seo.service';
 import { InstitutionalPageData } from '../../core/models/content.model';
 import { BreadcrumbComponent } from '../../shared/components/breadcrumb/breadcrumb.component';
 import { ContentSidebarComponent } from '../../shared/components/content-sidebar/content-sidebar.component';
@@ -18,11 +19,21 @@ import { IconComponent } from '../../shared/components/icon/icon.component';
 export class InstitutionalPageComponent implements OnInit {
   data = signal<InstitutionalPageData | null>(null);
 
-  constructor(private route: ActivatedRoute, private pageService: InstitutionalPageService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private pageService: InstitutionalPageService,
+    private seo: SeoService,
+  ) {}
 
   ngOnInit(): void {
     this.route.data
       .pipe(switchMap((routeData) => this.pageService.getPage(routeData['slug'])))
-      .subscribe((data) => this.data.set(data));
+      .subscribe((data) => {
+        this.data.set(data);
+        this.seo.setMeta({
+          title: data.title,
+          description: data.description ?? `${data.title} — Saúde ao Seu Alcance.`,
+        });
+      });
   }
 }

@@ -20,6 +20,7 @@ export type ContentBlock =
 export interface InstitutionalPageData {
   breadcrumbs: Breadcrumb[];
   title: string;
+  description: string | null;
   blocks: ContentBlock[];
   categories: BlogCategory[];
   recentPosts: RecentPost[];

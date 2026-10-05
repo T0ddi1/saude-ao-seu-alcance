@@ -12,5 +12,7 @@
     <p class="login__erro" *ngIf="erro">{{ erro }}</p>
 
     <button type="submit" [disabled]="enviando">{{ enviando ? 'Entrando...' : 'Entrar' }}</button>
+
+    <a class="login__esqueci" routerLink="/esqueci-senha">Esqueci minha senha</a>
   </form>
 </div>

@@ -8,6 +8,7 @@ import { parseContentHtml } from '../utils/content-html.util';
 
 interface PaginaInstitucionalApi {
   title: string;
+  description: string | null;
   contentHtml: string;
   image: string | null;
   attachmentUrl: string | null;
@@ -33,6 +34,7 @@ export class InstitutionalPageService {
           { label: pagina.title, href: `/${slug}` },
         ],
         title: pagina.title,
+        description: pagina.description,
         blocks: [
           ...parseContentHtml(pagina.contentHtml),
           ...(pagina.attachmentUrl

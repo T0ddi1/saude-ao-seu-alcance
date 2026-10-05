@@ -32,6 +32,22 @@ export class AuthService {
     );
   }
 
+  esqueciSenha(email: string): Observable<{ mensagem: string }> {
+    return this.http.post<{ mensagem: string }>(`${this.endpoint}/esqueci-senha`, { email });
+  }
+
+  redefinirSenha(usuarioId: string, token: string, novaSenha: string): Observable<{ redefinido: boolean }> {
+    return this.http.post<{ redefinido: boolean }>(`${this.endpoint}/redefinir-senha`, { usuarioId, token, novaSenha });
+  }
+
+  descadastrar(usuarioId: string, token: string): Observable<{ descadastrado: boolean }> {
+    return this.http.post<{ descadastrado: boolean }>(`${this.endpoint}/descadastrar?usuarioId=${encodeURIComponent(usuarioId)}&token=${encodeURIComponent(token)}`, {});
+  }
+
+  confirmarEmail(usuarioId: string, token: string): Observable<{ confirmado: boolean }> {
+    return this.http.post<{ confirmado: boolean }>(`${this.endpoint}/confirmar-email?usuarioId=${encodeURIComponent(usuarioId)}&token=${encodeURIComponent(token)}`, {});
+  }
+
   logout(): void {
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem(USER_KEY);

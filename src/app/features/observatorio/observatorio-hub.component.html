@@ -1,0 +1,47 @@
+<ng-container *ngIf="data() as d">
+  <app-breadcrumb [items]="d.breadcrumbs"></app-breadcrumb>
+
+  <div class="hub">
+    <h1 class="hub__title">Observatório</h1>
+
+    <ng-container *ngFor="let bloco of d.blocos">
+      <section class="hub__bloco" *ngIf="bloco.tipo === 'Texto'">
+        <h2 class="hub__bloco-titulo" *ngIf="bloco.titulo">{{ bloco.titulo }}</h2>
+        <ng-container *ngFor="let sub of bloco.blocos">
+          <p class="hub__lead" *ngIf="sub.type === 'lead'">
+            <ng-container *ngFor="let seg of sub.segments">
+              <strong *ngIf="seg.strong">{{ seg.text }}</strong>
+              <ng-container *ngIf="!seg.strong">{{ seg.text }}</ng-container>
+            </ng-container>
+          </p>
+          <p class="hub__paragraph" *ngIf="sub.type === 'paragraph'">{{ sub.text }}</p>
+        </ng-container>
+      </section>
+
+      <section class="hub__bloco" *ngIf="bloco.tipo === 'CardsSecoes'">
+        <h2 class="hub__bloco-titulo" *ngIf="bloco.titulo">{{ bloco.titulo }}</h2>
+        <div class="hub__grid">
+          <app-category-card *ngFor="let secao of bloco.secoes" [card]="paraCard(secao)"></app-category-card>
+        </div>
+      </section>
+
+      <section class="hub__bloco" *ngIf="bloco.tipo === 'Indicadores'">
+        <h2 class="hub__bloco-titulo" *ngIf="bloco.titulo">{{ bloco.titulo }}</h2>
+        <div class="hub__indicadores">
+          <div class="hub__indicador" *ngFor="let ind of bloco.indicadores">
+            <strong>{{ ind.valor }}</strong>
+            <span>{{ ind.rotulo }}</span>
+            <small *ngIf="ind.complemento">{{ ind.complemento }}</small>
+          </div>
+        </div>
+      </section>
+
+      <section class="hub__bloco" *ngIf="bloco.tipo === 'GradeArtigos'">
+        <h2 class="hub__bloco-titulo" *ngIf="bloco.titulo">{{ bloco.titulo }}</h2>
+        <div class="hub__artigos" *ngIf="bloco.artigos.length">
+          <app-article-card *ngFor="let article of bloco.artigos" [article]="article"></app-article-card>
+        </div>
+      </section>
+    </ng-container>
+  </div>
+</ng-container>

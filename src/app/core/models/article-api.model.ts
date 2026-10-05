@@ -14,6 +14,7 @@ export interface ArticleDetailApi extends ArticleSummaryApi {
   contentHtml: string;
   views: number;
   favoritedByMe: boolean;
+  updatedAt: string | null;
 }
 
 export interface PagedResultApi<T> {

@@ -31,4 +31,8 @@ export class NewsletterService {
   subscribe(payload: NewsletterSubscription): Observable<{ subscribed: boolean }> {
     return this.http.post<{ subscribed: boolean }>(`${environment.apiBaseUrl}/newsletter/inscricoes`, payload);
   }
+
+  descadastrar(token: string): Observable<{ descadastrado: boolean }> {
+    return this.http.post<{ descadastrado: boolean }>(`${environment.apiBaseUrl}/newsletter/descadastrar?token=${encodeURIComponent(token)}`, {});
+  }
 }

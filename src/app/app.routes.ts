@@ -40,9 +40,20 @@ export const routes: Routes = [
         canDeactivate: [alteracoesNaoSalvasGuard],
       },
       {
+        path: 'logs-erro',
+        loadComponent: () =>
+          import('./features/admin/logs-erro-admin.component').then((m) => m.LogsErroAdminComponent),
+      },
+      {
         path: 'identidade-site',
         loadComponent: () =>
           import('./features/admin/site-config-admin.component').then((m) => m.SiteConfigAdminComponent),
+        canDeactivate: [alteracoesNaoSalvasGuard],
+      },
+      {
+        path: 'observatorio',
+        loadComponent: () =>
+          import('./features/admin/observatorio-admin.component').then((m) => m.ObservatorioAdminComponent),
         canDeactivate: [alteracoesNaoSalvasGuard],
       },
       {
@@ -62,6 +73,18 @@ export const routes: Routes = [
     path: 'blog',
     loadComponent: () => import('./features/blog/blog.component').then((m) => m.BlogComponent),
     title: 'Cuidados com a saúde — Saúde ao Seu Alcance',
+  },
+  {
+    path: 'observatorio',
+    loadComponent: () =>
+      import('./features/observatorio/observatorio-hub.component').then((m) => m.ObservatorioHubComponent),
+    title: 'Observatório — Saúde ao Seu Alcance',
+  },
+  {
+    path: 'observatorio/:secao',
+    loadComponent: () =>
+      import('./features/observatorio/observatorio-secao.component').then((m) => m.ObservatorioSecaoComponent),
+    title: 'Observatório — Saúde ao Seu Alcance',
   },
   {
     path: 'quem-somos',
@@ -112,6 +135,32 @@ export const routes: Routes = [
     path: 'criar-conta',
     loadComponent: () => import('./features/auth/registrar.component').then((m) => m.RegistrarComponent),
     title: 'Criar nova conta — Saúde ao Seu Alcance',
+  },
+  {
+    path: 'esqueci-senha',
+    loadComponent: () => import('./features/auth/esqueci-senha.component').then((m) => m.EsqueciSenhaComponent),
+    title: 'Esqueci minha senha — Saúde ao Seu Alcance',
+  },
+  {
+    path: 'redefinir-senha',
+    loadComponent: () => import('./features/auth/redefinir-senha.component').then((m) => m.RedefinirSenhaComponent),
+    title: 'Redefinir senha — Saúde ao Seu Alcance',
+  },
+  {
+    path: 'descadastrar',
+    loadComponent: () => import('./features/auth/descadastrar.component').then((m) => m.DescadastrarComponent),
+    title: 'Descadastrar — Saúde ao Seu Alcance',
+  },
+  {
+    path: 'newsletter/descadastrar',
+    loadComponent: () =>
+      import('./features/auth/descadastrar-newsletter.component').then((m) => m.DescadastrarNewsletterComponent),
+    title: 'Descadastro da newsletter — Saúde ao Seu Alcance',
+  },
+  {
+    path: 'confirmar-email',
+    loadComponent: () => import('./features/auth/confirmar-email.component').then((m) => m.ConfirmarEmailComponent),
+    title: 'Confirmar e-mail — Saúde ao Seu Alcance',
   },
   {
     path: 'perfil',

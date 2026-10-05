@@ -1,0 +1,456 @@
+<div class="observatorio-admin">
+  <div class="adm-page-head">
+    <h2>Observatório</h2>
+    <p>
+      O Observatório tem 1 página de entrada (<code>/observatorio</code>) e {{ secoes.length }} seções, cada uma com sua própria página.
+      Escolha uma à esquerda pra ver e editar o que aparece nela — tudo é montado com "blocos" que você liga, edita e reordena.
+    </p>
+  </div>
+
+  <p class="adm-alert adm-alert--erro" *ngIf="erro">{{ erro }}</p>
+  <p class="adm-empty" *ngIf="carregando">Carregando...</p>
+
+  <div class="observatorio-admin__layout" *ngIf="!carregando && !erro">
+    <aside class="observatorio-admin__lista-paginas">
+      <button
+        type="button"
+        class="observatorio-admin__item-pagina"
+        [class.is-ativo]="paginaAtual === 'hub' && !criandoNova"
+        (click)="abrirHub()"
+      >
+        <app-icon name="fa-solid fa-house" [size]="18"></app-icon>
+        <span>
+          <strong>Página de entrada</strong>
+          <small>/observatorio</small>
+        </span>
+      </button>
+
+      <p class="observatorio-admin__lista-titulo">Seções</p>
+
+      <button
+        type="button"
+        class="observatorio-admin__item-pagina"
+        *ngFor="let secao of secoes"
+        [class.is-ativo]="paginaAtual === secao.id"
+        (click)="abrirSecao(secao)"
+      >
+        <app-icon *ngIf="secao.icone" [name]="secao.icone" [size]="18"></app-icon>
+        <span>
+          <strong>{{ secao.nome }}</strong>
+          <small>/observatorio/{{ secao.slug }}</small>
+        </span>
+      </button>
+
+      <button
+        type="button"
+        class="observatorio-admin__item-pagina observatorio-admin__item-pagina--nova"
+        [class.is-ativo]="criandoNova"
+        (click)="novaSecao()"
+      >
+        <app-icon name="fa-solid fa-plus" [size]="18"></app-icon>
+        <span><strong>Nova seção</strong></span>
+      </button>
+    </aside>
+
+    <section class="observatorio-admin__editor">
+      <ng-container *ngIf="criandoNova">
+        <div class="observatorio-admin__explicacao">
+          <strong>Criando uma nova seção do Observatório</strong>
+          <p>Depois de salvar, ela ganha sua própria página (algo como <code>/observatorio/nome-da-secao</code>) e você monta o conteúdo dela com blocos, do mesmo jeito que as outras.</p>
+        </div>
+
+        <form class="adm-form" [formGroup]="formSecao" (ngSubmit)="salvarSecao()">
+          <div class="adm-field">
+            <label for="nomeNova">Nome</label>
+            <input id="nomeNova" type="text" formControlName="nome" required />
+          </div>
+          <div class="adm-field">
+            <label for="resumoNova">Resumo (aparece no card da página de entrada)</label>
+            <textarea id="resumoNova" rows="2" formControlName="resumo"></textarea>
+          </div>
+          <div class="adm-field">
+            <label>Ícone</label>
+            <app-icon-picker formControlName="icone"></app-icon-picker>
+          </div>
+          <div class="adm-form-acoes">
+            <button type="submit" class="adm-btn adm-btn--primario" [disabled]="salvandoSecao">
+              {{ salvandoSecao ? 'Criando...' : 'Criar seção' }}
+            </button>
+            <button type="button" class="adm-btn adm-btn--fantasma" (click)="cancelarNovaSecao()">Cancelar</button>
+          </div>
+        </form>
+      </ng-container>
+
+      <ng-container *ngIf="!criandoNova">
+        <div class="observatorio-admin__explicacao" *ngIf="paginaAtual === 'hub'">
+          <strong>Página de entrada do Observatório</strong>
+          <p>É a primeira coisa que aparece quando alguém clica em "Observatório" no menu do site — geralmente um texto de apresentação seguido da vitrine com as seções.</p>
+        </div>
+
+        <ng-container *ngIf="secaoSelecionada as secao">
+          <div class="observatorio-admin__explicacao">
+            <strong>Página da seção "{{ secao.nome }}"</strong>
+            <p>Endereço: <code>/observatorio/{{ secao.slug }}</code></p>
+          </div>
+
+          <details class="observatorio-admin__info-secao">
+            <summary>Nome, resumo e ícone desta seção</summary>
+            <form class="adm-form" [formGroup]="formSecao" (ngSubmit)="salvarSecao()">
+              <div class="adm-field">
+                <label for="nomeSecao">Nome</label>
+                <input id="nomeSecao" type="text" formControlName="nome" required />
+              </div>
+              <div class="adm-field">
+                <label for="resumoSecao">Resumo (aparece no card da página de entrada e no topo desta página)</label>
+                <textarea id="resumoSecao" rows="2" formControlName="resumo"></textarea>
+              </div>
+              <div class="adm-field">
+                <label>Ícone</label>
+                <app-icon-picker formControlName="icone"></app-icon-picker>
+              </div>
+              <div class="adm-form-acoes">
+                <button type="submit" class="adm-btn adm-btn--primario" [disabled]="salvandoSecao">
+                  {{ salvandoSecao ? 'Salvando...' : 'Salvar informações' }}
+                </button>
+              </div>
+            </form>
+          </details>
+
+          <button type="button" class="adm-btn adm-btn--fantasma observatorio-admin__excluir-secao" (click)="excluirSecao(secao)">
+            <app-icon name="fa-solid fa-trash" [size]="14"></app-icon>
+            Excluir esta seção
+          </button>
+        </ng-container>
+
+        <div class="observatorio-admin__secoes-head observatorio-admin__blocos-head">
+          <h3>O que aparece nesta página</h3>
+          <button
+            type="button"
+            class="adm-btn adm-btn--outline"
+            (click)="abrirEscolhaDeTipo()"
+            *ngIf="!escolhendoTipoBloco && !criandoBloco && !editandoBlocoId"
+          >
+            <app-icon name="fa-solid fa-plus" [size]="14"></app-icon>
+            Adicionar bloco
+          </button>
+        </div>
+        <p class="observatorio-admin__ajuda" *ngIf="blocos.length">
+          Cada bloco é uma "fatia" da página, na ordem em que aparece nesta lista. Arraste pra reordenar.
+        </p>
+
+        <ul class="observatorio-admin__lista-blocos" cdkDropList (cdkDropListDropped)="soltarBloco($event)" *ngIf="blocos.length">
+          <li *ngFor="let bloco of blocos" cdkDrag>
+            <app-icon name="fa-solid fa-grip-lines" [size]="14" color="var(--adm-muted)" class="observatorio-admin__arrastar"></app-icon>
+            <app-icon [name]="opcaoDoTipo(bloco.tipo)?.icone ?? 'fa-solid fa-cube'" [size]="18" color="var(--adm-accent)"></app-icon>
+            <span class="observatorio-admin__bloco-titulo-item">
+              <strong>{{ rotulosTipoBloco[bloco.tipo] }}</strong>
+              <small>{{ bloco.titulo || '(sem título)' }}</small>
+            </span>
+            <span class="observatorio-admin__bloco-acoes">
+              <button type="button" class="adm-btn adm-btn--icone" (click)="editarBloco(bloco)" title="Editar">
+                <app-icon name="fa-solid fa-pen" [size]="14"></app-icon>
+              </button>
+              <button type="button" class="adm-btn adm-btn--icone adm-btn--icone-perigo" (click)="excluirBloco(bloco)" title="Excluir">
+                <app-icon name="fa-solid fa-trash" [size]="14"></app-icon>
+              </button>
+            </span>
+          </li>
+        </ul>
+        <p class="adm-empty" *ngIf="!blocos.length && !escolhendoTipoBloco">
+          Essa página ainda não tem nenhum bloco — ela vai ficar em branco pros visitantes. Clique em "Adicionar bloco" pra começar.
+        </p>
+
+        <div class="observatorio-admin__tipos" *ngIf="escolhendoTipoBloco">
+          <div class="observatorio-admin__secoes-head">
+            <h4>Que tipo de bloco você quer adicionar?</h4>
+            <button type="button" class="adm-btn adm-btn--icone" (click)="fecharEdicaoBloco()" title="Cancelar">
+              <app-icon name="fa-solid fa-xmark" [size]="16"></app-icon>
+            </button>
+          </div>
+          <div class="observatorio-admin__tipos-grid">
+            <button
+              type="button"
+              class="observatorio-admin__tipo-card"
+              *ngFor="let opcao of opcoesTipoBlocoDisponiveis"
+              (click)="escolherTipoBloco(opcao.tipo)"
+            >
+              <app-icon [name]="opcao.icone" [size]="26" color="var(--adm-accent)"></app-icon>
+              <strong>{{ opcao.rotulo }}</strong>
+              <span>{{ descricaoTipoBloco(opcao) }}</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="observatorio-admin__editor-bloco" *ngIf="criandoBloco || editandoBlocoId">
+          <form class="adm-form observatorio-admin__form-bloco" [formGroup]="formBloco" (ngSubmit)="salvarBloco()">
+            <div class="observatorio-admin__form-bloco-cabecalho">
+              <h4 class="observatorio-admin__form-bloco-titulo">
+                <app-icon [name]="opcaoDoTipo(formBloco.value.tipo)?.icone ?? 'fa-solid fa-cube'" [size]="18" color="var(--adm-accent)"></app-icon>
+                {{ criandoBloco ? 'Novo bloco —' : 'Editando bloco —' }} {{ rotulosTipoBloco[formBloco.value.tipo!] }}
+              </h4>
+              <button type="button" class="adm-btn adm-btn--icone" (click)="fecharEdicaoBloco()" title="Cancelar">
+                <app-icon name="fa-solid fa-xmark" [size]="16"></app-icon>
+              </button>
+            </div>
+            <p class="observatorio-admin__ajuda" *ngIf="opcaoDoTipo(formBloco.value.tipo) as opcao">
+              {{ descricaoTipoBloco(opcao) }}
+            </p>
+
+            <div class="adm-field">
+              <label for="tituloBloco">Título (opcional — aparece como um subtítulo acima do bloco)</label>
+              <input id="tituloBloco" type="text" formControlName="titulo" />
+            </div>
+
+            <div class="adm-field" *ngIf="formBloco.value.tipo === 'Texto'">
+              <label>Conteúdo</label>
+              <app-quill-editor formControlName="conteudoHtml"></app-quill-editor>
+            </div>
+
+            <ng-container *ngIf="formBloco.value.tipo === 'GradeArtigos'">
+              <div class="adm-field">
+                <label for="modoGrade">Como escolher os artigos</label>
+                <select id="modoGrade" formControlName="modo">
+                  <option *ngFor="let modo of modosGrade" [value]="modo">{{ rotulosModoGrade[modo] }}</option>
+                </select>
+              </div>
+
+              <div class="adm-field">
+                <label for="categoriaFiltro">De qual tópico</label>
+                <select id="categoriaFiltro" formControlName="categoriaFiltroId">
+                  <option [ngValue]="null">
+                    {{ paginaAtual === 'hub' ? '(todas as seções do Observatório)' : '(o tema desta seção)' }}
+                  </option>
+                  <option *ngFor="let cat of todasCategorias" [ngValue]="cat.id">{{ cat.nome }}</option>
+                </select>
+              </div>
+
+              <div class="adm-field" *ngIf="formBloco.value.modo !== 'Manual'">
+                <label for="limiteItens">Quantidade de artigos a mostrar</label>
+                <input id="limiteItens" type="number" min="1" max="12" formControlName="limiteItens" />
+              </div>
+
+              <div class="adm-field" *ngIf="formBloco.value.modo === 'Manual'">
+                <label for="addArtigoManual">Adicionar artigo</label>
+                <select
+                  id="addArtigoManual"
+                  (change)="adicionarArtigoManual($any($event.target).value); $any($event.target).value = ''"
+                >
+                  <option value="">Selecione um artigo...</option>
+                  <option *ngFor="let artigo of artigosDisponiveis" [value]="artigo.id">{{ artigo.titulo }}</option>
+                </select>
+
+                <ul class="observatorio-admin__lista-manual" cdkDropList (cdkDropListDropped)="soltarArtigoManual($event)">
+                  <li *ngFor="let artigo of artigosSelecionados" cdkDrag>
+                    <app-icon name="fa-solid fa-grip-lines" [size]="14" color="var(--adm-muted)"></app-icon>
+                    <span>{{ artigo.titulo }}</span>
+                    <button type="button" class="adm-btn adm-btn--icone adm-btn--icone-perigo" (click)="removerArtigoManual(artigo)" title="Remover">
+                      <app-icon name="fa-solid fa-xmark" [size]="12"></app-icon>
+                    </button>
+                  </li>
+                </ul>
+                <p class="adm-empty" *ngIf="!artigosSelecionados.length">Nenhum artigo escolhido ainda.</p>
+              </div>
+            </ng-container>
+
+            <div class="adm-field" *ngIf="formBloco.value.tipo === 'Indicadores'">
+              <label>Números deste bloco</label>
+
+              <ul class="observatorio-admin__lista-manual observatorio-admin__lista-manual--indicadores" cdkDropList (cdkDropListDropped)="soltarIndicador($event)" *ngIf="indicadores.length">
+                <li *ngFor="let indicador of indicadores" cdkDrag>
+                  <app-icon name="fa-solid fa-grip-lines" [size]="14" color="var(--adm-muted)"></app-icon>
+                  <span><strong>{{ indicador.valor }}</strong> — {{ indicador.rotulo }}</span>
+                  <button type="button" class="adm-btn adm-btn--icone" (click)="editarIndicador(indicador)" title="Editar">
+                    <app-icon name="fa-solid fa-pen" [size]="12"></app-icon>
+                  </button>
+                  <button type="button" class="adm-btn adm-btn--icone adm-btn--icone-perigo" (click)="excluirIndicador(indicador)" title="Excluir">
+                    <app-icon name="fa-solid fa-xmark" [size]="12"></app-icon>
+                  </button>
+                </li>
+              </ul>
+              <p class="adm-empty" *ngIf="!indicadores.length && !criandoIndicador && !editandoIndicadorId">Nenhum número cadastrado ainda.</p>
+
+              <button
+                type="button"
+                class="adm-btn adm-btn--outline observatorio-admin__add-indicador"
+                (click)="novoIndicador()"
+                *ngIf="!criandoIndicador && !editandoIndicadorId"
+              >
+                <app-icon name="fa-solid fa-plus" [size]="14"></app-icon>
+                Adicionar número
+              </button>
+
+              <form class="observatorio-admin__form-indicador" *ngIf="criandoIndicador || editandoIndicadorId" [formGroup]="formIndicador" (ngSubmit)="salvarIndicador()">
+                <input type="text" placeholder="Rótulo (ex: Hospitais no Brasil)" formControlName="rotulo" />
+
+                <label class="observatorio-admin__toggle-ibge">
+                  <input type="checkbox" [checked]="usandoIbge" (change)="usandoIbge = $any($event.target).checked" />
+                  Puxar automaticamente de um dado real do IBGE
+                </label>
+
+                <ng-container *ngIf="!usandoIbge">
+                  <input type="text" placeholder="Valor (ex: 6.700)" formControlName="valor" />
+                  <input type="text" placeholder="Complemento (opcional)" formControlName="complemento" />
+                </ng-container>
+
+                <div class="observatorio-admin__ibge" *ngIf="usandoIbge">
+                  <ng-container *ngIf="!tabelaIbgeSelecionada">
+                    <input
+                      type="text"
+                      placeholder="Buscar tabela do IBGE (ex: expectativa de vida, população, óbitos...)"
+                      [value]="buscaTabelaIbge"
+                      (input)="digitarBuscaTabelaIbge($any($event.target).value)"
+                    />
+                    <p class="observatorio-admin__ajuda" *ngIf="buscandoTabelasIbge">Buscando...</p>
+                    <ul class="observatorio-admin__resultados-ibge" *ngIf="tabelasIbge.length">
+                      <li *ngFor="let tabela of tabelasIbge" (click)="selecionarTabelaIbge(tabela)">
+                        <strong>{{ tabela.nome }}</strong>
+                        <small>{{ tabela.pesquisa }}</small>
+                      </li>
+                    </ul>
+                    <p class="adm-empty" *ngIf="buscaTabelaIbge.length > 2 && !buscandoTabelasIbge && !tabelasIbge.length">
+                      Nenhuma tabela encontrada com esse termo.
+                    </p>
+                  </ng-container>
+
+                  <div class="observatorio-admin__tabela-ibge-selecionada" *ngIf="tabelaIbgeSelecionada">
+                    <div class="observatorio-admin__secoes-head">
+                      <strong>{{ tabelaIbgeSelecionada.nome }}</strong>
+                      <button type="button" class="adm-btn adm-btn--fantasma" (click)="trocarTabelaIbge()">Trocar tabela</button>
+                    </div>
+
+                    <ng-container *ngIf="metadadosIbge; else carregandoMetadados">
+                      <div class="adm-field">
+                        <label for="variavelIbge">Variável</label>
+                        <select id="variavelIbge" [ngModel]="variavelIbgeId" [ngModelOptions]="{ standalone: true }" (ngModelChange)="variavelIbgeId = $event; previewIbge = null; erroValorIbge = null">
+                          <option [ngValue]="null">Selecione...</option>
+                          <option *ngFor="let variavel of metadadosIbge.variaveis" [ngValue]="variavel.id" [title]="variavel.nome">
+                            {{ truncarOpcaoIbge(variavel.nome) }}{{ variavel.unidade ? ' (' + variavel.unidade + ')' : '' }}
+                          </option>
+                        </select>
+                      </div>
+
+                      <p class="observatorio-admin__ajuda" *ngIf="metadadosIbge.classificacoes.length">
+                        Se uma das classificações abaixo representa o ano/período do dado, marque-a como "ano" pra sempre pegar o valor mais recente — só uma pode ficar marcada. As demais funcionam como filtro opcional.
+                      </p>
+
+                      <div
+                        class="observatorio-admin__classificacao"
+                        [class.is-ano]="classificacaoAnoId === classificacao.id"
+                        *ngFor="let classificacao of metadadosIbge.classificacoes"
+                      >
+                        <div class="observatorio-admin__classificacao-cabecalho">
+                          <strong>{{ classificacao.nome }}</strong>
+                          <label class="observatorio-admin__toggle-ano">
+                            <input type="checkbox" [checked]="classificacaoAnoId === classificacao.id" (change)="alternarClassificacaoAno(classificacao.id)" />
+                            É o ano
+                          </label>
+                        </div>
+                        <select
+                          *ngIf="classificacaoAnoId !== classificacao.id"
+                          [ngModel]="categoriaPorClassificacao[classificacao.id] ?? null"
+                          [ngModelOptions]="{ standalone: true }"
+                          (ngModelChange)="selecionarCategoriaClassificacao(classificacao.id, $event)"
+                        >
+                          <option [ngValue]="null">(qualquer / não filtrar)</option>
+                          <option *ngFor="let categoria of classificacao.categorias" [ngValue]="categoria.id" [title]="categoria.nome">{{ truncarOpcaoIbge(categoria.nome) }}</option>
+                        </select>
+                        <p class="observatorio-admin__classificacao-nota" *ngIf="classificacaoAnoId === classificacao.id">
+                          Pega sempre o dado mais recente disponível nesta classificação.
+                        </p>
+                      </div>
+
+                      <div class="adm-field">
+                        <label for="casasDecimaisIbge">Casas decimais</label>
+                        <input id="casasDecimaisIbge" type="number" min="0" max="4" [(ngModel)]="casasDecimaisIbge" [ngModelOptions]="{ standalone: true }" />
+                      </div>
+
+                      <div class="adm-field">
+                        <label for="complementoModeloIbge">Complemento (use {{ '{ano}' }} pro ano do dado)</label>
+                        <input id="complementoModeloIbge" type="text" [(ngModel)]="complementoModeloIbge" [ngModelOptions]="{ standalone: true }" />
+                      </div>
+
+                      <button type="button" class="adm-btn adm-btn--outline" [disabled]="!variavelIbgeId || buscandoValorIbge" (click)="buscarValorIbgePreview()">
+                        {{ buscandoValorIbge ? 'Buscando...' : 'Testar valor' }}
+                      </button>
+                      <p class="observatorio-admin__resultado-ibge" *ngIf="previewIbge">
+                        <strong>{{ previewIbge.valor }}</strong> — {{ previewIbge.complemento }}
+                      </p>
+                      <p class="observatorio-admin__erro-ibge" *ngIf="erroValorIbge">{{ erroValorIbge }}</p>
+                    </ng-container>
+                    <ng-template #carregandoMetadados>
+                      <p class="adm-empty">Carregando variáveis e classificações...</p>
+                    </ng-template>
+                  </div>
+                </div>
+
+                <div class="observatorio-admin__form-indicador-acoes">
+                  <button type="submit" class="adm-btn adm-btn--primario" [disabled]="usandoIbge && !variavelIbgeId">
+                    {{ criandoIndicador ? 'Adicionar' : 'Salvar' }}
+                  </button>
+                  <button type="button" class="adm-btn adm-btn--fantasma" (click)="fecharEdicaoIndicador()">Cancelar</button>
+                </div>
+              </form>
+            </div>
+            <p class="observatorio-admin__aviso" *ngIf="formBloco.value.tipo === 'CardsSecoes'">
+              Não precisa configurar nada — os cards são gerados automaticamente a partir das seções já cadastradas.
+            </p>
+
+            <div class="adm-form-acoes">
+              <button type="submit" class="adm-btn adm-btn--primario">{{ criandoBloco ? 'Adicionar bloco' : 'Salvar bloco' }}</button>
+              <button type="button" class="adm-btn adm-btn--fantasma" (click)="fecharEdicaoBloco()">Cancelar</button>
+            </div>
+          </form>
+
+          <div class="observatorio-admin__preview">
+            <span class="observatorio-admin__preview-label">
+              <app-icon name="fa-solid fa-eye" [size]="14"></app-icon>
+              Como vai ficar
+            </span>
+
+            <div class="observatorio-admin__preview-area" *ngIf="preview as p; else semPreview">
+              <ng-container [ngSwitch]="p.tipo">
+                <ng-container *ngSwitchCase="'Texto'">
+                  <h2 class="observatorio-admin__preview-bloco-titulo" *ngIf="p.titulo">{{ p.titulo }}</h2>
+                  <div class="observatorio-admin__preview-texto" [innerHTML]="p.conteudoHtml"></div>
+                  <p class="adm-empty" *ngIf="!p.conteudoHtml">Escreva algo no conteúdo pra ver o preview.</p>
+                </ng-container>
+
+                <ng-container *ngSwitchCase="'GradeArtigos'">
+                  <h2 class="observatorio-admin__preview-bloco-titulo" *ngIf="p.titulo">{{ p.titulo }}</h2>
+                  <div class="observatorio-admin__preview-grid" *ngIf="previewArtigos(p).length">
+                    <app-article-card *ngFor="let article of previewArtigos(p)" [article]="article"></app-article-card>
+                  </div>
+                  <p class="adm-empty" *ngIf="!previewArtigos(p).length">Nenhum artigo encontrado com esses critérios ainda.</p>
+                </ng-container>
+
+                <ng-container *ngSwitchCase="'Indicadores'">
+                  <h2 class="observatorio-admin__preview-bloco-titulo" *ngIf="p.titulo">{{ p.titulo }}</h2>
+                  <div class="observatorio-admin__preview-indicadores" *ngIf="p.indicadores?.length">
+                    <div class="observatorio-admin__preview-indicador" *ngFor="let ind of p.indicadores || []">
+                      <strong>{{ ind.valor }}</strong>
+                      <span>{{ ind.rotulo }}</span>
+                      <small *ngIf="ind.complemento">{{ ind.complemento }}</small>
+                    </div>
+                  </div>
+                  <p class="adm-empty" *ngIf="!p.indicadores?.length">
+                    Sem indicadores cadastrados ainda — salve este bloco e cadastre-os na lista abaixo.
+                  </p>
+                </ng-container>
+
+                <ng-container *ngSwitchCase="'CardsSecoes'">
+                  <h2 class="observatorio-admin__preview-bloco-titulo" *ngIf="p.titulo">{{ p.titulo }}</h2>
+                  <div class="observatorio-admin__preview-grid" *ngIf="p.secoes?.length">
+                    <app-category-card *ngFor="let secaoCard of p.secoes || []" [card]="previewCard(secaoCard)"></app-category-card>
+                  </div>
+                </ng-container>
+              </ng-container>
+            </div>
+            <ng-template #semPreview>
+              <p class="adm-empty">{{ carregandoPreview ? 'Carregando preview...' : 'Preencha o formulário pra ver o preview.' }}</p>
+            </ng-template>
+          </div>
+        </div>
+      </ng-container>
+    </section>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<app-breadcrumb [items]="breadcrumbs"></app-breadcrumb>
+
+<div class="auth">
+  <div class="auth__card">
+    <ng-container *ngIf="!enviado(); else confirmacao">
+      <h1>Esqueci minha senha</h1>
+      <p class="auth__subtitle">Digite o e-mail da sua conta e mandamos um link para você criar uma senha nova.</p>
+
+      <form class="auth__form" (ngSubmit)="onSubmit()">
+        <label class="auth__field">
+          <input type="email" name="email" [(ngModel)]="email" placeholder="Digite o seu e-mail" aria-label="E-mail" autocomplete="email" required />
+        </label>
+
+        <p class="auth__error" *ngIf="error()">{{ error() }}</p>
+
+        <app-button type="submit" variant="primary">{{ submitting() ? 'Enviando…' : 'Enviar link' }}</app-button>
+      </form>
+
+      <p class="auth__footnote"><a routerLink="/entrar">Voltar para o login</a></p>
+    </ng-container>
+
+    <ng-template #confirmacao>
+      <h1>Verifique seu e-mail</h1>
+      <p class="auth__subtitle">Se esse e-mail estiver cadastrado, você vai receber um link para redefinir a senha em instantes.</p>
+      <p class="auth__footnote"><a routerLink="/entrar">Voltar para o login</a></p>
+    </ng-template>
+  </div>
+</div>

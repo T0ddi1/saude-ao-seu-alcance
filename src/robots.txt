@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://saudeaoseualcance.com/api/sitemap.xml

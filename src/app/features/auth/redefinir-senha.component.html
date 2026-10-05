@@ -1,0 +1,39 @@
+<app-breadcrumb [items]="breadcrumbs"></app-breadcrumb>
+
+<div class="auth">
+  <div class="auth__card">
+    <ng-container *ngIf="linkValido; else linkInvalido">
+      <ng-container *ngIf="!sucesso(); else confirmacao">
+        <h1>Criar nova senha</h1>
+        <p class="auth__subtitle">Escolha uma nova senha para a sua conta.</p>
+
+        <form class="auth__form" (ngSubmit)="onSubmit()">
+          <label class="auth__field">
+            <input type="password" name="novaSenha" [(ngModel)]="novaSenha" placeholder="Nova senha (mínimo 8 caracteres)" aria-label="Nova senha" autocomplete="new-password" required />
+          </label>
+
+          <label class="auth__field">
+            <input type="password" name="confirmarSenha" [(ngModel)]="confirmarSenha" placeholder="Confirme a nova senha" aria-label="Confirmar nova senha" autocomplete="new-password" required />
+          </label>
+
+          <p class="auth__error" *ngIf="error()">{{ error() }}</p>
+
+          <app-button type="submit" variant="primary">{{ submitting() ? 'Salvando…' : 'Salvar nova senha' }}</app-button>
+        </form>
+      </ng-container>
+
+      <ng-template #confirmacao>
+        <h1>Senha alterada!</h1>
+        <p class="auth__subtitle">Sua senha foi redefinida. Levando você para o login…</p>
+      </ng-template>
+    </ng-container>
+
+    <ng-template #linkInvalido>
+      <h1>Link inválido</h1>
+      <p class="auth__subtitle">Esse link de redefinição de senha está incompleto ou expirou.</p>
+      <p class="auth__footnote"><a routerLink="/esqueci-senha">Pedir um novo link</a></p>
+    </ng-template>
+
+    <p class="auth__footnote"><a routerLink="/entrar">Voltar para o login</a></p>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+<ng-container *ngIf="data() as d">
+  <app-breadcrumb [items]="d.breadcrumbs"></app-breadcrumb>
+
+  <div class="secao">
+    <header class="secao__header">
+      <app-icon *ngIf="d.icone" [name]="d.icone" [size]="32" color="var(--color-primary)"></app-icon>
+      <h1 class="secao__title">{{ d.nome }}</h1>
+    </header>
+    <p class="secao__resumo" *ngIf="d.resumo">{{ d.resumo }}</p>
+
+    <ng-container *ngFor="let bloco of d.blocos">
+      <section class="secao__bloco" *ngIf="bloco.tipo === 'Texto'">
+        <h2 class="secao__bloco-titulo" *ngIf="bloco.titulo">{{ bloco.titulo }}</h2>
+        <ng-container *ngFor="let sub of bloco.blocos">
+          <p class="secao__texto-lead" *ngIf="sub.type === 'lead'">
+            <ng-container *ngFor="let seg of sub.segments">
+              <strong *ngIf="seg.strong">{{ seg.text }}</strong>
+              <ng-container *ngIf="!seg.strong">{{ seg.text }}</ng-container>
+            </ng-container>
+          </p>
+          <p class="secao__texto-paragrafo" *ngIf="sub.type === 'paragraph'">{{ sub.text }}</p>
+        </ng-container>
+      </section>
+
+      <section class="secao__bloco" *ngIf="bloco.tipo === 'Indicadores'">
+        <h2 class="secao__bloco-titulo" *ngIf="bloco.titulo">{{ bloco.titulo }}</h2>
+        <div class="secao__indicadores">
+          <div class="secao__indicador" *ngFor="let ind of bloco.indicadores">
+            <strong>{{ ind.valor }}</strong>
+            <span>{{ ind.rotulo }}</span>
+            <small *ngIf="ind.complemento">{{ ind.complemento }}</small>
+          </div>
+        </div>
+      </section>
+
+      <section class="secao__bloco" *ngIf="bloco.tipo === 'GradeArtigos'">
+        <div class="secao__bloco-cabecalho">
+          <h2 class="secao__bloco-titulo" *ngIf="bloco.titulo">{{ bloco.titulo }}</h2>
+          <a class="secao__ver-todos" [routerLink]="['/blog']" [queryParams]="{ categoria: d.slug }">Ver todos →</a>
+        </div>
+        <div class="secao__grid" *ngIf="bloco.artigos.length; else vazio">
+          <app-article-card *ngFor="let article of bloco.artigos" [article]="article"></app-article-card>
+        </div>
+        <ng-template #vazio>
+          <p class="secao__vazio">Ainda não há artigos publicados nesta seção. Volte em breve.</p>
+        </ng-template>
+      </section>
+    </ng-container>
+  </div>
+</ng-container>

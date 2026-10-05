@@ -1,0 +1,35 @@
+<app-breadcrumb [items]="breadcrumbs"></app-breadcrumb>
+
+<div class="auth">
+  <div class="auth__card">
+    <ng-container *ngIf="linkValido; else linkInvalido">
+      <ng-container *ngIf="!concluido(); else confirmacao">
+        <h1>Descadastrar conta</h1>
+        <p class="auth__subtitle">
+          Isso vai desativar sua conta no Saúde ao Seu Alcance e você para de receber qualquer comunicação nossa.
+          Essa ação não pode ser desfeita por aqui — fale conosco se mudar de ideia.
+        </p>
+
+        <p class="auth__error" *ngIf="error()">{{ error() }}</p>
+
+        <app-button type="button" variant="primary" [disabled]="processando()" (click)="confirmar()">
+          {{ processando() ? 'Descadastrando…' : 'Sim, descadastrar minha conta' }}
+        </app-button>
+
+        <p class="auth__footnote"><a routerLink="/">Cancelar e voltar para o site</a></p>
+      </ng-container>
+
+      <ng-template #confirmacao>
+        <h1>Conta descadastrada</h1>
+        <p class="auth__subtitle">Sua conta foi desativada e você não vai mais receber e-mails nossos. Sentiremos sua falta.</p>
+        <p class="auth__footnote"><a routerLink="/">Voltar para o site</a></p>
+      </ng-template>
+    </ng-container>
+
+    <ng-template #linkInvalido>
+      <h1>Link inválido</h1>
+      <p class="auth__subtitle">Esse link de descadastro está incompleto ou expirou.</p>
+      <p class="auth__footnote"><a routerLink="/contato">Falar com a gente</a></p>
+    </ng-template>
+  </div>
+</div>

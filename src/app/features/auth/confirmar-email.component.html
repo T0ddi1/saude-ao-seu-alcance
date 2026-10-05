@@ -1,0 +1,22 @@
+<app-breadcrumb [items]="breadcrumbs"></app-breadcrumb>
+
+<div class="auth">
+  <div class="auth__card">
+    <ng-container *ngIf="!confirmando(); else carregando">
+      <ng-container *ngIf="sucesso(); else invalido">
+        <h1>E-mail confirmado!</h1>
+        <p class="auth__subtitle">Sua conta está confirmada. Obrigado!</p>
+      </ng-container>
+      <ng-template #invalido>
+        <h1>Link inválido</h1>
+        <p class="auth__subtitle">Esse link de confirmação está incompleto ou expirou.</p>
+      </ng-template>
+      <p class="auth__footnote"><a routerLink="/">Voltar para o site</a></p>
+    </ng-container>
+
+    <ng-template #carregando>
+      <h1>Confirmando…</h1>
+      <p class="auth__subtitle">Só um instante.</p>
+    </ng-template>
+  </div>
+</div>

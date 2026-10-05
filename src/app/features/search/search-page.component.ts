@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { SearchService, SEARCH_MIN_CHARS } from '../../core/services/search.service';
+import { SeoService } from '../../core/services/seo.service';
 import { SearchResult } from '../../core/models/search.model';
 import { BreadcrumbComponent } from '../../shared/components/breadcrumb/breadcrumb.component';
 
@@ -23,13 +24,24 @@ export class SearchPageComponent implements OnInit {
     { label: 'Busca', href: '/buscar' },
   ];
 
-  constructor(private route: ActivatedRoute, private searchService: SearchService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private searchService: SearchService,
+    private seo: SeoService,
+  ) {}
 
   ngOnInit(): void {
     this.route.queryParamMap
       .pipe(switchMap((params) => {
         const q = params.get('q') ?? '';
         this.query.set(q);
+        this.seo.setMeta({
+          title: q ? `Busca por "${q}"` : 'Busca',
+          description: q
+            ? `Resultados da busca por "${q}" no Saúde ao Seu Alcance.`
+            : 'Busque artigos e conteúdos no Saúde ao Seu Alcance.',
+          noIndex: true,
+        });
         return this.searchService.search(q);
       }))
       .subscribe((results) => this.results.set(results));

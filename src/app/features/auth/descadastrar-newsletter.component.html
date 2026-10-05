@@ -1,0 +1,32 @@
+<app-breadcrumb [items]="breadcrumbs"></app-breadcrumb>
+
+<div class="auth">
+  <div class="auth__card">
+    <ng-container *ngIf="linkValido; else linkInvalido">
+      <ng-container *ngIf="!concluido(); else confirmacao">
+        <h1>Sair da newsletter</h1>
+        <p class="auth__subtitle">Você vai parar de receber os e-mails da newsletter do Saúde ao Seu Alcance. Pode se inscrever de novo quando quiser.</p>
+
+        <p class="auth__error" *ngIf="error()">{{ error() }}</p>
+
+        <app-button type="button" variant="primary" [disabled]="processando()" (click)="confirmar()">
+          {{ processando() ? 'Descadastrando…' : 'Sim, sair da newsletter' }}
+        </app-button>
+
+        <p class="auth__footnote"><a routerLink="/">Cancelar e voltar para o site</a></p>
+      </ng-container>
+
+      <ng-template #confirmacao>
+        <h1>Pronto, você saiu</h1>
+        <p class="auth__subtitle">Você não vai mais receber e-mails da nossa newsletter. Sentiremos sua falta!</p>
+        <p class="auth__footnote"><a routerLink="/">Voltar para o site</a></p>
+      </ng-template>
+    </ng-container>
+
+    <ng-template #linkInvalido>
+      <h1>Link inválido</h1>
+      <p class="auth__subtitle">Esse link de descadastro está incompleto ou expirou.</p>
+      <p class="auth__footnote"><a routerLink="/contato">Falar com a gente</a></p>
+    </ng-template>
+  </div>
+</div>

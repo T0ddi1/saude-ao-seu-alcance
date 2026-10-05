@@ -24,6 +24,8 @@ export interface ArticleDetail {
   title: string;
   subtitle: string;
   date: string;
+  publishedAtIso: string | null;
+  updatedAtIso: string | null;
   author: string;
   authorRole?: string;
   shareLinks: ShareLink[];

@@ -1,0 +1,121 @@
+<div class="logs-erro">
+  <div class="adm-page-head">
+    <h2>Log de erros</h2>
+    <p>Falhas registradas pelo sistema — envios de e-mail que não saíram, exceções não tratadas e outras integrações.</p>
+  </div>
+
+  <div class="logs-erro__kpis" *ngIf="resumo as r">
+    <div class="adm-card logs-erro__kpi">
+      <span class="logs-erro__kpi-rotulo">Total registrado</span>
+      <strong>{{ r.total }}</strong>
+    </div>
+    <div class="adm-card logs-erro__kpi">
+      <span class="logs-erro__kpi-rotulo">Últimas 24 horas</span>
+      <strong>{{ r.ultimas24Horas }}</strong>
+    </div>
+    <div class="adm-card logs-erro__kpi logs-erro__kpi--categorias" *ngIf="r.porCategoria.length">
+      <span class="logs-erro__kpi-rotulo">Por categoria</span>
+      <div class="logs-erro__categorias">
+        <span class="logs-erro__categoria-item" *ngFor="let c of r.porCategoria">{{ rotuloCategoria(c.rotulo) }}: <strong>{{ c.total }}</strong></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="adm-card logs-erro__filtros">
+    <div class="adm-field">
+      <label for="filtro-categoria">Categoria</label>
+      <select id="filtro-categoria" [(ngModel)]="filtroCategoria">
+        <option value="">Todas</option>
+        <option *ngFor="let c of categorias" [value]="c">{{ rotuloCategoria(c) }}</option>
+      </select>
+    </div>
+    <div class="adm-field">
+      <label for="filtro-texto">Buscar</label>
+      <input id="filtro-texto" type="text" placeholder="Mensagem ou origem..." [(ngModel)]="filtroTexto" (keydown.enter)="aplicarFiltros()" />
+    </div>
+    <div class="adm-field">
+      <label for="filtro-de">De</label>
+      <input id="filtro-de" type="date" [(ngModel)]="filtroDe" />
+    </div>
+    <div class="adm-field">
+      <label for="filtro-ate">Até</label>
+      <input id="filtro-ate" type="date" [(ngModel)]="filtroAte" />
+    </div>
+    <div class="logs-erro__filtros-acoes">
+      <button type="button" class="adm-btn adm-btn--primario" (click)="aplicarFiltros()">Filtrar</button>
+      <button type="button" class="adm-btn adm-btn--outline" (click)="limparFiltros()">Limpar</button>
+    </div>
+  </div>
+
+  <div class="adm-card adm-card--flush">
+    <table class="adm-table">
+      <thead>
+        <tr>
+          <th>Quando</th>
+          <th>Categoria</th>
+          <th>Origem</th>
+          <th>Mensagem</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let log of pagina?.itens">
+          <td>{{ formatarData(log.criadoEm) }}</td>
+          <td><span class="logs-erro__badge">{{ rotuloCategoria(log.categoria) }}</span></td>
+          <td>{{ log.origem || '-' }}</td>
+          <td class="logs-erro__mensagem">{{ log.mensagem }}</td>
+          <td class="adm-table__acoes">
+            <button type="button" (click)="abrir(log)" [attr.aria-label]="'Ver detalhes do erro'">
+              <i class="fa-regular fa-eye" aria-hidden="true"></i> Ver
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="adm-empty" *ngIf="pagina && !pagina.itens.length">Nenhum erro registrado com esses filtros. 🎉</p>
+    <p class="adm-empty" *ngIf="!pagina && carregando">Carregando...</p>
+
+    <nav class="dash__paginacao" *ngIf="pagina && pagina.totalPaginas > 1" aria-label="Paginação dos logs">
+      <span class="dash__paginacao-info">{{ pagina.totalItens }} registros · página {{ pagina.paginaAtual }} de {{ pagina.totalPaginas }}</span>
+      <div class="dash__paginacao-botoes">
+        <button type="button" (click)="irParaPagina(pagina.paginaAtual - 1)" [disabled]="pagina.paginaAtual === 1 || carregando" aria-label="Página anterior">‹</button>
+        <ng-container *ngFor="let p of paginasVisiveis">
+          <span *ngIf="p === 0" class="dash__paginacao-reticencias">…</span>
+          <button
+            *ngIf="p !== 0"
+            type="button"
+            [class.is-ativa]="p === pagina.paginaAtual"
+            [attr.aria-current]="p === pagina.paginaAtual ? 'page' : null"
+            (click)="irParaPagina(p)"
+            [disabled]="carregando"
+          >{{ p }}</button>
+        </ng-container>
+        <button type="button" (click)="irParaPagina(pagina.paginaAtual + 1)" [disabled]="pagina.paginaAtual === pagina.totalPaginas || carregando" aria-label="Próxima página">›</button>
+      </div>
+    </nav>
+  </div>
+
+  <div class="dash__modal-fundo" *ngIf="selecionado" (click)="fechar()">
+    <div class="dash__modal" appDialogFoco role="dialog" aria-modal="true" aria-labelledby="log-titulo" (click)="$event.stopPropagation()" (keydown.escape)="fechar()">
+      <div class="dash__modal-cabecalho">
+        <h3 id="log-titulo">Detalhes do erro</h3>
+        <button type="button" class="dash__modal-fechar" (click)="fechar()" aria-label="Fechar">×</button>
+      </div>
+
+      <dl class="dash__detalhes" *ngIf="selecionado as s">
+        <div><dt>Quando</dt><dd>{{ formatarData(s.criadoEm) }}</dd></div>
+        <div><dt>Categoria</dt><dd>{{ rotuloCategoria(s.categoria) }}</dd></div>
+        <div class="dash__detalhes-largo"><dt>Origem</dt><dd>{{ s.origem || '-' }}</dd></div>
+        <div class="dash__detalhes-largo"><dt>Mensagem</dt><dd>{{ s.mensagem }}</dd></div>
+        <div class="dash__detalhes-largo" *ngIf="s.detalhes">
+          <dt>Detalhes técnicos</dt>
+          <dd><pre class="logs-erro__pre">{{ s.detalhes }}</pre></dd>
+        </div>
+      </dl>
+
+      <div class="dash__modal-acoes">
+        <button type="button" class="adm-btn adm-btn--primario" (click)="fechar()">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>

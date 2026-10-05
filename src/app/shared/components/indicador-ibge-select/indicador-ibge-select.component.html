@@ -10,37 +10,115 @@
       <button type="button" class="indicador-select__fechar" (click)="fechar()" aria-label="Fechar">×</button>
     </div>
 
-    <div class="indicador-select__busca">
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <input
-        type="text"
-        placeholder="Buscar indicador do IBGE..."
-        [(ngModel)]="busca"
-        [ngModelOptions]="{ standalone: true }"
-        autofocus
-      />
+    <div class="indicador-select__corpo">
+      <button type="button" class="indicador-select__nenhum" [class.is-selecionado]="!valor" (click)="escolherNenhum()">
+        <span>Nenhum</span>
+        <span class="indicador-select__unidade">preencher valor manualmente</span>
+      </button>
+
+      <ng-container *ngIf="!tabelaSelecionada">
+        <div class="indicador-select__busca">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input
+            type="text"
+            placeholder="Buscar qualquer dado do IBGE (ex: expectativa de vida, população, óbitos...)"
+            [value]="busca"
+            (input)="digitarBusca($any($event.target).value)"
+            autofocus
+          />
+        </div>
+        <p class="indicador-select__ajuda" *ngIf="buscando">Buscando...</p>
+        <ul class="indicador-select__lista">
+          <li *ngFor="let tabela of tabelas">
+            <button type="button" class="indicador-select__item" (click)="selecionarTabela(tabela)">
+              <span>{{ tabela.nome }}</span>
+              <span class="indicador-select__unidade">{{ tabela.pesquisa }}</span>
+            </button>
+          </li>
+        </ul>
+        <p class="indicador-select__vazio" *ngIf="busca.length > 2 && !buscando && !tabelas.length">
+          Nenhuma tabela encontrada pra "{{ busca }}".
+        </p>
+      </ng-container>
+
+      <div class="indicador-select__configurar" *ngIf="tabelaSelecionada">
+        <div class="indicador-select__tabela-cabecalho">
+          <strong>{{ tabelaSelecionada.nome }}</strong>
+          <button type="button" class="indicador-select__trocar" (click)="trocarTabela()">Trocar tabela</button>
+        </div>
+
+        <ng-container *ngIf="metadados; else carregandoMetadados">
+          <div class="indicador-select__campo">
+            <label for="indicadorIbgeVariavel">Variável</label>
+            <select
+              id="indicadorIbgeVariavel"
+              [ngModel]="variavelId"
+              [ngModelOptions]="{ standalone: true }"
+              (ngModelChange)="selecionarVariavel($event)"
+            >
+              <option [ngValue]="null">Selecione...</option>
+              <option *ngFor="let variavel of metadados.variaveis" [ngValue]="variavel.id" [title]="variavel.nome">
+                {{ truncarOpcao(variavel.nome) }}{{ variavel.unidade ? ' (' + variavel.unidade + ')' : '' }}
+              </option>
+            </select>
+          </div>
+
+          <p class="indicador-select__ajuda-classificacao" *ngIf="metadados.classificacoes.length">
+            Se uma das classificações abaixo representa o ano/período do dado, marque-a como "ano" pra sempre pegar o valor mais recente — só uma pode ficar marcada. As demais funcionam como filtro opcional.
+          </p>
+
+          <div
+            class="indicador-select__classificacao"
+            [class.is-ano]="classificacaoAnoId === classificacao.id"
+            *ngFor="let classificacao of metadados.classificacoes"
+          >
+            <div class="indicador-select__classificacao-cabecalho">
+              <strong>{{ classificacao.nome }}</strong>
+              <label class="indicador-select__toggle-ano">
+                <input type="checkbox" [checked]="classificacaoAnoId === classificacao.id" (change)="alternarClassificacaoAno(classificacao.id)" />
+                É o ano
+              </label>
+            </div>
+            <select
+              *ngIf="classificacaoAnoId !== classificacao.id"
+              [ngModel]="categoriaPorClassificacao[classificacao.id] ?? null"
+              [ngModelOptions]="{ standalone: true }"
+              (ngModelChange)="selecionarCategoriaClassificacao(classificacao.id, $event)"
+            >
+              <option [ngValue]="null">(qualquer / não filtrar)</option>
+              <option *ngFor="let categoria of classificacao.categorias" [ngValue]="categoria.id" [title]="categoria.nome">{{ truncarOpcao(categoria.nome) }}</option>
+            </select>
+            <p class="indicador-select__classificacao-nota" *ngIf="classificacaoAnoId === classificacao.id">
+              Pega sempre o dado mais recente disponível nesta classificação.
+            </p>
+          </div>
+
+          <div class="indicador-select__campo">
+            <label for="indicadorIbgeCasas">Casas decimais</label>
+            <input id="indicadorIbgeCasas" type="number" min="0" max="4" [(ngModel)]="casasDecimais" [ngModelOptions]="{ standalone: true }" />
+          </div>
+
+          <div class="indicador-select__campo">
+            <label for="indicadorIbgeComplemento">Complemento (use {{ '{ano}' }} pro ano do dado)</label>
+            <input id="indicadorIbgeComplemento" type="text" [(ngModel)]="complementoModelo" [ngModelOptions]="{ standalone: true }" />
+          </div>
+
+          <button type="button" class="indicador-select__testar" [disabled]="!variavelId || buscandoValor" (click)="buscarValorPreview()">
+            {{ buscandoValor ? 'Buscando...' : 'Testar valor' }}
+          </button>
+          <p class="indicador-select__resultado" *ngIf="preview">
+            <strong>{{ preview.valor }}</strong> — {{ preview.complemento }}
+          </p>
+          <p class="indicador-select__erro" *ngIf="erroValor">{{ erroValor }}</p>
+
+          <div class="indicador-select__acoes">
+            <button type="button" class="indicador-select__confirmar" [disabled]="!variavelId" (click)="confirmar()">Usar este dado</button>
+          </div>
+        </ng-container>
+        <ng-template #carregandoMetadados>
+          <p class="indicador-select__ajuda">Carregando variáveis e classificações...</p>
+        </ng-template>
+      </div>
     </div>
-
-    <ul class="indicador-select__lista">
-      <li>
-        <button type="button" class="indicador-select__item" [class.is-selecionado]="!valor" (click)="escolher(null)">
-          <span>Nenhum</span>
-          <span class="indicador-select__unidade">preencher valor manualmente</span>
-        </button>
-      </li>
-      <li *ngFor="let opcao of opcoesFiltradas">
-        <button
-          type="button"
-          class="indicador-select__item"
-          [class.is-selecionado]="opcao.chave === valor"
-          (click)="escolher(opcao.chave)"
-        >
-          <span>{{ opcao.rotulo }}</span>
-          <span class="indicador-select__unidade">{{ opcao.unidade }}</span>
-        </button>
-      </li>
-    </ul>
-
-    <p class="indicador-select__vazio" *ngIf="!opcoesFiltradas.length">Nenhum indicador encontrado pra "{{ busca }}".</p>
   </div>
 </div>

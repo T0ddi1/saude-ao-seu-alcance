@@ -2,6 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { BlogService } from '../../core/services/blog.service';
+import { SeoService } from '../../core/services/seo.service';
 import { BlogPageData } from '../../core/models/blog.model';
 import { BreadcrumbComponent } from '../../shared/components/breadcrumb/breadcrumb.component';
 import { ArticleCardComponent } from './components/article-card/article-card.component';
@@ -23,6 +24,7 @@ export class BlogComponent implements OnInit {
   constructor(
     private blogService: BlogService,
     private route: ActivatedRoute,
+    private seo: SeoService,
   ) {}
 
   ngOnInit(): void {
@@ -30,6 +32,12 @@ export class BlogComponent implements OnInit {
       this.categoriaAtual = params.get('categoria');
       this.paginaAtual = 1;
       this.carregar();
+      this.seo.setMeta({
+        title: this.categoriaAtual ? `Blog — ${this.categoriaAtual}` : 'Blog',
+        description: this.categoriaAtual
+          ? `Artigos sobre ${this.categoriaAtual} no Saúde ao Seu Alcance.`
+          : 'Confira os artigos mais recentes sobre saúde, prevenção e bem-estar no Saúde ao Seu Alcance.',
+      });
     });
   }
 

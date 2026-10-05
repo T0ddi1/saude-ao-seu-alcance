@@ -84,6 +84,8 @@ export class ArticleService {
       title: dto.title,
       subtitle: dto.excerpt,
       date: this.formatarData(dto.publishedAt),
+      publishedAtIso: dto.publishedAt,
+      updatedAtIso: dto.updatedAt,
       author: dto.author ?? 'Redação Saúde ao Seu Alcance',
       authorRole: dto.authorRole ?? undefined,
       shareLinks: [

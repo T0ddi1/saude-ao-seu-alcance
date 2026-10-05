@@ -6,6 +6,7 @@ import { ButtonComponent } from '../../shared/components/button/button.component
 import { TotemService } from '../../core/services/totem.service';
 import { ToastService } from '../../core/services/toast.service';
 import { ContactOption, ContactOptions, ContatoService } from '../../core/services/contato.service';
+import { SeoService } from '../../core/services/seo.service';
 import { ESTADOS_BR } from '../../core/data/estados-br';
 
 @Component({
@@ -18,6 +19,7 @@ import { ESTADOS_BR } from '../../core/data/estados-br';
 export class ContactComponent implements OnInit {
   private contato = inject(ContatoService);
   private toast = inject(ToastService);
+  private seo = inject(SeoService);
   totem = inject(TotemService);
 
   breadcrumbs = [
@@ -46,6 +48,10 @@ export class ContactComponent implements OnInit {
   error = signal<string | null>(null);
 
   ngOnInit(): void {
+    this.seo.setMeta({
+      title: 'Contato',
+      description: 'Fale com o Saúde ao Seu Alcance: envie sua dúvida, sugestão ou solicitação e nossa equipe responde por e-mail.',
+    });
     this.contato.getOptions().subscribe({
       next: (options) => this.options.set(options),
       error: () => this.error.set('Não foi possível carregar o formulário agora. Tente novamente em instantes.'),

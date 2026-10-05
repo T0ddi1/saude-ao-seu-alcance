@@ -104,6 +104,10 @@ export class SiteConfigAdminComponent implements OnInit, ComponenteComAlteracoes
     this.formularioCores.patchValue(padroes);
   }
 
+  restaurarArquivoPadrao(chave: 'logoUrl' | 'faviconUrl'): void {
+    this.formulario.get(chave)?.setValue('');
+  }
+
   selecionarArquivo(event: Event, chave: 'logoUrl' | 'faviconUrl'): void {
     const input = event.target as HTMLInputElement;
     const arquivo = input.files?.[0];

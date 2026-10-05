@@ -1,15 +1,16 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { Meta, Title } from '@angular/platform-browser';
 import { switchMap } from 'rxjs';
 import { ArticleService } from '../../core/services/article.service';
 import { AuthService } from '../../core/services/auth.service';
+import { SeoService } from '../../core/services/seo.service';
+import { SwalService } from '../../core/services/swal.service';
 import { ArticleComment, ArticleDetail } from '../../core/models/article.model';
 import { BreadcrumbComponent } from '../../shared/components/breadcrumb/breadcrumb.component';
 import { ContentSidebarComponent } from '../../shared/components/content-sidebar/content-sidebar.component';
 import { IconComponent } from '../../shared/components/icon/icon.component';
-import { CommentSectionComponent } from './components/comment-section/comment-section.component';
+import { CommentSectionComponent, ComentarioEnviarEvento } from './components/comment-section/comment-section.component';
 
 @Component({
   selector: 'app-article-page',
@@ -25,8 +26,8 @@ export class ArticlePageComponent implements OnInit {
     private route: ActivatedRoute,
     private articleService: ArticleService,
     public authService: AuthService,
-    private meta: Meta,
-    private titleService: Title
+    private seo: SeoService,
+    private swal: SwalService,
   ) {}
 
   ngOnInit(): void {
@@ -35,6 +36,7 @@ export class ArticlePageComponent implements OnInit {
       .subscribe((data) => {
         this.data.set(data);
         this.setSocialMeta(data);
+        this.setStructuredData(data);
       });
   }
 
@@ -47,11 +49,20 @@ export class ArticlePageComponent implements OnInit {
     });
   }
 
-  enviarComentario(evt: { texto: string; comentarioPaiId: number | null }): void {
+  enviarComentario(evt: ComentarioEnviarEvento): void {
     const atual = this.data();
-    if (!atual) return;
+    if (!atual) {
+      evt.aoConcluir(false);
+      return;
+    }
 
-    this.articleService.postComment(atual.slug, evt.texto, evt.comentarioPaiId).subscribe();
+    this.articleService.postComment(atual.slug, evt.texto, evt.comentarioPaiId).subscribe({
+      next: () => evt.aoConcluir(true),
+      error: () => {
+        evt.aoConcluir(false);
+        this.swal.erro('Seu comentário não pôde ser publicado. O texto contém termos não permitidos.');
+      },
+    });
   }
 
   curtirComentario(comentarioId: number): void {
@@ -65,28 +76,39 @@ export class ArticlePageComponent implements OnInit {
   }
 
   private setSocialMeta(article: ArticleDetail): void {
-    const pageTitle = `${article.title} — Saúde ao Seu Alcance`;
-    const imageUrl = article.heroImage ? new URL(article.heroImage, window.location.origin).href : '';
+    this.seo.setMeta({
+      title: article.title,
+      description: article.subtitle,
+      image: article.heroImage,
+      type: 'article',
+    });
+  }
 
-    this.titleService.setTitle(pageTitle);
+  private setStructuredData(article: ArticleDetail): void {
+    const imageUrl = article.heroImage ? new URL(article.heroImage, window.location.origin).href : undefined;
 
-    const tags: { property?: string; name?: string; content: string }[] = [
-      { property: 'og:type', content: 'article' },
-      { property: 'og:title', content: article.title },
-      { property: 'og:description', content: article.subtitle },
-      { property: 'og:url', content: window.location.href },
-      { property: 'og:site_name', content: 'Saúde ao Seu Alcance' },
-      { name: 'twitter:card', content: 'summary_large_image' },
-      { name: 'twitter:title', content: article.title },
-      { name: 'twitter:description', content: article.subtitle },
-    ];
-    if (imageUrl) {
-      tags.push({ property: 'og:image', content: imageUrl }, { name: 'twitter:image', content: imageUrl });
-    }
-
-    for (const tag of tags) {
-      this.meta.updateTag(tag, tag.property ? `property="${tag.property}"` : `name="${tag.name}"`);
-    }
+    this.seo.setStructuredData({
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: article.title,
+      description: article.subtitle,
+      ...(imageUrl ? { image: [imageUrl] } : {}),
+      ...(article.publishedAtIso ? { datePublished: article.publishedAtIso } : {}),
+      dateModified: article.updatedAtIso ?? article.publishedAtIso ?? undefined,
+      author: {
+        '@type': 'Person',
+        name: article.author,
+        ...(article.authorRole ? { jobTitle: article.authorRole } : {}),
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: 'Saúde ao Seu Alcance',
+      },
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id': window.location.href,
+      },
+    });
   }
 
   shareUrl(icon: string): string {

@@ -26,6 +26,14 @@ export interface RecursoAdminConfig {
 }
 
 export const RECURSOS_ADMIN: Record<string, RecursoAdminConfig> = {
+  'palavras-bloqueadas': {
+    path: 'palavras-bloqueadas',
+    titulo: 'Palavras Bloqueadas (moderação de comentários)',
+    campos: [
+      { chave: 'texto', rotulo: 'Palavra ou termo', tipo: 'text', obrigatorio: true },
+    ],
+    colunasTabela: ['texto', 'ativo'],
+  },
   especialidades: {
     path: 'especialidades',
     titulo: 'Especialidades médicas',
@@ -67,8 +75,13 @@ export const RECURSOS_ADMIN: Record<string, RecursoAdminConfig> = {
   categorias: {
     path: 'categorias',
     titulo: 'Categorias',
-    campos: [{ chave: 'nome', rotulo: 'Nome', tipo: 'text', obrigatorio: true }],
-    colunasTabela: ['nome', 'slug', 'ativo'],
+    campos: [
+      { chave: 'nome', rotulo: 'Nome', tipo: 'text', obrigatorio: true },
+      { chave: 'resumo', rotulo: 'Resumo (opcional)', tipo: 'textarea' },
+      { chave: 'icone', rotulo: 'Ícone (opcional)', tipo: 'icone' },
+      { chave: 'ehSecaoObservatorio', rotulo: 'É seção do Observatório?', tipo: 'checkbox' },
+    ],
+    colunasTabela: ['nome', 'slug', 'ehSecaoObservatorio', 'ativo'],
   },
   'espacos-patrocinados': {
     path: 'espacos-patrocinados',

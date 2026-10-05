@@ -2,6 +2,11 @@
   <ng-container *ngIf="!totem.isTotem()">
     <h3>Deixe um comentário</h3>
     <p class="comments__note">Seu comentário passa por uma moderação antes de aparecer publicamente.</p>
+    <p class="comments__warning">
+      <strong>Atenção:</strong> este espaço não substitui orientação médica individual. Não compartilhe diagnósticos,
+      doses ou tratamentos como se fossem indicação para outra pessoa — em caso de dúvida sobre sua saúde, procure um
+      profissional.
+    </p>
 
     <p class="comments__disabled-note" *ngIf="!estaLogado">
       <a routerLink="/entrar">Faça login</a> para poder comentar.
@@ -13,7 +18,7 @@
         <textarea name="message" rows="6" [(ngModel)]="message" placeholder="Digite sua mensagem aqui." required></textarea>
       </label>
 
-      <app-button type="submit" variant="primary" [disabled]="!message.trim()">Postar Comentário →</app-button>
+      <app-button type="submit" variant="primary" [disabled]="!message.trim() || enviando()">Postar Comentário →</app-button>
       <p class="comments__thanks" *ngIf="posted()">Comentário enviado — ele aparece por aqui assim que for aprovado pela moderação.</p>
     </form>
   </ng-container>
@@ -42,7 +47,7 @@
 
         <form class="comments__reply-form" *ngIf="respondendoId === comment.id" (ngSubmit)="enviarResposta(comment.id)">
           <textarea rows="3" [(ngModel)]="respostaTexto" name="resposta-{{ comment.id }}" placeholder="Escreva sua resposta..."></textarea>
-          <app-button type="submit" variant="outline" [disabled]="!respostaTexto.trim()">Responder</app-button>
+          <app-button type="submit" variant="outline" [disabled]="!respostaTexto.trim() || enviando()">Responder</app-button>
         </form>
 
         <div class="comments__replies" *ngIf="comment.replies?.length">

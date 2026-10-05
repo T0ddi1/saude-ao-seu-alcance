@@ -1,6 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeService } from '../../core/services/home.service';
+import { SeoService } from '../../core/services/seo.service';
 import { HomePageData } from '../../core/models/home.model';
 import { HeroFeaturedComponent } from './components/hero-featured/hero-featured.component';
 import { TrendingPanelComponent } from './components/trending-panel/trending-panel.component';
@@ -25,9 +26,13 @@ import { SponsoredSectionComponent } from './components/sponsored-section/sponso
 export class HomeComponent implements OnInit {
   data = signal<HomePageData | null>(null);
 
-  constructor(private homeService: HomeService) {}
+  constructor(private homeService: HomeService, private seo: SeoService) {}
 
   ngOnInit(): void {
+    this.seo.setMeta({
+      title: 'Saúde ao Seu Alcance',
+      description: 'Notícias, orientações e conteúdo confiável sobre saúde, bem-estar e qualidade de vida para todo o Brasil.',
+    });
     this.homeService.getHomePage().subscribe((data) => this.data.set(data));
   }
 }
