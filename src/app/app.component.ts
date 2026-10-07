@@ -25,13 +25,12 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.router
       .events.pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
-      .subscribe((event) => this.isHome.set(this.isHomeUrl(event.urlAfterRedirects)));
+      .subscribe((event) => {
+        this.isHome.set(this.isHomeUrl(event.urlAfterRedirects));
+        this.trackPageView(event.urlAfterRedirects);
+      });
 
     if (this.totem.isTotem()) {
-      // Browsers only allow requestFullscreen() from a real user gesture, so
-      // we can't do it automatically on load — instead, the very first tap
-      // anywhere on the kiosk (whatever the visitor meant to tap) doubles as
-      // that gesture and quietly goes fullscreen alongside it.
       document.addEventListener('click', () => this.totem.goFullscreen(), { once: true, capture: true });
     }
   }
@@ -40,12 +39,19 @@ export class AppComponent implements OnInit {
     this.location.back();
   }
 
-  /**
-   * `router.url` includes the query string (e.g. "/?totem=1" on the kiosk's
-   * first load), so a plain "/" comparison missed the home route whenever
-   * that param was present — leaving the back button visible with nowhere
-   * useful to go back to.
-   */
+
+  private firstNavigation = true;
+
+  private trackPageView(url: string): void {
+    if (this.firstNavigation) {
+      this.firstNavigation = false;
+      return;
+    }
+    const gtag = (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag;
+    gtag?.('config', 'G-8NYWDK35JN', { page_path: url });
+  }
+
+
   private isHomeUrl(url: string): boolean {
     const path = url.split('?')[0].split('#')[0];
     return path === '/' || path === '';
