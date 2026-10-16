@@ -7,7 +7,7 @@
 
 .page {
   display: grid;
-  grid-template-columns: 2.4fr 1fr;
+  grid-template-columns: minmax(0, 2.4fr) minmax(0, 1fr);
   gap: 56px;
   align-items: start;
 }
@@ -114,9 +114,15 @@
 
 @media (max-width: 1000px) {
   .page {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   .page__display {
     font-size: 44px;
+  }
+}
+
+@media (min-width: 1000px) and (orientation: portrait) {
+  .page {
+    grid-template-columns: minmax(0, 1fr);
   }
 }

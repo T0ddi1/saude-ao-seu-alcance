@@ -101,7 +101,7 @@
 
 .adm-field-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 16px;
 }
 @media (max-width: 640px) {
@@ -266,4 +266,11 @@
   text-align: center;
   color: var(--adm-muted);
   font-size: 13px;
+}
+
+/* Tabelas largas não podem ser cortadas em telas médias/pequenas: o cartão que as contém rola pro lado, sem arrastar a página toda. */
+.adm-card--flush,
+.adm-card:has(.adm-table) {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }

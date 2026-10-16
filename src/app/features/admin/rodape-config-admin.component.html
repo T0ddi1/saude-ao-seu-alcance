@@ -1,7 +1,7 @@
 <div class="rodape-config">
-  <div class="adm-page-head">
+  <div class="adm-page-head" *ngIf="!embutido">
     <h2>Rodapé — Textos fixos</h2>
-    <p>Tagline e textos da newsletter que aparecem no rodapé do site. Os links por coluna, redes sociais e projetos especiais ficam nos outros itens do menu.</p>
+    <p>Tagline e textos da newsletter que aparecem no rodapé do site.</p>
   </div>
 
   <p class="adm-alert adm-alert--erro" *ngIf="erro">{{ erro }}</p>

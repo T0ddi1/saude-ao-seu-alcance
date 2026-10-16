@@ -128,7 +128,7 @@
 
 @media (max-width: 900px) {
   .hero {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 24px;
   }
   .hero__media {
@@ -149,8 +149,8 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
+    width: calc(var(--vw, 1vw) * 100);
+    margin-left: calc(50% - var(--vw, 1vw) * 50);
     min-height: 78vh;
     padding: 0 64px 72px;
     gap: 28px;

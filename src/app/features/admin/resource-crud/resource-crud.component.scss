@@ -1,15 +1,29 @@
 .crud {
-  padding: 24px;
+  padding: 0;
   max-width: 1100px;
+
+  &__aviso-home {
+    margin: 0 0 16px;
+    padding: 12px 14px;
+    font-size: 13px;
+    color: var(--adm-muted);
+    background: var(--adm-accent-soft);
+    border-radius: 10px;
+
+    a {
+      color: var(--adm-accent);
+      font-weight: 700;
+    }
+  }
 
   &__grid {
     display: grid;
-    grid-template-columns: 1.3fr 1fr;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
     gap: 20px;
     align-items: start;
   }
   @media (max-width: 800px) {
-    &__grid { grid-template-columns: 1fr; }
+    &__grid { grid-template-columns: minmax(0, 1fr); }
   }
 
   &__imagem {

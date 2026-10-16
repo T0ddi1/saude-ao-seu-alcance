@@ -35,7 +35,7 @@
 
 .health-data__map {
   flex: 0 0 auto;
-  width: 320px;
+  width: min(320px, 100%);
   aspect-ratio: 124 / 124;
   background-color: var(--color-primary);
   mask-image: url('/assets/images/mapa-brasil.svg');
@@ -50,7 +50,7 @@
 .health-data__stats {
   flex: 0 0 340px;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1px;
   background: rgba(255, 255, 255, 0.2);
   border-radius: var(--radius-l);
@@ -101,7 +101,7 @@
     width: 100%;
   }
   .health-data__map {
-    width: 280px;
+    width: min(280px, 100%);
   }
 }
 
@@ -118,12 +118,12 @@
     max-width: none;
   }
   .health-data__map {
-    width: 360px;
+    width: min(360px, 100%);
   }
 }
 
 @media (max-width: 700px) {
   .health-data__stats {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }

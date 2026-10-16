@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IconComponent } from '../../../../shared/components/icon/icon.component';
-import { HomePageData } from '../../../../core/models/home.model';
+import { HealthStatsData } from '../../../../core/models/home.model';
 
 @Component({
   selector: 'app-health-data-section',
@@ -11,15 +11,10 @@ import { HomePageData } from '../../../../core/models/home.model';
   styleUrl: './health-data-section.component.scss',
 })
 export class HealthDataSectionComponent {
-  @Input({ required: true }) healthStats!: HomePageData['healthStats'];
-  @Input({ required: true }) contentCategories!: HomePageData['contentCategories'];
+  @Input({ required: true }) healthStats!: HealthStatsData;
 
   isLastOddStat(index: number): boolean {
     const count = this.healthStats.stats.length;
     return count % 2 !== 0 && index === count - 1;
-  }
-
-  get categoryColumns(): number {
-    return Math.min(this.contentCategories.length, 3) || 1;
   }
 }

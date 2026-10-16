@@ -1,6 +1,8 @@
 import { Component, OnInit, signal, HostListener, ElementRef } from '@angular/core';
+import { LinkComQueryDirective } from '../../directives/link-com-query.directive';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { NavigationStart, Router, RouterLink } from '@angular/router';
+import { filter } from 'rxjs';
 import { NavigationService } from '../../../core/services/navigation.service';
 import { NavItem } from '../../../core/models/navigation.model';
 import { IconComponent } from '../../components/icon/icon.component';
@@ -14,7 +16,7 @@ import { SiteConfigService } from '../../../core/services/site-config.service';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterLink, IconComponent, SearchBoxComponent],
+  imports: [CommonModule, RouterLink, LinkComQueryDirective, IconComponent, SearchBoxComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
@@ -31,8 +33,12 @@ export class HeaderComponent implements OnInit {
     public anchorNav: AnchorNavService,
     private toast: ToastService,
     public authService: AuthService,
-    private siteConfig: SiteConfigService
-  ) {}
+    private siteConfig: SiteConfigService,
+    private router: Router
+  ) {
+    // Qualquer troca de página (link, botão voltar, endereço digitado) fecha o menu do celular e os submenus.
+    this.router.events.pipe(filter((e) => e instanceof NavigationStart)).subscribe(() => this.closeMobileMenu());
+  }
 
   ngOnInit(): void {
     this.navigationService.getNavigation().subscribe((items) => this.navItems.set(items));
@@ -50,6 +56,18 @@ export class HeaderComponent implements OnInit {
   toggleMenu(index: number, event: Event): void {
     event.stopPropagation();
     this.openIndex.update((current) => (current === index ? null : index));
+    setTimeout(() => this.manterSubmenuNaTela());
+  }
+
+  /** Um submenu com várias colunas, no último item do menu, passaria da borda direita: empurra pra esquerda o quanto precisar. */
+  private manterSubmenuNaTela(): void {
+    const submenu = this.elementRef.nativeElement.querySelector<HTMLElement>('.header__mega');
+    if (!submenu) return;
+
+    submenu.style.transform = '';
+    const margem = 16;
+    const excesso = submenu.getBoundingClientRect().right - (document.documentElement.clientWidth - margem);
+    if (excesso > 0) submenu.style.transform = `translateX(${-excesso}px)`;
   }
 
   closeMenu(): void {

@@ -72,6 +72,20 @@
             <label>Ícone</label>
             <app-icon-picker formControlName="icone"></app-icon-picker>
           </div>
+          <div class="adm-field">
+            <label>Foto da seção (aparece no card da página de entrada)</label>
+            <div class="observatorio-admin__foto">
+              <img *ngIf="formSecao.value.imagemUrl" [src]="formSecao.value.imagemUrl" alt="" />
+              <div class="observatorio-admin__foto-vazia" *ngIf="!formSecao.value.imagemUrl">Sem foto</div>
+              <div class="observatorio-admin__foto-acoes">
+                <label class="adm-btn adm-btn--outline">
+                  {{ enviandoImagemSecao ? 'Enviando...' : formSecao.value.imagemUrl ? 'Trocar foto' : 'Enviar foto' }}
+                  <input type="file" accept="image/*" (change)="selecionarImagemSecao($event)" [disabled]="enviandoImagemSecao" hidden />
+                </label>
+                <button type="button" class="adm-btn adm-btn--fantasma" *ngIf="formSecao.value.imagemUrl" (click)="removerImagemSecao()">Remover foto</button>
+              </div>
+            </div>
+          </div>
           <div class="adm-form-acoes">
             <button type="submit" class="adm-btn adm-btn--primario" [disabled]="salvandoSecao">
               {{ salvandoSecao ? 'Criando...' : 'Criar seção' }}
@@ -94,7 +108,7 @@
           </div>
 
           <details class="observatorio-admin__info-secao">
-            <summary>Nome, resumo e ícone desta seção</summary>
+            <summary>Nome, resumo, ícone e foto desta seção</summary>
             <form class="adm-form" [formGroup]="formSecao" (ngSubmit)="salvarSecao()">
               <div class="adm-field">
                 <label for="nomeSecao">Nome</label>
@@ -108,6 +122,20 @@
                 <label>Ícone</label>
                 <app-icon-picker formControlName="icone"></app-icon-picker>
               </div>
+              <div class="adm-field">
+                    <label>Foto da seção (aparece no card da página de entrada)</label>
+                    <div class="observatorio-admin__foto">
+                      <img *ngIf="formSecao.value.imagemUrl" [src]="formSecao.value.imagemUrl" alt="" />
+                      <div class="observatorio-admin__foto-vazia" *ngIf="!formSecao.value.imagemUrl">Sem foto</div>
+                      <div class="observatorio-admin__foto-acoes">
+                        <label class="adm-btn adm-btn--outline">
+                          {{ enviandoImagemSecao ? 'Enviando...' : formSecao.value.imagemUrl ? 'Trocar foto' : 'Enviar foto' }}
+                          <input type="file" accept="image/*" (change)="selecionarImagemSecao($event)" [disabled]="enviandoImagemSecao" hidden />
+                        </label>
+                        <button type="button" class="adm-btn adm-btn--fantasma" *ngIf="formSecao.value.imagemUrl" (click)="removerImagemSecao()">Remover foto</button>
+                      </div>
+                    </div>
+                  </div>
               <div class="adm-form-acoes">
                 <button type="submit" class="adm-btn adm-btn--primario" [disabled]="salvandoSecao">
                   {{ salvandoSecao ? 'Salvando...' : 'Salvar informações' }}
@@ -122,43 +150,74 @@
           </button>
         </ng-container>
 
-        <div class="observatorio-admin__secoes-head observatorio-admin__blocos-head">
-          <h3>O que aparece nesta página</h3>
-          <button
-            type="button"
-            class="adm-btn adm-btn--outline"
-            (click)="abrirEscolhaDeTipo()"
-            *ngIf="!escolhendoTipoBloco && !criandoBloco && !editandoBlocoId"
-          >
-            <app-icon name="fa-solid fa-plus" [size]="14"></app-icon>
-            Adicionar bloco
-          </button>
+        <!-- Mapa da página -->
+        <div class="observatorio-admin__mapa-cartao">
+          <span class="observatorio-admin__mapa-rotulo">Mapa da página — como os blocos se encaixam</span>
+          <div class="observatorio-admin__mapa">
+            <button
+              type="button"
+              class="observatorio-admin__mapa-bloco"
+              *ngFor="let bloco of blocos"
+              [style.grid-column]="'span ' + bloco.colunas"
+              [class.is-ativo]="bloco.id === editandoBlocoId"
+              [class.is-oculto]="!bloco.visivel"
+              (click)="editarBloco(bloco)"
+            >
+              <i [ngClass]="opcaoDoTipo(bloco.tipo)?.icone ?? 'fa-solid fa-cube'"></i>
+              <span>{{ rotulosTipoBloco[bloco.tipo] }}</span>
+            </button>
+            <p class="observatorio-admin__mapa-vazio" *ngIf="!blocos.length">
+              Essa página está vazia — vai ficar em branco pros visitantes. Adicione o primeiro bloco ao lado.
+            </p>
+          </div>
         </div>
-        <p class="observatorio-admin__ajuda" *ngIf="blocos.length">
-          Cada bloco é uma "fatia" da página, na ordem em que aparece nesta lista. Arraste pra reordenar.
-        </p>
 
-        <ul class="observatorio-admin__lista-blocos" cdkDropList (cdkDropListDropped)="soltarBloco($event)" *ngIf="blocos.length">
-          <li *ngFor="let bloco of blocos" cdkDrag>
-            <app-icon name="fa-solid fa-grip-lines" [size]="14" color="var(--adm-muted)" class="observatorio-admin__arrastar"></app-icon>
-            <app-icon [name]="opcaoDoTipo(bloco.tipo)?.icone ?? 'fa-solid fa-cube'" [size]="18" color="var(--adm-accent)"></app-icon>
-            <span class="observatorio-admin__bloco-titulo-item">
-              <strong>{{ rotulosTipoBloco[bloco.tipo] }}</strong>
-              <small>{{ bloco.titulo || '(sem título)' }}</small>
-            </span>
-            <span class="observatorio-admin__bloco-acoes">
-              <button type="button" class="adm-btn adm-btn--icone" (click)="editarBloco(bloco)" title="Editar">
-                <app-icon name="fa-solid fa-pen" [size]="14"></app-icon>
-              </button>
-              <button type="button" class="adm-btn adm-btn--icone adm-btn--icone-perigo" (click)="excluirBloco(bloco)" title="Excluir">
-                <app-icon name="fa-solid fa-trash" [size]="14"></app-icon>
-              </button>
-            </span>
-          </li>
-        </ul>
-        <p class="adm-empty" *ngIf="!blocos.length && !escolhendoTipoBloco">
-          Essa página ainda não tem nenhum bloco — ela vai ficar em branco pros visitantes. Clique em "Adicionar bloco" pra começar.
-        </p>
+        <div class="observatorio-admin__corpo">
+          <aside class="observatorio-admin__blocos-lista">
+            <p class="observatorio-admin__lista-titulo">Blocos, de cima pra baixo</p>
+            <p class="observatorio-admin__lista-dica" *ngIf="blocos.length > 1">Arraste pra mudar a ordem. O olho liga e desliga.</p>
+
+            <div cdkDropList class="observatorio-admin__blocos" (cdkDropListDropped)="soltarBloco($event)">
+              <div
+                class="observatorio-admin__bloco-item"
+                cdkDrag
+                *ngFor="let bloco of blocos"
+                [class.is-ativo]="bloco.id === editandoBlocoId"
+                [class.is-oculto]="!bloco.visivel"
+                (click)="editarBloco(bloco)"
+              >
+                <i class="fa-solid fa-grip-vertical observatorio-admin__arrastar" cdkDragHandle (click)="$event.stopPropagation()"></i>
+                <i class="observatorio-admin__bloco-icone" [ngClass]="opcaoDoTipo(bloco.tipo)?.icone ?? 'fa-solid fa-cube'"></i>
+                <span class="observatorio-admin__bloco-titulo-item">
+                  <strong>{{ bloco.titulo ? rotulosTipoBloco[bloco.tipo] + ': ' + bloco.titulo : rotulosTipoBloco[bloco.tipo] }}</strong>
+                  <small>{{ bloco.visivel ? nomeLargura(bloco.colunas) : 'Escondido do site' }}</small>
+                </span>
+                <button
+                  type="button"
+                  class="adm-btn adm-btn--icone"
+                  (click)="alternarVisivelBloco(bloco, $event)"
+                  [title]="bloco.visivel ? 'Esconder do site' : 'Mostrar no site'"
+                >
+                  <i class="fa-solid" [ngClass]="bloco.visivel ? 'fa-eye' : 'fa-eye-slash'"></i>
+                </button>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              class="observatorio-admin__bloco-item observatorio-admin__bloco-item--novo"
+              [class.is-ativo]="escolhendoTipoBloco"
+              (click)="abrirEscolhaDeTipo()"
+            >
+              <i class="fa-solid fa-plus"></i>
+              <strong>Adicionar bloco</strong>
+            </button>
+          </aside>
+
+          <div class="observatorio-admin__corpo-editor">
+            <p class="observatorio-admin__aviso" *ngIf="!escolhendoTipoBloco && !criandoBloco && !editandoBlocoId && blocos.length">
+              Selecione um bloco no mapa ou na lista pra editar, ou adicione um novo.
+            </p>
 
         <div class="observatorio-admin__tipos" *ngIf="escolhendoTipoBloco">
           <div class="observatorio-admin__secoes-head">
@@ -391,9 +450,41 @@
                 </div>
               </form>
             </div>
-            <p class="observatorio-admin__aviso" *ngIf="formBloco.value.tipo === 'CardsSecoes'">
-              Não precisa configurar nada — os cards são gerados automaticamente a partir das seções já cadastradas.
-            </p>
+            <div class="adm-field" *ngIf="formBloco.value.tipo === 'CardsSecoes'">
+              <label>Fotos dos cards</label>
+              <p class="adm-dica">Os cards são gerados sozinhos a partir das seções. Aqui você escolhe a foto de cada um.</p>
+              <ul class="observatorio-admin__fotos-secoes">
+                <li *ngFor="let secao of secoes">
+                  <img *ngIf="secao.imagemUrl" [src]="secao.imagemUrl" alt="" />
+                  <span class="observatorio-admin__foto-vazia" *ngIf="!secao.imagemUrl">Sem foto</span>
+                  <strong>{{ secao.nome }}</strong>
+                  <label class="adm-btn adm-btn--outline">
+                    {{ enviandoFotoSecaoId === secao.id ? 'Enviando...' : secao.imagemUrl ? 'Trocar foto' : 'Enviar foto' }}
+                    <input type="file" accept="image/*" (change)="enviarFotoDaSecao(secao, $event)" [disabled]="enviandoFotoSecaoId === secao.id" hidden />
+                  </label>
+                  <button type="button" class="adm-btn adm-btn--fantasma" *ngIf="secao.imagemUrl" (click)="removerFotoDaSecao(secao)">Remover</button>
+                </li>
+              </ul>
+            </div>
+
+            <h4 class="observatorio-admin__secao-form">Como aparece</h4>
+
+            <div class="adm-field">
+              <label>Largura do bloco</label>
+              <div class="observatorio-admin__larguras">
+                <label class="observatorio-admin__largura" *ngFor="let largura of larguras" [class.is-marcada]="formBloco.value.colunas === largura.colunas">
+                  <input type="radio" [value]="largura.colunas" formControlName="colunas" />
+                  <span class="observatorio-admin__largura-barra"><i [style.width.%]="(largura.colunas / 12) * 100"></i></span>
+                  <strong>{{ largura.nome }}</strong>
+                </label>
+              </div>
+              <p class="adm-dica">Blocos seguidos que somam uma linha ficam lado a lado (ex.: dois terços + um terço). No celular todos ocupam a linha inteira.</p>
+            </div>
+
+            <label class="adm-checkbox">
+              <input type="checkbox" formControlName="visivel" />
+              Mostrar este bloco no site
+            </label>
 
             <div class="adm-form-acoes">
               <button type="submit" class="adm-btn adm-btn--primario">{{ criandoBloco ? 'Adicionar bloco' : 'Salvar bloco' }}</button>
@@ -404,10 +495,10 @@
           <div class="observatorio-admin__preview">
             <span class="observatorio-admin__preview-label">
               <app-icon name="fa-solid fa-eye" [size]="14"></app-icon>
-              Como vai ficar
+              Como vai ficar <em class="observatorio-admin__preview-nota">(só uma prévia — os links não funcionam aqui)</em>
             </span>
 
-            <div class="observatorio-admin__preview-area" *ngIf="preview as p; else semPreview">
+            <div class="observatorio-admin__preview-area" inert [style.width.%]="larguraPreview" *ngIf="preview as p; else semPreview">
               <ng-container [ngSwitch]="p.tipo">
                 <ng-container *ngSwitchCase="'Texto'">
                   <h2 class="observatorio-admin__preview-bloco-titulo" *ngIf="p.titulo">{{ p.titulo }}</h2>
@@ -448,6 +539,8 @@
             <ng-template #semPreview>
               <p class="adm-empty">{{ carregandoPreview ? 'Carregando preview...' : 'Preencha o formulário pra ver o preview.' }}</p>
             </ng-template>
+          </div>
+        </div>
           </div>
         </div>
       </ng-container>

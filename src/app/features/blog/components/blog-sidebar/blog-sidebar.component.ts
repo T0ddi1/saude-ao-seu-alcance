@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { LinkComQueryDirective } from '../../../../shared/directives/link-com-query.directive';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { IconComponent } from '../../../../shared/components/icon/icon.component';
@@ -8,7 +9,7 @@ import { BlogCategory, RecentPost, SponsorCard } from '../../../../core/models/b
 @Component({
   selector: 'app-blog-sidebar',
   standalone: true,
-  imports: [CommonModule, RouterLink, IconComponent, ButtonComponent],
+  imports: [CommonModule, RouterLink, LinkComQueryDirective, IconComponent, ButtonComponent],
   templateUrl: './blog-sidebar.component.html',
   styleUrl: './blog-sidebar.component.scss',
 })

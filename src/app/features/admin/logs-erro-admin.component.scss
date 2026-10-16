@@ -184,7 +184,7 @@
 
 .dash__detalhes {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 14px 20px;
   margin: 0;
 
@@ -216,7 +216,7 @@
 
 @media (max-width: 560px) {
   .dash__detalhes {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   .logs-erro__kpi--categorias {
     grid-column: span 1;

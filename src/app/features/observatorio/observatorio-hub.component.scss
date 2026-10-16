@@ -76,3 +76,23 @@
   font-size: var(--fs-label-s);
   color: var(--color-muted);
 }
+
+.hub__blocos {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 40px;
+}
+
+.hub__bloco {
+  grid-column: span var(--colunas, 12);
+}
+
+@media (max-width: 1100px) {
+  // 11 espaços de 40px entre as 12 colunas passam da largura da tela; em telas menores que 1100px os blocos empilham (linha inteira), então sem espaço lateral
+  .hub__blocos {
+    column-gap: 0;
+  }
+  .hub__bloco {
+    grid-column: span 12;
+  }
+}

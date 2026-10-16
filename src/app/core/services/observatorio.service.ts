@@ -24,6 +24,7 @@ interface IndicadorApi {
 interface BlocoApi {
   tipo: 'Texto' | 'Indicadores' | 'GradeArtigos' | 'CardsSecoes';
   titulo: string | null;
+  colunas?: number;
   conteudoHtml?: string;
   indicadores?: IndicadorApi[];
   artigos?: ArticleSummaryApi[];
@@ -71,15 +72,16 @@ export class ObservatorioService {
   private paraBloco(bloco: BlocoApi): BlocoObservatorioPublico {
     switch (bloco.tipo) {
       case 'Texto':
-        return { tipo: 'Texto', titulo: bloco.titulo, blocos: parseContentHtml(bloco.conteudoHtml ?? '') };
+        return { tipo: 'Texto', titulo: bloco.titulo, colunas: bloco.colunas ?? 12, blocos: parseContentHtml(bloco.conteudoHtml ?? '') };
       case 'Indicadores':
-        return { tipo: 'Indicadores', titulo: bloco.titulo, indicadores: bloco.indicadores ?? [] };
+        return { tipo: 'Indicadores', titulo: bloco.titulo, colunas: bloco.colunas ?? 12, indicadores: bloco.indicadores ?? [] };
       case 'CardsSecoes':
-        return { tipo: 'CardsSecoes', titulo: bloco.titulo, secoes: bloco.secoes ?? [] };
+        return { tipo: 'CardsSecoes', titulo: bloco.titulo, colunas: bloco.colunas ?? 12, secoes: bloco.secoes ?? [] };
       case 'GradeArtigos':
         return {
           tipo: 'GradeArtigos',
           titulo: bloco.titulo,
+          colunas: bloco.colunas ?? 12,
           artigos: (bloco.artigos ?? []).map((a) => ({
             date: this.formatarData(a.publishedAt),
             title: a.title,

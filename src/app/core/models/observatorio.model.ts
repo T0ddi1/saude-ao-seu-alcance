@@ -12,29 +12,34 @@ export interface SecaoObservatorioResumo {
   slug: string;
   resumo: string | null;
   icone: string | null;
+  imagemUrl?: string | null;
 }
 
 export interface BlocoTexto {
   tipo: 'Texto';
   titulo: string | null;
+  colunas: number;
   blocos: ContentBlock[];
 }
 
 export interface BlocoIndicadores {
   tipo: 'Indicadores';
   titulo: string | null;
+  colunas: number;
   indicadores: IndicadorObservatorio[];
 }
 
 export interface BlocoGradeArtigos {
   tipo: 'GradeArtigos';
   titulo: string | null;
+  colunas: number;
   artigos: BlogArticle[];
 }
 
 export interface BlocoCardsSecoes {
   tipo: 'CardsSecoes';
   titulo: string | null;
+  colunas: number;
   secoes: SecaoObservatorioResumo[];
 }
 

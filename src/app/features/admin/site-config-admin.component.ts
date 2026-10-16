@@ -106,6 +106,7 @@ export class SiteConfigAdminComponent implements OnInit, ComponenteComAlteracoes
 
   restaurarArquivoPadrao(chave: 'logoUrl' | 'faviconUrl'): void {
     this.formulario.get(chave)?.setValue('');
+    this.formulario.markAsDirty();
   }
 
   selecionarArquivo(event: Event, chave: 'logoUrl' | 'faviconUrl'): void {
@@ -117,6 +118,7 @@ export class SiteConfigAdminComponent implements OnInit, ComponenteComAlteracoes
     this.uploadService.enviar(arquivo).subscribe({
       next: (url) => {
         this.formulario.patchValue({ [chave]: url });
+        this.formulario.markAsDirty();
         this.enviando[chave] = false;
       },
       error: () => {

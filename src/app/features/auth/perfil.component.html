@@ -21,7 +21,7 @@
 
     <label>
       Nome completo
-      <input type="text" formControlName="nomeCompleto" />
+      <input type="text" formControlName="nomeCompleto" autocomplete="name" />
     </label>
 
     <label>
@@ -31,7 +31,7 @@
 
     <label>
       Celular
-      <input type="text" formControlName="celular" placeholder="(00) 00000-0000" />
+      <input type="tel" inputmode="tel" formControlName="celular" placeholder="(00) 00000-0000" autocomplete="tel" />
     </label>
 
     <fieldset class="perfil__endereco">
@@ -39,11 +39,11 @@
 
       <label>
         CEP
-        <input type="text" formControlName="cep" />
+        <input type="text" inputmode="numeric" formControlName="cep" autocomplete="postal-code" />
       </label>
       <label>
         Logradouro
-        <input type="text" formControlName="logradouro" />
+        <input type="text" formControlName="logradouro" autocomplete="address-line1" />
       </label>
       <div class="perfil__linha">
         <label>
@@ -52,7 +52,7 @@
         </label>
         <label>
           Complemento
-          <input type="text" formControlName="complemento" />
+          <input type="text" formControlName="complemento" autocomplete="address-line2" />
         </label>
       </div>
       <label>
@@ -62,11 +62,11 @@
       <div class="perfil__linha">
         <label>
           Cidade
-          <input type="text" formControlName="cidade" />
+          <input type="text" formControlName="cidade" autocomplete="address-level2" />
         </label>
         <label>
           Estado (UF)
-          <input type="text" formControlName="estado" maxlength="2" />
+          <input type="text" formControlName="estado" maxlength="2" autocomplete="address-level1" />
         </label>
       </div>
     </fieldset>

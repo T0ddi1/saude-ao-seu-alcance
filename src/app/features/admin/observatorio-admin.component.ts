@@ -6,6 +6,7 @@ import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-
 import { Subject, debounceTime, takeUntil } from 'rxjs';
 import { AdminApiService } from '../../core/services/admin-api.service';
 import { SwalService } from '../../core/services/swal.service';
+import { UploadService } from '../../core/services/upload.service';
 import { QuillEditorComponent } from '../../shared/components/quill-editor/quill-editor.component';
 import { IconPickerComponent } from '../../shared/components/icon-picker/icon-picker.component';
 import { IconComponent } from '../../shared/components/icon/icon.component';
@@ -22,6 +23,7 @@ interface CategoriaAdmin {
   slug: string;
   resumo: string | null;
   icone: string | null;
+  imagemUrl?: string | null;
   ehSecaoObservatorio: boolean;
   ativo: boolean;
 }
@@ -37,6 +39,8 @@ interface BlocoAdmin {
   conteudoHtml: string | null;
   limiteItens: number;
   ordem: number;
+  colunas: number;
+  visivel: boolean;
   modo: ModoGrade;
   categoriaFiltroId: number | null;
   configuracaoJson: string | null;
@@ -112,6 +116,7 @@ interface PreviewSecao {
   slug: string;
   resumo: string | null;
   icone: string | null;
+  imagemUrl?: string | null;
 }
 
 interface PreviewBloco {
@@ -158,6 +163,13 @@ const ROTULOS_TIPO_BLOCO: Record<TipoBloco, string> = Object.fromEntries(
   OPCOES_TIPO_BLOCO.map((o) => [o.tipo, o.rotulo]),
 ) as Record<TipoBloco, string>;
 
+const LARGURAS_BLOCO = [
+  { colunas: 12, nome: 'Linha inteira' },
+  { colunas: 8, nome: 'Dois terços' },
+  { colunas: 6, nome: 'Metade' },
+  { colunas: 4, nome: 'Um terço' },
+];
+
 const ROTULOS_MODO_GRADE: Record<ModoGrade, string> = {
   Manual: 'Manual — eu escolho os artigos',
   RecentesAuto: 'Automático — mais recentes',
@@ -186,8 +198,10 @@ export class ObservatorioAdminComponent implements OnInit, OnDestroy, Componente
   private api = inject(AdminApiService);
   private fb = inject(FormBuilder);
   private swal = inject(SwalService);
+  private upload = inject(UploadService);
   private destruido = new Subject<void>();
 
+  readonly larguras = LARGURAS_BLOCO;
   readonly rotulosTipoBloco = ROTULOS_TIPO_BLOCO;
   readonly opcoesTipoBloco = OPCOES_TIPO_BLOCO;
   readonly rotulosModoGrade = ROTULOS_MODO_GRADE;
@@ -210,7 +224,11 @@ export class ObservatorioAdminComponent implements OnInit, OnDestroy, Componente
     nome: [''],
     resumo: [''],
     icone: [''],
+    imagemUrl: [''],
   });
+
+  enviandoImagemSecao = false;
+  enviandoFotoSecaoId: number | null = null;
 
   blocos: BlocoAdmin[] = [];
   indicadores: IndicadorAdmin[] = [];
@@ -229,6 +247,8 @@ export class ObservatorioAdminComponent implements OnInit, OnDestroy, Componente
     titulo: [''],
     conteudoHtml: [''],
     limiteItens: [4],
+    colunas: [12],
+    visivel: [true],
     modo: 'RecentesAuto' as ModoGrade,
     categoriaFiltroId: null as number | null,
   });
@@ -335,7 +355,7 @@ export class ObservatorioAdminComponent implements OnInit, OnDestroy, Componente
   abrirSecao(secao: CategoriaAdmin): void {
     this.paginaAtual = secao.id;
     this.criandoNova = false;
-    this.formSecao.reset({ nome: secao.nome, resumo: secao.resumo ?? '', icone: secao.icone ?? '' });
+    this.formSecao.reset({ nome: secao.nome, resumo: secao.resumo ?? '', icone: secao.icone ?? '', imagemUrl: secao.imagemUrl ?? '' });
     this.fecharEdicaoBloco();
     this.fecharEdicaoIndicador();
     this.carregarBlocosEIndicadores();
@@ -344,7 +364,7 @@ export class ObservatorioAdminComponent implements OnInit, OnDestroy, Componente
   novaSecao(): void {
     this.criandoNova = true;
     this.paginaAtual = 'hub'; // até salvar, não há seção selecionável
-    this.formSecao.reset({ nome: '', resumo: '', icone: '' });
+    this.formSecao.reset({ nome: '', resumo: '', icone: '', imagemUrl: '' });
     this.blocos = [];
     this.indicadores = [];
   }
@@ -363,6 +383,7 @@ export class ObservatorioAdminComponent implements OnInit, OnDestroy, Componente
       nome: this.formSecao.value.nome,
       resumo: this.formSecao.value.resumo || null,
       icone: this.formSecao.value.icone || null,
+      imagemUrl: this.formSecao.value.imagemUrl || null,
       ehSecaoObservatorio: true,
     };
 
@@ -385,6 +406,68 @@ export class ObservatorioAdminComponent implements OnInit, OnDestroy, Componente
       error: () => {
         this.erro = 'Não foi possível salvar a seção.';
         this.salvandoSecao = false;
+      },
+    });
+  }
+
+  selecionarImagemSecao(evento: Event): void {
+    const input = evento.target as HTMLInputElement;
+    const arquivo = input.files?.[0];
+    if (!arquivo) return;
+
+    this.enviandoImagemSecao = true;
+    this.upload.enviar(arquivo).subscribe({
+      next: (url) => {
+        this.formSecao.patchValue({ imagemUrl: url });
+        this.formSecao.markAsDirty();
+        this.enviandoImagemSecao = false;
+      },
+      error: () => {
+        this.enviandoImagemSecao = false;
+        this.swal.erro('Não foi possível enviar a foto.');
+      },
+    });
+    input.value = '';
+  }
+
+  removerImagemSecao(): void {
+    this.formSecao.patchValue({ imagemUrl: '' });
+    this.formSecao.markAsDirty();
+  }
+
+  /** Troca a foto de uma seção direto da lista do bloco "Cards das seções" e já atualiza a prévia. */
+  enviarFotoDaSecao(secao: CategoriaAdmin, evento: Event): void {
+    const input = evento.target as HTMLInputElement;
+    const arquivo = input.files?.[0];
+    if (!arquivo) return;
+
+    this.enviandoFotoSecaoId = secao.id;
+    this.upload.enviar(arquivo).subscribe({
+      next: (url) => this.salvarFotoDaSecao(secao, url),
+      error: () => {
+        this.enviandoFotoSecaoId = null;
+        this.swal.erro('Não foi possível enviar a foto.');
+      },
+    });
+    input.value = '';
+  }
+
+  removerFotoDaSecao(secao: CategoriaAdmin): void {
+    this.enviandoFotoSecaoId = secao.id;
+    this.salvarFotoDaSecao(secao, null);
+  }
+
+  private salvarFotoDaSecao(secao: CategoriaAdmin, imagemUrl: string | null): void {
+    const payload = { nome: secao.nome, resumo: secao.resumo, icone: secao.icone, imagemUrl, ehSecaoObservatorio: true };
+    this.api.atualizar<CategoriaAdmin>('categorias', secao.id, payload).subscribe({
+      next: () => {
+        secao.imagemUrl = imagemUrl;
+        this.enviandoFotoSecaoId = null;
+        this.atualizarPreview();
+      },
+      error: () => {
+        this.enviandoFotoSecaoId = null;
+        this.swal.erro('Não foi possível salvar a foto.');
       },
     });
   }
@@ -423,7 +506,7 @@ export class ObservatorioAdminComponent implements OnInit, OnDestroy, Componente
     this.criandoBloco = true;
     this.editandoBlocoId = null;
     this.artigosSelecionados = [];
-    this.formBloco.reset({ tipo, titulo: '', conteudoHtml: '', limiteItens: 4, modo: 'RecentesAuto', categoriaFiltroId: null });
+    this.formBloco.reset({ tipo, titulo: '', conteudoHtml: '', limiteItens: 4, colunas: 12, visivel: true, modo: 'RecentesAuto', categoriaFiltroId: null });
   }
 
   editarBloco(bloco: BlocoAdmin): void {
@@ -436,6 +519,8 @@ export class ObservatorioAdminComponent implements OnInit, OnDestroy, Componente
       titulo: bloco.titulo ?? '',
       conteudoHtml: bloco.conteudoHtml ?? '',
       limiteItens: bloco.limiteItens || 4,
+      colunas: bloco.colunas || 12,
+      visivel: bloco.visivel !== false,
       modo: bloco.modo || 'RecentesAuto',
       categoriaFiltroId: bloco.categoriaFiltroId,
     });
@@ -494,6 +579,8 @@ export class ObservatorioAdminComponent implements OnInit, OnDestroy, Componente
       titulo: valor.titulo || null,
       conteudoHtml: valor.conteudoHtml || null,
       limiteItens: valor.limiteItens || 4,
+      colunas: valor.colunas || 12,
+      visivel: valor.visivel !== false,
       modo: valor.modo,
       categoriaFiltroId: valor.categoriaFiltroId,
       configuracaoJson: valor.modo === 'Manual' ? JSON.stringify({ artigoIds: this.artigosSelecionados.map((a) => a.id) }) : null,
@@ -534,6 +621,24 @@ export class ObservatorioAdminComponent implements OnInit, OnDestroy, Componente
     if (!ok) return;
 
     this.api.excluir('blocos-observatorio', bloco.id).subscribe(() => this.carregarBlocosEIndicadores());
+  }
+
+  nomeLargura(colunas: number): string {
+    return LARGURAS_BLOCO.find((l) => l.colunas === colunas)?.nome ?? `${colunas}/12`;
+  }
+
+  get larguraPreview(): number {
+    return ((this.formBloco.value.colunas ?? 12) / 12) * 100;
+  }
+
+  /** Esconde (ou volta a mostrar) o bloco no site, sem excluir. */
+  alternarVisivelBloco(bloco: BlocoAdmin, evento: Event): void {
+    evento.stopPropagation();
+    const visivel = !bloco.visivel;
+    this.api.atualizar('blocos-observatorio', bloco.id, { ...bloco, visivel }).subscribe(() => {
+      bloco.visivel = visivel;
+      if (this.editandoBlocoId === bloco.id) this.formBloco.patchValue({ visivel }, { emitEvent: false });
+    });
   }
 
   soltarBloco(event: CdkDragDrop<BlocoAdmin[]>): void {
@@ -787,7 +892,7 @@ export class ObservatorioAdminComponent implements OnInit, OnDestroy, Componente
     return {
       icon: (secao.icone ?? 'dot') as IconGlyph,
       title: secao.nome,
-      image: null,
+      image: secao.imagemUrl ?? null,
       excerpt: secao.resumo ?? '',
       linkLabel: 'Explorar',
       href: '#',

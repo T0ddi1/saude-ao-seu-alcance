@@ -1,4 +1,5 @@
 import { Component, OnInit, signal } from '@angular/core';
+import { LinkComQueryDirective } from '../../directives/link-com-query.directive';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FooterService } from '../../../core/services/footer.service';
@@ -10,7 +11,7 @@ import { AnchorNavService } from '../../../core/services/anchor-nav.service';
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [CommonModule, RouterLink, IconComponent, NewsletterFormComponent],
+  imports: [CommonModule, RouterLink, LinkComQueryDirective, IconComponent, NewsletterFormComponent],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss',
 })

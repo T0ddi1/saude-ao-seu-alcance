@@ -103,3 +103,23 @@
   font-size: var(--fs-body-m);
   color: var(--color-muted);
 }
+
+.secao__blocos {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 40px;
+}
+
+.secao__bloco {
+  grid-column: span var(--colunas, 12);
+}
+
+@media (max-width: 1100px) {
+  // 11 espaços de 40px entre as 12 colunas passam da largura da tela; em telas menores que 1100px os blocos empilham (linha inteira), então sem espaço lateral
+  .secao__blocos {
+    column-gap: 0;
+  }
+  .secao__bloco {
+    grid-column: span 12;
+  }
+}

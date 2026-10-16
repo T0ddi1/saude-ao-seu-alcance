@@ -48,6 +48,7 @@
   width: 100%;
   max-width: 460px;
   max-height: 85vh;
+  max-height: 85dvh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -151,6 +152,7 @@
   padding: 0;
   overflow-y: auto;
   max-height: 45vh;
+  max-height: 45dvh;
   display: flex;
   flex-direction: column;
   gap: 4px;

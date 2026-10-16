@@ -52,8 +52,13 @@ html, body {
 }
 
 html {
-  
   scroll-behavior: smooth;
+  /* Rede de segurança: nada (ex: faixa de largura total com 100vw) pode criar rolagem horizontal. */
+  overflow-x: hidden;
+  overflow-x: clip;
+  /* iPhone em modo paisagem não infla o tamanho das fontes sozinho */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -79,6 +84,11 @@ p {
   margin: 0;
 }
 
+/* Palavras sem espaço (e-mail, URL, nome longo) quebram em vez de empurrar a página pro lado no celular */
+p, h1, h2, h3, h4, h5, h6, li, blockquote, figcaption, td, th, dd {
+  overflow-wrap: break-word;
+}
+
 a {
   color: var(--color-primary);
   text-decoration: none;
@@ -93,9 +103,18 @@ button {
   font-family: var(--font-body);
 }
 
+/* Toque rápido: sem espera de 300ms nem zoom por duplo toque em links e botões */
+a, button, input, select, textarea, label, summary {
+  touch-action: manipulation;
+}
+
 img {
   max-width: 100%;
   display: block;
+}
+
+video, iframe, canvas, embed, object {
+  max-width: 100%;
 }
 
 :focus-visible {
@@ -189,5 +208,73 @@ main:focus {
     content: '';
     position: absolute;
     inset: -10px;
+  }
+}
+
+/*
+ * Celular e tablet (toque ou tela estreita):
+ * - campos com menos de 16px fazem o iPhone dar zoom ao focar, e a página "escorrega" pro lado;
+ * - links e botões precisam de pelo menos 44px de área de toque.
+ */
+@media (pointer: coarse), (max-width: 900px) {
+  input:not([type='checkbox']):not([type='radio']):not([type='file']):not([type='range']),
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+
+  .breadcrumb a {
+    padding-block: 12px;
+  }
+  .pagination__side,
+  .pagination__page {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  .sidebar__categories a,
+  .sidebar__post-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .auth__toggle {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  .nl-modal__close,
+  .article__favorite,
+  .perfil__sair {
+    min-height: 44px;
+  }
+  .nl-modal__close {
+    min-width: 44px;
+  }
+  .secao__ver-todos {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .article__share-btn {
+    width: 44px !important;
+    height: 44px !important;
+  }
+}
+
+/* Totem: o conteúdo não pode ficar escondido atrás da barra de navegação fixa. */
+html.is-totem body {
+  padding-bottom: 104px;
+}
+
+/*
+ * Totem e telas verticais grandes (1000px+ em pé): texto maior pra ler de longe
+ * e páginas de conteúdo em UMA coluna (a barra lateral vai pro fim, em vez de espremer o texto).
+ */
+@media (min-width: 1000px) and (orientation: portrait) {
+  :root {
+    --fs-body-l: 26px;
+    --fs-body-m: 22px;
+    --fs-body-s: 19px;
+    --fs-label-m: 17px;
+    --fs-label-s: 15px;
   }
 }

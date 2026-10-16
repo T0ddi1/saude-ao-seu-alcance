@@ -5,59 +5,38 @@
   padding: 40px var(--gutter) 0;
 }
 
-.home__top {
+// A Home é uma grade de 12 colunas; cada bloco ocupa a largura (--colunas) definida no admin.
+.home__blocos {
   display: grid;
-  grid-template-columns: minmax(0, 1.6fr) minmax(360px, 1fr);
-  gap: 40px;
-  align-items: center;
-  padding-bottom: 48px;
-  border-bottom: 1px solid var(--color-border);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 40px;
+  align-items: stretch;
 }
 
-.home__grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 32px 24px;
-  padding: 48px 0;
+.home__bloco {
+  grid-column: span var(--colunas, 12);
 }
 
 @media (max-width: 1100px) {
-  .home__grid {
-    grid-template-columns: repeat(2, 1fr);
+  // 11 espaços de 40px entre as 12 colunas passam da largura da tela; em telas menores que 1100px os blocos empilham (linha inteira), então sem espaço lateral
+  .home__blocos {
+    column-gap: 0;
+  }
+  .home__bloco {
+    grid-column: span 12;
   }
 }
-
-@media (max-width: 900px) {
-  .home__top {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 560px) {
-  .home__grid {
-    grid-template-columns: 1fr;
-  }
-}
-
 
 @media (min-width: 1000px) and (orientation: portrait) {
   :host {
     padding-top: 0;
   }
 
-  .home__top {
-    display: block;
-    padding-bottom: 0;
-    border-bottom: none;
+  // Totem / tela vertical: o "Em alta" some e o carrossel ocupa a largura toda, qualquer que seja a largura configurada no admin
+  .home__bloco {
+    grid-column: span 12;
   }
-
-  app-trending-panel {
-    display: none;
-  }
-
-  .home__grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 40px 32px;
-    padding: 56px 0;
+  .home__blocos {
+    column-gap: 0;
   }
 }

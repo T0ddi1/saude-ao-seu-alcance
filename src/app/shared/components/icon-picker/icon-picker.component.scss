@@ -60,6 +60,7 @@
   width: 100%;
   max-width: 420px;
   max-height: 80vh;
+  max-height: 80dvh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -158,11 +159,12 @@
 
 .icon-picker__grade {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 4px;
   padding: 14px;
   overflow-y: auto;
   max-height: 50vh;
+  max-height: 50dvh;
 }
 
 .icon-picker__item {

@@ -6,21 +6,14 @@
 <app-footer *ngIf="!isAdmin()"></app-footer>
 <app-toast></app-toast>
 
-<button
-  type="button"
-  class="fullscreen-btn"
-  *ngIf="totem.isTotem() && !totem.isFullscreen()"
-  (click)="totem.goFullscreen()"
->
-  Tocar para tela cheia
-</button>
-
-<button
-  type="button"
-  class="back-btn"
-  *ngIf="totem.isTotem() && !isHome() && !totem.menuOpen()"
-  (click)="goBack()"
-  aria-label="Voltar"
->
-  ← Voltar
-</button>
+<nav class="totem-nav" *ngIf="totem.isTotem() && !totem.menuOpen()" aria-label="Navegação do totem">
+  <button type="button" class="totem-nav__btn" *ngIf="!isHome()" (click)="goBack()" aria-label="Voltar">
+    <span aria-hidden="true">←</span> Voltar
+  </button>
+  <button type="button" class="totem-nav__btn totem-nav__btn--destaque" *ngIf="!isHome()" (click)="goHome()" aria-label="Ir para o início">
+    <span aria-hidden="true">⌂</span> Início
+  </button>
+  <button type="button" class="totem-nav__btn" *ngIf="!totem.isFullscreen()" (click)="totem.goFullscreen()">
+    Tela cheia
+  </button>
+</nav>

@@ -1,6 +1,6 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AdminApiService } from '../../../core/services/admin-api.service';
@@ -10,7 +10,7 @@ import { ComponenteComAlteracoes } from '../../../core/guards/alteracoes-nao-sal
 import { CampoFormulario, RECURSOS_ADMIN, RecursoAdminConfig } from './admin-resources.config';
 import { QuillEditorComponent } from '../../../shared/components/quill-editor/quill-editor.component';
 import { ArtigoAdmin, CategoriaAdmin } from '../../../core/models/admin.model';
-import { SecaoHomeConfigComponent } from '../secao-home-config/secao-home-config.component';
+import { LinkVinculoComponent } from '../../../shared/components/link-vinculo/link-vinculo.component';
 import { IconPickerComponent } from '../../../shared/components/icon-picker/icon-picker.component';
 import { IconComponent } from '../../../shared/components/icon/icon.component';
 import { IndicadorIbgeSelectComponent } from '../../../shared/components/indicador-ibge-select/indicador-ibge-select.component';
@@ -30,7 +30,7 @@ interface PaginaInstitucionalResumo {
 @Component({
   selector: 'app-resource-crud',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, QuillEditorComponent, SecaoHomeConfigComponent, IconPickerComponent, IconComponent, IndicadorIbgeSelectComponent],
+  imports: [CommonModule, ReactiveFormsModule, QuillEditorComponent, RouterLink, IconPickerComponent, IconComponent, IndicadorIbgeSelectComponent, LinkVinculoComponent],
   templateUrl: './resource-crud.component.html',
   styleUrl: './resource-crud.component.scss',
 })
@@ -70,21 +70,9 @@ export class ResourceCrudComponent implements OnInit, ComponenteComAlteracoes {
     });
   }
 
-  vincular(campo: string, valor: string): void {
-    const [tipo, idTexto] = valor.split(':');
-    const id = Number(idTexto);
-    if (!tipo || !id) return;
-
-    if (tipo === 'artigo') {
-      const artigo = this.artigos.find((a) => a.id === id);
-      if (artigo) this.formulario.patchValue({ [campo]: `/artigos/${artigo.categoriaSlug ?? 'geral'}/${artigo.slug}` });
-    } else if (tipo === 'pagina') {
-      const pagina = this.paginas.find((p) => p.id === id);
-      if (pagina) this.formulario.patchValue({ [campo]: `/${pagina.slug}` });
-    } else if (tipo === 'categoria') {
-      const categoria = this.categorias.find((c) => c.id === id);
-      if (categoria) this.formulario.patchValue({ [campo]: `/blog?categoria=${categoria.slug}` });
-    }
+  vincular(campo: string, caminho: string): void {
+    this.formulario.patchValue({ [campo]: caminho });
+    this.formulario.markAsDirty();
   }
 
   get temPreviewVisual(): boolean {

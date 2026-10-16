@@ -8,8 +8,9 @@
     </header>
     <p class="secao__resumo" *ngIf="d.resumo">{{ d.resumo }}</p>
 
+    <div class="secao__blocos">
     <ng-container *ngFor="let bloco of d.blocos">
-      <section class="secao__bloco" *ngIf="bloco.tipo === 'Texto'">
+      <section class="secao__bloco" [style.--colunas]="bloco.colunas" *ngIf="bloco.tipo === 'Texto'">
         <h2 class="secao__bloco-titulo" *ngIf="bloco.titulo">{{ bloco.titulo }}</h2>
         <ng-container *ngFor="let sub of bloco.blocos">
           <p class="secao__texto-lead" *ngIf="sub.type === 'lead'">
@@ -22,7 +23,7 @@
         </ng-container>
       </section>
 
-      <section class="secao__bloco" *ngIf="bloco.tipo === 'Indicadores'">
+      <section class="secao__bloco" [style.--colunas]="bloco.colunas" *ngIf="bloco.tipo === 'Indicadores'">
         <h2 class="secao__bloco-titulo" *ngIf="bloco.titulo">{{ bloco.titulo }}</h2>
         <div class="secao__indicadores">
           <div class="secao__indicador" *ngFor="let ind of bloco.indicadores">
@@ -33,7 +34,7 @@
         </div>
       </section>
 
-      <section class="secao__bloco" *ngIf="bloco.tipo === 'GradeArtigos'">
+      <section class="secao__bloco" [style.--colunas]="bloco.colunas" *ngIf="bloco.tipo === 'GradeArtigos'">
         <div class="secao__bloco-cabecalho">
           <h2 class="secao__bloco-titulo" *ngIf="bloco.titulo">{{ bloco.titulo }}</h2>
           <a class="secao__ver-todos" [routerLink]="['/blog']" [queryParams]="{ categoria: d.slug }">Ver todos →</a>
@@ -46,5 +47,6 @@
         </ng-template>
       </section>
     </ng-container>
+    </div>
   </div>
 </ng-container>

@@ -1,11 +1,12 @@
 import { Component, Input } from '@angular/core';
+import { LinkComQueryDirective } from '../../directives/link-com-query.directive';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { IconComponent } from '../icon/icon.component';
 @Component({
   selector: 'app-button',
   standalone: true,
-  imports: [CommonModule, RouterLink, IconComponent],
+  imports: [CommonModule, RouterLink, LinkComQueryDirective, IconComponent],
   templateUrl: './button.component.html',
   styleUrl: './button.component.scss',
 })

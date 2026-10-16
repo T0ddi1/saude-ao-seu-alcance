@@ -7,7 +7,7 @@
 
 .sponsored__grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 20px;
 }
 
@@ -175,7 +175,7 @@
 
 .sponsored__badges {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 16px;
   padding-top: 24px;
   border-top: 1px solid var(--color-border);
@@ -195,7 +195,7 @@
     grid-column: 1 / -1 !important;
   }
   .sponsored__badges {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

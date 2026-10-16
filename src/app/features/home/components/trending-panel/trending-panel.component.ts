@@ -1,4 +1,5 @@
 import { Component, Input, computed, signal } from '@angular/core';
+import { LinkComQueryDirective } from '../../../../shared/directives/link-com-query.directive';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { IconComponent } from '../../../../shared/components/icon/icon.component';
@@ -7,7 +8,7 @@ import { TrendingData } from '../../../../core/models/home.model';
 @Component({
   selector: 'app-trending-panel',
   standalone: true,
-  imports: [CommonModule, RouterLink, IconComponent],
+  imports: [CommonModule, RouterLink, LinkComQueryDirective, IconComponent],
   templateUrl: './trending-panel.component.html',
   styleUrl: './trending-panel.component.scss',
 })

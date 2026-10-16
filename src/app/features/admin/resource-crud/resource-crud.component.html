@@ -5,12 +5,10 @@
 
   <p class="adm-alert adm-alert--erro" *ngIf="erro">{{ erro }}</p>
 
-  <app-secao-home-config
-    *ngIf="config.secaoHome"
-    [secao]="config.secaoHome"
-    (itensReordenados)="carregar()"
-    (itemSelecionado)="editar($event)"
-  ></app-secao-home-config>
+  <p class="crud__aviso-home" *ngIf="config.secaoHome">
+    Estes itens aparecem num bloco da <strong>Página inicial</strong>. Pra mudar a posição, a largura, quantos aparecem ou esconder o bloco, use
+    <a routerLink="/admin/home">Página inicial</a>.
+  </p>
 
   <div class="crud__grid">
     <div class="adm-card" #cardFormulario>
@@ -65,18 +63,7 @@
 
           <div class="crud__link" *ngIf="campo.tipo === 'link'">
             <input [id]="campo.chave" type="text" placeholder="/caminho ou https://..." [formControlName]="campo.chave" />
-            <select (change)="vincular(campo.chave, $any($event.target).value); $any($event.target).value = ''">
-              <option value="">↳ ou vincular a um artigo, página ou tópico...</option>
-              <optgroup label="Artigos">
-                <option *ngFor="let artigo of artigos" [value]="'artigo:' + artigo.id">{{ artigo.titulo }}</option>
-              </optgroup>
-              <optgroup label="Páginas institucionais">
-                <option *ngFor="let pagina of paginas" [value]="'pagina:' + pagina.id">{{ pagina.titulo }}</option>
-              </optgroup>
-              <optgroup label="Tópicos (categorias)">
-                <option *ngFor="let categoria of categorias" [value]="'categoria:' + categoria.id">{{ categoria.nome }}</option>
-              </optgroup>
-            </select>
+            <app-link-vinculo [artigos]="artigos" [paginas]="paginas" [categorias]="categorias" (escolher)="vincular(campo.chave, $event)"></app-link-vinculo>
           </div>
 
           <app-quill-editor

@@ -36,7 +36,7 @@ export class ObservatorioHubComponent implements OnInit {
       // aceita qualquer string, só o tipo ContentCard.icon é que é restrito.
       icon: (secao.icone ?? 'dot') as IconGlyph,
       title: secao.nome,
-      image: null,
+      image: secao.imagemUrl ?? null,
       excerpt: secao.resumo ?? '',
       linkLabel: 'Explorar',
       href: `/observatorio/${secao.slug}`,

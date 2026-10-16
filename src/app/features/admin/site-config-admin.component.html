@@ -12,28 +12,41 @@
     <div class="adm-field">
       <label>Logo (PNG/SVG com fundo transparente funciona melhor)</label>
       <div class="site-config__preview">
-        <img *ngIf="formulario.value.logoUrl" [src]="formulario.value.logoUrl" alt="" />
-        <div class="site-config__placeholder" *ngIf="!formulario.value.logoUrl">Usando o logo padrão</div>
+        <span class="site-config__logo-caixa">
+          <img *ngIf="formulario.value.logoUrl" [src]="formulario.value.logoUrl" alt="" />
+          <span *ngIf="!formulario.value.logoUrl" class="site-config__logo-original" aria-label="Logo original"></span>
+        </span>
+        <span class="site-config__origem" [class.is-padrao]="!formulario.value.logoUrl">
+          {{ formulario.value.logoUrl ? 'Logo personalizado' : 'Logo original do site' }}
+        </span>
         <label class="adm-btn adm-btn--outline">
           {{ enviando['logoUrl'] ? 'Enviando...' : 'Enviar logo' }}
           <input type="file" accept="image/*" (change)="selecionarArquivo($event, 'logoUrl')" [disabled]="enviando['logoUrl']" hidden />
         </label>
-        <button type="button" class="adm-btn adm-btn--outline" *ngIf="formulario.value.logoUrl" (click)="restaurarArquivoPadrao('logoUrl')">Usar logo padrão</button>
+        <button type="button" class="adm-btn adm-btn--fantasma" *ngIf="formulario.value.logoUrl" (click)="restaurarArquivoPadrao('logoUrl')">
+          <i class="fa-solid fa-rotate-left"></i> Voltar ao logo original
+        </button>
       </div>
     </div>
 
     <div class="adm-field">
       <label>Favicon (ícone quadrado, ideal 512x512)</label>
       <div class="site-config__preview">
-        <img *ngIf="formulario.value.faviconUrl" [src]="formulario.value.faviconUrl" alt="" class="site-config__favicon" />
-        <div class="site-config__placeholder" *ngIf="!formulario.value.faviconUrl">Usando o favicon padrão</div>
+        <img [src]="formulario.value.faviconUrl || 'assets/images/logo-icon.svg'" alt="" class="site-config__favicon" />
+        <span class="site-config__origem" [class.is-padrao]="!formulario.value.faviconUrl">
+          {{ formulario.value.faviconUrl ? 'Favicon personalizado' : 'Favicon original do site' }}
+        </span>
         <label class="adm-btn adm-btn--outline">
           {{ enviando['faviconUrl'] ? 'Enviando...' : 'Enviar favicon' }}
           <input type="file" accept="image/*" (change)="selecionarArquivo($event, 'faviconUrl')" [disabled]="enviando['faviconUrl']" hidden />
         </label>
-        <button type="button" class="adm-btn adm-btn--outline" *ngIf="formulario.value.faviconUrl" (click)="restaurarArquivoPadrao('faviconUrl')">Usar favicon padrão</button>
+        <button type="button" class="adm-btn adm-btn--fantasma" *ngIf="formulario.value.faviconUrl" (click)="restaurarArquivoPadrao('faviconUrl')">
+          <i class="fa-solid fa-rotate-left"></i> Voltar ao favicon original
+        </button>
       </div>
     </div>
+
+    <p class="adm-dica" *ngIf="formulario.dirty">Você mudou o logo ou o favicon — clique em Salvar para aplicar no site.</p>
 
     <div class="adm-form-acoes">
       <button type="submit" class="adm-btn adm-btn--primario" [disabled]="salvando">{{ salvando ? 'Salvando...' : 'Salvar' }}</button>

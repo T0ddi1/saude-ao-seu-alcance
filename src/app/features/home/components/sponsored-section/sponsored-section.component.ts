@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { LinkComQueryDirective } from '../../../../shared/directives/link-com-query.directive';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { IconComponent } from '../../../../shared/components/icon/icon.component';
@@ -18,13 +19,13 @@ export const BANNER_PRESETS: Record<'sm' | 'md' | 'lg' | 'xl', { width: number; 
 @Component({
   selector: 'app-sponsored-section',
   standalone: true,
-  imports: [CommonModule, RouterLink, IconComponent],
+  imports: [CommonModule, RouterLink, LinkComQueryDirective, IconComponent],
   templateUrl: './sponsored-section.component.html',
   styleUrl: './sponsored-section.component.scss',
 })
 export class SponsoredSectionComponent {
-  @Input({ required: true }) items!: SponsoredItem[];
-  @Input({ required: true }) trustBadges!: TrustBadge[];
+  @Input() items: SponsoredItem[] = [];
+  @Input() trustBadges: TrustBadge[] = [];
 
   spanFor(item: SponsoredItem): number {
     return SIZE_SPAN[item.size ?? 'md'];

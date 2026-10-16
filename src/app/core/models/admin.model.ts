@@ -28,6 +28,7 @@ export interface ArtigoAdmin {
   visualizacoes: number;
   publicado: boolean;
   publicadoEm?: string | null;
+  publicacaoAgendadaEm?: string | null;
   ativo: boolean;
   criadoEm: string;
 }
@@ -138,10 +139,3 @@ export interface ComentarioAdmin {
   criadoEm: string;
 }
 
-export interface ConfiguracaoSecaoHomeAdmin {
-  id: number;
-  secao: string;
-  modo: string;
-  limiteItens: number;
-  configuracaoJson?: string | null;
-}

@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, inject } from '@angular/core';
+import { Component, HostListener, Input, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AdminApiService } from '../../core/services/admin-api.service';
@@ -23,6 +23,9 @@ interface ConfiguracaoRodapeAdmin {
 export class RodapeConfigAdminComponent implements OnInit, ComponenteComAlteracoes {
   private api = inject(AdminApiService);
   private fb = inject(FormBuilder);
+
+  /** Quando usado dentro da tela única do rodapé, o cabeçalho da página fica por conta de quem hospeda. */
+  @Input() embutido = false;
 
   carregando = false;
   salvando = false;

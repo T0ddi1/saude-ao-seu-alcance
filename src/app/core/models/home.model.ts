@@ -74,16 +74,63 @@ export interface TrustBadge {
   label: string;
 }
 
-export interface HomePageData {
+export interface HealthStatsData {
+  title: string;
+  stats: HealthStat[];
+}
+
+interface BlocoHomeBase {
+  id: number;
+  /** Largura do bloco numa grade de 12 colunas. */
+  colunas: number;
+  titulo: string | null;
+}
+
+export interface BlocoHomeCarrossel extends BlocoHomeBase {
+  tipo: 'Carrossel';
   featuredArticles: FeaturedArticle[];
-  carrosselAutoplaySegundos?: number;
+  autoplaySegundos: number;
+}
+
+export interface BlocoHomeEmAlta extends BlocoHomeBase {
+  tipo: 'EmAlta';
   trending: TrendingData;
+}
+
+export interface BlocoHomeGradeArtigos extends BlocoHomeBase {
+  tipo: 'GradeArtigos';
   contentCards: ContentCard[];
-  healthStats: {
-    title: string;
-    stats: HealthStat[];
-  };
-  contentCategories: ContentCategory[];
+}
+
+export interface BlocoHomeDadosSaude extends BlocoHomeBase {
+  tipo: 'DadosSaude';
+  healthStats: HealthStatsData;
+}
+
+export interface BlocoHomePatrocinio extends BlocoHomeBase {
+  tipo: 'Patrocinio';
   sponsored: SponsoredItem[];
+}
+
+export interface BlocoHomeSelosConfianca extends BlocoHomeBase {
+  tipo: 'SelosConfianca';
   trustBadges: TrustBadge[];
+}
+
+export interface BlocoHomeTexto extends BlocoHomeBase {
+  tipo: 'Texto';
+  conteudoHtml: string;
+}
+
+export type BlocoHome =
+  | BlocoHomeCarrossel
+  | BlocoHomeEmAlta
+  | BlocoHomeGradeArtigos
+  | BlocoHomeDadosSaude
+  | BlocoHomePatrocinio
+  | BlocoHomeSelosConfianca
+  | BlocoHomeTexto;
+
+export interface HomePageData {
+  blocos: BlocoHome[];
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AdminApiService } from '../../core/services/admin-api.service';
@@ -13,6 +13,10 @@ import { ComentarioAdmin } from '../../core/models/admin.model';
 })
 export class ComentariosAdminComponent implements OnInit {
   private api = inject(AdminApiService);
+
+  /** Dentro da tela de Moderação, o cabeçalho da página fica por conta de quem hospeda. */
+  @Input() embutido = false;
+  @Output() pendentesMudaram = new EventEmitter<number>();
 
   status: 'pendente' | 'aprovado' | 'todos' = 'pendente';
   comentarios: ComentarioAdmin[] = [];
@@ -29,6 +33,7 @@ export class ComentariosAdminComponent implements OnInit {
     this.api.listarComQuery<ComentarioAdmin>('comentarios', `status=${this.status}`).subscribe((itens) => {
       this.comentarios = itens;
       this.carregando = false;
+      if (this.status === 'pendente') this.pendentesMudaram.emit(itens.length);
     });
   }
 

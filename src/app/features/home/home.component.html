@@ -1,17 +1,8 @@
-<ng-container *ngIf="data() as d">
-  <section class="home__top">
-    <app-hero-featured [articles]="d.featuredArticles" [autoplaySegundos]="d.carrosselAutoplaySegundos || 6"></app-hero-featured>
-    <app-trending-panel [data]="d.trending"></app-trending-panel>
-  </section>
-
-  <section class="home__grid">
-    <app-category-card *ngFor="let card of d.contentCards" [card]="card"></app-category-card>
-  </section>
-
-  <app-health-data-section
-    [healthStats]="d.healthStats"
-    [contentCategories]="d.contentCategories"
-  ></app-health-data-section>
-
-  <app-sponsored-section [items]="d.sponsored" [trustBadges]="d.trustBadges"></app-sponsored-section>
-</ng-container>
+<div class="home__blocos" *ngIf="data() as d">
+  <app-home-bloco
+    *ngFor="let bloco of d.blocos; trackBy: porId"
+    class="home__bloco"
+    [style.--colunas]="bloco.colunas"
+    [bloco]="bloco"
+  ></app-home-bloco>
+</div>

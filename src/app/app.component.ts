@@ -38,6 +38,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.acompanharLarguraUtil();
     this.siteConfig.getConfig().subscribe((config) => {
       this.siteConfig.aplicarFavicon(config.faviconUrl);
       this.siteConfig.aplicarCores(config.coresJson);
@@ -58,12 +59,32 @@ export class AppComponent implements OnInit {
       });
 
     if (this.totem.isTotem()) {
+      document.documentElement.classList.add('is-totem');
       
       
       
       
       document.addEventListener('click', () => this.totem.goFullscreen(), { once: true, capture: true });
     }
+  }
+
+  /**
+   * "100vw" inclui a barra de rolagem e faz faixas de largura total passarem da tela.
+   * Aqui guardamos 1% da largura REAL disponível em --vw (px) pra usar no lugar de 1vw.
+   */
+  private acompanharLarguraUtil(): void {
+    const raiz = document.documentElement;
+    const atualizar = () => raiz.style.setProperty('--vw', `${raiz.clientWidth / 100}px`);
+    atualizar();
+    // A barra de rolagem aparece/some conforme o tamanho do conteúdo, sem disparar "resize" da janela:
+    // por isso também observamos o <body> e reavaliamos a cada troca de página.
+    window.addEventListener('resize', atualizar);
+    if (typeof ResizeObserver !== 'undefined') {
+      const observador = new ResizeObserver(atualizar);
+      observador.observe(raiz);
+      observador.observe(document.body);
+    }
+    this.router.events.pipe(filter((e) => e instanceof NavigationEnd)).subscribe(() => setTimeout(atualizar, 350));
   }
 
   irParaConteudo(evento: Event): void {
@@ -75,6 +96,10 @@ export class AppComponent implements OnInit {
 
   goBack(): void {
     this.location.back();
+  }
+
+  goHome(): void {
+    this.router.navigateByUrl('/');
   }
 
   

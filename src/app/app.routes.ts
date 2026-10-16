@@ -24,19 +24,29 @@ export const routes: Routes = [
         canDeactivate: [alteracoesNaoSalvasGuard],
       },
       {
-        path: 'secoes-home',
-        loadComponent: () =>
-          import('./features/admin/secoes-home-admin.component').then((m) => m.SecoesHomeAdminComponent),
+        path: 'home',
+        loadComponent: () => import('./features/admin/home-admin.component').then((m) => m.HomeAdminComponent),
+        canDeactivate: [alteracoesNaoSalvasGuard],
       },
       {
-        path: 'comentarios',
-        loadComponent: () =>
-          import('./features/admin/comentarios-admin.component').then((m) => m.ComentariosAdminComponent),
+        path: 'paginas',
+        loadComponent: () => import('./features/admin/paginas-admin.component').then((m) => m.PaginasAdminComponent),
+        canDeactivate: [alteracoesNaoSalvasGuard],
+      },
+      {
+        path: 'moderacao',
+        loadComponent: () => import('./features/admin/moderacao-admin.component').then((m) => m.ModeracaoAdminComponent),
+        canDeactivate: [alteracoesNaoSalvasGuard],
+      },
+      { path: 'comentarios', redirectTo: 'moderacao', pathMatch: 'full' },
+      {
+        path: 'leads',
+        loadComponent: () => import('./features/admin/leads-admin.component').then((m) => m.LeadsAdminComponent),
+        canDeactivate: [alteracoesNaoSalvasGuard],
       },
       {
         path: 'rodape',
-        loadComponent: () =>
-          import('./features/admin/rodape-config-admin.component').then((m) => m.RodapeConfigAdminComponent),
+        loadComponent: () => import('./features/admin/rodape-admin.component').then((m) => m.RodapeAdminComponent),
         canDeactivate: [alteracoesNaoSalvasGuard],
       },
       {
@@ -54,6 +64,11 @@ export const routes: Routes = [
         path: 'observatorio',
         loadComponent: () =>
           import('./features/admin/observatorio-admin.component').then((m) => m.ObservatorioAdminComponent),
+        canDeactivate: [alteracoesNaoSalvasGuard],
+      },
+      {
+        path: 'menu',
+        loadComponent: () => import('./features/admin/menu-admin.component').then((m) => m.MenuAdminComponent),
         canDeactivate: [alteracoesNaoSalvasGuard],
       },
       {

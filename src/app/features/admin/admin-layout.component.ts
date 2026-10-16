@@ -1,6 +1,7 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, HostListener, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { NavigationStart, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { filter } from 'rxjs';
 import { AuthService } from '../../core/services/auth.service';
 
 interface ItemMenu {
@@ -27,6 +28,35 @@ export class AdminLayoutComponent {
 
   usuario = this.authService.usuario;
   sidebarAberta = signal(true);
+  /** No celular o menu lateral vira uma gaveta que abre por cima do conteúdo. */
+  menuMobileAberto = signal(false);
+
+  constructor() {
+    this.router.events.pipe(filter((e) => e instanceof NavigationStart)).subscribe(() => this.menuMobileAberto.set(false));
+  }
+
+  get ehTelaPequena(): boolean {
+    return window.matchMedia('(max-width: 900px)').matches;
+  }
+
+  abrirMenuMobile(): void {
+    this.menuMobileAberto.set(true);
+  }
+
+  fecharMenuMobile(): void {
+    this.menuMobileAberto.set(false);
+  }
+
+  /** O botão de recolher vira "fechar" quando o menu é uma gaveta. */
+  aoClicarRecolher(): void {
+    if (this.ehTelaPequena) this.fecharMenuMobile();
+    else this.toggleSidebar();
+  }
+
+  @HostListener('document:keydown.escape')
+  aoApertarEsc(): void {
+    this.fecharMenuMobile();
+  }
 
   grupos: GrupoMenu[] = [
     {
@@ -37,47 +67,34 @@ export class AdminLayoutComponent {
       titulo: 'Conteúdo',
       itens: [
         { rota: '/admin/artigos', rotulo: 'Artigos', icone: 'fa-newspaper' },
-        { rota: '/admin/comentarios', rotulo: 'Comentários', icone: 'fa-comments' },
-        { rota: '/admin/recurso/palavras-bloqueadas', rotulo: 'Palavras Bloqueadas', icone: 'fa-ban' },
+        { rota: '/admin/moderacao', rotulo: 'Moderação', icone: 'fa-comments' },
         { rota: '/admin/recurso/categorias', rotulo: 'Categorias', icone: 'fa-tags' },
-        { rota: '/admin/recurso/paginas-institucionais', rotulo: 'Páginas Institucionais', icone: 'fa-file-lines' },
+        { rota: '/admin/paginas', rotulo: 'Páginas Institucionais', icone: 'fa-file-lines' },
         { rota: '/admin/observatorio', rotulo: 'Observatório', icone: 'fa-binoculars' },
       ],
     },
     {
       titulo: 'Home',
       itens: [
-        { rota: '/admin/secoes-home', rotulo: 'Seções da Home', icone: 'fa-table-cells-large' },
-        { rota: '/admin/recurso/slides-destaque', rotulo: 'Slides do Carrossel', icone: 'fa-images' },
-        { rota: '/admin/recurso/cards-conteudo', rotulo: 'Cards de Conteúdo', icone: 'fa-th-large' },
-        { rota: '/admin/recurso/espacos-patrocinados', rotulo: 'Espaços Patrocinados', icone: 'fa-bullhorn' },
-        { rota: '/admin/recurso/dados-saude', rotulo: 'Dados da Saúde', icone: 'fa-chart-simple' },
-        { rota: '/admin/recurso/selos-confianca', rotulo: 'Selos de Confiança', icone: 'fa-shield-halved' },
+        { rota: '/admin/home', rotulo: 'Página inicial', icone: 'fa-table-cells-large' },
       ],
     },
     {
       titulo: 'Navegação',
       itens: [
-        { rota: '/admin/recurso/menu-itens', rotulo: 'Menu — Itens', icone: 'fa-bars' },
-        { rota: '/admin/recurso/menu-links', rotulo: 'Menu — Links', icone: 'fa-link' },
+        { rota: '/admin/menu', rotulo: 'Menu do site', icone: 'fa-bars' },
       ],
     },
     {
       titulo: 'Rodapé',
       itens: [
-        { rota: '/admin/rodape', rotulo: 'Textos e Newsletter', icone: 'fa-align-left' },
-        { rota: '/admin/recurso/footer-links', rotulo: 'Links por Coluna', icone: 'fa-link' },
-        { rota: '/admin/recurso/footer-redes-sociais', rotulo: 'Redes Sociais', icone: 'fa-share-nodes' },
-        { rota: '/admin/recurso/footer-projetos-especiais', rotulo: 'Projetos Especiais', icone: 'fa-heart' },
+        { rota: '/admin/rodape', rotulo: 'Rodapé', icone: 'fa-align-left' },
       ],
     },
     {
       titulo: 'Leads',
       itens: [
-        { rota: '/admin/recurso/especialidades', rotulo: 'Especialidades', icone: 'fa-user-doctor' },
-        { rota: '/admin/recurso/origens-lead', rotulo: 'Origens do lead', icone: 'fa-location-crosshairs' },
-        { rota: '/admin/recurso/tipos-interesse', rotulo: 'Tipos de interesse', icone: 'fa-bullseye' },
-        { rota: '/admin/recurso/campanhas', rotulo: 'Campanhas (UTM)', icone: 'fa-bullhorn' },
+        { rota: '/admin/leads', rotulo: 'Leads', icone: 'fa-bullseye' },
       ],
     },
     {

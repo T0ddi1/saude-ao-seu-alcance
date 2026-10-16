@@ -1,119 +1,246 @@
 <div class="artigos">
-  <div class="adm-page-head">
-    <h2>Artigos</h2>
-    <p>Crie e edite artigos com o editor rico e veja o preview antes de publicar.</p>
-  </div>
-
-  <p class="adm-alert adm-alert--erro" *ngIf="erro">{{ erro }}</p>
-
-  <div class="adm-card artigos__editor">
-    <div class="artigos__editor-head">
-      <h3>{{ editandoId ? 'Editar artigo' : 'Novo artigo' }}</h3>
-      <div class="adm-tabs">
-        <button type="button" [class.is-ativo]="abaAtiva === 'editar'" (click)="abaAtiva = 'editar'">Editar</button>
-        <button type="button" [class.is-ativo]="abaAtiva === 'preview'" (click)="abaAtiva = 'preview'">Preview</button>
+  <!-- ============ LISTA ============ -->
+  <ng-container *ngIf="!noEditor">
+    <div class="adm-page-head artigos__cabecalho-pagina">
+      <div>
+        <h2>Artigos</h2>
+        <p>Escreva, publique e acompanhe os artigos do portal.</p>
       </div>
+      <button type="button" class="adm-btn adm-btn--primario" (click)="novo()"><i class="fa-solid fa-plus"></i> Novo artigo</button>
     </div>
 
-    <form class="adm-form" *ngIf="abaAtiva === 'editar'" [formGroup]="formulario" (ngSubmit)="salvar()">
-      <div class="adm-field">
-        <label for="titulo">Título</label>
-        <input id="titulo" type="text" formControlName="titulo" />
+    <p class="adm-alert adm-alert--erro" *ngIf="erro">{{ erro }}</p>
+
+    <div class="artigos__barra">
+      <div class="artigos__busca">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" placeholder="Buscar por título ou autor..." [(ngModel)]="busca" />
       </div>
 
-      <div class="adm-field">
-        <label for="resumo">Resumo</label>
-        <textarea id="resumo" rows="2" formControlName="resumo"></textarea>
+      <div class="artigos__filtros" role="tablist">
+        <button type="button" [class.is-ativo]="filtro === 'todos'" (click)="filtro = 'todos'">Todos <em>{{ totais.todos }}</em></button>
+        <button type="button" [class.is-ativo]="filtro === 'publicados'" (click)="filtro = 'publicados'">Publicados <em>{{ totais.publicados }}</em></button>
+        <button type="button" [class.is-ativo]="filtro === 'agendados'" (click)="filtro = 'agendados'" *ngIf="totais.agendados || filtro === 'agendados'">Agendados <em>{{ totais.agendados }}</em></button>
+        <button type="button" [class.is-ativo]="filtro === 'rascunhos'" (click)="filtro = 'rascunhos'">Rascunhos <em>{{ totais.rascunhos }}</em></button>
       </div>
 
-      <div class="adm-field">
-        <label>Conteúdo</label>
-        <app-quill-editor formControlName="conteudoHtml"></app-quill-editor>
-      </div>
-
-      <div class="adm-field">
-        <label>Imagem de capa</label>
-        <div class="artigos__capa">
-          <img *ngIf="formulario.value.imagemCapaUrl" [src]="formulario.value.imagemCapaUrl" alt="" />
-          <div class="artigos__capa-placeholder" *ngIf="!formulario.value.imagemCapaUrl">Sem imagem</div>
-          <label class="adm-btn adm-btn--outline">
-            {{ enviandoCapa ? 'Enviando...' : 'Enviar imagem' }}
-            <input type="file" accept="image/jpeg,image/png,image/gif,image/webp" (change)="selecionarCapa($event)" [disabled]="enviandoCapa" hidden />
-          </label>
-        </div>
-        <p class="adm-dica">
-          Use uma foto na horizontal, com pelo menos 1200x800px. Ela aparece cortada de formas diferentes (mais estreita nas listagens, mais larga na página do artigo) —
-          mantenha o assunto principal centralizado na imagem pra não cortar em nenhum dos dois formatos.
-        </p>
-      </div>
-
-      <div class="adm-field-row">
-        <div class="adm-field">
-          <label for="categoriaId">Tópico / Categoria</label>
-          <select id="categoriaId" formControlName="categoriaId">
-            <option [ngValue]="null" disabled>Selecione um tópico</option>
-            <option *ngFor="let categoria of categorias" [ngValue]="categoria.id">{{ categoria.nome }}</option>
-          </select>
-        </div>
-        <div class="adm-field">
-          <label for="autorExibicao">Autor (exibição)</label>
-          <input id="autorExibicao" type="text" formControlName="autorExibicao" />
-        </div>
-        <div class="adm-field">
-          <label for="autorCargo">Cargo/qualificação do autor</label>
-          <input id="autorCargo" type="text" formControlName="autorCargo" placeholder="Ex: Médico – Professor – Escritor" />
-        </div>
-      </div>
-
-      <label class="adm-checkbox">
-        <input type="checkbox" formControlName="destaque" />
-        Destaque (carrossel da home)
-      </label>
-
-      <div class="adm-form-acoes">
-        <button type="submit" class="adm-btn adm-btn--primario">{{ editandoId ? 'Salvar alterações' : 'Criar artigo' }}</button>
-        <button type="button" class="adm-btn adm-btn--fantasma" *ngIf="editandoId" (click)="cancelarEdicao()">Cancelar</button>
-      </div>
-    </form>
-
-    <div class="artigos__preview" *ngIf="abaAtiva === 'preview'">
-      <span class="artigos__preview-topico" *ngIf="categoriaNomeSelecionada">{{ categoriaNomeSelecionada }}</span>
-      <h1>{{ formulario.value.titulo || 'Título do artigo' }}</h1>
-      <p class="artigos__preview-resumo">{{ formulario.value.resumo }}</p>
-      <img *ngIf="formulario.value.imagemCapaUrl" class="artigos__preview-capa" [src]="formulario.value.imagemCapaUrl" alt="" />
-      <div class="artigos__preview-corpo" [innerHTML]="conteudoPreview"></div>
+      <select class="artigos__categoria" [(ngModel)]="categoriaFiltroId">
+        <option [ngValue]="null">Todos os tópicos</option>
+        <option *ngFor="let categoria of categorias" [ngValue]="categoria.id">{{ categoria.nome }}</option>
+      </select>
     </div>
-  </div>
-
-  <h3 class="adm-section-title">Todos os artigos</h3>
-  <div class="adm-card adm-card--flush">
-    <table class="adm-table" *ngIf="!carregando">
-      <thead>
-        <tr>
-          <th>Título</th>
-          <th>Categoria</th>
-          <th>Destaque</th>
-          <th>Views</th>
-          <th>Publicado</th>
-          <th>Ações</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let artigo of artigos">
-          <td>{{ artigo.titulo }}</td>
-          <td>{{ artigo.categoriaNome ?? '—' }}</td>
-          <td>{{ artigo.destaque ? 'Sim' : 'Não' }}</td>
-          <td>{{ artigo.visualizacoes }}</td>
-          <td><span class="adm-badge" [class.adm-badge--ok]="artigo.publicado">{{ artigo.publicado ? 'Sim' : 'Não' }}</span></td>
-          <td class="adm-table__acoes">
-            <button type="button" (click)="editar(artigo)">Editar</button>
-            <button type="button" (click)="alternarPublicacao(artigo)">{{ artigo.publicado ? 'Despublicar' : 'Publicar' }}</button>
-            <button type="button" class="is-perigo" (click)="excluir(artigo)">Excluir</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
 
     <p class="adm-empty" *ngIf="carregando">Carregando...</p>
-  </div>
+
+    <div class="artigos__lista" *ngIf="!carregando">
+      <article class="artigos__linha" *ngFor="let artigo of artigosFiltrados" (click)="editar(artigo)">
+        <div class="artigos__miniatura">
+          <img *ngIf="artigo.imagemCapaUrl" [src]="artigo.imagemCapaUrl" alt="" />
+          <i class="fa-solid fa-image" *ngIf="!artigo.imagemCapaUrl"></i>
+        </div>
+
+        <div class="artigos__info">
+          <strong>{{ artigo.titulo }}</strong>
+          <small>
+            {{ artigo.categoriaNome ?? 'Sem tópico' }}
+            <ng-container *ngIf="artigo.autorExibicao"> · {{ artigo.autorExibicao }}</ng-container>
+            · <i class="fa-solid fa-eye"></i> {{ artigo.visualizacoes }}
+            <ng-container *ngIf="artigo.publicado && artigo.publicadoEm"> · {{ artigo.publicadoEm | date: 'dd/MM/yyyy' }}</ng-container>
+            <ng-container *ngIf="!artigo.publicado && artigo.publicacaoAgendadaEm"> · sai em {{ artigo.publicacaoAgendadaEm | date: 'dd/MM/yyyy HH:mm' }}</ng-container>
+          </small>
+        </div>
+
+        <div class="artigos__selos">
+          <span class="artigos__selo artigos__selo--destaque" *ngIf="artigo.destaque" title="Aparece no carrossel da Home"><i class="fa-solid fa-star"></i> Destaque</span>
+          <span class="artigos__selo artigos__selo--agendado" *ngIf="!artigo.publicado && artigo.publicacaoAgendadaEm"><i class="fa-solid fa-clock"></i> Agendado</span>
+          <span class="artigos__selo" [class.artigos__selo--ok]="artigo.publicado" *ngIf="artigo.publicado || !artigo.publicacaoAgendadaEm">{{ artigo.publicado ? 'Publicado' : 'Rascunho' }}</span>
+        </div>
+
+        <div class="artigos__acoes">
+          <a
+            class="artigos__icone"
+            *ngIf="artigo.publicado"
+            [href]="linkNoSite(artigo)"
+            target="_blank"
+            rel="noopener"
+            title="Ver no site"
+            (click)="$event.stopPropagation()"
+          >
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+          <button type="button" class="artigos__icone" (click)="alternarPublicacao(artigo, $event)" [title]="artigo.publicado ? 'Despublicar (volta a ser rascunho)' : artigo.publicacaoAgendadaEm ? 'Publicar agora (cancela o agendamento)' : 'Publicar no site'">
+            <i class="fa-solid" [ngClass]="artigo.publicado ? 'fa-eye-slash' : 'fa-paper-plane'"></i>
+          </button>
+          <button type="button" class="artigos__icone artigos__icone--perigo" (click)="excluir(artigo, $event)" title="Excluir">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </div>
+      </article>
+
+      <p class="adm-empty" *ngIf="!artigosFiltrados.length">
+        {{ artigos.length ? 'Nenhum artigo com esses filtros.' : 'Nenhum artigo ainda. Clique em "Novo artigo" pra começar.' }}
+      </p>
+    </div>
+  </ng-container>
+
+  <!-- ============ EDITOR ============ -->
+  <ng-container *ngIf="noEditor">
+    <div class="artigos__topo-editor">
+      <button type="button" class="adm-btn adm-btn--fantasma" (click)="voltarParaLista()"><i class="fa-solid fa-arrow-left"></i> Voltar para a lista</button>
+
+      <div class="artigos__topo-acoes">
+        <span class="artigos__selo artigos__selo--agendado" *ngIf="editandoId && !artigoAtual?.publicado && artigoAtual?.publicacaoAgendadaEm"><i class="fa-solid fa-clock"></i> Agendado</span>
+        <span class="artigos__selo" *ngIf="editandoId && (artigoAtual?.publicado || !artigoAtual?.publicacaoAgendadaEm)" [class.artigos__selo--ok]="artigoAtual?.publicado">
+          {{ artigoAtual?.publicado ? 'Publicado' : 'Rascunho' }}
+        </span>
+        <span class="artigos__selo" *ngIf="!editandoId">Novo artigo</span>
+
+        <div class="adm-tabs">
+          <button type="button" [class.is-ativo]="abaAtiva === 'editar'" (click)="abaAtiva = 'editar'">Editar</button>
+          <button type="button" [class.is-ativo]="abaAtiva === 'preview'" (click)="abaAtiva = 'preview'">Prévia</button>
+        </div>
+
+        <button type="button" class="adm-btn adm-btn--primario" [disabled]="salvando" (click)="salvar()">
+          {{ salvando ? 'Salvando...' : rotuloSalvar }}
+        </button>
+      </div>
+    </div>
+
+    <form class="artigos__editor" [formGroup]="formulario" (ngSubmit)="salvar()">
+      <!-- coluna principal -->
+      <div class="artigos__principal" [hidden]="abaAtiva !== 'editar'">
+        <div class="adm-field">
+          <label for="titulo">Título</label>
+          <input id="titulo" type="text" class="artigos__titulo-input" formControlName="titulo" placeholder="O título do artigo" [maxlength]="limiteTitulo" />
+        </div>
+
+        <div class="adm-field">
+          <label for="resumo">Resumo</label>
+          <textarea id="resumo" rows="3" formControlName="resumo" [maxlength]="limiteResumo" placeholder="Uma ou duas frases que aparecem nos cards e na busca."></textarea>
+          <p class="adm-dica artigos__contador" [class.is-limite]="resumoRestante < 40">{{ resumoRestante }} caracteres restantes</p>
+        </div>
+
+        <div class="adm-field">
+          <label>Conteúdo</label>
+          <app-quill-editor formControlName="conteudoHtml"></app-quill-editor>
+        </div>
+      </div>
+
+      <!-- prévia -->
+      <div class="artigos__principal" *ngIf="abaAtiva === 'preview'">
+        <div class="artigos__preview" inert>
+          <span class="artigos__preview-topico" *ngIf="categoriaNomeSelecionada">{{ categoriaNomeSelecionada }}</span>
+          <h1>{{ formulario.value.titulo || 'Título do artigo' }}</h1>
+          <p class="artigos__preview-resumo">{{ formulario.value.resumo }}</p>
+          <img *ngIf="formulario.value.imagemCapaUrl" class="artigos__preview-capa" [src]="formulario.value.imagemCapaUrl" alt="" />
+          <div class="artigos__preview-corpo" [innerHTML]="conteudoPreview"></div>
+        </div>
+      </div>
+
+      <!-- lateral -->
+      <aside class="artigos__lateral">
+        <section class="artigos__painel">
+          <h4>Publicação</h4>
+
+          <!-- Artigo ainda não publicado: escolher o que fazer ao salvar -->
+          <ng-container *ngIf="!artigoAtual?.publicado">
+            <div class="artigos__situacoes">
+              <label class="artigos__situacao" [class.is-marcada]="situacao === 'rascunho'">
+                <input type="radio" name="situacao" value="rascunho" [(ngModel)]="situacao" [ngModelOptions]="{ standalone: true }" />
+                <span><strong>Rascunho</strong><small>Só você vê, no admin.</small></span>
+              </label>
+              <label class="artigos__situacao" [class.is-marcada]="situacao === 'publicar'">
+                <input type="radio" name="situacao" value="publicar" [(ngModel)]="situacao" [ngModelOptions]="{ standalone: true }" />
+                <span><strong>Publicar agora</strong><small>Vai pro site assim que salvar.</small></span>
+              </label>
+              <label class="artigos__situacao" [class.is-marcada]="situacao === 'agendar'">
+                <input type="radio" name="situacao" value="agendar" [(ngModel)]="situacao" [ngModelOptions]="{ standalone: true }" />
+                <span><strong>Agendar</strong><small>Publica sozinho na data escolhida.</small></span>
+              </label>
+            </div>
+
+            <div class="adm-field" *ngIf="situacao === 'agendar'">
+              <label for="dataAgendada">Publicar em</label>
+              <input
+                id="dataAgendada"
+                type="datetime-local"
+                [min]="minimoAgendamento"
+                [(ngModel)]="dataAgendada"
+                [ngModelOptions]="{ standalone: true }"
+              />
+              <p class="adm-dica">Horário de Brasília. O artigo fica como rascunho até lá e entra no ar sozinho (a checagem é feita a cada minuto).</p>
+            </div>
+
+            <p class="artigos__estado artigos__estado--agendado" *ngIf="artigoAtual?.publicacaoAgendadaEm && situacao === 'agendar'">
+              <i class="fa-solid fa-clock"></i> Agendado para {{ artigoAtual?.publicacaoAgendadaEm | date: "dd/MM/yyyy 'às' HH:mm" }}
+            </p>
+          </ng-container>
+
+          <!-- Artigo já publicado -->
+          <ng-container *ngIf="artigoAtual?.publicado">
+            <p class="artigos__estado">
+              <i class="fa-solid fa-circle-check"></i>
+              No ar{{ artigoAtual?.publicadoEm ? ' desde ' + (artigoAtual?.publicadoEm | date: 'dd/MM/yyyy') : '' }}
+            </p>
+            <button type="button" class="adm-btn adm-btn--outline" (click)="alternarPublicacao(artigoAtual!)">
+              <i class="fa-solid fa-eye-slash"></i> Despublicar
+            </button>
+            <a class="artigos__ver-site" [href]="linkNoSite(artigoAtual!)" target="_blank" rel="noopener">
+              Ver no site <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+          </ng-container>
+        </section>
+
+        <section class="artigos__painel">
+          <h4>Imagem de capa</h4>
+          <div class="artigos__capa">
+            <img *ngIf="formulario.value.imagemCapaUrl" [src]="formulario.value.imagemCapaUrl" alt="" />
+            <div class="artigos__capa-vazia" *ngIf="!formulario.value.imagemCapaUrl"><i class="fa-solid fa-image"></i> Sem imagem</div>
+          </div>
+          <div class="artigos__capa-acoes">
+            <label class="adm-btn adm-btn--outline">
+              {{ enviandoCapa ? 'Enviando...' : formulario.value.imagemCapaUrl ? 'Trocar imagem' : 'Enviar imagem' }}
+              <input type="file" accept="image/jpeg,image/png,image/gif,image/webp" (change)="selecionarCapa($event)" [disabled]="enviandoCapa" hidden />
+            </label>
+            <button type="button" class="adm-btn adm-btn--fantasma" *ngIf="formulario.value.imagemCapaUrl" (click)="removerCapa()">Remover</button>
+          </div>
+          <p class="adm-dica">
+            Foto na horizontal, de pelo menos 1200x800px, com o assunto no centro — ela é cortada de jeitos diferentes nas listas e na página do artigo.
+          </p>
+        </section>
+
+        <section class="artigos__painel">
+          <h4>Tópico e autoria</h4>
+          <div class="adm-field">
+            <label for="categoriaId">Tópico</label>
+            <select id="categoriaId" formControlName="categoriaId">
+              <option [ngValue]="null" disabled>Selecione um tópico</option>
+              <option *ngFor="let categoria of categorias" [ngValue]="categoria.id">{{ categoria.nome }}</option>
+            </select>
+          </div>
+          <div class="adm-field">
+            <label for="autorExibicao">Autor</label>
+            <input id="autorExibicao" type="text" formControlName="autorExibicao" />
+          </div>
+          <div class="adm-field">
+            <label for="autorCargo">Cargo ou qualificação</label>
+            <input id="autorCargo" type="text" formControlName="autorCargo" placeholder="Ex: Médico – Professor – Escritor" />
+          </div>
+        </section>
+
+        <section class="artigos__painel">
+          <h4>Destaque</h4>
+          <label class="adm-checkbox">
+            <input type="checkbox" formControlName="destaque" />
+            Pode aparecer no carrossel da Home
+          </label>
+          <p class="adm-dica">Vale quando o carrossel da Página inicial está no modo "artigos em destaque".</p>
+        </section>
+
+        <button type="button" class="adm-btn adm-btn--fantasma artigos__excluir" *ngIf="artigoAtual as artigo" (click)="excluir(artigo)">
+          <i class="fa-solid fa-trash"></i> Excluir artigo
+        </button>
+      </aside>
+    </form>
+  </ng-container>
 </div>

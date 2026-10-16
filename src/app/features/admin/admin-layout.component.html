@@ -1,4 +1,14 @@
-<div class="admin-layout" [class.admin-layout--recolhida]="!sidebarAberta()">
+<div class="admin-layout" [class.admin-layout--recolhida]="!sidebarAberta()" [class.admin-layout--menu-aberto]="menuMobileAberto()">
+  <header class="admin-layout__topo">
+    <button type="button" class="admin-layout__burger" (click)="abrirMenuMobile()" aria-label="Abrir menu">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+    <strong>Painel administrativo</strong>
+    <a routerLink="/" class="admin-layout__topo-site" aria-label="Ver site"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+  </header>
+
+  <div class="admin-layout__fundo" (click)="fecharMenuMobile()"></div>
+
   <aside class="admin-layout__sidebar">
     <div class="admin-layout__marca">
       <span class="admin-layout__logo">S</span>
@@ -6,7 +16,7 @@
         <strong>Saúde ao Seu Alcance</strong>
         <span>Painel administrativo</span>
       </div>
-      <button type="button" class="admin-layout__recolher" (click)="toggleSidebar()" aria-label="Recolher menu">
+      <button type="button" class="admin-layout__recolher" (click)="aoClicarRecolher()" aria-label="Recolher ou fechar menu">
         <i class="fa-solid fa-angles-left"></i>
       </button>
     </div>
