@@ -1,0 +1,71 @@
+<div class="rodape-lista">
+  <p class="rodape-lista__explicacao" *ngIf="explicacao">{{ explicacao }}</p>
+
+  <p class="adm-alert adm-alert--erro" *ngIf="erro">{{ erro }}</p>
+  <p class="adm-empty" *ngIf="carregando">Carregando...</p>
+
+  <ng-container *ngIf="!carregando && !erro">
+    <div cdkDropList class="rodape-lista__itens" (cdkDropListDropped)="soltar($event)">
+      <div class="rodape-lista__item" cdkDrag *ngFor="let item of itens" [class.is-editando]="item.id === editandoId" [class.is-oculto]="!item.ativo">
+        <i class="fa-solid fa-grip-vertical rodape-lista__arrastar" cdkDragHandle></i>
+        <span class="rodape-lista__icone"><app-icon [name]="item.icone" [size]="20"></app-icon></span>
+        <span class="rodape-lista__texto">
+          <strong>{{ nomeDe(item) }}</strong>
+          <small>{{ !item.ativo ? 'Escondido do site' : comDescricao && item.descricao ? item.descricao : item.href }}</small>
+        </span>
+        <button type="button" class="rodape-lista__botao" (click)="alternarVisivel(item)" [title]="item.ativo ? 'Esconder do site' : 'Mostrar no site'">
+          <i class="fa-solid" [ngClass]="item.ativo ? 'fa-eye' : 'fa-eye-slash'"></i>
+        </button>
+        <button type="button" class="rodape-lista__botao" (click)="editar(item)" title="Editar">
+          <i class="fa-solid fa-pen"></i>
+        </button>
+        <button type="button" class="rodape-lista__botao rodape-lista__botao--perigo" (click)="excluir(item)" title="Excluir">
+          <i class="fa-solid fa-trash"></i>
+        </button>
+      </div>
+      <p class="rodape-lista__vazio" *ngIf="!itens.length">Nenhum {{ rotuloItem }} ainda.</p>
+    </div>
+
+    <button type="button" class="rodape-lista__adicionar" *ngIf="!editando" (click)="novo()">
+      <i class="fa-solid fa-plus"></i> Adicionar {{ rotuloItem }}
+    </button>
+
+    <form class="rodape-lista__form" *ngIf="editando" [formGroup]="form" (ngSubmit)="salvar()">
+      <h4>{{ editandoId ? 'Editar' : 'Novo' }} {{ rotuloItem }}</h4>
+
+      <div class="adm-field">
+        <label>Ícone</label>
+        <app-icon-picker formControlName="icone"></app-icon-picker>
+      </div>
+
+      <div class="adm-field">
+        <label for="rodapeListaNome">{{ rotuloNome }}</label>
+        <input id="rodapeListaNome" type="text" formControlName="nome" />
+      </div>
+
+      <div class="adm-field" *ngIf="comDescricao">
+        <label for="rodapeListaDescricao">Descrição</label>
+        <textarea id="rodapeListaDescricao" rows="2" formControlName="descricao"></textarea>
+      </div>
+
+      <div class="adm-field">
+        <label for="rodapeListaHref">Endereço</label>
+        <input id="rodapeListaHref" type="text" formControlName="href" placeholder="https://... ou /caminho" />
+        <app-link-vinculo
+          *ngIf="comLinkInterno"
+          [artigos]="artigos"
+          [paginas]="paginas"
+          [categorias]="categorias"
+          (escolher)="vincular($event)"
+        ></app-link-vinculo>
+      </div>
+
+      <div class="adm-form-acoes">
+        <button type="submit" class="adm-btn adm-btn--primario" [disabled]="form.invalid || salvando">
+          {{ salvando ? 'Salvando...' : editandoId ? 'Salvar' : 'Adicionar' }}
+        </button>
+        <button type="button" class="adm-btn adm-btn--fantasma" (click)="fechar()">Cancelar</button>
+      </div>
+    </form>
+  </ng-container>
+</div>

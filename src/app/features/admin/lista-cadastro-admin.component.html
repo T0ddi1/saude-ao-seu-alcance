@@ -1,0 +1,59 @@
+<div class="lista-cadastro">
+  <p class="lista-cadastro__explicacao">{{ config.explicacao }}</p>
+
+  <p class="adm-alert adm-alert--erro" *ngIf="erro">{{ erro }}</p>
+  <p class="adm-empty" *ngIf="carregando">Carregando...</p>
+
+  <ng-container *ngIf="!carregando && !erro">
+    <div class="lista-cadastro__topo">
+      <div class="lista-cadastro__busca" *ngIf="itens.length > 6">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" placeholder="Pesquisar..." [value]="busca" (input)="busca = $any($event.target).value" />
+      </div>
+      <button type="button" class="adm-btn adm-btn--outline" *ngIf="!editando" (click)="novo()">
+        <i class="fa-solid fa-plus"></i> Adicionar {{ config.rotuloItem }}
+      </button>
+    </div>
+
+    <p class="lista-cadastro__dica" *ngIf="podeArrastar && itens.length > 1">Arraste pra mudar a ordem em que aparecem. O olho esconde sem excluir.</p>
+
+    <div cdkDropList [cdkDropListDisabled]="!podeArrastar" class="lista-cadastro__itens" (cdkDropListDropped)="soltar($event)">
+      <div class="lista-cadastro__item" cdkDrag *ngFor="let item of itensFiltrados" [class.is-oculto]="!item.ativo" [class.is-editando]="item.id === editandoId">
+        <i class="fa-solid fa-grip-vertical lista-cadastro__arrastar" cdkDragHandle *ngIf="podeArrastar"></i>
+        <span class="lista-cadastro__texto">
+          <strong>{{ titulo(item) }}</strong>
+          <small *ngIf="subtitulo(item)">{{ subtitulo(item) }}</small>
+        </span>
+        <button type="button" class="lista-cadastro__botao" (click)="alternarVisivel(item)" [title]="item.ativo ? 'Esconder' : 'Mostrar'">
+          <i class="fa-solid" [ngClass]="item.ativo ? 'fa-eye' : 'fa-eye-slash'"></i>
+        </button>
+        <button type="button" class="lista-cadastro__botao" (click)="editar(item)" title="Editar">
+          <i class="fa-solid fa-pen"></i>
+        </button>
+        <button type="button" class="lista-cadastro__botao lista-cadastro__botao--perigo" (click)="excluir(item)" title="Excluir">
+          <i class="fa-solid fa-trash"></i>
+        </button>
+      </div>
+      <p class="lista-cadastro__vazio" *ngIf="!itensFiltrados.length">
+        {{ busca ? 'Nada encontrado pra essa pesquisa.' : 'Nenhum item ainda. Clique em "Adicionar ' + config.rotuloItem + '".' }}
+      </p>
+    </div>
+
+    <form class="lista-cadastro__form" *ngIf="editando" [formGroup]="form" (ngSubmit)="salvar()">
+      <h4>{{ editandoId ? 'Editar' : 'Novo' }} {{ config.rotuloItem }}</h4>
+
+      <div class="adm-field" *ngFor="let campo of config.campos">
+        <label [for]="'campo-' + campo.chave">{{ campo.rotulo }}</label>
+        <input [id]="'campo-' + campo.chave" type="text" [formControlName]="campo.chave" [placeholder]="campo.placeholder ?? ''" />
+        <p class="adm-dica" *ngIf="campo.dica">{{ campo.dica }}</p>
+      </div>
+
+      <div class="adm-form-acoes">
+        <button type="submit" class="adm-btn adm-btn--primario" [disabled]="form.invalid || salvando">
+          {{ salvando ? 'Salvando...' : editandoId ? 'Salvar' : 'Adicionar' }}
+        </button>
+        <button type="button" class="adm-btn adm-btn--fantasma" (click)="fechar()">Cancelar</button>
+      </div>
+    </form>
+  </ng-container>
+</div>

@@ -1,0 +1,246 @@
+<div class="menu-admin">
+  <div class="adm-page-head">
+    <h2>Menu do site</h2>
+    <p>
+      É a barra de navegação no topo do site. Cada <strong>item</strong> (ex: "Blog") aparece na barra. Um item pode levar direto a uma página
+      ou abrir um <strong>submenu</strong> com links organizados em colunas.
+    </p>
+  </div>
+
+  <p class="adm-alert adm-alert--erro" *ngIf="erro">{{ erro }}</p>
+  <p class="adm-empty" *ngIf="carregando">Carregando...</p>
+
+  <ng-container *ngIf="!carregando && !erro">
+    <div class="menu-admin__barra" aria-label="Prévia da barra do topo">
+      <span class="menu-admin__barra-rotulo">Como aparece no site</span>
+      <div class="menu-admin__barra-itens">
+        <button
+          type="button"
+          class="menu-admin__barra-item"
+          *ngFor="let item of itens"
+          [class.is-ativo]="item.id === itemSelecionadoId"
+          [class.is-oculto]="!item.ativo"
+          (click)="selecionarItem(item)"
+        >
+          {{ item.label }}
+          <i class="fa-solid fa-chevron-down" *ngIf="item.href === '#'"></i>
+        </button>
+        <span class="menu-admin__barra-item menu-admin__barra-item--novo" *ngIf="criandoItem">{{ formItem.value.label || 'Novo item' }}</span>
+      </div>
+    </div>
+
+    <div class="menu-admin__layout">
+      <aside class="menu-admin__lista">
+        <p class="menu-admin__lista-titulo">Itens da barra</p>
+        <p class="menu-admin__lista-dica" *ngIf="itens.length > 1">Arraste pra mudar a ordem. O olho esconde sem excluir.</p>
+
+        <div cdkDropList class="menu-admin__itens" (cdkDropListDropped)="soltarItem($event)">
+          <div
+            class="menu-admin__item"
+            cdkDrag
+            *ngFor="let item of itens"
+            [class.is-ativo]="item.id === itemSelecionadoId"
+            [class.is-oculto]="!item.ativo"
+            (click)="selecionarItem(item)"
+          >
+            <i class="fa-solid fa-grip-vertical menu-admin__arrastar" cdkDragHandle (click)="$event.stopPropagation()"></i>
+            <span class="menu-admin__item-texto">
+              <strong>{{ item.label }}</strong>
+              <small>{{ !item.ativo ? 'Escondido do site' : item.href === '#' ? 'Abre um submenu' : item.href }}</small>
+            </span>
+            <button
+              type="button"
+              class="menu-admin__icone"
+              (click)="alternarVisivelItem(item, $event)"
+              [title]="item.ativo ? 'Esconder do site' : 'Mostrar no site'"
+            >
+              <i class="fa-solid" [ngClass]="item.ativo ? 'fa-eye' : 'fa-eye-slash'"></i>
+            </button>
+          </div>
+        </div>
+
+        <button type="button" class="menu-admin__item menu-admin__item--novo" [class.is-ativo]="criandoItem" (click)="novoItem()">
+          <i class="fa-solid fa-plus"></i>
+          <strong>Novo item</strong>
+        </button>
+      </aside>
+
+      <section class="menu-admin__editor">
+        <!-- 1. O item -->
+        <div class="menu-admin__cartao">
+          <div class="menu-admin__cartao-cabecalho">
+            <span class="menu-admin__passo">1</span>
+            <div>
+              <h3>{{ criandoItem ? 'Novo item da barra' : 'O item na barra' }}</h3>
+              <p>O nome que aparece no topo do site e pra onde ele leva.</p>
+            </div>
+          </div>
+
+          <form class="adm-form" [formGroup]="formItem" (ngSubmit)="salvarItem()">
+            <div class="adm-field">
+              <label for="itemLabel">Nome no menu</label>
+              <input id="itemLabel" type="text" formControlName="label" placeholder="Ex: Blog, Observatório, Sobre nós" />
+            </div>
+
+            <div class="menu-admin__opcoes">
+              <label class="menu-admin__opcao" [class.is-marcada]="!hrefDoItemEhSubmenu">
+                <input type="radio" [value]="false" formControlName="soAbreSubmenu" />
+                <span>
+                  <strong>Leva a uma página</strong>
+                  <small>Clicar no item abre esse endereço.</small>
+                </span>
+              </label>
+              <label class="menu-admin__opcao" [class.is-marcada]="hrefDoItemEhSubmenu">
+                <input type="radio" [value]="true" formControlName="soAbreSubmenu" />
+                <span>
+                  <strong>Só abre o submenu</strong>
+                  <small>Não leva a lugar nenhum, apenas mostra os links abaixo.</small>
+                </span>
+              </label>
+            </div>
+
+            <div class="adm-field" *ngIf="!hrefDoItemEhSubmenu">
+              <label for="itemHref">Endereço</label>
+              <input id="itemHref" type="text" formControlName="href" placeholder="/caminho ou https://..." />
+              <app-link-vinculo [artigos]="artigos" [paginas]="paginas" [categorias]="categorias" (escolher)="vincular('item', $event)"></app-link-vinculo>
+            </div>
+
+            <div class="adm-form-acoes">
+              <button type="submit" class="adm-btn adm-btn--primario" [disabled]="formItem.invalid || salvando">
+                {{ salvando ? 'Salvando...' : criandoItem ? 'Criar item' : 'Salvar item' }}
+              </button>
+              <button type="button" class="adm-btn adm-btn--fantasma menu-admin__perigo" *ngIf="!criandoItem" (click)="excluirItem()">
+                <i class="fa-solid fa-trash"></i> Excluir item
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- 2. O submenu -->
+        <div class="menu-admin__cartao" *ngIf="!criandoItem && itemSelecionado">
+          <div class="menu-admin__cartao-cabecalho">
+            <span class="menu-admin__passo">2</span>
+            <div>
+              <h3>O submenu de "{{ itemSelecionado.label }}"</h3>
+              <p>
+                Links que aparecem quando alguém passa o mouse sobre o item. Eles ficam em <strong>colunas</strong>, cada uma com um título.
+                Arraste os links pra reordenar ou levar de uma coluna pra outra.
+              </p>
+            </div>
+          </div>
+
+          <p class="menu-admin__vazio" *ngIf="!colunas.length">
+            Ainda não tem nenhum link aqui. {{ itemSelecionado.href === '#' ? 'Como esse item só abre o submenu, adicione ao menos um link.' : 'Sem links, o item vira um link comum, sem dropdown.' }}
+          </p>
+
+          <div class="menu-admin__colunas" cdkDropListGroup>
+            <div class="menu-admin__coluna" *ngFor="let coluna of colunas; let i = index">
+              <div class="menu-admin__coluna-cabecalho">
+                <input
+                  type="text"
+                  class="menu-admin__coluna-titulo"
+                  [value]="coluna.titulo"
+                  placeholder="Título da coluna"
+                  (change)="renomearColuna(coluna, $any($event.target).value)"
+                  aria-label="Título da coluna"
+                />
+                <div class="menu-admin__coluna-acoes">
+                  <button type="button" class="menu-admin__icone" [disabled]="i === 0" (click)="moverColuna(i, -1)" title="Mover pra esquerda">
+                    <i class="fa-solid fa-arrow-left"></i>
+                  </button>
+                  <button type="button" class="menu-admin__icone" [disabled]="i === colunas.length - 1" (click)="moverColuna(i, 1)" title="Mover pra direita">
+                    <i class="fa-solid fa-arrow-right"></i>
+                  </button>
+                  <button type="button" class="menu-admin__icone menu-admin__icone--perigo" (click)="excluirColuna(coluna)" title="Excluir coluna">
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div
+                cdkDropList
+                class="menu-admin__links"
+                [cdkDropListData]="coluna.links"
+                (cdkDropListDropped)="soltarLink($event, coluna)"
+              >
+                <div class="menu-admin__link" cdkDrag *ngFor="let link of coluna.links" [class.is-editando]="link.id === linkEmEdicaoId" [class.is-oculto]="!link.ativo">
+                  <i class="fa-solid fa-grip-vertical menu-admin__arrastar" cdkDragHandle></i>
+                  <span class="menu-admin__link-texto">
+                    <strong>{{ link.label }}</strong>
+                    <small>{{ link.ativo ? link.href : 'Escondido do site' }}</small>
+                  </span>
+                  <button type="button" class="menu-admin__icone" (click)="alternarVisivelLink(link)" [title]="link.ativo ? 'Esconder do site' : 'Mostrar no site'">
+                    <i class="fa-solid" [ngClass]="link.ativo ? 'fa-eye' : 'fa-eye-slash'"></i>
+                  </button>
+                  <button type="button" class="menu-admin__icone" (click)="editarLink(link)" title="Editar link">
+                    <i class="fa-solid fa-pen"></i>
+                  </button>
+                  <button type="button" class="menu-admin__icone menu-admin__icone--perigo" (click)="excluirLink(link)" title="Excluir link">
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                </div>
+                <p class="menu-admin__coluna-vazia" *ngIf="!coluna.links.length">Coluna vazia. Adicione um link abaixo.</p>
+              </div>
+
+              <button type="button" class="menu-admin__adicionar" (click)="novoLink(coluna)">
+                <i class="fa-solid fa-plus"></i> Adicionar link
+              </button>
+            </div>
+
+            <button type="button" class="menu-admin__coluna menu-admin__coluna--nova" (click)="adicionarColuna()">
+              <i class="fa-solid fa-table-columns"></i>
+              <strong>Nova coluna</strong>
+              <small>Separa os links em grupos com título</small>
+            </button>
+          </div>
+
+          <button type="button" class="adm-btn adm-btn--outline menu-admin__primeiro-link" *ngIf="!colunas.length" (click)="novoLink()">
+            <i class="fa-solid fa-plus"></i> Adicionar o primeiro link
+          </button>
+
+          <!-- Formulário de link -->
+          <form class="menu-admin__form-link" *ngIf="editandoLink" [formGroup]="formLink" (ngSubmit)="salvarLink()">
+            <h4>{{ linkEmEdicaoId ? 'Editar link' : 'Novo link do submenu' }}</h4>
+
+            <div class="adm-field">
+              <label for="linkLabel">Texto do link</label>
+              <input id="linkLabel" type="text" formControlName="label" placeholder="Ex: Saúde da mulher" />
+            </div>
+
+            <div class="adm-field">
+              <label for="linkHref">Endereço</label>
+              <input id="linkHref" type="text" formControlName="href" placeholder="/caminho ou https://..." />
+              <app-link-vinculo [artigos]="artigos" [paginas]="paginas" [categorias]="categorias" (escolher)="vincular('link', $event)"></app-link-vinculo>
+            </div>
+
+            <div class="adm-field">
+              <label for="linkColuna">Em qual coluna</label>
+              <select id="linkColuna" formControlName="coluna">
+                <option *ngFor="let titulo of titulosColunasExistentes" [value]="titulo">{{ titulo }}</option>
+                <option value="">Sem título de coluna</option>
+                <option [value]="NOVA_COLUNA">+ Criar uma nova coluna...</option>
+              </select>
+              <input
+                *ngIf="formLink.value.coluna === NOVA_COLUNA"
+                type="text"
+                formControlName="novaColuna"
+                placeholder="Título da nova coluna"
+              />
+            </div>
+
+            <div class="adm-form-acoes">
+              <button type="submit" class="adm-btn adm-btn--primario" [disabled]="formLink.invalid || salvando">
+                {{ salvando ? 'Salvando...' : linkEmEdicaoId ? 'Salvar link' : 'Adicionar link' }}
+              </button>
+              <button type="button" class="adm-btn adm-btn--fantasma" (click)="fecharEdicaoLink()">Cancelar</button>
+            </div>
+          </form>
+        </div>
+
+        <p class="menu-admin__dica" *ngIf="criandoItem">
+          Depois de criar o item, você poderá montar o submenu dele (colunas e links).
+        </p>
+      </section>
+    </div>
+  </ng-container>
+</div>

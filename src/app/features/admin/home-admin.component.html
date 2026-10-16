@@ -1,0 +1,253 @@
+<div class="home-admin">
+  <div class="adm-page-head">
+    <h2>Página inicial</h2>
+    <p>
+      A página inicial do site é uma sequência de <strong>blocos</strong>. Você escolhe quais blocos aparecem, em que ordem, e qual a largura de cada um —
+      dois blocos "estreitos" lado a lado formam uma linha. Clique num bloco pra editar o conteúdo dele.
+    </p>
+  </div>
+
+  <p class="adm-alert adm-alert--erro" *ngIf="erro">{{ erro }}</p>
+  <p class="adm-empty" *ngIf="carregando">Carregando...</p>
+
+  <ng-container *ngIf="!carregando && !erro">
+    <!-- Mapa da página -->
+    <div class="home-admin__mapa-cartao">
+      <span class="home-admin__rotulo">Mapa da página — como os blocos se encaixam</span>
+      <div class="home-admin__mapa">
+        <button
+          type="button"
+          class="home-admin__mapa-bloco"
+          *ngFor="let bloco of blocos"
+          [style.grid-column]="'span ' + bloco.colunas"
+          [class.is-ativo]="bloco.id === editandoId"
+          [class.is-oculto]="!bloco.visivel"
+          (click)="selecionar(bloco)"
+        >
+          <i class="fa-solid" [ngClass]="infoDoTipo(bloco.tipo).icone"></i>
+          <span>{{ infoDoTipo(bloco.tipo).nome }}</span>
+        </button>
+        <p class="home-admin__mapa-vazio" *ngIf="!blocos.length">A Home está vazia. Adicione o primeiro bloco ao lado.</p>
+      </div>
+    </div>
+
+    <div class="home-admin__layout">
+      <!-- Lista -->
+      <aside class="home-admin__lista">
+        <p class="home-admin__lista-titulo">Blocos, de cima pra baixo</p>
+        <p class="home-admin__lista-dica" *ngIf="blocos.length > 1">Arraste pra mudar a ordem. O olho liga e desliga.</p>
+
+        <div cdkDropList class="home-admin__itens" (cdkDropListDropped)="soltarBloco($event)">
+          <div
+            class="home-admin__item"
+            cdkDrag
+            *ngFor="let bloco of blocos"
+            [class.is-ativo]="bloco.id === editandoId"
+            [class.is-oculto]="!bloco.visivel"
+            (click)="selecionar(bloco)"
+          >
+            <i class="fa-solid fa-grip-vertical home-admin__arrastar" cdkDragHandle (click)="$event.stopPropagation()"></i>
+            <i class="fa-solid home-admin__item-icone" [ngClass]="infoDoTipo(bloco.tipo).icone"></i>
+            <span class="home-admin__item-texto">
+              <strong>{{ tituloBloco(bloco) }}</strong>
+              <small>{{ bloco.visivel ? resumoBloco(bloco) : 'Escondido do site' }}</small>
+            </span>
+            <button
+              type="button"
+              class="home-admin__icone"
+              (click)="alternarVisivel(bloco, $event)"
+              [title]="bloco.visivel ? 'Esconder do site' : 'Mostrar no site'"
+            >
+              <i class="fa-solid" [ngClass]="bloco.visivel ? 'fa-eye' : 'fa-eye-slash'"></i>
+            </button>
+          </div>
+        </div>
+
+        <button type="button" class="home-admin__item home-admin__item--novo" [class.is-ativo]="escolhendoTipo" (click)="abrirEscolhaDeTipo()">
+          <i class="fa-solid fa-plus"></i>
+          <strong>Adicionar bloco</strong>
+        </button>
+      </aside>
+
+      <!-- Editor -->
+      <section class="home-admin__editor">
+        <!-- Escolha do tipo -->
+        <div class="home-admin__cartao" *ngIf="escolhendoTipo">
+          <h3>Que tipo de bloco você quer adicionar?</h3>
+          <div class="home-admin__tipos">
+            <button type="button" class="home-admin__tipo" *ngFor="let info of tipos" (click)="escolherTipo(info)">
+              <i class="fa-solid" [ngClass]="info.icone"></i>
+              <strong>{{ info.nome }}</strong>
+              <span>{{ info.descricao }}</span>
+            </button>
+          </div>
+          <button type="button" class="adm-btn adm-btn--fantasma" (click)="escolhendoTipo = false">Cancelar</button>
+        </div>
+
+        <p class="home-admin__dica" *ngIf="!escolhendoTipo && !emEdicao && blocos.length">
+          Selecione um bloco no mapa ou na lista pra editar, ou adicione um novo.
+        </p>
+
+        <!-- Formulário do bloco -->
+        <ng-container *ngIf="emEdicao">
+          <form class="home-admin__cartao" [formGroup]="formBloco" (ngSubmit)="salvar()">
+            <div class="home-admin__cartao-cabecalho">
+              <i class="fa-solid home-admin__tipo-icone" [ngClass]="infoAtual.icone"></i>
+              <div>
+                <h3>{{ criando ? 'Novo bloco: ' : '' }}{{ infoAtual.nome }}</h3>
+                <p>{{ infoAtual.descricao }}</p>
+              </div>
+            </div>
+
+            <!-- Conteúdo -->
+            <h4 class="home-admin__secao">O que mostrar</h4>
+
+            <div class="adm-field" *ngIf="infoAtual.tipo === 'Texto' || infoAtual.tipo === 'GradeArtigos' || infoAtual.tipo === 'DadosSaude'">
+              <label for="tituloBloco">
+                {{ infoAtual.tipo === 'DadosSaude' ? 'Título da seção' : 'Título (opcional, aparece acima do bloco)' }}
+              </label>
+              <input id="tituloBloco" type="text" formControlName="titulo" />
+            </div>
+
+            <div class="adm-field" *ngIf="infoAtual.tipo === 'Texto'">
+              <label>Texto</label>
+              <app-quill-editor formControlName="conteudoHtml"></app-quill-editor>
+            </div>
+
+            <ng-container *ngIf="usaArtigos">
+              <div class="adm-field">
+                <label for="modoBloco">Como escolher os artigos</label>
+                <select id="modoBloco" formControlName="modo">
+                  <option *ngFor="let modo of infoAtual.modos" [value]="modo">{{ rotulosModo[modo] }}</option>
+                </select>
+              </div>
+
+              <div class="adm-field" *ngIf="!modoEscolhaManual">
+                <label for="categoriaBloco">De qual tópico</label>
+                <select id="categoriaBloco" formControlName="categoriaFiltroId">
+                  <option [ngValue]="null">Todos os tópicos</option>
+                  <option *ngFor="let cat of categorias" [ngValue]="cat.id">{{ cat.nome }}</option>
+                </select>
+              </div>
+
+              <div class="adm-field" *ngIf="formBloco.value.modo !== 'ArtigoFixo'">
+                <label for="limiteBloco">Quantos artigos mostrar</label>
+                <input id="limiteBloco" type="number" min="1" max="20" formControlName="limiteItens" />
+              </div>
+
+              <div class="adm-field" *ngIf="modoEscolhaManual">
+                <label>{{ formBloco.value.modo === 'ArtigoFixo' ? 'Qual artigo' : 'Artigos (na ordem em que aparecem)' }}</label>
+                <app-link-vinculo
+                  modo="artigo"
+                  rotulo="+ Escolher um artigo (pesquise pelo título)..."
+                  [artigos]="artigosDisponiveis"
+                  (escolherArtigo)="adicionarArtigo($event)"
+                ></app-link-vinculo>
+
+                <ul class="home-admin__lista-manual" cdkDropList (cdkDropListDropped)="soltarArtigo($event)">
+                  <li *ngFor="let artigo of artigosSelecionados" cdkDrag>
+                    <i class="fa-solid fa-grip-vertical home-admin__arrastar"></i>
+                    <span>{{ artigo.titulo }}</span>
+                    <button type="button" class="home-admin__icone home-admin__icone--perigo" (click)="removerArtigo(artigo)" title="Remover">
+                      <i class="fa-solid fa-xmark"></i>
+                    </button>
+                  </li>
+                </ul>
+                <p class="adm-dica" *ngIf="!artigosSelecionados.length">
+                  Nenhum artigo escolhido ainda — enquanto estiver vazio, o bloco mostra os mais recentes.
+                </p>
+              </div>
+            </ng-container>
+
+            <div class="adm-field" *ngIf="infoAtual.tipo === 'Carrossel'">
+              <label for="autoplayBloco">Troca de slide a cada (segundos)</label>
+              <input id="autoplayBloco" type="number" min="2" max="60" formControlName="autoplaySegundos" />
+            </div>
+
+            <ng-container *ngIf="infoAtual.tipo === 'EmAlta'">
+              <div class="adm-field-row">
+                <div class="adm-field">
+                  <label for="labelBloco">Título da lista</label>
+                  <input id="labelBloco" type="text" formControlName="label" />
+                </div>
+                <div class="adm-field">
+                  <label for="linkLabelBloco">Texto do link "ver mais"</label>
+                  <input id="linkLabelBloco" type="text" formControlName="linkLabel" />
+                </div>
+              </div>
+              <div class="adm-field">
+                <label for="hrefBloco">Pra onde o "ver mais" leva</label>
+                <input id="hrefBloco" type="text" formControlName="href" placeholder="/blog" />
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="infoAtual.recursoItens as recurso">
+              <div class="adm-field">
+                <label for="limiteItensBloco">Quantos itens mostrar</label>
+                <input id="limiteItensBloco" type="number" min="1" max="12" formControlName="limiteItens" />
+              </div>
+              <div class="home-admin__itens-externos">
+                <span>Os itens ficam no cadastro <strong>{{ recurso.nome }}</strong> — lá você cria, edita e reordena cada um.</span>
+                <a class="adm-btn adm-btn--outline" [routerLink]="['/admin/recurso', recurso.path]">
+                  Gerenciar {{ recurso.nome }} <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
+              </div>
+            </ng-container>
+
+            <!-- Aparência -->
+            <h4 class="home-admin__secao">Como aparece</h4>
+
+            <div class="adm-field">
+              <label>Largura do bloco</label>
+              <div class="home-admin__larguras">
+                <label class="home-admin__largura" *ngFor="let largura of larguras" [class.is-marcada]="formBloco.value.colunas === largura.colunas">
+                  <input type="radio" [value]="largura.colunas" formControlName="colunas" />
+                  <span class="home-admin__largura-barra"><i [style.width.%]="(largura.colunas / 12) * 100"></i></span>
+                  <strong>{{ largura.nome }}</strong>
+                </label>
+              </div>
+              <p class="adm-dica">
+                Blocos seguidos que somam até uma linha ficam lado a lado (ex.: dois terços + um terço). No celular todos ocupam a linha inteira.
+              </p>
+            </div>
+
+            <label class="adm-checkbox">
+              <input type="checkbox" formControlName="visivel" />
+              Mostrar este bloco no site
+            </label>
+
+            <div class="adm-form-acoes">
+              <button type="submit" class="adm-btn adm-btn--primario" [disabled]="salvando">
+                {{ salvando ? 'Salvando...' : criando ? 'Adicionar à Home' : 'Salvar bloco' }}
+              </button>
+              <button type="button" class="adm-btn adm-btn--fantasma" (click)="fecharEdicao()">Fechar</button>
+              <button
+                type="button"
+                class="adm-btn adm-btn--fantasma home-admin__perigo"
+                *ngIf="!criando && editandoId"
+                (click)="excluir(blocoEditado!)"
+              >
+                <i class="fa-solid fa-trash"></i> Remover bloco
+              </button>
+            </div>
+          </form>
+
+          <!-- Preview -->
+          <div class="home-admin__cartao home-admin__preview">
+            <span class="home-admin__rotulo">
+              Como vai ficar no site
+              <em *ngIf="carregandoPreview">atualizando...</em>
+              <em>(só uma prévia — os links não funcionam aqui)</em>
+            </span>
+            <p class="adm-alert adm-alert--erro" *ngIf="erroPreview">{{ erroPreview }}</p>
+            <div class="home-admin__preview-moldura" inert>
+              <div class="home-admin__preview-bloco" [style.width.%]="larguraPreview">
+                <app-home-bloco *ngIf="preview" [bloco]="preview"></app-home-bloco>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </section>
+    </div>
+  </ng-container>
+</div>

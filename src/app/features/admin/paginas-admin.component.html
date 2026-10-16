@@ -1,0 +1,129 @@
+<div class="paginas-admin">
+  <div class="adm-page-head">
+    <h2>Páginas institucionais</h2>
+    <p>
+      Páginas fixas do portal, como "Quem somos", "Linha editorial" e a política de privacidade. Cada uma tem um endereço próprio, que você pode
+      colocar no menu e no rodapé.
+    </p>
+  </div>
+
+  <p class="adm-alert adm-alert--erro" *ngIf="erro">{{ erro }}</p>
+  <p class="adm-empty" *ngIf="carregando">Carregando...</p>
+
+  <div class="paginas-admin__layout" *ngIf="!carregando && !erro">
+    <aside class="paginas-admin__lista">
+      <p class="paginas-admin__lista-titulo">Páginas</p>
+
+      <button type="button" class="paginas-admin__item" *ngFor="let pagina of paginas" [class.is-ativo]="pagina.id === editandoId" (click)="selecionar(pagina)">
+        <i class="fa-solid fa-file-lines"></i>
+        <span>
+          <strong>{{ pagina.titulo }}</strong>
+          <small>/{{ pagina.slug }}</small>
+        </span>
+      </button>
+
+      <button type="button" class="paginas-admin__item paginas-admin__item--nova" [class.is-ativo]="criando" (click)="nova()">
+        <i class="fa-solid fa-plus"></i>
+        <strong>Nova página</strong>
+      </button>
+    </aside>
+
+    <section class="paginas-admin__editor">
+      <p class="paginas-admin__dica" *ngIf="!emEdicao">Selecione uma página na lista pra editar, ou crie uma nova.</p>
+
+      <form class="paginas-admin__cartao" *ngIf="emEdicao" [formGroup]="form" (ngSubmit)="salvar()">
+        <div class="paginas-admin__cabecalho">
+          <div>
+            <h3>{{ criando ? 'Nova página' : form.value.titulo || 'Editar página' }}</h3>
+            <p class="paginas-admin__endereco" *ngIf="paginaAtual as pagina">
+              Endereço: <code>/{{ pagina.slug }}</code>
+              <a [href]="'#/' + pagina.slug" target="_blank" rel="noopener">Ver no site <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+            </p>
+            <p class="paginas-admin__endereco" *ngIf="criando">O endereço é criado a partir do título quando você salvar.</p>
+          </div>
+
+          <div class="adm-tabs">
+            <button type="button" [class.is-ativo]="aba === 'editar'" (click)="aba = 'editar'">Editar</button>
+            <button type="button" [class.is-ativo]="aba === 'previa'" (click)="aba = 'previa'">Prévia</button>
+          </div>
+        </div>
+
+        <ng-container *ngIf="aba === 'editar'">
+          <div class="adm-field">
+            <label for="paginaTitulo">Título</label>
+            <input id="paginaTitulo" type="text" formControlName="titulo" />
+          </div>
+
+          <div class="adm-field">
+            <label for="paginaResumo">Resumo para a busca</label>
+            <textarea id="paginaResumo" rows="2" formControlName="resumoBusca"></textarea>
+            <p class="adm-dica">Uma ou duas frases. Aparece no resultado quando alguém pesquisa no site.</p>
+          </div>
+
+          <div class="adm-field">
+            <label>Imagem (opcional)</label>
+            <div class="paginas-admin__arquivo">
+              <img *ngIf="form.value.imagemUrl" [src]="form.value.imagemUrl" alt="" />
+              <span class="paginas-admin__arquivo-vazio" *ngIf="!form.value.imagemUrl">Sem imagem</span>
+              <div class="paginas-admin__arquivo-acoes">
+                <label class="adm-btn adm-btn--outline">
+                  {{ enviando['imagemUrl'] ? 'Enviando...' : form.value.imagemUrl ? 'Trocar imagem' : 'Enviar imagem' }}
+                  <input type="file" accept="image/*" (change)="enviarArquivo($event, 'imagemUrl')" [disabled]="enviando['imagemUrl']" hidden />
+                </label>
+                <button type="button" class="adm-btn adm-btn--fantasma" *ngIf="form.value.imagemUrl" (click)="limparArquivo('imagemUrl')">Remover</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="adm-field">
+            <label>Conteúdo</label>
+            <app-quill-editor formControlName="conteudoHtml"></app-quill-editor>
+          </div>
+
+          <div class="adm-field">
+            <label>Anexo em PDF (opcional)</label>
+            <p class="adm-dica">Útil pra documentos que a pessoa baixa, como a política de privacidade em PDF.</p>
+            <div class="paginas-admin__anexo">
+              <div class="paginas-admin__anexo-arquivo" *ngIf="form.value.anexoUrl">
+                <i class="fa-solid fa-file-pdf"></i>
+                <a [href]="form.value.anexoUrl" target="_blank" rel="noopener">Ver arquivo enviado</a>
+              </div>
+              <div class="paginas-admin__arquivo-acoes">
+                <label class="adm-btn adm-btn--outline">
+                  {{ enviando['anexoUrl'] ? 'Enviando...' : form.value.anexoUrl ? 'Trocar arquivo' : 'Enviar PDF' }}
+                  <input type="file" accept="application/pdf,image/*" (change)="enviarArquivo($event, 'anexoUrl')" [disabled]="enviando['anexoUrl']" hidden />
+                </label>
+                <button type="button" class="adm-btn adm-btn--fantasma" *ngIf="form.value.anexoUrl" (click)="limparArquivo('anexoUrl')">Remover</button>
+              </div>
+            </div>
+            <input
+              *ngIf="form.value.anexoUrl"
+              type="text"
+              formControlName="anexoLabel"
+              placeholder="Legenda do anexo — ex: PDF · atualizado em 20/08/2026"
+            />
+          </div>
+        </ng-container>
+
+        <div class="paginas-admin__previa" *ngIf="aba === 'previa'" inert>
+          <h1>{{ form.value.titulo || 'Título da página' }}</h1>
+          <img *ngIf="form.value.imagemUrl" class="paginas-admin__previa-imagem" [src]="form.value.imagemUrl" alt="" />
+          <div class="paginas-admin__previa-corpo" [innerHTML]="conteudoPrevia"></div>
+          <span class="paginas-admin__previa-anexo" *ngIf="form.value.anexoUrl">
+            <i class="fa-solid fa-file-pdf"></i> {{ form.value.anexoLabel || 'Baixar anexo' }}
+          </span>
+        </div>
+
+        <div class="adm-form-acoes">
+          <button type="submit" class="adm-btn adm-btn--primario" [disabled]="salvando">
+            {{ salvando ? 'Salvando...' : criando ? 'Criar página' : 'Salvar alterações' }}
+          </button>
+          <button type="button" class="adm-btn adm-btn--fantasma" (click)="fechar()">Fechar</button>
+          <button type="button" class="adm-btn adm-btn--fantasma paginas-admin__perigo" *ngIf="!criando && editandoId" (click)="excluir()">
+            <i class="fa-solid fa-trash"></i> Excluir página
+          </button>
+        </div>
+      </form>
+    </section>
+  </div>
+</div>

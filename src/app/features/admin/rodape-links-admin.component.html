@@ -1,0 +1,111 @@
+<div class="rodape-links">
+  <div class="adm-page-head" *ngIf="!embutido">
+    <h2>Links do rodapé</h2>
+    <p>
+      Os links que aparecem no rodapé do site, organizados em <strong>colunas</strong>. Arraste um link para reordenar ou levá-lo para outra coluna.
+    </p>
+  </div>
+
+  <p class="adm-alert adm-alert--erro" *ngIf="erro">{{ erro }}</p>
+  <p class="adm-empty" *ngIf="carregando">Carregando...</p>
+
+  <ng-container *ngIf="!carregando && !erro">
+    <p class="rodape-links__dica">
+      <i class="fa-solid fa-circle-info"></i>
+      <span>
+        No site, a <strong>última coluna</strong> (à direita) é a coluna em destaque: aparece <strong>com título</strong>, em duas colunas de links.
+        As demais aparecem só com os links, <strong>sem título</strong> — o nome delas serve apenas pra você se organizar.
+      </span>
+    </p>
+
+    <div class="rodape-links__colunas" cdkDropListGroup>
+      <div class="rodape-links__coluna" *ngFor="let coluna of colunas; let i = index; let ultima = last" [class.is-destaque]="ultima">
+        <span class="rodape-links__selo" [class.rodape-links__selo--destaque]="ultima">
+          {{ ultima ? 'Coluna em destaque — título aparece' : 'Coluna simples — título não aparece' }}
+        </span>
+
+        <div class="rodape-links__coluna-cabecalho">
+          <input
+            type="text"
+            class="rodape-links__coluna-nome"
+            [value]="coluna.nome"
+            (change)="renomearColuna(coluna, $any($event.target).value)"
+            [attr.aria-label]="ultima ? 'Título da coluna' : 'Nome da coluna'"
+          />
+          <div class="rodape-links__coluna-acoes">
+            <button type="button" class="rodape-links__icone" [disabled]="i === 0" (click)="moverColuna(i, -1)" title="Mover pra esquerda">
+              <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <button type="button" class="rodape-links__icone" [disabled]="ultima" (click)="moverColuna(i, 1)" title="Mover pra direita">
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+            <button type="button" class="rodape-links__icone rodape-links__icone--perigo" (click)="excluirColuna(coluna)" title="Excluir coluna">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>
+        </div>
+
+        <div cdkDropList class="rodape-links__links" [cdkDropListData]="coluna.links" (cdkDropListDropped)="soltarLink($event, coluna)">
+          <div class="rodape-links__link" cdkDrag *ngFor="let link of coluna.links" [class.is-editando]="link.id === linkEmEdicaoId" [class.is-oculto]="!link.ativo">
+            <i class="fa-solid fa-grip-vertical rodape-links__arrastar" cdkDragHandle></i>
+            <span class="rodape-links__link-texto">
+              <strong>{{ link.label }}</strong>
+              <small>{{ link.ativo ? link.href : 'Escondido do site' }}</small>
+            </span>
+            <button type="button" class="rodape-links__icone" (click)="alternarVisivel(link)" [title]="link.ativo ? 'Esconder do site' : 'Mostrar no site'">
+              <i class="fa-solid" [ngClass]="link.ativo ? 'fa-eye' : 'fa-eye-slash'"></i>
+            </button>
+            <button type="button" class="rodape-links__icone" (click)="editarLink(link)" title="Editar link">
+              <i class="fa-solid fa-pen"></i>
+            </button>
+            <button type="button" class="rodape-links__icone rodape-links__icone--perigo" (click)="excluirLink(link)" title="Excluir link">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>
+          <p class="rodape-links__vazia" *ngIf="!coluna.links.length">Coluna vazia. Adicione um link abaixo.</p>
+        </div>
+
+        <button type="button" class="rodape-links__adicionar" (click)="novoLink(coluna)">
+          <i class="fa-solid fa-plus"></i> Adicionar link
+        </button>
+      </div>
+
+      <button type="button" class="rodape-links__coluna rodape-links__coluna--nova" (click)="adicionarColuna()">
+        <i class="fa-solid fa-table-columns"></i>
+        <strong>Nova coluna</strong>
+        <small>Entra no fim — vira a coluna em destaque</small>
+      </button>
+    </div>
+
+    <form class="rodape-links__form" *ngIf="editando" [formGroup]="formLink" (ngSubmit)="salvarLink()">
+      <h4>{{ linkEmEdicaoId ? 'Editar link' : 'Novo link' }}</h4>
+
+      <div class="adm-field">
+        <label for="rodapeLinkLabel">Texto do link</label>
+        <input id="rodapeLinkLabel" type="text" formControlName="label" placeholder="Ex: Política de Privacidade" />
+      </div>
+
+      <div class="adm-field">
+        <label for="rodapeLinkHref">Endereço</label>
+        <input id="rodapeLinkHref" type="text" formControlName="href" placeholder="/caminho ou https://..." />
+        <app-link-vinculo [artigos]="artigos" [paginas]="paginas" [categorias]="categorias" (escolher)="vincular($event)"></app-link-vinculo>
+      </div>
+
+      <div class="adm-field">
+        <label for="rodapeLinkColuna">Em qual coluna</label>
+        <select id="rodapeLinkColuna" formControlName="coluna">
+          <option *ngFor="let nome of nomesColunas" [value]="nome">{{ nome }}</option>
+          <option [value]="NOVA_COLUNA">+ Criar uma nova coluna...</option>
+        </select>
+        <input *ngIf="formLink.value.coluna === NOVA_COLUNA" type="text" formControlName="novaColuna" placeholder="Nome da nova coluna" />
+      </div>
+
+      <div class="adm-form-acoes">
+        <button type="submit" class="adm-btn adm-btn--primario" [disabled]="formLink.invalid || salvando">
+          {{ salvando ? 'Salvando...' : linkEmEdicaoId ? 'Salvar link' : 'Adicionar link' }}
+        </button>
+        <button type="button" class="adm-btn adm-btn--fantasma" (click)="fecharEdicao()">Cancelar</button>
+      </div>
+    </form>
+  </ng-container>
+</div>

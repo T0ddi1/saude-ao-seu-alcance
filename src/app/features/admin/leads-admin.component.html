@@ -1,0 +1,29 @@
+<div class="leads-admin">
+  <div class="adm-page-head">
+    <h2>Leads</h2>
+    <p>As listas e campanhas ligadas aos formulários de newsletter e contato, num lugar só. Escolha o que quer editar nas abas abaixo.</p>
+  </div>
+
+  <div class="abas-pagina__abas" role="tablist">
+    <button
+      type="button"
+      role="tab"
+      class="abas-pagina__aba"
+      *ngFor="let aba of abas"
+      [class.is-ativa]="abaAtiva === aba.id"
+      [attr.aria-selected]="abaAtiva === aba.id"
+      (click)="abaAtiva = aba.id"
+    >
+      <i class="fa-solid" [ngClass]="aba.icone"></i>
+      <span>
+        <strong>{{ aba.nome }}</strong>
+        <small>{{ aba.descricao }}</small>
+      </span>
+    </button>
+  </div>
+
+  <!-- Todas as abas ficam montadas pra não perder o que já foi digitado ao trocar de aba. -->
+  <section class="abas-pagina__painel" *ngFor="let aba of abas" [hidden]="abaAtiva !== aba.id">
+    <app-lista-cadastro-admin [config]="aba.config"></app-lista-cadastro-admin>
+  </section>
+</div>

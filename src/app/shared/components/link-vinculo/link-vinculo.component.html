@@ -1,0 +1,23 @@
+<div class="link-vinculo">
+  <button type="button" class="link-vinculo__gatilho" [class.is-aberto]="aberto" (click)="alternar()">
+    <span>{{ rotulo }}</span>
+    <i class="fa-solid fa-chevron-down"></i>
+  </button>
+
+  <div class="link-vinculo__painel" *ngIf="aberto">
+    <div class="link-vinculo__busca">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" placeholder="Pesquisar pelo título..." [(ngModel)]="busca" [ngModelOptions]="{ standalone: true }" autofocus />
+    </div>
+
+    <div class="link-vinculo__lista">
+      <ng-container *ngFor="let grupo of grupos">
+        <p class="link-vinculo__grupo">{{ grupo.titulo }}</p>
+        <button type="button" class="link-vinculo__item" *ngFor="let item of grupo.itens" (click)="selecionar(item)">
+          {{ item.rotulo }}
+        </button>
+      </ng-container>
+      <p class="link-vinculo__vazio" *ngIf="!grupos.length">Nada encontrado pra "{{ busca }}".</p>
+    </div>
+  </div>
+</div>

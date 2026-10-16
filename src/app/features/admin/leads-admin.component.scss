@@ -1,0 +1,51 @@
+.abas-pagina__abas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.abas-pagina__aba {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1.5px solid var(--adm-border);
+  border-radius: 12px;
+  background: var(--adm-surface, #fff);
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+
+  i {
+    width: 20px;
+    text-align: center;
+    color: var(--adm-accent);
+  }
+  span {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  strong {
+    font-size: 13.5px;
+    color: var(--adm-ink);
+  }
+  small {
+    font-size: 11.5px;
+    color: var(--adm-muted);
+    line-height: 1.35;
+  }
+
+  &:hover {
+    border-color: var(--adm-accent);
+  }
+  &.is-ativa {
+    border-color: var(--adm-accent);
+    background: var(--adm-accent-soft);
+  }
+}
+
+.abas-pagina__painel[hidden] {
+  display: none;
+}

@@ -1,0 +1,62 @@
+:host {
+  display: block;
+  min-width: 0;
+}
+
+.home-bloco {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.home-bloco--Carrossel,
+.home-bloco--EmAlta {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-bottom: 48px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.home-bloco--GradeArtigos,
+.home-bloco--Texto {
+  padding: 48px 0;
+}
+
+.home-bloco__titulo {
+  margin: 0 0 24px;
+  font-size: var(--fs-h2);
+}
+
+.home-bloco__grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 32px 24px;
+}
+
+.home-bloco__texto {
+  font-size: var(--fs-body-m);
+  line-height: 1.7;
+  color: var(--color-body-text);
+
+  :is(h1, h2, h3) {
+    margin: 0 0 12px;
+    color: var(--color-ink);
+  }
+  :is(p, ul, ol) {
+    margin: 0 0 14px;
+  }
+  a {
+    color: var(--color-primary);
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-s);
+  }
+}
+
+@media (min-width: 1000px) and (orientation: portrait) {
+  .home-bloco--EmAlta {
+    display: none;
+  }
+}

@@ -1,0 +1,34 @@
+<div class="moderacao-admin">
+  <div class="adm-page-head">
+    <h2>Moderação</h2>
+    <p>Comentários dos leitores e as palavras que bloqueiam um comentário automaticamente, num lugar só.</p>
+  </div>
+
+  <div class="abas-pagina__abas" role="tablist">
+    <button type="button" role="tab" class="abas-pagina__aba" [class.is-ativa]="abaAtiva === 'comentarios'" (click)="abaAtiva = 'comentarios'">
+      <i class="fa-solid fa-comments"></i>
+      <span>
+        <strong>
+          Comentários
+          <em class="abas-pagina__contador" *ngIf="pendentes">{{ pendentes }} pendente{{ pendentes > 1 ? 's' : '' }}</em>
+        </strong>
+        <small>Aprovar, rejeitar e responder.</small>
+      </span>
+    </button>
+    <button type="button" role="tab" class="abas-pagina__aba" [class.is-ativa]="abaAtiva === 'palavras'" (click)="abaAtiva = 'palavras'">
+      <i class="fa-solid fa-ban"></i>
+      <span>
+        <strong>Palavras bloqueadas</strong>
+        <small>O que o sistema barra sozinho.</small>
+      </span>
+    </button>
+  </div>
+
+  <section class="abas-pagina__painel" [hidden]="abaAtiva !== 'comentarios'">
+    <app-comentarios-admin [embutido]="true" (pendentesMudaram)="pendentes = $event"></app-comentarios-admin>
+  </section>
+
+  <section class="abas-pagina__painel" [hidden]="abaAtiva !== 'palavras'">
+    <app-lista-cadastro-admin [config]="configPalavras"></app-lista-cadastro-admin>
+  </section>
+</div>

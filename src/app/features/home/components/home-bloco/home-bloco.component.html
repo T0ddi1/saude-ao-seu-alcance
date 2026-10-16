@@ -1,0 +1,33 @@
+<div class="home-bloco" [ngClass]="'home-bloco--' + bloco.tipo">
+  <ng-container *ngIf="bloco.tipo === 'Carrossel'">
+    <app-hero-featured [articles]="bloco.featuredArticles" [autoplaySegundos]="bloco.autoplaySegundos || 6"></app-hero-featured>
+  </ng-container>
+
+  <ng-container *ngIf="bloco.tipo === 'EmAlta'">
+    <app-trending-panel [data]="bloco.trending"></app-trending-panel>
+  </ng-container>
+
+  <ng-container *ngIf="bloco.tipo === 'GradeArtigos'">
+    <h2 class="home-bloco__titulo" *ngIf="bloco.titulo">{{ bloco.titulo }}</h2>
+    <div class="home-bloco__grade">
+      <app-category-card *ngFor="let card of bloco.contentCards" [card]="card"></app-category-card>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="bloco.tipo === 'DadosSaude'">
+    <app-health-data-section [healthStats]="bloco.healthStats"></app-health-data-section>
+  </ng-container>
+
+  <ng-container *ngIf="bloco.tipo === 'Patrocinio'">
+    <app-sponsored-section [items]="bloco.sponsored"></app-sponsored-section>
+  </ng-container>
+
+  <ng-container *ngIf="bloco.tipo === 'SelosConfianca'">
+    <app-sponsored-section [trustBadges]="bloco.trustBadges"></app-sponsored-section>
+  </ng-container>
+
+  <ng-container *ngIf="bloco.tipo === 'Texto'">
+    <h2 class="home-bloco__titulo" *ngIf="bloco.titulo">{{ bloco.titulo }}</h2>
+    <div class="home-bloco__texto" [innerHTML]="bloco.conteudoHtml"></div>
+  </ng-container>
+</div>

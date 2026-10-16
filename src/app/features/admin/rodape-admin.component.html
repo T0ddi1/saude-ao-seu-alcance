@@ -1,0 +1,57 @@
+<div class="rodape-admin">
+  <div class="adm-page-head">
+    <h2>Rodapé</h2>
+    <p>Tudo o que aparece no rodapé do site, num lugar só. Escolha a parte que quer editar nas abas abaixo.</p>
+  </div>
+
+  <div class="rodape-admin__abas" role="tablist">
+    <button
+      type="button"
+      role="tab"
+      class="rodape-admin__aba"
+      *ngFor="let aba of abas"
+      [class.is-ativa]="abaAtiva === aba.id"
+      [attr.aria-selected]="abaAtiva === aba.id"
+      (click)="abaAtiva = aba.id"
+    >
+      <i class="fa-solid" [ngClass]="aba.icone"></i>
+      <span>
+        <strong>{{ aba.nome }}</strong>
+        <small>{{ aba.descricao }}</small>
+      </span>
+    </button>
+  </div>
+
+  <!-- Todas as abas ficam montadas pra não perder o que já foi digitado ao trocar de aba. -->
+  <section class="rodape-admin__painel" [hidden]="abaAtiva !== 'textos'">
+    <app-rodape-config-admin [embutido]="true"></app-rodape-config-admin>
+  </section>
+
+  <section class="rodape-admin__painel" [hidden]="abaAtiva !== 'links'">
+    <app-rodape-links-admin [embutido]="true"></app-rodape-links-admin>
+  </section>
+
+  <section class="rodape-admin__painel" [hidden]="abaAtiva !== 'redes'">
+    <app-rodape-lista-admin
+      #redes
+      recurso="footer-redes-sociais"
+      campoNome="label"
+      rotuloNome="Nome da rede"
+      rotuloItem="rede social"
+      explicacao="Os ícones que aparecem no rodapé, cada um levando ao perfil do portal na rede. Arraste pra mudar a ordem."
+      [comLinkInterno]="false"
+    ></app-rodape-lista-admin>
+  </section>
+
+  <section class="rodape-admin__painel" [hidden]="abaAtiva !== 'projetos'">
+    <app-rodape-lista-admin
+      #projetos
+      recurso="footer-projetos-especiais"
+      campoNome="titulo"
+      rotuloNome="Título do projeto"
+      rotuloItem="projeto"
+      explicacao="Destaques de projetos especiais mostrados no rodapé, com ícone, título e uma frase de descrição. Arraste pra mudar a ordem."
+      [comDescricao]="true"
+    ></app-rodape-lista-admin>
+  </section>
+</div>
