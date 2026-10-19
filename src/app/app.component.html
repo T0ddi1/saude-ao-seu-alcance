@@ -5,6 +5,7 @@
 </main>
 <app-footer *ngIf="!isAdmin()"></app-footer>
 <app-toast></app-toast>
+<app-aviso-popup *ngIf="!isAdmin()"></app-aviso-popup>
 
 <nav class="totem-nav" *ngIf="totem.isTotem() && !totem.menuOpen()" aria-label="Navegação do totem">
   <button type="button" class="totem-nav__btn" *ngIf="!isHome()" (click)="goBack()" aria-label="Voltar">

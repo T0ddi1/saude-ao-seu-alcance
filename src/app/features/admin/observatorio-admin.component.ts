@@ -1,3 +1,4 @@
+import { DicaImagemComponent } from '../../shared/components/dica-imagem/dica-imagem.component';
 import { Component, HostListener, OnDestroy, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -180,7 +181,7 @@ const ROTULOS_MODO_GRADE: Record<ModoGrade, string> = {
 @Component({
   selector: 'app-observatorio-admin',
   standalone: true,
-  imports: [
+  imports: [DicaImagemComponent, 
     CommonModule,
     FormsModule,
     ReactiveFormsModule,

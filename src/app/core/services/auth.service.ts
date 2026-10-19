@@ -36,8 +36,8 @@ export class AuthService {
     return this.http.post<{ mensagem: string }>(`${this.endpoint}/esqueci-senha`, { email });
   }
 
-  redefinirSenha(usuarioId: string, token: string, novaSenha: string): Observable<{ redefinido: boolean }> {
-    return this.http.post<{ redefinido: boolean }>(`${this.endpoint}/redefinir-senha`, { usuarioId, token, novaSenha });
+  redefinirSenha(usuarioId: string, token: string, novaSenha: string): Observable<{ redefinido: boolean; painel?: boolean }> {
+    return this.http.post<{ redefinido: boolean; painel?: boolean }>(`${this.endpoint}/redefinir-senha`, { usuarioId, token, novaSenha });
   }
 
   descadastrar(usuarioId: string, token: string): Observable<{ descadastrado: boolean }> {
@@ -51,6 +51,11 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem(USER_KEY);
+    try {
+      sessionStorage.removeItem('sasa_aviso_pendentes_visto'); // o aviso de comentários pendentes volta no próximo login
+    } catch {
+      /* sem sessionStorage */
+    }
     this.usuario.set(null);
     this.cancelarLogoutAutomatico();
   }

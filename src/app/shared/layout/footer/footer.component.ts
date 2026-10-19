@@ -17,6 +17,8 @@ import { AnchorNavService } from '../../../core/services/anchor-nav.service';
 })
 export class FooterComponent implements OnInit {
   data = signal<FooterData | null>(null);
+  readonly ano = new Date().getFullYear();
+  readonly versao = '1.1.2026.10';
 
   constructor(private footerService: FooterService, public anchorNav: AnchorNavService) {}
 

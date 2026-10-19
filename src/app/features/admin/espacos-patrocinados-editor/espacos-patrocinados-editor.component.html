@@ -1,0 +1,274 @@
+<div class="esp">
+  <div class="esp__topo">
+    <div>
+      <strong>Espaços deste bloco</strong>
+      <small>Arraste pra mudar a ordem. O olho tira do ar sem apagar. Clique num espaço pra editar.</small>
+    </div>
+    <button type="button" class="adm-btn adm-btn--primario" (click)="abrirNovo()"><i class="fa-solid fa-plus"></i> Novo espaço</button>
+  </div>
+
+  <p class="adm-alert adm-alert--erro" *ngIf="erro">{{ erro }}</p>
+  <p class="adm-empty" *ngIf="carregando">Carregando...</p>
+  <p class="adm-empty" *ngIf="!carregando && !itens.length && !erro">
+    Nenhum espaço ainda. Crie o primeiro — pode ser um banner, um card com texto ou um conteúdo de marca.
+  </p>
+
+  <div class="esp__lista" cdkDropList (cdkDropListDropped)="soltar($event)" *ngIf="itens.length">
+    <div
+      class="esp__item"
+      cdkDrag
+      *ngFor="let item of itens"
+      [class.is-escondido]="!item.ativo"
+      [class.is-encerrado]="situacao(item) === 'encerrado'"
+      (click)="abrirEdicao(item)"
+    >
+      <i class="fa-solid fa-grip-vertical esp__arrastar" cdkDragHandle (click)="$event.stopPropagation()"></i>
+      <span class="esp__miniatura">
+        <img *ngIf="item.imagemUrl" [src]="item.imagemUrl" alt="" />
+        <i class="fa-solid fa-bullhorn" *ngIf="!item.imagemUrl"></i>
+      </span>
+      <span class="esp__info">
+        <strong>{{ item.titulo }}</strong>
+        <small>{{ rotulosTipo[item.tipo] || item.tipo }} · {{ rotuloFormato(item) }}</small>
+        <small class="esp__situacao" [ngClass]="'is-' + situacao(item)">
+          <i class="fa-solid" [ngClass]="{ 'fa-circle-check': situacao(item) === 'no-ar', 'fa-clock': situacao(item) === 'agendado', 'fa-flag-checkered': situacao(item) === 'encerrado', 'fa-eye-slash': situacao(item) === 'escondido' }"></i>
+          {{ rotuloSituacao(item) }}
+        </small>
+      </span>
+      <span class="esp__alerta" *ngIf="temConflito(item)" title="Datas em conflito com outros espaços">
+        <i class="fa-solid fa-triangle-exclamation"></i> Conflito de datas
+      </span>
+      <button type="button" class="esp__icone" (click)="alternarVisivel(item, $event)" [title]="item.ativo ? 'Tirar do ar (sem apagar)' : 'Colocar no ar'">
+        <i class="fa-solid" [ngClass]="item.ativo ? 'fa-eye' : 'fa-eye-slash'"></i>
+      </button>
+      <button type="button" class="esp__icone esp__icone--perigo" (click)="excluir(item, $event)" title="Excluir">
+        <i class="fa-solid fa-trash"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Popup de criar / editar -->
+<div class="esp-modal" *ngIf="modalAberto" (mousedown)="aoPressionarFundo($event)">
+  <div class="esp-modal__painel" [formGroup]="form" (keydown.enter)="bloquearEnter($any($event))" role="dialog" aria-modal="true">
+    <header class="esp-modal__cabecalho">
+      <h3>{{ editando ? 'Editar espaço' : 'Novo espaço' }}</h3>
+      <button type="button" class="esp-modal__fechar" (click)="fechar()" aria-label="Fechar">×</button>
+    </header>
+
+    <div class="esp-modal__corpo">
+      <!-- Formato -->
+      <h4 class="esp-modal__secao">1. O que vai aparecer</h4>
+      <div class="esp-opcoes">
+        <label class="esp-opcao" [class.is-marcada]="form.value.formato === 'card'">
+          <input type="radio" value="card" formControlName="formato" />
+          <i class="fa-solid fa-newspaper"></i>
+          <span><strong>Card com texto</strong><small>Título, descrição e botão — leva pra um artigo ou link.</small></span>
+        </label>
+        <label class="esp-opcao" [class.is-marcada]="form.value.formato === 'banner'">
+          <input type="radio" value="banner" formControlName="formato" />
+          <i class="fa-solid fa-image"></i>
+          <span><strong>Banner (só imagem)</strong><small>A arte inteira é clicável. Ideal pra anúncios prontos.</small></span>
+        </label>
+      </div>
+
+      <div class="adm-field-row">
+        <div class="adm-field">
+          <label for="espTipo">Selo que aparece em cima</label>
+          <select id="espTipo" formControlName="tipo">
+            <option *ngFor="let t of ['Patrocinio', 'ConteudoDeMarca', 'Anuncio']" [value]="t">{{ rotulosTipo[t] }}</option>
+          </select>
+        </div>
+        <div class="adm-field" *ngIf="form.value.formato === 'card'">
+          <label for="espTema">Estilo do card</label>
+          <select id="espTema" formControlName="tema">
+            <option *ngFor="let t of temasCard" [value]="t.valor">{{ t.nome }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="adm-field">
+        <label for="espTitulo">{{ form.value.formato === 'banner' ? 'Nome do banner (leitores de tela e identificação)' : 'Título' }}</label>
+        <input id="espTitulo" type="text" formControlName="titulo" />
+      </div>
+
+      <ng-container *ngIf="form.value.formato === 'card'">
+        <div class="adm-field">
+          <label for="espDesc">Descrição (opcional)</label>
+          <textarea id="espDesc" rows="3" formControlName="descricao"></textarea>
+        </div>
+        <div class="adm-field-row">
+          <div class="adm-field">
+            <label for="espBotao">Texto do botão</label>
+            <input id="espBotao" type="text" formControlName="textoBotao" placeholder="Saiba mais" />
+          </div>
+          <div class="adm-field">
+            <label for="espChamada">Chamada acima do título (opcional)</label>
+            <input id="espChamada" type="text" formControlName="chamada" [placeholder]="rotulosTipo[form.value.tipo || 'Patrocinio']" />
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- Imagens -->
+      <div class="adm-field">
+        <label>{{ form.value.formato === 'banner' ? 'Arte do banner' : 'Imagem (opcional)' }}</label>
+        <div class="esp-imagem">
+          <img *ngIf="form.value.imagemUrl" [src]="form.value.imagemUrl" alt="" />
+          <div class="esp-imagem__vazia" *ngIf="!form.value.imagemUrl"><i class="fa-solid fa-image"></i> Sem imagem</div>
+          <div class="esp-imagem__acoes">
+            <label class="adm-btn adm-btn--outline">
+              {{ enviando.imagemUrl ? 'Enviando...' : form.value.imagemUrl ? 'Trocar imagem' : 'Enviar imagem' }}
+              <input type="file" accept="image/jpeg,image/png,image/gif,image/webp" (change)="enviarImagem($event, 'imagemUrl')" [disabled]="enviando.imagemUrl" hidden />
+            </label>
+            <button type="button" class="adm-btn adm-btn--fantasma" *ngIf="form.value.imagemUrl" (click)="removerImagem('imagemUrl')">Remover</button>
+          </div>
+        </div>
+        <app-dica-imagem [medida]="dicaImagem"></app-dica-imagem>
+      </div>
+
+      <div class="adm-field" *ngIf="form.value.formato === 'card'">
+        <label>Logo da marca (opcional)</label>
+        <div class="esp-imagem esp-imagem--logo">
+          <img *ngIf="form.value.logoUrl" [src]="form.value.logoUrl" alt="" />
+          <div class="esp-imagem__vazia" *ngIf="!form.value.logoUrl"><i class="fa-solid fa-image"></i> Sem logo</div>
+          <div class="esp-imagem__acoes">
+            <label class="adm-btn adm-btn--outline">
+              {{ enviando.logoUrl ? 'Enviando...' : form.value.logoUrl ? 'Trocar logo' : 'Enviar logo' }}
+              <input type="file" accept="image/jpeg,image/png,image/gif,image/webp" (change)="enviarImagem($event, 'logoUrl')" [disabled]="enviando.logoUrl" hidden />
+            </label>
+            <button type="button" class="adm-btn adm-btn--fantasma" *ngIf="form.value.logoUrl" (click)="removerImagem('logoUrl')">Remover</button>
+          </div>
+        </div>
+        <app-dica-imagem [medida]="dicaLogo"></app-dica-imagem>
+      </div>
+
+      <!-- Cor do card "Cor da marca" -->
+      <div class="adm-field esp-cor" *ngIf="form.value.formato === 'card' && form.value.tema === 'Brand'">
+        <label>Cor do card</label>
+        <div class="esp-cor__previa" [style.background]="corEfetiva" [style.color]="corDoTexto">
+          <strong>{{ form.value.titulo || 'Título do card' }}</strong>
+          <span>{{ form.value.textoBotao || 'Saiba mais' }} [+]</span>
+        </div>
+
+        <div class="esp-cor__linha">
+          <input
+            type="color"
+            class="esp-cor__seletor"
+            [value]="corEfetiva"
+            (input)="definirCor($any($event.target).value)"
+            aria-label="Escolher a cor do card"
+          />
+          <input
+            type="text"
+            class="esp-cor__hex"
+            [value]="form.value.corFundo || ''"
+            (input)="digitarCor($any($event.target).value)"
+            [placeholder]="corPadrao + ' (padrão)'"
+            maxlength="7"
+            aria-label="Código da cor"
+          />
+          <button type="button" class="adm-btn adm-btn--outline" [disabled]="!form.value.logoUrl || lendoCor" (click)="pegarCorDaImagem('logoUrl')">
+            <i class="fa-solid fa-droplet"></i> Pegar da logo
+          </button>
+          <button type="button" class="adm-btn adm-btn--outline" [disabled]="!form.value.imagemUrl || lendoCor" (click)="pegarCorDaImagem('imagemUrl')">
+            <i class="fa-solid fa-image"></i> Pegar da imagem
+          </button>
+          <button type="button" class="adm-btn adm-btn--outline" *ngIf="temContaGotas" (click)="usarContaGotas()">
+            <i class="fa-solid fa-eye-dropper"></i> Conta-gotas
+          </button>
+          <button type="button" class="adm-btn adm-btn--fantasma" *ngIf="!usandoCorPadrao" (click)="voltarCorPadrao()">Usar a cor padrão do site</button>
+        </div>
+        <p class="adm-dica" *ngIf="!avisoCor">
+          {{ usandoCorPadrao ? 'Sem cor escolhida: o card usa a cor padrão do site.' : 'O texto do card muda sozinho para branco ou preto, conforme a cor, pra continuar legível.' }}
+          Envie a logo acima e use "Pegar da logo" pra puxar a cor principal dela, ou escolha uma cor à mão.
+        </p>
+        <p class="adm-dica esp-cor__aviso" *ngIf="avisoCor">{{ avisoCor }}</p>
+      </div>
+
+      <!-- Destino -->
+      <h4 class="esp-modal__secao">2. Pra onde leva</h4>
+      <div class="adm-field">
+        <label for="espLink">Link</label>
+        <input id="espLink" type="text" formControlName="link" placeholder="/caminho ou https://..." />
+        <app-link-vinculo [fluxo]="true" [artigos]="artigos" [paginas]="paginas" [categorias]="categorias" (escolher)="vincular($event)"></app-link-vinculo>
+        <label class="adm-checkbox">
+          <input type="checkbox" formControlName="externo" />
+          Link de fora do site (abre em outra aba)
+        </label>
+      </div>
+
+      <!-- Publicação -->
+      <h4 class="esp-modal__secao">3. Quando fica no ar</h4>
+      <div class="esp-opcoes">
+        <label class="esp-opcao" [class.is-marcada]="form.value.publicacao === 'sempre'">
+          <input type="radio" value="sempre" formControlName="publicacao" />
+          <i class="fa-solid fa-infinity"></i>
+          <span><strong>Sempre no ar</strong><small>Até você esconder ou excluir.</small></span>
+        </label>
+        <label class="esp-opcao" [class.is-marcada]="form.value.publicacao === 'agendar'">
+          <input type="radio" value="agendar" formControlName="publicacao" />
+          <i class="fa-solid fa-calendar-check"></i>
+          <span><strong>Agendar</strong><small>Escolha o dia e a hora de entrar e de sair do ar.</small></span>
+        </label>
+      </div>
+
+      <div class="adm-field-row" *ngIf="form.value.publicacao === 'agendar'">
+        <div class="adm-field">
+          <label for="espInicio">Entra no ar em <em>(vazio = já)</em></label>
+          <input id="espInicio" type="datetime-local" formControlName="inicio" />
+        </div>
+        <div class="adm-field">
+          <label for="espFim">Sai do ar em <em>(vazio = nunca)</em></label>
+          <input id="espFim" type="datetime-local" formControlName="fim" [min]="minimoAgora" />
+        </div>
+      </div>
+
+      <!-- Conflito de datas -->
+      <ng-container *ngIf="conflitoAtual as conflito">
+        <div class="esp-conflito esp-conflito--alerta" *ngIf="conflito.excede">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <div>
+            <strong>Conflito de datas</strong>
+            <p>
+              Nesse período também ficam no ar:
+              <b *ngFor="let o of conflito.sobrepostos; let ultimo = last">"{{ o.titulo }}"{{ ultimo ? '' : ', ' }}</b>.
+              O bloco mostra no máximo {{ limite }} por vez, então só os de menor ordem aparecem. Ajuste as datas ou a ordem na lista.
+            </p>
+          </div>
+        </div>
+        <div class="esp-conflito esp-conflito--info" *ngIf="!conflito.excede && conflito.sobrepostos.length">
+          <i class="fa-solid fa-circle-info"></i>
+          <div>
+            <p>
+              Fica no ar junto com
+              <b *ngFor="let o of conflito.sobrepostos; let ultimo = last">"{{ o.titulo }}"{{ ultimo ? '' : ', ' }}</b>
+              — cabe no bloco (até {{ limite }} por vez).
+            </p>
+          </div>
+        </div>
+      </ng-container>
+
+      <label class="adm-checkbox">
+        <input type="checkbox" formControlName="ativo" />
+        Ligado (desmarque pra deixar salvo mas fora do site)
+      </label>
+
+      <details class="esp-avancado">
+        <summary>Opções avançadas</summary>
+        <div class="adm-field">
+          <label for="espTamanho">Largura do espaço dentro do bloco (muda o tamanho ideal da imagem)</label>
+          <select id="espTamanho" formControlName="tamanho">
+            <option *ngFor="let t of tamanhos" [value]="t.valor">{{ t.nome }}</option>
+          </select>
+        </div>
+      </details>
+    </div>
+
+    <footer class="esp-modal__rodape">
+      <button type="button" class="adm-btn adm-btn--fantasma" (click)="fechar()">Cancelar</button>
+      <button type="button" class="adm-btn adm-btn--primario" [disabled]="salvando" (click)="salvar()">
+        {{ salvando ? 'Salvando...' : form.value.publicacao === 'agendar' ? 'Salvar e agendar' : 'Salvar' }}
+      </button>
+    </footer>
+  </div>
+</div>

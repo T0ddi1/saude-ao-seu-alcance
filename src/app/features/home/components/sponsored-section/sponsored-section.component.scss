@@ -102,7 +102,7 @@
 
 .sponsored__card.is-brand {
   background: var(--color-info);
-  color: #fff;
+  color: var(--texto-marca, #fff);
   text-align: center;
   flex-direction: column;
   align-items: center;
@@ -111,7 +111,7 @@
   padding: 24px;
 }
 .is-brand h3 {
-  color: #fff;
+  color: var(--texto-marca, #fff);
 }
 
 

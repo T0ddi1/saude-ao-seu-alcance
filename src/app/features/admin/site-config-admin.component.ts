@@ -1,3 +1,4 @@
+import { DicaImagemComponent } from '../../shared/components/dica-imagem/dica-imagem.component';
 import { Component, HostListener, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
@@ -18,7 +19,7 @@ const HEX_VALIDO = /^#[0-9a-f]{6}$/i;
 @Component({
   selector: 'app-site-config-admin',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [DicaImagemComponent, CommonModule, ReactiveFormsModule],
   templateUrl: './site-config-admin.component.html',
   styleUrl: './site-config-admin.component.scss',
 })

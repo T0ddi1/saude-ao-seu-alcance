@@ -1,0 +1,172 @@
+<div class="avisos">
+  <div class="adm-page-head avisos__cabecalho">
+    <div>
+      <h2>Avisos do site (popup)</h2>
+      <p>
+        Mensagens que aparecem por cima do site assim que a pessoa entra — um comunicado, uma campanha, um banner. Você escolhe o dia e a hora de
+        começar e de terminar, e o visitante pode marcar <strong>"Não ver novamente"</strong> (fica guardado no navegador dele; se você editar o aviso, ele volta a aparecer).
+      </p>
+    </div>
+    <button type="button" class="adm-btn adm-btn--primario" (click)="abrirNovo()"><i class="fa-solid fa-plus"></i> Novo aviso</button>
+  </div>
+
+  <p class="adm-alert adm-alert--erro" *ngIf="erro">{{ erro }}</p>
+  <p class="adm-empty" *ngIf="carregando">Carregando...</p>
+  <p class="adm-empty" *ngIf="!carregando && !itens.length && !erro">Nenhum aviso ainda. Crie o primeiro com o botão acima.</p>
+
+  <p class="avisos__dica" *ngIf="itens.length > 1">Arraste pra mudar a ordem: se dois avisos estiverem no ar ao mesmo tempo, aparecem um depois do outro, nessa ordem.</p>
+
+  <div class="avisos__lista" cdkDropList (cdkDropListDropped)="soltar($event)" *ngIf="itens.length">
+    <div
+      class="avisos__item"
+      cdkDrag
+      *ngFor="let aviso of itens"
+      [class.is-apagado]="situacao(aviso) === 'escondido' || situacao(aviso) === 'encerrado'"
+      (click)="abrirEdicao(aviso)"
+    >
+      <i class="fa-solid fa-grip-vertical avisos__arrastar" cdkDragHandle (click)="$event.stopPropagation()"></i>
+      <span class="avisos__miniatura">
+        <img *ngIf="aviso.imagemUrl" [src]="aviso.imagemUrl" alt="" />
+        <i class="fa-solid fa-bell" *ngIf="!aviso.imagemUrl"></i>
+      </span>
+      <span class="avisos__info">
+        <strong>{{ aviso.titulo }}</strong>
+        <small>{{ aviso.somenteImagem ? 'Banner' : 'Texto' }}{{ aviso.permiteNaoVerMais ? ' · com "Não ver novamente"' : '' }}</small>
+        <small class="avisos__situacao" [ngClass]="'is-' + situacao(aviso)">
+          <i class="fa-solid" [ngClass]="{ 'fa-circle-check': situacao(aviso) === 'no-ar', 'fa-clock': situacao(aviso) === 'agendado', 'fa-flag-checkered': situacao(aviso) === 'encerrado', 'fa-eye-slash': situacao(aviso) === 'escondido' }"></i>
+          {{ rotuloSituacao(aviso) }}
+        </small>
+      </span>
+      <span class="avisos__alerta" *ngIf="temConflito(aviso)" title="Datas se cruzam com outro aviso">
+        <i class="fa-solid fa-triangle-exclamation"></i> Conflito de datas
+      </span>
+      <button type="button" class="avisos__icone" (click)="alternarVisivel(aviso, $event)" [title]="aviso.ativo ? 'Tirar do ar (sem apagar)' : 'Colocar no ar'">
+        <i class="fa-solid" [ngClass]="aviso.ativo ? 'fa-eye' : 'fa-eye-slash'"></i>
+      </button>
+      <button type="button" class="avisos__icone avisos__icone--perigo" (click)="excluir(aviso, $event)" title="Excluir">
+        <i class="fa-solid fa-trash"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Popup de criar / editar -->
+<div class="av-modal" *ngIf="modalAberto" (mousedown)="aoPressionarFundo($event)">
+  <div class="av-modal__painel" [formGroup]="form" role="dialog" aria-modal="true">
+    <header class="av-modal__cabecalho">
+      <h3>{{ editando ? 'Editar aviso' : 'Novo aviso' }}</h3>
+      <button type="button" class="av-modal__fechar" (click)="fechar()" aria-label="Fechar">×</button>
+    </header>
+
+    <div class="av-modal__corpo">
+      <h4 class="av-modal__secao">1. O que o visitante vê</h4>
+      <div class="av-opcoes">
+        <label class="av-opcao" [class.is-marcada]="form.value.formato === 'texto'">
+          <input type="radio" value="texto" formControlName="formato" />
+          <i class="fa-solid fa-message"></i>
+          <span><strong>Texto</strong><small>Título, mensagem e um botão (que leva pra um artigo ou link).</small></span>
+        </label>
+        <label class="av-opcao" [class.is-marcada]="form.value.formato === 'banner'">
+          <input type="radio" value="banner" formControlName="formato" />
+          <i class="fa-solid fa-image"></i>
+          <span><strong>Banner (só imagem)</strong><small>A arte inteira vira o aviso, e pode ser clicável.</small></span>
+        </label>
+      </div>
+
+      <div class="adm-field">
+        <label for="avTitulo">{{ form.value.formato === 'banner' ? 'Nome do aviso (identifica na lista e descreve a imagem)' : 'Título' }}</label>
+        <input id="avTitulo" type="text" formControlName="titulo" maxlength="200" />
+      </div>
+
+      <div class="adm-field" *ngIf="form.value.formato === 'texto'">
+        <label for="avMensagem">Mensagem</label>
+        <textarea id="avMensagem" rows="4" maxlength="1500" formControlName="mensagem"></textarea>
+      </div>
+
+      <div class="adm-field">
+        <label>{{ form.value.formato === 'banner' ? 'Arte do banner' : 'Imagem (opcional)' }}</label>
+        <div class="av-imagem">
+          <img *ngIf="form.value.imagemUrl" [src]="form.value.imagemUrl" alt="" />
+          <div class="av-imagem__vazia" *ngIf="!form.value.imagemUrl"><i class="fa-solid fa-image"></i> Sem imagem</div>
+          <div class="av-imagem__acoes">
+            <label class="adm-btn adm-btn--outline">
+              {{ enviandoImagem ? 'Enviando...' : form.value.imagemUrl ? 'Trocar imagem' : 'Enviar imagem' }}
+              <input type="file" accept="image/jpeg,image/png,image/gif,image/webp" (change)="enviarImagem($event)" [disabled]="enviandoImagem" hidden />
+            </label>
+            <button type="button" class="adm-btn adm-btn--fantasma" *ngIf="form.value.imagemUrl" (click)="removerImagem()">Remover</button>
+          </div>
+        </div>
+        <app-dica-imagem [medida]="dicaImagem"></app-dica-imagem>
+      </div>
+
+      <h4 class="av-modal__secao">2. Pra onde leva <em>(opcional)</em></h4>
+      <div class="adm-field">
+        <label for="avLink">Link</label>
+        <input id="avLink" type="text" formControlName="link" placeholder="/caminho ou https://... (vazio = só informa)" />
+        <app-link-vinculo [fluxo]="true" [artigos]="artigos" [paginas]="paginas" [categorias]="categorias" (escolher)="vincular($event)"></app-link-vinculo>
+        <label class="adm-checkbox">
+          <input type="checkbox" formControlName="externo" />
+          Link de fora do site (abre em outra aba)
+        </label>
+      </div>
+      <div class="adm-field" *ngIf="form.value.formato === 'texto' && form.value.link">
+        <label for="avBotao">Texto do botão</label>
+        <input id="avBotao" type="text" formControlName="textoBotao" placeholder="Saiba mais" maxlength="100" />
+      </div>
+
+      <h4 class="av-modal__secao">3. Quando aparece</h4>
+      <div class="av-opcoes">
+        <label class="av-opcao" [class.is-marcada]="form.value.publicacao === 'sempre'">
+          <input type="radio" value="sempre" formControlName="publicacao" />
+          <i class="fa-solid fa-infinity"></i>
+          <span><strong>Sempre no ar</strong><small>Até você esconder ou excluir.</small></span>
+        </label>
+        <label class="av-opcao" [class.is-marcada]="form.value.publicacao === 'agendar'">
+          <input type="radio" value="agendar" formControlName="publicacao" />
+          <i class="fa-solid fa-calendar-check"></i>
+          <span><strong>Agendar</strong><small>Escolha o dia e a hora de começar e de terminar.</small></span>
+        </label>
+      </div>
+
+      <div class="adm-field-row" *ngIf="form.value.publicacao === 'agendar'">
+        <div class="adm-field">
+          <label for="avInicio">Começa em <em>(vazio = já)</em></label>
+          <input id="avInicio" type="datetime-local" formControlName="inicio" />
+        </div>
+        <div class="adm-field">
+          <label for="avFim">Termina em <em>(vazio = nunca)</em></label>
+          <input id="avFim" type="datetime-local" formControlName="fim" [min]="minimoAgora" />
+        </div>
+      </div>
+
+      <div class="av-conflito" *ngIf="conflitoAtual.length">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <div>
+          <strong>Conflito de datas</strong>
+          <p>
+            Nesse período também aparecem:
+            <b *ngFor="let o of conflitoAtual; let ultimo = last">"{{ o.titulo }}"{{ ultimo ? '' : ', ' }}</b>.
+            Os avisos saem um de cada vez, na ordem da lista — o visitante fecha um e vê o próximo. Se não for isso que você quer, ajuste as datas.
+          </p>
+        </div>
+      </div>
+
+      <h4 class="av-modal__secao">4. Opções</h4>
+      <label class="adm-checkbox">
+        <input type="checkbox" formControlName="permiteNaoVerMais" />
+        Mostrar a opção "Não ver novamente" (o visitante pode dispensar o aviso de vez)
+      </label>
+      <label class="adm-checkbox">
+        <input type="checkbox" formControlName="ativo" />
+        Ligado (desmarque pra deixar salvo mas fora do site)
+      </label>
+    </div>
+
+    <footer class="av-modal__rodape">
+      <button type="button" class="adm-btn adm-btn--fantasma" (click)="fechar()">Cancelar</button>
+      <button type="button" class="adm-btn adm-btn--primario" [disabled]="salvando" (click)="salvar()">
+        {{ salvando ? 'Salvando...' : form.value.publicacao === 'agendar' ? 'Salvar e agendar' : 'Salvar' }}
+      </button>
+    </footer>
+  </div>
+</div>

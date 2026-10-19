@@ -1,3 +1,4 @@
+import { DicaImagemComponent } from '../../shared/components/dica-imagem/dica-imagem.component';
 import { Component, HostListener, OnInit, inject } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -19,7 +20,7 @@ const LIMITE_TITULO = 200;
 @Component({
   selector: 'app-artigos-admin',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, QuillEditorComponent],
+  imports: [DicaImagemComponent, CommonModule, FormsModule, ReactiveFormsModule, QuillEditorComponent],
   providers: [DatePipe],
   templateUrl: './artigos-admin.component.html',
   styleUrl: './artigos-admin.component.scss',

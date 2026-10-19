@@ -1,0 +1,84 @@
+<div class="usuarios">
+  <div class="adm-page-head usuarios__cabecalho">
+    <div>
+      <h2>Usuários do painel</h2>
+      <p>
+        Quem pode entrar no painel administrativo. Ao cadastrar alguém, a pessoa recebe um e-mail para <strong>definir a própria senha</strong> — você nunca precisa
+        saber nem repassar a senha de ninguém.
+      </p>
+    </div>
+    <button type="button" class="adm-btn adm-btn--primario" (click)="abrirNovo()"><i class="fa-solid fa-user-plus"></i> Novo usuário</button>
+  </div>
+
+  <p class="adm-alert adm-alert--erro" *ngIf="erro">{{ erro }}</p>
+  <p class="adm-empty" *ngIf="carregando">Carregando...</p>
+
+  <div class="usuarios__lista" *ngIf="!carregando && !erro">
+    <div class="usuarios__item" *ngFor="let u of usuarios" [class.is-inativo]="!u.ativo" (click)="abrirEdicao(u)">
+      <span class="usuarios__avatar">{{ inicial(u) }}</span>
+      <span class="usuarios__info">
+        <strong>{{ u.nomeCompleto }} <em *ngIf="u.ehVoce">(você)</em></strong>
+        <small>{{ u.email }}</small>
+      </span>
+      <span class="usuarios__papel" [class.usuarios__papel--admin]="u.papel === 'Admin'">{{ nomePapel(u.papel) }}</span>
+      <span class="usuarios__status" [class.is-inativo]="!u.ativo">{{ u.ativo ? 'Ativo' : 'Desativado' }}</span>
+      <button
+        type="button"
+        class="usuarios__icone"
+        title="Enviar link para a pessoa redefinir a senha"
+        [disabled]="!u.ativo || enviandoId === u.id"
+        (click)="enviarRedefinicao(u, $event)"
+      >
+        <i class="fa-solid" [ngClass]="enviandoId === u.id ? 'fa-spinner fa-spin' : 'fa-key'"></i>
+        <span>Enviar link de senha</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="usu-modal" *ngIf="modalAberto" (mousedown)="aoPressionarFundo($event)">
+  <form class="usu-modal__painel" [formGroup]="form" (ngSubmit)="salvar()" role="dialog" aria-modal="true">
+    <header class="usu-modal__cabecalho">
+      <h3>{{ editando ? 'Editar usuário' : 'Novo usuário' }}</h3>
+      <button type="button" class="usu-modal__fechar" (click)="fechar()" aria-label="Fechar">×</button>
+    </header>
+
+    <div class="usu-modal__corpo">
+      <div class="adm-field">
+        <label for="usuNome">Nome</label>
+        <input id="usuNome" type="text" formControlName="nomeCompleto" autocomplete="off" />
+      </div>
+      <div class="adm-field">
+        <label for="usuEmail">E-mail (é o login da pessoa)</label>
+        <input id="usuEmail" type="email" formControlName="email" autocomplete="off" />
+        <p class="adm-dica" *ngIf="!editando">Use um e-mail real: é pra lá que vai o link para criar a senha.</p>
+        <p class="adm-dica" *ngIf="editando">O e-mail é o login e não muda por aqui.</p>
+      </div>
+
+      <div class="adm-field">
+        <label>O que a pessoa pode fazer</label>
+        <div class="usu-papeis">
+          <label class="usu-papel" *ngFor="let p of papeis" [class.is-marcado]="form.value.papel === p.valor">
+            <input type="radio" [value]="p.valor" formControlName="papel" />
+            <span>
+              <strong>{{ p.nome }}</strong>
+              <small>{{ p.descricao }}</small>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <label class="adm-checkbox" *ngIf="editando">
+        <input type="checkbox" formControlName="ativo" />
+        Conta ativa (desmarque pra impedir o acesso sem apagar o usuário)
+      </label>
+    </div>
+
+    <footer class="usu-modal__rodape">
+      <button type="button" class="adm-btn adm-btn--fantasma" (click)="fechar()">Cancelar</button>
+      <button type="submit" class="adm-btn adm-btn--primario" [disabled]="salvando">
+        {{ salvando ? 'Salvando...' : editando ? 'Salvar' : 'Cadastrar e enviar e-mail' }}
+      </button>
+    </footer>
+  </form>
+</div>

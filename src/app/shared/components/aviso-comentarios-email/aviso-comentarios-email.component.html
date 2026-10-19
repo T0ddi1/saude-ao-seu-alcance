@@ -1,0 +1,34 @@
+<section class="aviso-email" *ngIf="conta">
+  <div class="aviso-email__titulo">
+    <i class="fa-solid fa-envelope-open-text"></i>
+    <div>
+      <strong>Aviso por e-mail de comentários esperando aprovação</strong>
+      <small>Toda vez que um leitor comentar, mandamos um e-mail pra você moderar.</small>
+    </div>
+  </div>
+
+  <label class="adm-checkbox">
+    <input type="checkbox" [(ngModel)]="avisar" />
+    Quero receber esse aviso
+  </label>
+
+  <div class="adm-field" *ngIf="avisar">
+    <label for="emailAvisoComentarios">Receber neste e-mail</label>
+    <div class="aviso-email__linha">
+      <input id="emailAvisoComentarios" type="email" [(ngModel)]="email" [placeholder]="conta.email" autocomplete="email" />
+      <button type="button" class="adm-btn adm-btn--fantasma" *ngIf="!usandoEmailDaConta" (click)="usarEmailDaConta()">Usar o e-mail da conta</button>
+    </div>
+    <p class="adm-dica">
+      <ng-container *ngIf="usandoEmailDaConta">Está usando o e-mail da sua conta ({{ conta.email }}).</ng-container>
+      <ng-container *ngIf="!usandoEmailDaConta">O e-mail da sua conta é {{ conta.email }}. Se ele não for um e-mail que você lê, deixe aqui um que você acompanhe.</ng-container>
+    </p>
+  </div>
+
+  <div class="aviso-email__acoes">
+    <button type="button" class="adm-btn adm-btn--primario" [disabled]="!alterado || salvando" (click)="salvar()">
+      {{ salvando ? 'Salvando...' : 'Salvar' }}
+    </button>
+    <span class="aviso-email__ok" *ngIf="salvoAgora"><i class="fa-solid fa-circle-check"></i> Salvo</span>
+  </div>
+</section>
+<p class="adm-alert adm-alert--erro" *ngIf="erro">Não foi possível carregar as preferências de aviso.</p>

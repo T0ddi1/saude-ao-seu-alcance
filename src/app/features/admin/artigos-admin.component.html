@@ -204,9 +204,9 @@
             </label>
             <button type="button" class="adm-btn adm-btn--fantasma" *ngIf="formulario.value.imagemCapaUrl" (click)="removerCapa()">Remover</button>
           </div>
-          <p class="adm-dica">
-            Foto na horizontal, de pelo menos 1200x800px, com o assunto no centro — ela é cortada de jeitos diferentes nas listas e na página do artigo.
-          </p>
+          <app-dica-imagem
+            medida="A capa é cortada ao centro de jeitos diferentes: faixa 2:1 na página do artigo, 16:11 nos cards e 5:4 no destaque da Home. Ideal: 1600 × 1100 px (horizontal), com o assunto bem no meio."
+          ></app-dica-imagem>
         </section>
 
         <section class="artigos__painel">

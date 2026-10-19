@@ -76,6 +76,7 @@ export interface EspacoPatrocinadoAdmin {
   dataInicioVigencia?: string | null;
   dataFimVigencia?: string | null;
   anuncianteId?: number | null;
+  corFundo?: string | null;
 }
 
 export interface DadoSaudeAdmin {

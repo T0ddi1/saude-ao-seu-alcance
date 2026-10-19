@@ -81,6 +81,7 @@
               <input type="file" accept="application/pdf,image/*" (change)="selecionarImagem($event, campo.chave)" [disabled]="enviandoImagem[campo.chave]" hidden />
             </label>
           </div>
+          <app-dica-imagem *ngIf="campo.tipo === 'arquivo'" tipo="arquivo" [medida]="campo.dicaImagem || ''"></app-dica-imagem>
 
           <div class="crud__imagem" *ngIf="campo.tipo === 'image'">
             <img *ngIf="formulario.value[campo.chave]" [src]="formulario.value[campo.chave]" alt="" />
@@ -90,6 +91,7 @@
               <input type="file" accept="image/jpeg,image/png,image/gif,image/webp" (change)="selecionarImagem($event, campo.chave)" [disabled]="enviandoImagem[campo.chave]" hidden />
             </label>
           </div>
+          <app-dica-imagem *ngIf="campo.tipo === 'image'" [medida]="campo.dicaImagem || 'Ideal: pelo menos 1200 px de largura.'"></app-dica-imagem>
 
           <span class="crud__campo-erro" *ngIf="campoInvalido(campo)">Campo obrigatório.</span>
         </div>

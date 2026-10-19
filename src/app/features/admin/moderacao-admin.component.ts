@@ -5,6 +5,7 @@ import { ComponenteComAlteracoes } from '../../core/guards/alteracoes-nao-salvas
 import { ComentarioAdmin } from '../../core/models/admin.model';
 import { ComentariosAdminComponent } from './comentarios-admin.component';
 import { ConfigLista, ListaCadastroAdminComponent } from './lista-cadastro-admin.component';
+import { AvisoComentariosEmailComponent } from '../../shared/components/aviso-comentarios-email/aviso-comentarios-email.component';
 
 type Aba = 'comentarios' | 'palavras';
 
@@ -12,7 +13,7 @@ type Aba = 'comentarios' | 'palavras';
 @Component({
   selector: 'app-moderacao-admin',
   standalone: true,
-  imports: [CommonModule, ComentariosAdminComponent, ListaCadastroAdminComponent],
+  imports: [CommonModule, ComentariosAdminComponent, ListaCadastroAdminComponent, AvisoComentariosEmailComponent],
   templateUrl: './moderacao-admin.component.html',
   styleUrl: './moderacao-admin.component.scss',
 })

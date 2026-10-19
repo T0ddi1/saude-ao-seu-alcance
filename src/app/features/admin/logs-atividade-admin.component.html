@@ -1,0 +1,96 @@
+<div class="logs">
+  <div class="adm-page-head">
+    <h2>Log de atividades</h2>
+    <p>Quem fez o quê no painel: cada criação, alteração, exclusão, ocultação e login, com a data, a hora e a pessoa. Os registros não podem ser editados nem apagados.</p>
+  </div>
+
+  <div class="logs__filtros">
+    <div class="adm-field">
+      <label for="logUsuario">Quem</label>
+      <select id="logUsuario" [(ngModel)]="usuarioId" (change)="filtrar()">
+        <option value="">Todos</option>
+        <option *ngFor="let u of filtros.usuarios" [value]="u.id || ''">{{ u.nome }}</option>
+      </select>
+    </div>
+    <div class="adm-field">
+      <label for="logEntidade">O quê</label>
+      <select id="logEntidade" [(ngModel)]="entidade" (change)="filtrar()">
+        <option value="">Tudo</option>
+        <option *ngFor="let e of filtros.entidades" [value]="e">{{ e }}</option>
+      </select>
+    </div>
+    <div class="adm-field">
+      <label for="logAcao">Ação</label>
+      <select id="logAcao" [(ngModel)]="acao" (change)="filtrar()">
+        <option value="">Todas</option>
+        <option *ngFor="let a of acoes" [value]="a">{{ a }}</option>
+      </select>
+    </div>
+    <div class="adm-field">
+      <label for="logDe">De</label>
+      <input id="logDe" type="date" [(ngModel)]="de" (change)="filtrar()" />
+    </div>
+    <div class="adm-field">
+      <label for="logAte">Até</label>
+      <input id="logAte" type="date" [(ngModel)]="ate" (change)="filtrar()" />
+    </div>
+    <div class="adm-field logs__busca">
+      <label for="logBusca">Buscar no título/nome</label>
+      <input id="logBusca" type="search" [(ngModel)]="busca" (keyup.enter)="filtrar()" (blur)="filtrar()" placeholder="Ex.: Dengue" />
+    </div>
+    <button type="button" class="adm-btn adm-btn--fantasma" *ngIf="temFiltro" (click)="limpar()">Limpar filtros</button>
+  </div>
+
+  <p class="adm-alert adm-alert--erro" *ngIf="erro">{{ erro }}</p>
+  <p class="adm-empty" *ngIf="carregando">Carregando...</p>
+  <p class="adm-empty" *ngIf="!carregando && !erro && !itens.length">
+    {{ temFiltro ? 'Nada encontrado com esses filtros.' : 'Ainda não há atividades registradas.' }}
+  </p>
+
+  <div class="logs__lista" *ngIf="!carregando && itens.length">
+    <div class="logs__item" *ngFor="let item of itens" [class.is-aberto]="aberto === item.id">
+      <button type="button" class="logs__linha" (click)="alternar(item)" [class.is-clicavel]="temDetalhes(item)">
+        <span class="logs__quando">
+          <strong>{{ item.dataHora | date: 'dd/MM/yyyy' }}</strong>
+          <small>{{ item.dataHora | date: 'HH:mm:ss' }}</small>
+        </span>
+        <span class="logs__acao" [ngClass]="'logs__acao--' + classeAcao(item.acao)">{{ item.acao }}</span>
+        <span class="logs__o-que">
+          <strong>{{ item.entidade }}</strong>
+          <small>{{ item.resumo }}</small>
+        </span>
+        <span class="logs__quem">
+          <i class="fa-solid fa-user"></i>
+          <span>{{ item.usuarioNome }}</span>
+        </span>
+        <i class="fa-solid logs__seta" *ngIf="temDetalhes(item)" [ngClass]="aberto === item.id ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+      </button>
+
+      <div class="logs__detalhes" *ngIf="aberto === item.id">
+        <table class="logs__campos" *ngIf="campos(item).length">
+          <thead>
+            <tr><th>Campo</th><th>Antes</th><th>Depois</th></tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let c of campos(item)">
+              <td>{{ c.c }}</td>
+              <td>{{ c.d }}</td>
+              <td>{{ c.p }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="logs__meta">
+          <span *ngIf="item.usuarioEmail">{{ item.usuarioEmail }}</span>
+          <span *ngIf="item.ip">IP {{ item.ip }}</span>
+          <span *ngIf="item.entidadeId">Item nº {{ item.entidadeId }}</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <nav class="logs__paginas" *ngIf="total > tamanho" aria-label="Páginas do histórico">
+    <button type="button" class="adm-btn adm-btn--fantasma" [disabled]="pagina === 1" (click)="irPara(pagina - 1)">← Anterior</button>
+    <span>Página {{ pagina }} de {{ totalPaginas }} · {{ total }} registros</span>
+    <button type="button" class="adm-btn adm-btn--fantasma" [disabled]="pagina === totalPaginas" (click)="irPara(pagina + 1)">Próxima →</button>
+  </nav>
+</div>

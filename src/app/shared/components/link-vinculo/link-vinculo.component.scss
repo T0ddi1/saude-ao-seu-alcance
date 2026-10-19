@@ -104,3 +104,10 @@
   text-align: center;
   color: var(--adm-muted);
 }
+
+// Versão "em fluxo": usada dentro de popups com rolagem.
+.link-vinculo--fluxo .link-vinculo__painel {
+  position: static;
+  margin-top: 8px;
+  box-shadow: none;
+}

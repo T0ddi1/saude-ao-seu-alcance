@@ -12,6 +12,7 @@ import { BlocoHome } from '../../core/models/home.model';
 import { QuillEditorComponent } from '../../shared/components/quill-editor/quill-editor.component';
 import { LinkVinculoComponent } from '../../shared/components/link-vinculo/link-vinculo.component';
 import { HomeBlocoComponent } from '../home/components/home-bloco/home-bloco.component';
+import { EspacosPatrocinadosEditorComponent } from './espacos-patrocinados-editor/espacos-patrocinados-editor.component';
 
 type TipoBloco = 'Carrossel' | 'EmAlta' | 'GradeArtigos' | 'DadosSaude' | 'Patrocinio' | 'SelosConfianca' | 'Texto';
 type Modo = 'Manual' | 'ArtigoFixo' | 'DestaquesAuto' | 'RecentesAuto' | 'MaisVistosAuto' | 'MaisSalvosAuto';
@@ -87,10 +88,9 @@ const TIPOS: InfoTipo[] = [
     tipo: 'Patrocinio',
     nome: 'Espaços patrocinados',
     icone: 'fa-bullhorn',
-    descricao: 'Anúncios, conteúdo de marca e patrocínios. Vêm do cadastro "Espaços Patrocinados".',
+    descricao: 'Anúncios, conteúdo de marca e patrocínios — banners ou cards com texto, com data pra entrar e sair do ar.',
     colunasPadrao: 12,
     modos: [],
-    recursoItens: { path: 'espacos-patrocinados', nome: 'Espaços Patrocinados' },
   },
   {
     tipo: 'SelosConfianca',
@@ -130,6 +130,7 @@ const LARGURAS = [
     QuillEditorComponent,
     LinkVinculoComponent,
     HomeBlocoComponent,
+    EspacosPatrocinadosEditorComponent,
   ],
   templateUrl: './home-admin.component.html',
   styleUrl: './home-admin.component.scss',
@@ -404,7 +405,7 @@ export class HomeAdminComponent implements OnInit, OnDestroy, ComponenteComAlter
     };
   }
 
-  private atualizarPreview(): void {
+  atualizarPreview(): void {
     if (!this.emEdicao) return;
 
     this.carregandoPreview = true;

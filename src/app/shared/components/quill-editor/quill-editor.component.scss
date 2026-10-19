@@ -21,3 +21,10 @@
 ::ng-deep .quill-host .ql-editor {
   min-height: 260px;
 }
+
+.quill-dica {
+  margin: 6px 0 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--adm-muted, #6b6b6b);
+}

@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/services/auth.guard';
 import { alteracoesNaoSalvasGuard } from './core/guards/alteracoes-nao-salvas.guard';
+import { adminApenasGuard } from './core/services/admin-apenas.guard';
 
 export const routes: Routes = [
   {
@@ -37,6 +38,25 @@ export const routes: Routes = [
         path: 'moderacao',
         loadComponent: () => import('./features/admin/moderacao-admin.component').then((m) => m.ModeracaoAdminComponent),
         canDeactivate: [alteracoesNaoSalvasGuard],
+      },
+      {
+        path: 'avisos',
+        loadComponent: () => import('./features/admin/avisos-admin.component').then((m) => m.AvisosAdminComponent),
+        canDeactivate: [alteracoesNaoSalvasGuard],
+      },
+      {
+        path: 'usuarios',
+        canActivate: [adminApenasGuard],
+        loadComponent: () => import('./features/admin/usuarios-admin.component').then((m) => m.UsuariosAdminComponent),
+      },
+      {
+        path: 'logs-atividade',
+        canActivate: [adminApenasGuard],
+        loadComponent: () => import('./features/admin/logs-atividade-admin.component').then((m) => m.LogsAtividadeAdminComponent),
+      },
+      {
+        path: 'minha-conta',
+        loadComponent: () => import('./features/admin/minha-conta-admin.component').then((m) => m.MinhaContaAdminComponent),
       },
       { path: 'comentarios', redirectTo: 'moderacao', pathMatch: 'full' },
       {

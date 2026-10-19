@@ -85,6 +85,7 @@
                 <button type="button" class="adm-btn adm-btn--fantasma" *ngIf="formSecao.value.imagemUrl" (click)="removerImagemSecao()">Remover foto</button>
               </div>
             </div>
+            <app-dica-imagem medida="A foto aparece no card da página de entrada do Observatório, em proporção 4:3, cortada ao centro. Ideal: 1200 × 900 px."></app-dica-imagem>
           </div>
           <div class="adm-form-acoes">
             <button type="submit" class="adm-btn adm-btn--primario" [disabled]="salvandoSecao">
@@ -135,6 +136,7 @@
                         <button type="button" class="adm-btn adm-btn--fantasma" *ngIf="formSecao.value.imagemUrl" (click)="removerImagemSecao()">Remover foto</button>
                       </div>
                     </div>
+                    <app-dica-imagem medida="Proporção 4:3, cortada ao centro no card. Ideal: 1200 × 900 px."></app-dica-imagem>
                   </div>
               <div class="adm-form-acoes">
                 <button type="submit" class="adm-btn adm-btn--primario" [disabled]="salvandoSecao">
@@ -453,6 +455,7 @@
             <div class="adm-field" *ngIf="formBloco.value.tipo === 'CardsSecoes'">
               <label>Fotos dos cards</label>
               <p class="adm-dica">Os cards são gerados sozinhos a partir das seções. Aqui você escolhe a foto de cada um.</p>
+              <app-dica-imagem medida="Cada foto aparece no card da seção em proporção 4:3, cortada ao centro. Ideal: 1200 × 900 px."></app-dica-imagem>
               <ul class="observatorio-admin__fotos-secoes">
                 <li *ngFor="let secao of secoes">
                   <img *ngIf="secao.imagemUrl" [src]="secao.imagemUrl" alt="" />

@@ -1,13 +1,16 @@
-import { Component, HostListener, inject, signal } from '@angular/core';
+import { Component, HostListener, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavigationStart, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
 import { AuthService } from '../../core/services/auth.service';
+import { EquipeService } from '../../core/services/equipe.service';
+import { SwalService } from '../../core/services/swal.service';
 
 interface ItemMenu {
   rota: string;
   rotulo: string;
   icone: string;
+  somenteAdmin?: boolean;
 }
 
 interface GrupoMenu {
@@ -22,9 +25,11 @@ interface GrupoMenu {
   templateUrl: './admin-layout.component.html',
   styleUrl: './admin-layout.component.scss',
 })
-export class AdminLayoutComponent {
+export class AdminLayoutComponent implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
+  private equipe = inject(EquipeService);
+  private swal = inject(SwalService);
 
   usuario = this.authService.usuario;
   sidebarAberta = signal(true);
@@ -33,6 +38,38 @@ export class AdminLayoutComponent {
 
   constructor() {
     this.router.events.pipe(filter((e) => e instanceof NavigationStart)).subscribe(() => this.menuMobileAberto.set(false));
+  }
+
+  /** Ao entrar no painel, avisa uma vez por sessão se há comentários esperando aprovação. */
+  ngOnInit(): void {
+    const CHAVE = 'sasa_aviso_pendentes_visto';
+    try {
+      if (sessionStorage.getItem(CHAVE)) return;
+      sessionStorage.setItem(CHAVE, '1');
+    } catch {
+      /* sem sessionStorage: avisa de novo a cada carregamento, sem problema */
+    }
+
+    this.equipe.totalComentariosPendentes().subscribe({
+      next: async ({ total }) => {
+        if (total <= 0) return;
+        if (await this.swal.avisoComentariosPendentes(total)) this.router.navigate(['/admin/moderacao']);
+      },
+      error: () => undefined,
+    });
+  }
+
+  private gruposFiltrados?: GrupoMenu[];
+
+  /** Menu sem as telas exclusivas de administrador quando quem entrou é Editor. Calculado uma vez: o *ngFor não pode receber um array novo a cada ciclo. */
+  get gruposVisiveis(): GrupoMenu[] {
+    if (!this.gruposFiltrados) {
+      const ehAdmin = this.authService.ehAdmin;
+      this.gruposFiltrados = this.grupos
+        .map((g) => ({ ...g, itens: g.itens.filter((i) => !i.somenteAdmin || ehAdmin) }))
+        .filter((g) => g.itens.length > 0);
+    }
+    return this.gruposFiltrados;
   }
 
   get ehTelaPequena(): boolean {
@@ -71,6 +108,7 @@ export class AdminLayoutComponent {
         { rota: '/admin/recurso/categorias', rotulo: 'Categorias', icone: 'fa-tags' },
         { rota: '/admin/paginas', rotulo: 'Páginas Institucionais', icone: 'fa-file-lines' },
         { rota: '/admin/observatorio', rotulo: 'Observatório', icone: 'fa-binoculars' },
+        { rota: '/admin/avisos', rotulo: 'Avisos do site (popup)', icone: 'fa-bell' },
       ],
     },
     {
@@ -95,6 +133,14 @@ export class AdminLayoutComponent {
       titulo: 'Leads',
       itens: [
         { rota: '/admin/leads', rotulo: 'Leads', icone: 'fa-bullseye' },
+      ],
+    },
+    {
+      titulo: 'Equipe',
+      itens: [
+        { rota: '/admin/usuarios', rotulo: 'Usuários', icone: 'fa-users', somenteAdmin: true },
+        { rota: '/admin/logs-atividade', rotulo: 'Log de atividades', icone: 'fa-clock-rotate-left', somenteAdmin: true },
+        { rota: '/admin/minha-conta', rotulo: 'Minha conta', icone: 'fa-user-gear' },
       ],
     },
     {

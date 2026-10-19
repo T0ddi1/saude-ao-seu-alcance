@@ -5,6 +5,7 @@ import { filter } from 'rxjs';
 import { HeaderComponent } from './shared/layout/header/header.component';
 import { FooterComponent } from './shared/layout/footer/footer.component';
 import { ToastComponent } from './shared/components/toast/toast.component';
+import { AvisoPopupComponent } from './shared/components/aviso-popup/aviso-popup.component';
 import { TotemService } from './core/services/totem.service';
 import { SiteConfigService } from './core/services/site-config.service';
 import { ContatoService } from './core/services/contato.service';
@@ -13,7 +14,7 @@ import { GeolocationService } from './core/services/geolocation.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, HeaderComponent, FooterComponent, ToastComponent],
+  imports: [CommonModule, RouterOutlet, HeaderComponent, FooterComponent, ToastComponent, AvisoPopupComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

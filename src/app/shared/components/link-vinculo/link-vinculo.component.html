@@ -1,4 +1,4 @@
-<div class="link-vinculo">
+<div class="link-vinculo" [class.link-vinculo--fluxo]="fluxo">
   <button type="button" class="link-vinculo__gatilho" [class.is-aberto]="aberto" (click)="alternar()">
     <span>{{ rotulo }}</span>
     <i class="fa-solid fa-chevron-down"></i>
@@ -11,9 +11,9 @@
     </div>
 
     <div class="link-vinculo__lista">
-      <ng-container *ngFor="let grupo of grupos">
+      <ng-container *ngFor="let grupo of grupos; trackBy: porGrupo">
         <p class="link-vinculo__grupo">{{ grupo.titulo }}</p>
-        <button type="button" class="link-vinculo__item" *ngFor="let item of grupo.itens" (click)="selecionar(item)">
+        <button type="button" class="link-vinculo__item" *ngFor="let item of grupo.itens; trackBy: porItem" (click)="selecionar(item)">
           {{ item.rotulo }}
         </button>
       </ng-container>

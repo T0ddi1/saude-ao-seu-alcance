@@ -1,3 +1,4 @@
+import { DicaImagemComponent } from '../../../shared/components/dica-imagem/dica-imagem.component';
 import { Component, ElementRef, HostListener, OnInit, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -30,7 +31,7 @@ interface PaginaInstitucionalResumo {
 @Component({
   selector: 'app-resource-crud',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, QuillEditorComponent, RouterLink, IconPickerComponent, IconComponent, IndicadorIbgeSelectComponent, LinkVinculoComponent],
+  imports: [DicaImagemComponent, CommonModule, ReactiveFormsModule, QuillEditorComponent, RouterLink, IconPickerComponent, IconComponent, IndicadorIbgeSelectComponent, LinkVinculoComponent],
   templateUrl: './resource-crud.component.html',
   styleUrl: './resource-crud.component.scss',
 })

@@ -1,0 +1,59 @@
+.conta {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  max-width: 760px;
+}
+
+.conta__cartao {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 18px 20px;
+  background: var(--adm-surface, #fff);
+  border: 1px solid var(--adm-border);
+  border-radius: 14px;
+
+  h3 {
+    margin: 0;
+    font-size: 14px;
+
+    i {
+      color: var(--adm-accent);
+      margin-right: 6px;
+    }
+  }
+}
+
+.conta__perfil {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  strong {
+    display: block;
+    font-size: 15px;
+  }
+  small {
+    color: var(--adm-muted);
+    font-size: 12.5px;
+    overflow-wrap: anywhere;
+  }
+}
+
+.conta__avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--adm-accent-soft);
+  color: var(--adm-accent);
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.conta__erro {
+  color: #c0392b;
+}

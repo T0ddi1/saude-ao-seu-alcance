@@ -1,0 +1,45 @@
+<div class="conta">
+  <div class="adm-page-head">
+    <h2>Minha conta</h2>
+    <p>Seus dados de acesso, sua senha e onde você quer receber os avisos do painel.</p>
+  </div>
+
+  <section class="conta__cartao" *ngIf="conta">
+    <div class="conta__perfil">
+      <span class="conta__avatar">{{ conta.nomeCompleto.charAt(0) }}</span>
+      <div>
+        <strong>{{ conta.nomeCompleto }}</strong>
+        <small>{{ conta.email }} · {{ conta.papel === 'Admin' ? 'Administrador' : 'Editor' }}</small>
+      </div>
+    </div>
+  </section>
+
+  <section class="conta__cartao">
+    <h3><i class="fa-solid fa-key"></i> Alterar minha senha</h3>
+    <div class="adm-field">
+      <label for="senhaAtual">Senha atual</label>
+      <input id="senhaAtual" [type]="mostrarSenhas ? 'text' : 'password'" [(ngModel)]="senhaAtual" autocomplete="current-password" />
+    </div>
+    <div class="adm-field-row">
+      <div class="adm-field">
+        <label for="novaSenha">Nova senha</label>
+        <input id="novaSenha" [type]="mostrarSenhas ? 'text' : 'password'" [(ngModel)]="novaSenha" autocomplete="new-password" />
+        <p class="adm-dica conta__erro" *ngIf="senhaFraca">Use pelo menos 8 caracteres.</p>
+      </div>
+      <div class="adm-field">
+        <label for="confirmarSenha">Repita a nova senha</label>
+        <input id="confirmarSenha" [type]="mostrarSenhas ? 'text' : 'password'" [(ngModel)]="confirmarSenha" autocomplete="new-password" />
+        <p class="adm-dica conta__erro" *ngIf="senhasDiferentes">As senhas não são iguais.</p>
+      </div>
+    </div>
+    <label class="adm-checkbox"><input type="checkbox" [(ngModel)]="mostrarSenhas" /> Mostrar as senhas</label>
+    <div>
+      <button type="button" class="adm-btn adm-btn--primario" [disabled]="!podeAlterar" (click)="alterarSenha()">
+        {{ salvandoSenha ? 'Salvando...' : 'Alterar senha' }}
+      </button>
+    </div>
+    <p class="adm-dica">Esqueceu a senha atual? Peça a um administrador para enviar um link de redefinição pela tela Usuários, ou use "Esqueci minha senha" na tela de login.</p>
+  </section>
+
+  <app-aviso-comentarios-email></app-aviso-comentarios-email>
+</div>

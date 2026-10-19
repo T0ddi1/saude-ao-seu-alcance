@@ -48,6 +48,8 @@ export class LinkVinculoComponent {
   /** 'link': escolhe artigo, página ou tópico e emite o caminho. 'artigo': só artigos, emite o id do artigo escolhido. */
   @Input() modo: 'link' | 'artigo' = 'link';
   @Input() rotulo = '↳ ou escolha um artigo, página ou tópico do site...';
+  /** Dentro de um popup com rolagem: a lista abre empurrando o conteúdo (em vez de flutuar e ficar cortada pelo rodapé do popup). */
+  @Input() fluxo = false;
   @Output() escolher = new EventEmitter<string>();
   @Output() escolherArtigo = new EventEmitter<number>();
 
@@ -69,9 +71,18 @@ export class LinkVinculoComponent {
     return grupos.filter((g) => g.itens.length > 0 && (this.modo === 'link' || g.titulo === 'Artigos'));
   }
 
+  // A lista é recalculada a cada ciclo de detecção; sem trackBy os botões eram recriados entre o "apertar" e o "soltar" do mouse
+  // e o clique se perdia (o item nunca era selecionado).
+  porGrupo = (_: number, grupo: Grupo): string => grupo.titulo;
+  porItem = (_: number, item: ItemGrupo): string => item.caminho;
+
   alternar(): void {
     this.aberto = !this.aberto;
     this.busca = '';
+    if (this.aberto) {
+      // Garante que a lista aberta apareça inteira na tela, mesmo dentro de uma área com rolagem.
+      setTimeout(() => this.elemento.nativeElement.querySelector('.link-vinculo__painel')?.scrollIntoView({ block: 'nearest', behavior: 'smooth' }));
+    }
   }
 
   selecionar(item: ItemGrupo): void {

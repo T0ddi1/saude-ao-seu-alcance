@@ -246,3 +246,20 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+// Crédito discreto no fim da página.
+.footer__credito {
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+
+  p {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 12px var(--gutter);
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--color-muted);
+    opacity: 0.85;
+    overflow-wrap: anywhere;
+  }
+}

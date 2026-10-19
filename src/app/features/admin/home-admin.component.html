@@ -181,6 +181,14 @@
               </div>
             </ng-container>
 
+            <ng-container *ngIf="infoAtual.tipo === 'Patrocinio'">
+              <div class="adm-field">
+                <label for="limiteEspacosBloco">Quantos espaços mostrar ao mesmo tempo</label>
+                <input id="limiteEspacosBloco" type="number" min="1" max="12" formControlName="limiteItens" />
+              </div>
+              <app-espacos-patrocinados-editor [limite]="formBloco.value.limiteItens || 3" (alterou)="atualizarPreview()"></app-espacos-patrocinados-editor>
+            </ng-container>
+
             <ng-container *ngIf="infoAtual.recursoItens as recurso">
               <div class="adm-field">
                 <label for="limiteItensBloco">Quantos itens mostrar</label>

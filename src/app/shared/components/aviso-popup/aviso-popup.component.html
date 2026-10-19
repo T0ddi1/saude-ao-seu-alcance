@@ -1,0 +1,40 @@
+<div class="aviso" *ngIf="atual as aviso" (mousedown)="aoPressionarFundo($event)">
+  <div class="aviso__painel" role="dialog" aria-modal="true" [attr.aria-label]="aviso.titulo" [class.aviso__painel--imagem]="aviso.somenteImagem">
+    <button type="button" #botaoFechar class="aviso__fechar" (click)="fechar()" aria-label="Fechar aviso">×</button>
+
+    <!-- Só imagem (banner) -->
+    <ng-container *ngIf="aviso.somenteImagem; else comTexto">
+      <ng-container *ngIf="aviso.link; else imagemSolta">
+        <a *ngIf="!externo" [routerLink]="aviso.link" (click)="fechar()" class="aviso__banner">
+          <img [src]="aviso.imagemUrl" [alt]="aviso.titulo" />
+        </a>
+        <a *ngIf="externo" [href]="aviso.link" target="_blank" rel="noopener noreferrer" (click)="fechar()" class="aviso__banner">
+          <img [src]="aviso.imagemUrl" [alt]="aviso.titulo" />
+        </a>
+      </ng-container>
+      <ng-template #imagemSolta>
+        <img class="aviso__banner" [src]="aviso.imagemUrl" [alt]="aviso.titulo" />
+      </ng-template>
+    </ng-container>
+
+    <!-- Texto -->
+    <ng-template #comTexto>
+      <img *ngIf="aviso.imagemUrl" class="aviso__imagem" [src]="aviso.imagemUrl" alt="" />
+      <div class="aviso__conteudo">
+        <h2 class="aviso__titulo">{{ aviso.titulo }}</h2>
+        <p class="aviso__mensagem" *ngIf="aviso.mensagem">{{ aviso.mensagem }}</p>
+        <ng-container *ngIf="aviso.link">
+          <a *ngIf="!externo" class="aviso__botao" [routerLink]="aviso.link" (click)="fechar()">{{ aviso.textoBotao || 'Saiba mais' }}</a>
+          <a *ngIf="externo" class="aviso__botao" [href]="aviso.link" target="_blank" rel="noopener noreferrer" (click)="fechar()">
+            {{ aviso.textoBotao || 'Saiba mais' }}
+          </a>
+        </ng-container>
+      </div>
+    </ng-template>
+
+    <label class="aviso__nao-ver" *ngIf="aviso.permiteNaoVerMais">
+      <input type="checkbox" [(ngModel)]="naoVerMais" />
+      Não ver novamente
+    </label>
+  </div>
+</div>

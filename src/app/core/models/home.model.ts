@@ -67,6 +67,8 @@ export interface SponsoredItem {
   logo?: string | null;
   siteLabel?: string | null;
   external?: boolean;
+  /** Cor de fundo (#RRGGBB) do card "brand"; vazio = cor padrão do site. */
+  backgroundColor?: string | null;
 }
 
 export interface TrustBadge {

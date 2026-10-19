@@ -46,6 +46,8 @@
         *ngIf="!item.external"
         class="sponsored__card"
         [ngClass]="'is-' + item.theme"
+        [style.background]="corFundo(item)"
+        [style.--texto-marca]="corTexto(item)"
         [routerLink]="item.href"
       >
         <ng-container *ngTemplateOutlet="cardContent"></ng-container>
@@ -54,6 +56,8 @@
         *ngIf="item.external"
         class="sponsored__card"
         [ngClass]="'is-' + item.theme"
+        [style.background]="corFundo(item)"
+        [style.--texto-marca]="corTexto(item)"
         [href]="item.href"
         target="_blank"
         rel="noopener noreferrer"

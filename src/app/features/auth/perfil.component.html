@@ -14,7 +14,7 @@
           {{ enviandoFoto() ? 'Enviando...' : 'Trocar foto' }}
           <input type="file" accept="image/jpeg,image/png,image/gif,image/webp" (change)="selecionarFoto($event)" [disabled]="enviandoFoto()" hidden />
         </label>
-        <p class="perfil__hint">JPG, PNG, GIF ou WEBP — até 5MB.</p>
+        <p class="perfil__hint">Foto quadrada, ideal 400 × 400 px (aparece em círculo). JPG, PNG, GIF ou WEBP — até 5MB.</p>
         <p class="perfil__erro" *ngIf="erroFoto()">{{ erroFoto() }}</p>
       </div>
     </div>

@@ -1,0 +1,262 @@
+.usuarios__cabecalho {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+
+  > div {
+    flex: 1 1 420px;
+    min-width: 0;
+  }
+}
+
+.usuarios__lista {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.usuarios__item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  background: #fff;
+  border: 1px solid var(--adm-border);
+  border-radius: 12px;
+  cursor: pointer;
+  min-width: 0;
+
+  &:hover {
+    border-color: var(--adm-accent);
+  }
+  &.is-inativo {
+    opacity: 0.6;
+  }
+}
+
+.usuarios__avatar {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--adm-accent-soft);
+  color: var(--adm-accent);
+  font-weight: 700;
+}
+
+.usuarios__info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  strong {
+    font-size: 14px;
+    overflow-wrap: anywhere;
+  }
+  em {
+    font-style: normal;
+    font-weight: 400;
+    color: var(--adm-muted);
+    font-size: 12px;
+  }
+  small {
+    font-size: 12.5px;
+    color: var(--adm-muted);
+    overflow-wrap: anywhere;
+  }
+}
+
+.usuarios__papel,
+.usuarios__status {
+  flex-shrink: 0;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  background: var(--adm-bg);
+  color: var(--adm-muted);
+}
+.usuarios__papel--admin {
+  background: var(--adm-accent-soft);
+  color: var(--adm-accent);
+}
+.usuarios__status {
+  background: rgba(47, 168, 138, 0.14);
+  color: #1f7a63;
+
+  &.is-inativo {
+    background: var(--adm-bg);
+    color: var(--adm-muted);
+  }
+}
+
+.usuarios__icone {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid var(--adm-border);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--adm-ink);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    border-color: var(--adm-accent);
+    color: var(--adm-accent);
+  }
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+@media (max-width: 760px) {
+  .usuarios__item {
+    flex-wrap: wrap;
+  }
+  .usuarios__icone {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+// ---- popup ----
+
+.usu-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(26, 18, 48, 0.5);
+}
+
+.usu-modal__painel {
+  width: 100%;
+  max-width: 520px;
+  max-height: 92vh;
+  max-height: 92dvh;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(26, 18, 48, 0.35);
+  overflow: hidden;
+}
+
+.usu-modal__cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 22px;
+  border-bottom: 1px solid var(--adm-border);
+
+  h3 {
+    margin: 0;
+    font-size: 16px;
+  }
+}
+
+.usu-modal__fechar {
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 50%;
+  background: var(--adm-bg);
+  font-size: 18px;
+  line-height: 1;
+  color: var(--adm-muted);
+  cursor: pointer;
+}
+
+.usu-modal__corpo {
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.usu-modal__rodape {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 14px 22px;
+  border-top: 1px solid var(--adm-border);
+}
+
+.usu-papeis {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.usu-papel {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 10px 12px;
+  border: 1.5px solid var(--adm-border);
+  border-radius: 10px;
+  cursor: pointer;
+
+  input {
+    margin-top: 3px;
+  }
+  span {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  strong {
+    font-size: 13px;
+  }
+  small {
+    font-size: 11.5px;
+    color: var(--adm-muted);
+  }
+  &.is-marcado {
+    border-color: var(--adm-accent);
+    background: var(--adm-accent-soft);
+  }
+}
+
+// Telas baixas (janela pequena, painel de pré-visualização, celular deitado): o popup ocupa a tela toda
+// pra sobrar espaço pras opções e o botão de salvar ficar sempre à vista.
+@media (max-height: 640px), (max-width: 560px) {
+  .usu-modal {
+    padding: 0;
+    align-items: stretch;
+  }
+  .usu-modal__painel {
+    max-width: none;
+    max-height: 100vh;
+    max-height: 100dvh;
+    height: 100vh;
+    height: 100dvh;
+    border-radius: 0;
+  }
+  .usu-modal__cabecalho {
+    padding: 10px 16px;
+  }
+  .usu-modal__corpo {
+    padding: 14px 16px 20px;
+  }
+  .usu-modal__rodape {
+    padding: 10px 16px;
+  }
+}

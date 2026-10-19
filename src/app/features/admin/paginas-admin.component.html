@@ -73,6 +73,7 @@
                 <button type="button" class="adm-btn adm-btn--fantasma" *ngIf="form.value.imagemUrl" (click)="limparArquivo('imagemUrl')">Remover</button>
               </div>
             </div>
+            <app-dica-imagem medida="Imagem de apoio da página. Ideal: 1200 × 675 px (16:9, horizontal), com o assunto no centro."></app-dica-imagem>
           </div>
 
           <div class="adm-field">
@@ -96,6 +97,7 @@
                 <button type="button" class="adm-btn adm-btn--fantasma" *ngIf="form.value.anexoUrl" (click)="limparArquivo('anexoUrl')">Remover</button>
               </div>
             </div>
+            <app-dica-imagem tipo="arquivo" medida="Documento para download (ex.: política, relatório). Prefira PDF leve."></app-dica-imagem>
             <input
               *ngIf="form.value.anexoUrl"
               type="text"

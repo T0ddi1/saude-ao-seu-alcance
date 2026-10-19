@@ -15,7 +15,12 @@ import { SwalService } from '../../../core/services/swal.service';
 @Component({
   selector: 'app-quill-editor',
   standalone: true,
-  template: `<div #editorHost class="quill-host"></div>`,
+  template: `
+    <div #editorHost class="quill-host"></div>
+    <p class="quill-dica">
+      Imagem dentro do texto (botão de imagem da barra): ocupa a largura da coluna. Ideal: 1400 px de largura, em 16:9 ou 3:2. Aceita JPG, PNG, WebP ou GIF, até 10 MB.
+    </p>
+  `,
   styleUrl: './quill-editor.component.scss',
   providers: [
     {
@@ -101,7 +106,7 @@ export class QuillEditorComponent implements AfterViewInit, OnDestroy, ControlVa
           remover();
         },
         error: () => {
-          this.swal.erro('Não foi possível enviar a imagem. Verifique o formato e o tamanho (até 5MB).');
+          this.swal.erro('Não foi possível enviar a imagem. Verifique o formato (JPG, PNG, WebP ou GIF) e o tamanho (até 10 MB).');
           remover();
         },
       });

@@ -53,10 +53,11 @@ export class RedefinirSenhaComponent implements OnInit {
     this.submitting.set(true);
 
     this.authService.redefinirSenha(this.usuarioId, this.token, this.novaSenha).subscribe({
-      next: () => {
+      next: (resposta) => {
         this.submitting.set(false);
         this.sucesso.set(true);
-        setTimeout(() => this.router.navigate(['/entrar']), 2500);
+        // Quem é da equipe do painel volta pro login do painel; leitor volta pro login do site.
+        setTimeout(() => this.router.navigate([resposta.painel ? '/admin/login' : '/entrar']), 2500);
       },
       error: (err) => {
         this.submitting.set(false);

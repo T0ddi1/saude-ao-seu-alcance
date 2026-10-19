@@ -30,7 +30,7 @@
     </div>
 
     <nav class="admin-layout__nav">
-      <div class="admin-layout__grupo" *ngFor="let grupo of grupos">
+      <div class="admin-layout__grupo" *ngFor="let grupo of gruposVisiveis">
         <span class="admin-layout__grupo-titulo">{{ grupo.titulo }}</span>
         <a *ngFor="let item of grupo.itens" [routerLink]="item.rota" routerLinkActive="is-ativo">
           <i class="fa-solid" [ngClass]="item.icone"></i>

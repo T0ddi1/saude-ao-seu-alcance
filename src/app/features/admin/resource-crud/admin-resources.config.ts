@@ -7,6 +7,8 @@ export interface CampoFormulario {
   obrigatorio?: boolean;
   opcoes?: string[];
   rotulosOpcoes?: Record<string, string>;
+  /** Onde a imagem aparece e qual o tamanho/proporção ideal (mostrado abaixo do botão de enviar). */
+  dicaImagem?: string;
 }
 
 export const ROTULOS_TIPO_ESPACO: Record<string, string> = {
@@ -49,8 +51,8 @@ export const RECURSOS_ADMIN: Record<string, RecursoAdminConfig> = {
       { chave: 'descricao', rotulo: 'Descrição', tipo: 'textarea' },
       { chave: 'textoBotao', rotulo: 'Texto do botão', tipo: 'text' },
       { chave: 'link', rotulo: 'Link de redirecionamento', tipo: 'link', obrigatorio: true },
-      { chave: 'imagemUrl', rotulo: 'Imagem', tipo: 'image' },
-      { chave: 'logoUrl', rotulo: 'Logo', tipo: 'image' },
+      { chave: 'imagemUrl', rotulo: 'Imagem', tipo: 'image', dicaImagem: 'Banner: aparece inteiro, na largura do espaço (altura de 267 px). Card: aparece cortada ao centro. Ideal: 800 × 534 px.' },
+      { chave: 'logoUrl', rotulo: 'Logo', tipo: 'image', dicaImagem: 'PNG com fundo transparente, bem horizontal (ex.: 400 × 100 px). Aparece com 26 px de altura.' },
       { chave: 'tema', rotulo: 'Tema', tipo: 'select', obrigatorio: true, opcoes: ['Light', 'Dark', 'Brand', 'Banner'] },
       { chave: 'tamanho', rotulo: 'Tamanho', tipo: 'select', obrigatorio: true, opcoes: ['Sm', 'Md', 'Lg', 'Xl'] },
       { chave: 'larguraPx', rotulo: 'Largura (px)', tipo: 'number' },
@@ -95,7 +97,7 @@ export const RECURSOS_ADMIN: Record<string, RecursoAdminConfig> = {
     campos: [
       { chave: 'icone', rotulo: 'Ícone', tipo: 'icone', obrigatorio: true },
       { chave: 'titulo', rotulo: 'Título', tipo: 'text', obrigatorio: true },
-      { chave: 'imagemUrl', rotulo: 'Imagem', tipo: 'image' },
+      { chave: 'imagemUrl', rotulo: 'Imagem', tipo: 'image', dicaImagem: 'Aparece no card da grade da Home em proporção 4:3, cortada ao centro. Ideal: 1200 × 900 px.' },
       { chave: 'resumo', rotulo: 'Resumo', tipo: 'textarea', obrigatorio: true },
       { chave: 'textoLink', rotulo: 'Texto do link', tipo: 'text', obrigatorio: true },
       { chave: 'link', rotulo: 'Link', tipo: 'link', obrigatorio: true },
@@ -114,7 +116,7 @@ export const RECURSOS_ADMIN: Record<string, RecursoAdminConfig> = {
       { chave: 'resumo', rotulo: 'Resumo', tipo: 'textarea', obrigatorio: true },
       { chave: 'textoBotao', rotulo: 'Texto do botão', tipo: 'text', obrigatorio: true },
       { chave: 'link', rotulo: 'Link', tipo: 'link', obrigatorio: true },
-      { chave: 'imagemUrl', rotulo: 'Imagem', tipo: 'image' },
+      { chave: 'imagemUrl', rotulo: 'Imagem', tipo: 'image', dicaImagem: 'Aparece no destaque da Home em proporção 5:4 (celular: 16:10), cortada ao centro. Ideal: 1500 × 1200 px.' },
       { chave: 'ordem', rotulo: 'Ordem', tipo: 'number', obrigatorio: true },
     ],
     colunasTabela: ['titulo', 'ordem', 'ativo'],

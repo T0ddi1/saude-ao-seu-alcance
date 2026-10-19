@@ -21,6 +21,37 @@ export class SwalService {
     return resultado.isConfirmed;
   }
 
+  /** Aviso ao entrar no painel. Devolve true se a pessoa quer ir moderar agora. */
+  async avisoComentariosPendentes(total: number): Promise<boolean> {
+    const resultado = await Swal.fire({
+      title: total === 1 ? '1 comentário aguardando aprovação' : `${total} comentários aguardando aprovação`,
+      text: 'Leitores comentaram nos artigos e esperam a sua moderação.',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonText: 'Ver comentários',
+      cancelButtonText: 'Depois',
+      confirmButtonColor: CONFIRM_BUTTON_COLOR,
+      cancelButtonColor: CANCEL_BUTTON_COLOR,
+      reverseButtons: true,
+    });
+    return resultado.isConfirmed;
+  }
+
+  async confirmarAcao(mensagem: string, titulo: string, textoConfirmar: string): Promise<boolean> {
+    const resultado = await Swal.fire({
+      title: titulo,
+      text: mensagem,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: textoConfirmar,
+      cancelButtonText: 'Voltar e ajustar',
+      confirmButtonColor: CONFIRM_BUTTON_COLOR,
+      cancelButtonColor: CANCEL_BUTTON_COLOR,
+      reverseButtons: true,
+    });
+    return resultado.isConfirmed;
+  }
+
   async confirmarExclusao(mensagem: string): Promise<boolean> {
     const resultado = await Swal.fire({
       title: 'Excluir?',
